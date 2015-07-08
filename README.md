@@ -1,5 +1,5 @@
 # Decodable
-Simple yet powerful object mapping/JSON parsing using Swift 2's new error handling. Greatly inspired by [Argo](http://github.com/thoughtbot/Argo), but without any functional programming and bizillion operators.
+Simple yet powerful object mapping/JSON parsing made possible by Swift 2's new error handling. Greatly inspired by [Argo](http://github.com/thoughtbot/Argo), but without any functional programming and bizillion operators.
 
 ## Example:
 
