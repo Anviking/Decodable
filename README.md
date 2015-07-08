@@ -11,15 +11,22 @@ struct Repository {
     let stargazersCount: Int
     let language: String?
     
-    let owner: User
-    let defaultBranch: Branch
+    let owner: User // Struct conforming to Decodable
+    let defaultBranch: Branch // Struct conforming to Decodable
     
     var fullName: String { return "\(owner.login)/\(name)" }
 }
 
 extension Repository: Decodable {
     static func decode(j: AnyObject) throws -> Repository {
-        return try Repository(name: j => "name", description: j => "description", stargazersCount: j => "stargazers_count", language: j => "language", owner: j => "owner", defaultBranch: j => "default_branch")
+        return try Repository(
+                    name: j => "name", 
+                    description: j => "description", 
+                    stargazersCount: j => "stargazers_count", 
+                    language: j => "language", 
+                    owner: j => "owner", 
+                    defaultBranch: j => "default_branch"
+                )
     }
 }
 
