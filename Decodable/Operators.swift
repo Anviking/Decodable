@@ -11,7 +11,7 @@ import Foundation
 infix operator => { associativity left precedence 150 }
 infix operator =>? { associativity left precedence 150 }
 
-func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
     guard let dict = lhs as? [String: AnyObject] else {
         throw DecodingError.JSONNotObject(lhs)
     }
@@ -24,7 +24,7 @@ func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
 }
 
 
-func => (lhs: AnyObject, rhs: String) throws -> [String: AnyObject] {
+public func => (lhs: AnyObject, rhs: String) throws -> [String: AnyObject] {
     guard let dict = lhs as? [String: AnyObject] else {
         throw DecodingError.JSONNotObject(lhs)
     }
@@ -41,7 +41,7 @@ func => (lhs: AnyObject, rhs: String) throws -> [String: AnyObject] {
 }
 
 
-func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T? {
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T? {
     do {
         let value: T = try lhs => rhs
         return value
@@ -50,7 +50,7 @@ func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T? {
     }
 }
 
-func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     guard let dict = lhs as? [String: AnyObject] else {
         throw DecodingError.JSONNotObject(lhs)
     }
@@ -66,7 +66,7 @@ func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     return result
 }
 
-func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     guard let dict = lhs as? [String: AnyObject] else {
         throw DecodingError.JSONNotObject(lhs)
     }

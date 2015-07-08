@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DecodingError: ErrorType {
+public enum DecodingError: ErrorType {
     case MissingKey(String, Any)
     case TypeMismatch(String, Any)
     case JSONNotObject(AnyObject)
