@@ -1,7 +1,7 @@
 # Decodable
 Simple yet powerful object mapping/JSON parsing using Swift 2's new error handling. Greatly inspired by [Argo](http://github.com/thoughtbot/Argo), but without any functional programming and bizillion operators.
 
-Example:
+## Example:
 
 ```swift
 
@@ -23,5 +23,15 @@ extension Repository: Decodable {
     }
 }
 
-
 ```
+
+## How does it work?
+By using this operator in a variety of forms.
+```swift
+func => <T: Decodable>(json: AnyObject, key: String) throws -> T
+```
+
+There are also overloads for returning T?, [String: AnyObject] and [T].
+
+### Arrays
+The default behaviour for array decoding is to throw if one element throws. The special operator `=>?` will catch errors when decoding elements in an array.
