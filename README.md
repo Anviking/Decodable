@@ -18,7 +18,7 @@ struct Repository {
 }
 
 extension Repository: Decodable {
-    public static func decode(j: AnyObject) throws -> Repository {
+    static func decode(j: AnyObject) throws -> Repository {
         return try Repository(name: j => "name", description: j => "description", stargazersCount: j => "stargazers_count", language: j => "language", owner: j => "owner", defaultBranch: j => "default_branch")
     }
 }
