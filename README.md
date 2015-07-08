@@ -34,4 +34,4 @@ func => <T: Decodable>(json: AnyObject, key: String) throws -> T
 There are also overloads for returning T?, [String: AnyObject] and [T].
 
 ### Arrays
-The default behaviour for array decoding is to throw if one element throws. The special operator `=>?` will catch errors when decoding elements in an array.
+The default behaviour for array decoding is to throw if one element throws. The special operator `=>?` will catch errors when decoding elements in an array and filter out faulty objects.
