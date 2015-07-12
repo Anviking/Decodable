@@ -35,3 +35,12 @@ extension Int: Decodable {
         return result
     }
 }
+
+extension Double: Decodable {
+    public static func decode(j: AnyObject) throws -> Double {
+        guard let result = j as? Double else {
+            throw DecodingError.TypeMismatch("Double", j)
+        }
+        return result
+    }
+}
