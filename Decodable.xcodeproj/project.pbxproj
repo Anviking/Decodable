@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		17FB81011B530FED0012F106 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17FB80F71B530FED0012F106 /* Decodable.framework */; };
+		17FB810E1B5311840012F106 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B57C1B4CA01400837609 /* Decodable.swift */; };
+		17FB810F1B5311870012F106 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
 		8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
 		8FE7B5661B4C9FB900837609 /* Decodable.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE7B5651B4C9FB900837609 /* Decodable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FE7B56D1B4C9FB900837609 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7B5621B4C9FB900837609 /* Decodable.framework */; };
@@ -15,6 +18,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		17FB81021B530FED0012F106 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8FE7B5591B4C9FB900837609 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 17FB80F61B530FED0012F106;
+			remoteInfo = "Decodable-Mac";
+		};
 		8FE7B56E1B4C9FB900837609 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8FE7B5591B4C9FB900837609 /* Project object */;
@@ -25,17 +35,34 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		17FB80F71B530FED0012F106 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		17FB81001B530FED0012F106 /* Decodable-MacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Decodable-MacTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F956D1E1B4D6FF700243072 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		8FE7B5621B4C9FB900837609 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE7B5651B4C9FB900837609 /* Decodable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Decodable.h; sourceTree = "<group>"; };
 		8FE7B5671B4C9FB900837609 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		8FE7B56C1B4C9FB900837609 /* DecodableTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DecodableTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8FE7B56C1B4C9FB900837609 /* DecodableTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DecodableTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE7B5711B4C9FB900837609 /* DecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableTests.swift; sourceTree = "<group>"; };
 		8FE7B5731B4C9FB900837609 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FE7B57C1B4CA01400837609 /* Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		17FB80F31B530FED0012F106 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17FB80FD1B530FED0012F106 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17FB81011B530FED0012F106 /* Decodable.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FE7B55E1B4C9FB900837609 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -67,7 +94,9 @@
 			isa = PBXGroup;
 			children = (
 				8FE7B5621B4C9FB900837609 /* Decodable.framework */,
-				8FE7B56C1B4C9FB900837609 /* DecodableTests.xctest */,
+				8FE7B56C1B4C9FB900837609 /* DecodableTests-iOS.xctest */,
+				17FB80F71B530FED0012F106 /* Decodable.framework */,
+				17FB81001B530FED0012F106 /* Decodable-MacTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,6 +124,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		17FB80F41B530FED0012F106 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FE7B55F1B4C9FB900837609 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -106,9 +142,45 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		8FE7B5611B4C9FB900837609 /* Decodable */ = {
+		17FB80F61B530FED0012F106 /* Decodable-Mac */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8FE7B5761B4C9FB900837609 /* Build configuration list for PBXNativeTarget "Decodable" */;
+			buildConfigurationList = 17FB81081B530FED0012F106 /* Build configuration list for PBXNativeTarget "Decodable-Mac" */;
+			buildPhases = (
+				17FB80F21B530FED0012F106 /* Sources */,
+				17FB80F31B530FED0012F106 /* Frameworks */,
+				17FB80F41B530FED0012F106 /* Headers */,
+				17FB80F51B530FED0012F106 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Decodable-Mac";
+			productName = "Decodable-Mac";
+			productReference = 17FB80F71B530FED0012F106 /* Decodable.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		17FB80FF1B530FED0012F106 /* Decodable-MacTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 17FB810B1B530FED0012F106 /* Build configuration list for PBXNativeTarget "Decodable-MacTests" */;
+			buildPhases = (
+				17FB80FC1B530FED0012F106 /* Sources */,
+				17FB80FD1B530FED0012F106 /* Frameworks */,
+				17FB80FE1B530FED0012F106 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				17FB81031B530FED0012F106 /* PBXTargetDependency */,
+			);
+			name = "Decodable-MacTests";
+			productName = "Decodable-MacTests";
+			productReference = 17FB81001B530FED0012F106 /* Decodable-MacTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8FE7B5611B4C9FB900837609 /* Decodable-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8FE7B5761B4C9FB900837609 /* Build configuration list for PBXNativeTarget "Decodable-iOS" */;
 			buildPhases = (
 				8FE7B55D1B4C9FB900837609 /* Sources */,
 				8FE7B55E1B4C9FB900837609 /* Frameworks */,
@@ -119,14 +191,14 @@
 			);
 			dependencies = (
 			);
-			name = Decodable;
+			name = "Decodable-iOS";
 			productName = Decodable;
 			productReference = 8FE7B5621B4C9FB900837609 /* Decodable.framework */;
 			productType = "com.apple.product-type.framework";
 		};
-		8FE7B56B1B4C9FB900837609 /* DecodableTests */ = {
+		8FE7B56B1B4C9FB900837609 /* DecodableTests-iOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8FE7B5791B4C9FB900837609 /* Build configuration list for PBXNativeTarget "DecodableTests" */;
+			buildConfigurationList = 8FE7B5791B4C9FB900837609 /* Build configuration list for PBXNativeTarget "DecodableTests-iOS" */;
 			buildPhases = (
 				8FE7B5681B4C9FB900837609 /* Sources */,
 				8FE7B5691B4C9FB900837609 /* Frameworks */,
@@ -137,9 +209,9 @@
 			dependencies = (
 				8FE7B56F1B4C9FB900837609 /* PBXTargetDependency */,
 			);
-			name = DecodableTests;
+			name = "DecodableTests-iOS";
 			productName = DecodableTests;
-			productReference = 8FE7B56C1B4C9FB900837609 /* DecodableTests.xctest */;
+			productReference = 8FE7B56C1B4C9FB900837609 /* DecodableTests-iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -152,6 +224,12 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = anviking;
 				TargetAttributes = {
+					17FB80F61B530FED0012F106 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					17FB80FF1B530FED0012F106 = {
+						CreatedOnToolsVersion = 7.0;
+					};
 					8FE7B5611B4C9FB900837609 = {
 						CreatedOnToolsVersion = 7.0;
 					};
@@ -172,13 +250,29 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8FE7B5611B4C9FB900837609 /* Decodable */,
-				8FE7B56B1B4C9FB900837609 /* DecodableTests */,
+				8FE7B5611B4C9FB900837609 /* Decodable-iOS */,
+				8FE7B56B1B4C9FB900837609 /* DecodableTests-iOS */,
+				17FB80F61B530FED0012F106 /* Decodable-Mac */,
+				17FB80FF1B530FED0012F106 /* Decodable-MacTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		17FB80F51B530FED0012F106 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17FB80FE1B530FED0012F106 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FE7B5601B4C9FB900837609 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,6 +290,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		17FB80F21B530FED0012F106 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				17FB810E1B5311840012F106 /* Decodable.swift in Sources */,
+				17FB810F1B5311870012F106 /* Operators.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		17FB80FC1B530FED0012F106 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8FE7B55D1B4C9FB900837609 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -216,14 +326,85 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		17FB81031B530FED0012F106 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 17FB80F61B530FED0012F106 /* Decodable-Mac */;
+			targetProxy = 17FB81021B530FED0012F106 /* PBXContainerItemProxy */;
+		};
 		8FE7B56F1B4C9FB900837609 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 8FE7B5611B4C9FB900837609 /* Decodable */;
+			target = 8FE7B5611B4C9FB900837609 /* Decodable-iOS */;
 			targetProxy = 8FE7B56E1B4C9FB900837609 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		17FB81091B530FED0012F106 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = Decodable/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = anviking.Decodable;
+				PRODUCT_NAME = Decodable;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		17FB810A1B530FED0012F106 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_VERSION = A;
+				INFOPLIST_FILE = Decodable/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = anviking.Decodable;
+				PRODUCT_NAME = Decodable;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		17FB810C1B530FED0012F106 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Decodable-MacTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "anviking.Decodable-MacTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		17FB810D1B530FED0012F106 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = "Decodable-MacTests/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_BUNDLE_IDENTIFIER = "anviking.Decodable-MacTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		8FE7B5741B4C9FB900837609 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -326,7 +507,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = anviking.Decodable;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Decodable;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -345,7 +526,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = anviking.Decodable;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Decodable;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
@@ -373,6 +554,22 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		17FB81081B530FED0012F106 /* Build configuration list for PBXNativeTarget "Decodable-Mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17FB81091B530FED0012F106 /* Debug */,
+				17FB810A1B530FED0012F106 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		17FB810B1B530FED0012F106 /* Build configuration list for PBXNativeTarget "Decodable-MacTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				17FB810C1B530FED0012F106 /* Debug */,
+				17FB810D1B530FED0012F106 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		8FE7B55C1B4C9FB900837609 /* Build configuration list for PBXProject "Decodable" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -382,7 +579,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8FE7B5761B4C9FB900837609 /* Build configuration list for PBXNativeTarget "Decodable" */ = {
+		8FE7B5761B4C9FB900837609 /* Build configuration list for PBXNativeTarget "Decodable-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8FE7B5771B4C9FB900837609 /* Debug */,
@@ -391,7 +588,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		8FE7B5791B4C9FB900837609 /* Build configuration list for PBXNativeTarget "DecodableTests" */ = {
+		8FE7B5791B4C9FB900837609 /* Build configuration list for PBXNativeTarget "DecodableTests-iOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				8FE7B57A1B4C9FB900837609 /* Debug */,

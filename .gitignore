@@ -16,7 +16,6 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-Decodable.xcodeproj/xcshareddata/
 
 # CocoaPods
 #
