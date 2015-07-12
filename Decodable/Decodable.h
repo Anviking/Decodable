@@ -6,7 +6,7 @@
 //  Copyright © 2015 anviking. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for Decodable.
 FOUNDATION_EXPORT double DecodableVersionNumber;
