@@ -7,20 +7,20 @@
 //
 
 import XCTest
+@testable import Decodable
 
 class DecodableTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-    }
-    
-    override func tearDown() {
-        super.tearDown()
+    private func readJsonFile(file: String) -> NSDictionary {
+        let filePath = NSBundle(forClass: object_getClass(self)).resourcePath!.stringByAppendingPathComponent(file)
+        let jsonString = try! String(contentsOfFile: filePath)
+        let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
+        return try! NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
     }
     
     func testDecodeRepositoryExampleShouldSuccess() {
         // given
-        let json = readJsonFile("repository.json")
+        let json = readJsonFile("Repository.json")
     
         // when
         do {
@@ -49,11 +49,62 @@ class DecodableTests: XCTestCase {
         }
     }
     
-    private func readJsonFile(file: String) -> NSDictionary {
-        let filePath = NSBundle(forClass: object_getClass(self)).resourcePath!.stringByAppendingPathComponent(file)
+    func testDecodeRepositoryExampleShouldThrowMissingKeyException() {
+        // given
+        let json = readJsonFile("MissingKey.json")
+        
+        // when
+        do {
+            try Repository.decode(json)
+        } catch DecodingError.MissingKey(let string, _) {
+            // then
+            XCTAssertEqual(string, "id")
+        } catch DecodingError.TypeMismatch {
+            XCTFail("it should not throw this exception")
+        } catch DecodingError.JSONNotObject {
+            XCTFail("it should not throw this exception")
+        } catch {
+            XCTFail("it should not throw this exception")
+        }
+    }
+    
+    func testDecodeRepositoryExampleShouldThrowTypeMismatchException() {
+        // given
+        let json = readJsonFile("TypeMismatch.json")
+        
+        // when
+        do {
+            try Repository.decode(json)
+        } catch DecodingError.MissingKey {
+            XCTFail("it should not throw this exception")
+        } catch DecodingError.TypeMismatch(let string, _) {
+            // then
+            XCTAssertEqual(string, "Int")
+        } catch DecodingError.JSONNotObject {
+            XCTFail("it should not throw this exception")
+        } catch {
+            XCTFail("it should not throw this exception")
+        }
+    }
+    
+    func testDecodeRepositoryExampleShouldThrowNoJsonObjectException() {
+        // given
+        let filePath = NSBundle(forClass: object_getClass(self)).resourcePath!.stringByAppendingPathComponent("NoJsonObject.json")
         let jsonString = try! String(contentsOfFile: filePath)
-        let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
-        return try! NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+        
+        // when
+        do {
+            try Repository.decode(jsonString)
+        } catch DecodingError.MissingKey {
+            XCTFail("it should not throw this exception")
+        } catch DecodingError.TypeMismatch {
+            XCTFail("it should not throw this exception")
+        } catch DecodingError.JSONNotObject {
+            // then
+            XCTAssertTrue(true)
+        } catch {
+            XCTFail("it should not throw this exception")
+        }
     }
     
 }
