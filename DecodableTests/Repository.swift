@@ -22,6 +22,7 @@ struct Repository {
     let owner: Owner // Struct conforming to Decodable
     let coverage: Double
     let files: Array<String>
+    let optional: String?
 }
 
 extension Owner : Decodable {
@@ -42,7 +43,8 @@ extension Repository : Decodable {
             htmlUrlString : j => "html_url",
             owner: j => "owner",
             coverage: j => "coverage",
-            files: j => "files"
+            files: j => "files",
+            optional: j => "optional"
         )
     }
 }

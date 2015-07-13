@@ -8,5 +8,6 @@
         "login": "fjbelchi"
     },
     "coverage": 90.9,
-    "files": ["file1", "file2", "file3"]
+    "files": ["file1", "file2", "file3"],
+    "optional": null
 }

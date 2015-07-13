@@ -15,6 +15,7 @@
 		8FE7B56D1B4C9FB900837609 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7B5621B4C9FB900837609 /* Decodable.framework */; };
 		8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B5711B4C9FB900837609 /* DecodableTests.swift */; };
 		8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B57C1B4CA01400837609 /* Decodable.swift */; };
+		FF0060981B5453C600D8CB77 /* DecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B5711B4C9FB900837609 /* DecodableTests.swift */; };
 		FFE77E1C1B53915600E52F28 /* repository.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE77E191B53910400E52F28 /* repository.json */; };
 		FFE77E1D1B53915700E52F28 /* repository.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE77E191B53910400E52F28 /* repository.json */; };
 		FFE77E211B5396FB00E52F28 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE77E1E1B5391AD00E52F28 /* Repository.swift */; };
@@ -314,6 +315,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFE77E211B5396FB00E52F28 /* Repository.swift in Sources */,
+				FF0060981B5453C600D8CB77 /* DecodableTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

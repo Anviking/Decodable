@@ -43,8 +43,9 @@ class DecodableTests: XCTestCase {
             XCTAssertEqual(files[0], array[0])
             XCTAssertEqual(files[1], array[1])
             XCTAssertEqual(files[2], array[2])
+            XCTAssertNil(repository.optional)
         } catch {
-            XCTFail("it should throw an exception")
+            XCTFail("it should not throw an exception")
         }
     }
     
