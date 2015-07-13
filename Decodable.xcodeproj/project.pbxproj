@@ -16,8 +16,16 @@
 		8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B5711B4C9FB900837609 /* DecodableTests.swift */; };
 		8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B57C1B4CA01400837609 /* Decodable.swift */; };
 		FF0060981B5453C600D8CB77 /* DecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B5711B4C9FB900837609 /* DecodableTests.swift */; };
-		FFE77E1C1B53915600E52F28 /* repository.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE77E191B53910400E52F28 /* repository.json */; };
-		FFE77E1D1B53915700E52F28 /* repository.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE77E191B53910400E52F28 /* repository.json */; };
+		FF00609E1B5454F400D8CB77 /* DecodableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF00609D1B5454F400D8CB77 /* DecodableExtensionTests.swift */; };
+		FF00609F1B5454F400D8CB77 /* DecodableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF00609D1B5454F400D8CB77 /* DecodableExtensionTests.swift */; };
+		FF0060A41B5464FD00D8CB77 /* MissingKey.json in Resources */ = {isa = PBXBuildFile; fileRef = FF0060A01B5464FD00D8CB77 /* MissingKey.json */; };
+		FF0060A51B5464FD00D8CB77 /* MissingKey.json in Resources */ = {isa = PBXBuildFile; fileRef = FF0060A01B5464FD00D8CB77 /* MissingKey.json */; };
+		FF0060A61B5464FD00D8CB77 /* NoJsonObject.json in Resources */ = {isa = PBXBuildFile; fileRef = FF0060A11B5464FD00D8CB77 /* NoJsonObject.json */; };
+		FF0060A71B5464FD00D8CB77 /* NoJsonObject.json in Resources */ = {isa = PBXBuildFile; fileRef = FF0060A11B5464FD00D8CB77 /* NoJsonObject.json */; };
+		FF0060A81B5464FD00D8CB77 /* Repository.json in Resources */ = {isa = PBXBuildFile; fileRef = FF0060A21B5464FD00D8CB77 /* Repository.json */; };
+		FF0060A91B5464FD00D8CB77 /* Repository.json in Resources */ = {isa = PBXBuildFile; fileRef = FF0060A21B5464FD00D8CB77 /* Repository.json */; };
+		FF0060AA1B5464FD00D8CB77 /* TypeMismatch.json in Resources */ = {isa = PBXBuildFile; fileRef = FF0060A31B5464FD00D8CB77 /* TypeMismatch.json */; };
+		FF0060AB1B5464FD00D8CB77 /* TypeMismatch.json in Resources */ = {isa = PBXBuildFile; fileRef = FF0060A31B5464FD00D8CB77 /* TypeMismatch.json */; };
 		FFE77E211B5396FB00E52F28 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE77E1E1B5391AD00E52F28 /* Repository.swift */; };
 		FFE77E221B5396FC00E52F28 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE77E1E1B5391AD00E52F28 /* Repository.swift */; };
 /* End PBXBuildFile section */
@@ -50,7 +58,11 @@
 		8FE7B5711B4C9FB900837609 /* DecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableTests.swift; sourceTree = "<group>"; };
 		8FE7B5731B4C9FB900837609 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FE7B57C1B4CA01400837609 /* Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
-		FFE77E191B53910400E52F28 /* repository.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = repository.json; sourceTree = "<group>"; };
+		FF00609D1B5454F400D8CB77 /* DecodableExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodableExtensionTests.swift; sourceTree = "<group>"; };
+		FF0060A01B5464FD00D8CB77 /* MissingKey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = MissingKey.json; path = JSONExamples/MissingKey.json; sourceTree = "<group>"; };
+		FF0060A11B5464FD00D8CB77 /* NoJsonObject.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = NoJsonObject.json; path = JSONExamples/NoJsonObject.json; sourceTree = "<group>"; };
+		FF0060A21B5464FD00D8CB77 /* Repository.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = Repository.json; path = JSONExamples/Repository.json; sourceTree = "<group>"; };
+		FF0060A31B5464FD00D8CB77 /* TypeMismatch.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = TypeMismatch.json; path = JSONExamples/TypeMismatch.json; sourceTree = "<group>"; };
 		FFE77E1E1B5391AD00E52F28 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,12 +134,24 @@
 		8FE7B5701B4C9FB900837609 /* DecodableTests */ = {
 			isa = PBXGroup;
 			children = (
+				FF0060991B54544A00D8CB77 /* JSONExamples */,
 				8FE7B5711B4C9FB900837609 /* DecodableTests.swift */,
+				FF00609D1B5454F400D8CB77 /* DecodableExtensionTests.swift */,
 				8FE7B5731B4C9FB900837609 /* Info.plist */,
-				FFE77E191B53910400E52F28 /* repository.json */,
 				FFE77E1E1B5391AD00E52F28 /* Repository.swift */,
 			);
 			path = DecodableTests;
+			sourceTree = "<group>";
+		};
+		FF0060991B54544A00D8CB77 /* JSONExamples */ = {
+			isa = PBXGroup;
+			children = (
+				FF0060A01B5464FD00D8CB77 /* MissingKey.json */,
+				FF0060A11B5464FD00D8CB77 /* NoJsonObject.json */,
+				FF0060A21B5464FD00D8CB77 /* Repository.json */,
+				FF0060A31B5464FD00D8CB77 /* TypeMismatch.json */,
+			);
+			name = JSONExamples;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,7 +303,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFE77E1D1B53915700E52F28 /* repository.json in Resources */,
+				FF0060A51B5464FD00D8CB77 /* MissingKey.json in Resources */,
+				FF0060AB1B5464FD00D8CB77 /* TypeMismatch.json in Resources */,
+				FF0060A91B5464FD00D8CB77 /* Repository.json in Resources */,
+				FF0060A71B5464FD00D8CB77 /* NoJsonObject.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +321,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FFE77E1C1B53915600E52F28 /* repository.json in Resources */,
+				FF0060A41B5464FD00D8CB77 /* MissingKey.json in Resources */,
+				FF0060AA1B5464FD00D8CB77 /* TypeMismatch.json in Resources */,
+				FF0060A81B5464FD00D8CB77 /* Repository.json in Resources */,
+				FF0060A61B5464FD00D8CB77 /* NoJsonObject.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,6 +344,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF00609F1B5454F400D8CB77 /* DecodableExtensionTests.swift in Sources */,
 				FFE77E211B5396FB00E52F28 /* Repository.swift in Sources */,
 				FF0060981B5453C600D8CB77 /* DecodableTests.swift in Sources */,
 			);
@@ -332,6 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF00609E1B5454F400D8CB77 /* DecodableExtensionTests.swift in Sources */,
 				8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */,
 				FFE77E221B5396FC00E52F28 /* Repository.swift in Sources */,
 			);
