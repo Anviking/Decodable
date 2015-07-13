@@ -1,0 +1,12 @@
+{
+    "id": 23,
+    "name": "Decodable",
+    "description": "Decodable",
+    "html_url": "https://github.com/Anviking/Decodable",
+    "owner": {
+        "id": 23,
+        "login": "fjbelchi"
+    },
+    "coverage": 90.9,
+    "files": ["file1", "file2", "file3"]
+}

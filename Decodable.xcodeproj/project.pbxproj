@@ -15,6 +15,10 @@
 		8FE7B56D1B4C9FB900837609 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7B5621B4C9FB900837609 /* Decodable.framework */; };
 		8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B5711B4C9FB900837609 /* DecodableTests.swift */; };
 		8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B57C1B4CA01400837609 /* Decodable.swift */; };
+		FFE77E1C1B53915600E52F28 /* repository.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE77E191B53910400E52F28 /* repository.json */; };
+		FFE77E1D1B53915700E52F28 /* repository.json in Resources */ = {isa = PBXBuildFile; fileRef = FFE77E191B53910400E52F28 /* repository.json */; };
+		FFE77E211B5396FB00E52F28 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE77E1E1B5391AD00E52F28 /* Repository.swift */; };
+		FFE77E221B5396FC00E52F28 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE77E1E1B5391AD00E52F28 /* Repository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +49,8 @@
 		8FE7B5711B4C9FB900837609 /* DecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableTests.swift; sourceTree = "<group>"; };
 		8FE7B5731B4C9FB900837609 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FE7B57C1B4CA01400837609 /* Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
+		FFE77E191B53910400E52F28 /* repository.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = repository.json; sourceTree = "<group>"; };
+		FFE77E1E1B5391AD00E52F28 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,8 @@
 			children = (
 				8FE7B5711B4C9FB900837609 /* DecodableTests.swift */,
 				8FE7B5731B4C9FB900837609 /* Info.plist */,
+				FFE77E191B53910400E52F28 /* repository.json */,
+				FFE77E1E1B5391AD00E52F28 /* Repository.swift */,
 			);
 			path = DecodableTests;
 			sourceTree = "<group>";
@@ -270,6 +278,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE77E1D1B53915700E52F28 /* repository.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -284,6 +293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE77E1C1B53915600E52F28 /* repository.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +313,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFE77E211B5396FB00E52F28 /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */,
+				FFE77E221B5396FC00E52F28 /* Repository.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -561,6 +573,7 @@
 				17FB810A1B530FED0012F106 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		17FB810B1B530FED0012F106 /* Build configuration list for PBXNativeTarget "Decodable-MacTests" */ = {
 			isa = XCConfigurationList;
@@ -569,6 +582,7 @@
 				17FB810D1B530FED0012F106 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		8FE7B55C1B4C9FB900837609 /* Build configuration list for PBXProject "Decodable" */ = {
 			isa = XCConfigurationList;
