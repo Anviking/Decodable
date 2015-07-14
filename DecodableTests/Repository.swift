@@ -48,3 +48,13 @@ extension Repository : Decodable {
         )
     }
 }
+
+// MARK: Equatable
+
+func == (lhs: Owner, rhs: Owner) -> Bool {
+    return lhs.id == rhs.id && lhs.login == rhs.login
+}
+
+extension Owner: Equatable {
+    var hashValue: Int { return id.hashValue }
+}
