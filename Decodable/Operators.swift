@@ -66,6 +66,16 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     return result
 }
 
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]? {
+    do {
+        let value: [T] = try lhs => rhs
+        return value
+    } catch {
+        return nil
+    }
+}
+
+
 public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     guard let dict = lhs as? [String: AnyObject] else {
         throw DecodingError.JSONNotObject(lhs)
