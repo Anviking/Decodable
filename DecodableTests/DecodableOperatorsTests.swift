@@ -41,7 +41,7 @@ class DecodableOperatorsTests: XCTestCase {
         let value = "value"
         let dictionary: NSDictionary = [key: value]
         // when
-        let string = try! dictionary => key as String?
+        let string = dictionary => key as String?
         // then
         XCTAssertEqual(string!, value)
     }
@@ -51,7 +51,7 @@ class DecodableOperatorsTests: XCTestCase {
         let key = "key"
         let dictionary: NSDictionary = [key: NSNull()]
         // when
-        let string = try! dictionary => key as String?
+        let string = dictionary => key as String?
         // then
         XCTAssertNil(string)
     }
@@ -73,7 +73,7 @@ class DecodableOperatorsTests: XCTestCase {
         let value = ["value"]
         let dictionary: NSDictionary = [key: value]
         // when
-        let string = try! dictionary => key as [String]?
+        let string = dictionary => key as [String]?
         // then
         XCTAssertEqual(string!, value)
     }
@@ -83,7 +83,7 @@ class DecodableOperatorsTests: XCTestCase {
         let key = "key"
         let dictionary: NSDictionary = [key: NSNull()]
         // when
-        let string = try! dictionary => key as [String]?
+        let string = dictionary => key as [String]?
         // then
         XCTAssertNil(string)
     }
@@ -93,7 +93,7 @@ class DecodableOperatorsTests: XCTestCase {
         let key = "key"
         let dictionary = NSDictionary()
         // when
-        let string = try! dictionary => key as [String]?
+        let string = dictionary => key as [String]?
         // then
         XCTAssertNil(string)
     }
