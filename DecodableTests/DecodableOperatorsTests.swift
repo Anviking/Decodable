@@ -67,6 +67,38 @@ class DecodableOperatorsTests: XCTestCase {
         XCTAssertEqual(result, value)
     }
     
+    func testDecodeAnyDecodableOptionalArraySuccess() {
+        // given
+        let key = "key"
+        let value = ["value"]
+        let dictionary: NSDictionary = [key: value]
+        // when
+        let string = try! dictionary => key as [String]?
+        // then
+        XCTAssertEqual(string!, value)
+    }
+    
+    func testDecodeAnyDecodableOptionalArrayNilSuccess() {
+        // given
+        let key = "key"
+        let dictionary: NSDictionary = [key: NSNull()]
+        // when
+        let string = try! dictionary => key as [String]?
+        // then
+        XCTAssertNil(string)
+    }
+    
+    func testDecodeAnyDecodableOptionalArrayMissingKeySuccess() {
+        // given
+        let key = "key"
+        let dictionary = NSDictionary()
+        // when
+        let string = try! dictionary => key as [String]?
+        // then
+        XCTAssertNil(string)
+    }
+
+    
     // MARK: => Errors
     
     func testDecodeAnyDecodableThrowMissingKeyException() {
