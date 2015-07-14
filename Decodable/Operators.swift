@@ -41,7 +41,7 @@ public func => (lhs: AnyObject, rhs: String) throws -> [String: AnyObject] {
 }
 
 
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T? {
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
     do {
         let value: T = try lhs => rhs
         return value
@@ -66,7 +66,7 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     return result
 }
 
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]? {
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]? {
     do {
         let value: [T] = try lhs => rhs
         return value
