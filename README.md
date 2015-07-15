@@ -12,7 +12,7 @@ struct Repository {
     let language: String?
     
     let owner: User // Struct conforming to Decodable
-    let defaultBranch: Branch // Struct conforming to Decodable
+    let defaultBranch: Branch // Struct NOT conforming to Decodable
     
     var fullName: String { return "\(owner.login)/\(name)" }
 }
@@ -25,7 +25,7 @@ extension Repository: Decodable {
                     stargazersCount: j => "stargazers_count", 
                     language: j => "language", 
                     owner: j => "owner", 
-                    defaultBranch: j => "default_branch"
+                    defaultBranch: Branch(name: j => "default_branch")
                 )
     }
 }
@@ -38,7 +38,16 @@ By using this operator in a variety of forms.
 func => <T: Decodable>(json: AnyObject, key: String) throws -> T
 ```
 
-There are also overloads for returning T?, [String: AnyObject] and [T].
+There are also overloads for returning T?, [String: AnyObject], [T] and [T]?.
+
+## Flexibility
+The `Decodable`-protocol and the `=>`-operator should in no way make you committed to use them everywhere.
+
+For example you could...
+
+- Skip adapting the `Decodable` protocol, and parse things differently depending on the context (like `defaultBranch` in the example code).
+
+- Create your own throwing parsing-functions, e.g for `NSDate`-parsing.
 
 ### Arrays
 The default behaviour for array decoding is to throw if one element throws. The special operator `=>?` will catch errors when decoding elements in an array and filter out faulty objects.
