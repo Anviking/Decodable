@@ -126,9 +126,10 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try noDictionary => key as String
-        } catch DecodingError.JSONNotObject {
-            // then
-            XCTAssertTrue(true)
+        } catch DecodingError.TypeMismatch(let path, let type, let object) {
+            XCTAssertEqual(path, [])
+            XCTAssertTrue(type == JSONDictionary.self)
+            XCTAssertEqual(object as! NSString, noDictionary)
         } catch {
             XCTFail("should not throw this exception")
         }
@@ -159,9 +160,10 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try noDictionary => key
-        } catch DecodingError.JSONNotObject {
-            // then
-            XCTAssertTrue(true)
+        } catch DecodingError.TypeMismatch(let path, let type, let object) {
+            XCTAssertEqual(path, [])
+            XCTAssertTrue(type == JSONDictionary.self)
+            XCTAssertEqual(object as! NSString, noDictionary)
         } catch {
             XCTFail("should not throw this exception")
         }

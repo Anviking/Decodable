@@ -11,7 +11,6 @@ import Foundation
 public enum DecodingError: ErrorType, CustomDebugStringConvertible {
     case MissingKey(path: [String], key: String, object: AnyObject)
     case TypeMismatch(path: [String], type: Any.Type, object: AnyObject)
-    case JSONNotObject(path: [String], object: AnyObject)
     
     var path: [String] {
         get {
@@ -19,8 +18,6 @@ public enum DecodingError: ErrorType, CustomDebugStringConvertible {
             case let .MissingKey(path: path, key: _, object: _):
                 return path
             case let .TypeMismatch(path: path, type: _, object: _):
-                return path
-            case let .JSONNotObject(path: path, object: _):
                 return path
             }
         }
@@ -30,8 +27,6 @@ public enum DecodingError: ErrorType, CustomDebugStringConvertible {
                 self = MissingKey(path: newValue, key: key, object: object)
             case let .TypeMismatch(path: _, type: type, object: object):
                 self = .TypeMismatch(path: path, type: type, object: object)
-            case let .JSONNotObject(path: _, object: object):
-                self = .JSONNotObject(path: newValue, object: object)
             }
         }
     }
@@ -45,8 +40,6 @@ public enum DecodingError: ErrorType, CustomDebugStringConvertible {
         case .TypeMismatch(let path, let type, let object):
             let path = ".".join(path)
             return "TypeMismatch \(path) type: \(type), object: \(object)"
-        case .JSONNotObject(_, _):
-            return "NO"
         }
     }
 }
