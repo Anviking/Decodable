@@ -50,6 +50,7 @@ extension Dictionary: Decodable {
     }
 }
 
+/*
 // Only casts, see DecodableArray for decoding
 extension Array: Decodable {
     public static func decode(json: AnyObject) throws -> Array {
@@ -60,3 +61,4 @@ extension Array: Decodable {
         return result
     }
 }
+*/

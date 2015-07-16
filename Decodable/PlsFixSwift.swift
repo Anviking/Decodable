@@ -28,13 +28,36 @@ public struct DecodableArray<T: Decodable>: Decodable {
     }
 }
 
-
-public func => <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> DecodableArray<T>)) throws -> [T]
-{
-    return try ((lhs => rhs) as DecodableArray<T>).value
+public struct NilFilteringArray<T: Decodable>: Decodable {
+    var value: [T]
+    
+    public static func decode(json: AnyObject) throws -> NilFilteringArray<T> {
+        guard let array = json as? [AnyObject] else {
+            throw DecodingError.TypeMismatch(path: [], type: self, object: json)
+        }
+        
+        var newArray = [T]()
+        for obj in array {
+            print(obj)
+            do {
+                try newArray.append(T.decode(obj))
+            } catch let error {
+                print("NilFilteringArray caught an error: \(error)")
+            }
+        }
+        
+        return NilFilteringArray(value: newArray)
+    }
 }
+
+
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
 {
     return try ((lhs => rhs) as DecodableArray<T>).value
+}
+
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
+{
+    return try ((lhs => rhs) as NilFilteringArray<T>).value
 }

@@ -39,7 +39,7 @@ func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((AnyObje
 {
     return catchErrorAndAppendPath(lhs) { (obj: AnyObject) in
         return try rhs(parse(obj, key: lhs))
-    }
+   }
 }
 
 // End
@@ -51,19 +51,20 @@ func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -> T)
 }
 
 // MARK: Beginning
+
+func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T
+{
+    return try rhs(lhs)
+}
+
 func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
 {
     return try T.decode(parse(lhs, key: rhs))
 }
 
-func => <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T
-{
-    return try rhs(lhs)
-}
-
 // MARK: Optionals
 
-func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T?
+func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
 {
     do {
         return try T.decode(parse(lhs, key: rhs))
@@ -72,10 +73,12 @@ func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T?
     }
 }
 
-func => <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T?
+// MARK: Optional Arrays
+
+func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]?
 {
     do {
-        return try rhs(lhs)
+        return try lhs => rhs as [T]
     } catch {
         return nil
     }
@@ -85,13 +88,9 @@ func => <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws ->
 
 func => (lhs: AnyObject, rhs: String) throws -> JSONDictionary
 {
-    return try lhs => rhs
+    return try JSONDictionary.decode(parse(lhs, key: rhs))
 }
 
-func => <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> JSONDictionary
-{
-    return try lhs => rhs as JSONDictionary
-}
 
 private func printArrayError(error: DecodingError) {
     print("Error caught in nil-filtering Array Decoder (=>?): \(error)")
