@@ -30,7 +30,7 @@ class DecodableOperatorsTests: XCTestCase {
         let value: NSDictionary = [key : "value"]
         let dictionary: NSDictionary = [key: value]
         // when
-        let result = try! dictionary => key
+        let result: [String: AnyObject] = try! dictionary => key
         // then
         XCTAssertEqual(result, value)
     }
@@ -109,9 +109,11 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try dictionary => "nokey" as String
-        } catch DecodingError.MissingKey(let key, _) {
+        } catch DecodingError.MissingKey(let path, let key, let object) {
             // then
             XCTAssertEqual(key, "nokey")
+            XCTAssertEqual(path, [])
+            XCTAssertEqual(object as! NSDictionary, dictionary)
         } catch {
             XCTFail("should not throw this exception")
         }
@@ -140,9 +142,11 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try dictionary => "nokey"
-        } catch DecodingError.MissingKey(let key, _) {
+        } catch DecodingError.MissingKey(let path, let key, let object) {
             // then
             XCTAssertEqual(key, "nokey")
+            XCTAssertEqual(path, [])
+            XCTAssertEqual(object as! NSDictionary, dictionary)
         } catch {
             XCTFail("should not throw this exception")
         }

@@ -11,93 +11,88 @@ import Foundation
 infix operator => { associativity left precedence 150 }
 infix operator =>? { associativity left precedence 150 }
 
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
-    guard let dict = lhs as? [String: AnyObject] else {
-        throw DecodingError.JSONNotObject(lhs)
-    }
-    
-    guard let object = dict[rhs] else {
-        throw DecodingError.MissingKey(rhs, dict)
-    }
-    
-    return try T.decode(object)
-}
+typealias JSONDictionary = [String: AnyObject]
 
-
-public func => (lhs: AnyObject, rhs: String) throws -> [String: AnyObject] {
-    guard let dict = lhs as? [String: AnyObject] else {
-        throw DecodingError.JSONNotObject(lhs)
-    }
-    
-    guard let object = dict[rhs] else {
-        throw DecodingError.MissingKey(rhs, dict)
-    }
-    
-    guard let result = object as? [String: AnyObject] else {
-        throw DecodingError.TypeMismatch("JSON Object", object)
-    }
-    
-    return result
-}
-
-
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
-    do {
-        let value: T = try lhs => rhs
-        return value
-    } catch {
-        return nil
-    }
-}
-
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    guard let dict = lhs as? [String: AnyObject] else {
-        throw DecodingError.JSONNotObject(lhs)
-    }
-    
-    guard let array = dict[rhs] as? [AnyObject] else {
-        throw DecodingError.TypeMismatch("JSON Array", lhs)
-    }
-    
-    var result = [T]()
-    for obj in array {
-        try result.append(T.decode(obj))
+private func parse(object: AnyObject, key: String) throws -> AnyObject {
+    let dict = try JSONDictionary.decode(object)
+    guard let result = dict[key] else {
+        throw DecodingError.MissingKey(path: [], key: key, object: dict)
     }
     return result
 }
 
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]? {
-    do {
-        let value: [T] = try lhs => rhs
-        return value
-    } catch {
-        return nil
-    }
-}
-
-
-public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    guard let dict = lhs as? [String: AnyObject] else {
-        throw DecodingError.JSONNotObject(lhs)
-    }
-    
-    guard let array = dict[rhs] as? [AnyObject] else {
-        throw DecodingError.TypeMismatch("JSON Array", lhs)
-    }
-    
-    var result = [T]()
-    for obj in array {
+private func catchErrorAndAppendPath<T>(path: String, block: ((AnyObject) throws -> T)) -> ((AnyObject) throws -> T)  {
+    return { (obj: AnyObject) throws -> T in
         do {
-            try result.append(T.decode(obj))
-        } catch let DecodingError.TypeMismatch(a, b) {
-            print("Optional Array Decoder: Type mismatch: \(a) \(b)")
-        } catch let DecodingError.JSONNotObject(json) {
-            print("Optional Array Decoder: JSON not object: \(json)")
-        } catch let DecodingError.MissingKey(key, obj) {
-            print("Optional Array Decoder: Missing key: \(key) \(obj)")
-        } catch {
-            print("Optional Array Decoder: Unknown Error")
+            return try block(obj)
+        } catch var error as DecodingError {
+            error.path = [path] + error.path
+            throw error
         }
     }
-    return result
+}
+
+// MARK: Operators
+
+// Middle
+func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((AnyObject) throws -> T)
+{
+    return catchErrorAndAppendPath(lhs) { (obj: AnyObject) in
+        return try rhs(parse(obj, key: lhs))
+    }
+}
+
+// End
+func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -> T)
+{
+    return lhs => { obj in
+        try T.decode(parse(obj, key: key))
+    }
+}
+
+// MARK: Beginning
+func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
+{
+    return try T.decode(parse(lhs, key: rhs))
+}
+
+func => <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T
+{
+    return try rhs(lhs)
+}
+
+// MARK: Optionals
+
+func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T?
+{
+    do {
+        return try T.decode(parse(lhs, key: rhs))
+    } catch {
+        return nil
+    }
+}
+
+func => <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T?
+{
+    do {
+        return try rhs(lhs)
+    } catch {
+        return nil
+    }
+}
+
+// MARK: No inffered type
+
+func => (lhs: AnyObject, rhs: String) throws -> JSONDictionary
+{
+    return try lhs => rhs
+}
+
+func => <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> JSONDictionary
+{
+    return try lhs => rhs as JSONDictionary
+}
+
+private func printArrayError(error: DecodingError) {
+    print("Error caught in nil-filtering Array Decoder (=>?): \(error)")
 }
