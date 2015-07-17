@@ -11,38 +11,28 @@ import Foundation
 infix operator => { associativity left precedence 150 }
 infix operator =>? { associativity left precedence 150 }
 
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
-    guard let dict = lhs as? [String: AnyObject] else {
-        throw DecodingError.TypeMismatch(type: [String: AnyObject].self, object: lhs, path: [])
+private func parse(dict: [String: AnyObject], _ key: String) throws -> AnyObject {
+    guard let object = dict[key] else {
+        throw DecodingError.MissingKey(key: key, object: dict, path: [])
     }
-    
-    guard let object = dict[rhs] else {
-        throw DecodingError.MissingKey(key: rhs, object: dict, path: [])
-    }
-    
-    return try T.decode(object)
+    return object
+}
+
+public func => <T: Decodable>(object: AnyObject, key: String) throws -> T {
+    let dict = try [String: AnyObject].decode(object)
+    return try T.decode(parse(dict, key))
 }
 
 
-public func => (lhs: AnyObject, rhs: String) throws -> [String: AnyObject] {
-    guard let dict = lhs as? [String: AnyObject] else {
-        throw DecodingError.TypeMismatch(type: [String: AnyObject].self, object: lhs, path: [])
-    }
-    
-    guard let object = dict[rhs] else {
-        throw DecodingError.MissingKey(key: rhs, object: dict, path: [])
-    }
-    
-    let result = try [String: AnyObject].decode(object)
-    
-    return result
-}
+public func => (object: AnyObject, key: String) throws -> [String: AnyObject] {
+    let dict = try [String: AnyObject].decode(object)
+    return try [String: AnyObject].decode(parse(dict, key))}
 
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
     do {
-        let value: T = try lhs => rhs
-        return value
+         return try lhs => rhs as T
+
     } catch {
         return nil
     }
