@@ -75,6 +75,14 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]? {
     }
 }
 
+public func => (lhs: AnyObject, rhs: String) -> [String: AnyObject]? {
+    do {
+        let value: [String: AnyObject] = try lhs => rhs
+        return value
+    } catch {
+        return nil
+    }
+}
 
 public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     guard let dict = lhs as? [String: AnyObject] else {
