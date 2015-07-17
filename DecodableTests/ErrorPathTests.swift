@@ -11,7 +11,7 @@ import XCTest
 
 class ErrorPathTests: XCTestCase {
     
-    func testTypeMisMatch() {
+    func testPath() {
         
         let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
         
