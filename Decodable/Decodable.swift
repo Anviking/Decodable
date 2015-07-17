@@ -53,3 +53,14 @@ extension Bool: Decodable {
         return result
     }
 }
+
+extension Dictionary: Decodable {
+    
+    /// Warning: Will not produce compile-time error if used with un-castable types.
+    public static func decode(json: AnyObject) throws -> Dictionary {
+        guard let result = json as? [Key: Value] else {
+            throw DecodingError.TypeMismatch(String(self), json)
+        }
+        return result
+    }
+}

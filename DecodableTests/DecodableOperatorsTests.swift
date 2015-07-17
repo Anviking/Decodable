@@ -35,6 +35,41 @@ class DecodableOperatorsTests: XCTestCase {
         XCTAssertEqual(result, value)
     }
     
+    func testDecodeNestedDictionarySuccess() {
+        // given
+        let key = "key"
+        let value: NSDictionary = ["aKey" : "value"]
+        let dictionary: NSDictionary = [key: [key: value]]
+        // when
+        let result = try! dictionary => key => key
+        // then
+        XCTAssertEqual(result, value)
+    }
+
+    /* Does not work
+    func testDecodeNestedDictionaryOptionalSuccess() {
+        // given
+        let key = "key"
+        let value: NSDictionary = ["aKey" : "value"]
+        let dictionary: NSDictionary = [key: [key: value]]
+        // when
+        let result: [String: AnyObject]? = dictionary => key => key
+        // then
+        XCTAssertEqual(result, value)
+    }
+    */
+    
+    func testDecodeNestedDictionaryCastingSuccess() {
+        // given
+        let key = "key"
+        let value: NSDictionary = ["aKey" : "value"]
+        let dictionary: NSDictionary = [key: [key: value]]
+        // when
+        let result: [String: String] = try! dictionary => key => key
+        // then
+        XCTAssertEqual(result, value)
+    }
+
     func testDecodeAnyDecodableOptionalSuccess() {
         // given
         let key = "key"
@@ -100,6 +135,24 @@ class DecodableOperatorsTests: XCTestCase {
 
     
     // MARK: => Errors
+    
+    func testDecodeNestedDictionaryCastingFailure() {
+        // given
+        let key = "key"
+        let value: NSDictionary = ["aKey" : 2]
+        let dictionary: NSDictionary = [key: [key: value]]
+        // when
+        do {
+            let result: [String: String] = try dictionary => key => key
+            XCTFail()
+        } catch DecodingError.TypeMismatch(let a, let b) {
+            // then
+            XCTAssertEqual(b as! NSDictionary, value)
+            XCTAssertEqual(a, "Swift.Dictionary<Swift.String, Swift.String>")
+        } catch {
+            XCTFail("should not throw this exception")
+        }
+    }
     
     func testDecodeAnyDecodableThrowMissingKeyException() {
         // given
