@@ -24,6 +24,21 @@ class ErrorPathTests: XCTestCase {
             XCTFail("should not throw this exception: \(error)")
         }
     }
+    
+*/
+    /*
+    func testFoo() {
+        let dictionary: NSDictionary = ["key": ["test": 3]]
+        let a: Int = try uppercase(dictionary => "key") as AnyObject => "TEST"
+    }
+    
+    func uppercase(json: [String: AnyObject]) -> [String: AnyObject] {
+        var result = [String: AnyObject]()
+        for (key, value) in json {
+            result[key] = value.uppercaseString
+        }
+        return result
+    }
 */
     
 }

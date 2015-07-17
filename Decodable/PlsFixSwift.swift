@@ -15,7 +15,7 @@ public struct DecodableArray<T: Decodable>: Decodable {
     
     public static func decode(json: AnyObject) throws -> DecodableArray<T> {
         guard let array = json as? [AnyObject] else {
-            throw DecodingError.TypeMismatch(path: [], type: self, object: json)
+            throw DecodingError.TypeMismatch(type: self, object: json, path: [])
         }
         
         var newArray = [T]()
@@ -33,7 +33,7 @@ public struct NilFilteringArray<T: Decodable>: Decodable {
     
     public static func decode(json: AnyObject) throws -> NilFilteringArray<T> {
         guard let array = json as? [AnyObject] else {
-            throw DecodingError.TypeMismatch(path: [], type: self, object: json)
+            throw DecodingError.TypeMismatch(type: self, object: json, path: [])
         }
         
         var newArray = [T]()

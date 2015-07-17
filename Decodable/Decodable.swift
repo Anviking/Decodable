@@ -14,9 +14,9 @@ public protocol Decodable {
 
 public protocol Castable: Decodable {}
 extension Castable {
-    public static func decode(j: AnyObject) throws -> String {
-        guard let result = j as? String else {
-            throw DecodingError.TypeMismatch(path: [], type: self, object: j)
+    public static func decode(j: AnyObject) throws -> Self {
+        guard let result = j as? Self else {
+            throw DecodingError.TypeMismatch(type: self, object: j, path: [])
         }
         return result
     }

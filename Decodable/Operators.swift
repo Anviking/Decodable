@@ -16,7 +16,7 @@ typealias JSONDictionary = [String: AnyObject]
 private func parse(object: AnyObject, key: String) throws -> AnyObject {
     let dict = try JSONDictionary.decode(object)
     guard let result = dict[key] else {
-        throw DecodingError.MissingKey(path: [], key: key, object: dict)
+        throw DecodingError.MissingKey(key: key, object: dict, path: [])
     }
     return result
 }

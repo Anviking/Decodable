@@ -95,7 +95,7 @@ class DecodableTests: XCTestCase {
             try Repository.decode(jsonString)
         } catch DecodingError.MissingKey {
             XCTFail("it should not throw this exception")
-        } catch DecodingError.TypeMismatch(let type, _, _) {
+        } catch DecodingError.TypeMismatch(let type, let object, let path) {
             XCTAssertEqual(path, [])
             XCTAssertTrue(type == [String: AnyObject].self)
             XCTAssertNotNil(object)
