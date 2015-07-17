@@ -8,8 +8,8 @@
 
 import Foundation
 
-infix operator => { associativity left precedence 150 }
-infix operator =>? { associativity left precedence 150 }
+infix operator => { associativity right precedence 150 }
+infix operator =>? { associativity right precedence 150 }
 
 typealias JSONDictionary = [String: AnyObject]
 
@@ -35,7 +35,7 @@ private func catchErrorAndAppendPath<T>(path: String, block: ((AnyObject) throws
 // MARK: Operators
 
 // Middle
-func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((AnyObject) throws -> T)
+public func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((AnyObject) throws -> T)
 {
     return catchErrorAndAppendPath(lhs) { (obj: AnyObject) in
         return try rhs(parse(obj, key: lhs))
@@ -43,7 +43,7 @@ func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((AnyObje
 }
 
 // End
-func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -> T)
+public func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -> T)
 {
     return lhs => { obj in
         try T.decode(parse(obj, key: key))
@@ -52,19 +52,19 @@ func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -> T)
 
 // MARK: Beginning
 
-func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T
+public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T
 {
     return try rhs(lhs)
 }
 
-func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
 {
     return try T.decode(parse(lhs, key: rhs))
 }
 
 // MARK: Optionals
 
-func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
 {
     do {
         return try T.decode(parse(lhs, key: rhs))
@@ -75,7 +75,7 @@ func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
 
 // MARK: Optional Arrays
 
-func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]?
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]?
 {
     do {
         return try lhs => rhs as [T]
@@ -86,9 +86,14 @@ func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]?
 
 // MARK: No inffered type
 
-func => (lhs: AnyObject, rhs: String) throws -> JSONDictionary
+public func => (lhs: AnyObject, rhs: String) throws -> [String: AnyObject]
 {
     return try JSONDictionary.decode(parse(lhs, key: rhs))
+}
+
+public func => (lhs: AnyObject, rhs: ((AnyObject) throws -> [String: AnyObject])) throws -> [String: AnyObject]
+{
+    return try JSONDictionary.decode(rhs(lhs))
 }
 
 

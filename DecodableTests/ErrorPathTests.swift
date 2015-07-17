@@ -11,34 +11,33 @@ import XCTest
 
 class ErrorPathTests: XCTestCase {
     
-    /*
     func testTypeMisMatch() {
-        // given
-        let dictionary: NSDictionary = ["key": ["test": 3]]
-        // when
+        
+        let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
+        
         do {
-            try (dictionary => "key" => "test") as [String]
-        } catch let DecodingError.TypeMismatch(path: path, type: type, object: object) {
-            XCTAssertEqual(path, ["key"])
+            try dict => "object" => "repo" => "owner" => "oops" as String
+        } catch DecodingError.MissingKey( _, _, let path) {
+            XCTAssertEqual(".".join(path), "object.repo.owner")
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }
     }
     
-*/
-    /*
+
     func testFoo() {
         let dictionary: NSDictionary = ["key": ["test": 3]]
-        let a: Int = try uppercase(dictionary => "key") as AnyObject => "TEST"
+        let a: Int = try! uppercase(dictionary => "key") as AnyObject => "TEST"
+        XCTAssertEqual(a, 3)
     }
     
-    func uppercase(json: [String: AnyObject]) -> [String: AnyObject] {
+    private func uppercase(json: [String: AnyObject]) -> [String: AnyObject] {
         var result = [String: AnyObject]()
         for (key, value) in json {
-            result[key] = value.uppercaseString
+            result[key.uppercaseString] = value
         }
+        print(result)
         return result
     }
-*/
-    
+
 }
