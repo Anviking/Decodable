@@ -8,21 +8,15 @@
 
 import Foundation
 
-public enum DecodingError: ErrorType {
-    case MissingKey(String, Any)
-    case TypeMismatch(String, Any)
-    case JSONNotObject(AnyObject)
-}
-
 public protocol Decodable {
     static func decode(json: AnyObject) throws -> Self
 }
 
 public protocol Castable: Decodable {}
 extension Castable {
-    public static func decode(j: AnyObject) throws -> Self {
-        guard let result = j as? Self else {
-            throw DecodingError.TypeMismatch(String(self), j)
+    public static func decode(json: AnyObject) throws -> Self {
+        guard let result = json as? Self else {
+            throw DecodingError.TypeMismatch(type: self, object: json, path: [])
         }
         return result
     }

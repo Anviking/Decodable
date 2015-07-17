@@ -143,12 +143,12 @@ class DecodableOperatorsTests: XCTestCase {
         let dictionary: NSDictionary = [key: [key: value]]
         // when
         do {
-            let result: [String: String] = try dictionary => key => key
+            let _: [String: String] = try dictionary => key => key
             XCTFail()
-        } catch DecodingError.TypeMismatch(let a, let b) {
+        } catch DecodingError.TypeMismatch(let type, let object, _) {
             // then
-            XCTAssertEqual(b as! NSDictionary, value)
-            XCTAssertEqual(a, "Swift.Dictionary<Swift.String, Swift.String>")
+            XCTAssertEqual(object as! NSDictionary, value)
+            XCTAssertTrue(type == Dictionary<Swift.String, Swift.String>.self)
         } catch {
             XCTFail("should not throw this exception")
         }
@@ -162,7 +162,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try dictionary => "nokey" as String
-        } catch DecodingError.MissingKey(let key, _) {
+        } catch DecodingError.MissingKey(let key, _, _) {
             // then
             XCTAssertEqual(key, "nokey")
         } catch {
@@ -177,7 +177,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try noDictionary => key as String
-        } catch DecodingError.JSONNotObject {
+        } catch DecodingError.TypeMismatch {
             // then
             XCTAssertTrue(true)
         } catch {
@@ -193,7 +193,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try dictionary => "nokey"
-        } catch DecodingError.MissingKey(let key, _) {
+        } catch DecodingError.MissingKey(let key, _, _) {
             // then
             XCTAssertEqual(key, "nokey")
         } catch {
@@ -208,7 +208,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try noDictionary => key
-        } catch DecodingError.JSONNotObject {
+        } catch DecodingError.TypeMismatch {
             // then
             XCTAssertTrue(true)
         } catch {

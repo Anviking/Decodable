@@ -13,11 +13,11 @@ infix operator =>? { associativity left precedence 150 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
     guard let dict = lhs as? [String: AnyObject] else {
-        throw DecodingError.JSONNotObject(lhs)
+        throw DecodingError.TypeMismatch(type: [String: AnyObject].self, object: lhs, path: [])
     }
     
     guard let object = dict[rhs] else {
-        throw DecodingError.MissingKey(rhs, dict)
+        throw DecodingError.MissingKey(key: rhs, object: dict, path: [])
     }
     
     return try T.decode(object)
@@ -26,16 +26,14 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
 
 public func => (lhs: AnyObject, rhs: String) throws -> [String: AnyObject] {
     guard let dict = lhs as? [String: AnyObject] else {
-        throw DecodingError.JSONNotObject(lhs)
+        throw DecodingError.TypeMismatch(type: [String: AnyObject].self, object: lhs, path: [])
     }
     
     guard let object = dict[rhs] else {
-        throw DecodingError.MissingKey(rhs, dict)
+        throw DecodingError.MissingKey(key: rhs, object: dict, path: [])
     }
     
-    guard let result = object as? [String: AnyObject] else {
-        throw DecodingError.TypeMismatch("JSON Object", object)
-    }
+    let result = try [String: AnyObject].decode(object)
     
     return result
 }
@@ -52,11 +50,11 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     guard let dict = lhs as? [String: AnyObject] else {
-        throw DecodingError.JSONNotObject(lhs)
+        throw DecodingError.TypeMismatch(type: [String: AnyObject].self, object: lhs, path: [])
     }
     
     guard let array = dict[rhs] as? [AnyObject] else {
-        throw DecodingError.TypeMismatch("JSON Array", lhs)
+        throw DecodingError.TypeMismatch(type: [AnyObject].self, object: lhs, path: [])
     }
     
     var result = [T]()
@@ -78,26 +76,26 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]? {
 
 public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     guard let dict = lhs as? [String: AnyObject] else {
-        throw DecodingError.JSONNotObject(lhs)
+        throw DecodingError.TypeMismatch(type: [String: AnyObject].self, object: lhs, path: [])
     }
     
     guard let array = dict[rhs] as? [AnyObject] else {
-        throw DecodingError.TypeMismatch("JSON Array", lhs)
+        throw DecodingError.TypeMismatch(type: [AnyObject].self, object: lhs, path: [])
     }
     
     var result = [T]()
     for obj in array {
         do {
             try result.append(T.decode(obj))
-        } catch let DecodingError.TypeMismatch(a, b) {
-            print("Optional Array Decoder: Type mismatch: \(a) \(b)")
-        } catch let DecodingError.JSONNotObject(json) {
-            print("Optional Array Decoder: JSON not object: \(json)")
-        } catch let DecodingError.MissingKey(key, obj) {
-            print("Optional Array Decoder: Missing key: \(key) \(obj)")
+        } catch let error as DecodingError {
+            printNilFilteringError(error.debugDescription)
         } catch {
-            print("Optional Array Decoder: Unknown Error")
+            printNilFilteringError("Unknown Error")
         }
     }
     return result
+}
+
+func printNilFilteringError(string: String) {
+    print("Error caught in nil-filtering array: \(string)")
 }
