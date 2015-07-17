@@ -39,7 +39,7 @@ public enum DecodingError: ErrorType, CustomDebugStringConvertible {
     public var debugDescription: String {
         switch self {
         case .MissingKey(let key, let object, _):
-            return "MissingKey at \(formattedPath): \(key) in \(object)"
+            return "Missing Key \(key) in \(formattedPath) \(object)"
         case .TypeMismatch(let type, let object, _):
             return "TypeMismatch \(formattedPath) type: \(type), object: \(object)"
         }
