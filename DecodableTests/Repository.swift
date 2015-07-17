@@ -23,6 +23,8 @@ struct Repository {
     let coverage: Double
     let files: Array<String>
     let optional: String?
+    let active: Bool
+    let optionalActive: Bool?
 }
 
 extension Owner : Decodable {
@@ -44,7 +46,9 @@ extension Repository : Decodable {
             owner: j => "owner",
             coverage: j => "coverage",
             files: j => "files",
-            optional: j => "optional"
+            optional: j => "optional",
+            active: j => "active",
+            optionalActive: j => "optionalActive"
         )
     }
 }

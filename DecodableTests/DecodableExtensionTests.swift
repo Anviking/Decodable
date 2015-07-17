@@ -82,4 +82,28 @@ class DecodableExtensionTests: XCTestCase {
             XCTFail("should not throw this exception")
         }
     }
+    
+    // MARK: Bool
+    func testBoolDecodable() {
+        //given
+        let anyObject = true
+        //when
+        let bool = try! Bool.decode(anyObject)
+        //then
+        XCTAssertEqual(bool, anyObject)
+    }
+    
+    func testBoolDecodableFail() {
+        //given
+        let anyObject = ""
+        //when
+        do {
+            try Bool.decode(anyObject)
+        } catch DecodingError.TypeMismatch {
+            //then
+            XCTAssertTrue(true)
+        } catch {
+            XCTFail("should not throw this exception")
+        }
+    }
 }

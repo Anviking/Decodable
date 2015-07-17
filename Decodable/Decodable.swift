@@ -44,3 +44,12 @@ extension Double: Decodable {
         return result
     }
 }
+
+extension Bool: Decodable {
+    public static func decode(json: AnyObject) throws -> Bool {
+        guard let result = json as? Bool else {
+            throw DecodingError.TypeMismatch("Bool", json)
+        }
+        return result
+    }
+}
