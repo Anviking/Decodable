@@ -12,8 +12,8 @@
 		17FB810F1B5311870012F106 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
 		8F87BCBB1B580CE200E53A8C /* ErrorPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */; };
 		8F87BCBC1B580CE200E53A8C /* ErrorPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */; };
-		8F87BCBE1B58612100E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCBD1B58612100E53A8C /* DecodingError.swift */; };
-		8F87BCBF1B58612100E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCBD1B58612100E53A8C /* DecodingError.swift */; };
+		8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
+		8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F87BCC11B58643200E53A8C /* PlsFixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC01B58643200E53A8C /* PlsFixSwift.swift */; };
 		8F87BCC21B58643200E53A8C /* PlsFixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC01B58643200E53A8C /* PlsFixSwift.swift */; };
 		8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
@@ -59,7 +59,7 @@
 		17FB80F71B530FED0012F106 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17FB81001B530FED0012F106 /* DecodableTests-Mac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DecodableTests-Mac.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPathTests.swift; sourceTree = "<group>"; };
-		8F87BCBD1B58612100E53A8C /* DecodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingError.swift; sourceTree = "<group>"; };
+		8F87BCC31B592F0E00E53A8C /* DecodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingError.swift; sourceTree = "<group>"; };
 		8F87BCC01B58643200E53A8C /* PlsFixSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlsFixSwift.swift; sourceTree = "<group>"; };
 		8F956D1E1B4D6FF700243072 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		8FE7B5621B4C9FB900837609 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -139,7 +139,7 @@
 				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
 				8F87BCC01B58643200E53A8C /* PlsFixSwift.swift */,
-				8F87BCBD1B58612100E53A8C /* DecodingError.swift */,
+				8F87BCC31B592F0E00E53A8C /* DecodingError.swift */,
 				8FE7B5671B4C9FB900837609 /* Info.plist */,
 			);
 			path = Decodable;
@@ -351,7 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F87BCBF1B58612100E53A8C /* DecodingError.swift in Sources */,
+				8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */,
 				17FB810E1B5311840012F106 /* Decodable.swift in Sources */,
 				17FB810F1B5311870012F106 /* Operators.swift in Sources */,
 				8F87BCC21B58643200E53A8C /* PlsFixSwift.swift in Sources */,
@@ -374,7 +374,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8F87BCBE1B58612100E53A8C /* DecodingError.swift in Sources */,
+				8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */,
 				8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */,
 				8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */,
 				8F87BCC11B58643200E53A8C /* PlsFixSwift.swift in Sources */,
