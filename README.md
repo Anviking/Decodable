@@ -56,6 +56,20 @@ MissingKey at object.repo.owner: lllloogon in {
     login = anviking;
 }
 ```
+
+## Errors
+```swift
+public enum DecodingError {
+    public struct Info {
+        var path: [String]
+        var object: AnyObject?
+        var rootObject: AnyObject? // Not implemented yet
+    }
+    
+    case MissingKey(key: String, info: Info)
+    case TypeMismatch(type: Any.Type, info: Info)
+}
+```
 ## Flexibility
 The `Decodable`-protocol and the `=>`-operator should in no way make you committed to use them everywhere.
 
