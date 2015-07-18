@@ -16,7 +16,8 @@ typealias JSONDictionary = [String: AnyObject]
 private func parse(object: AnyObject, key: String) throws -> AnyObject {
     let dict = try JSONDictionary.decode(object)
     guard let result = dict[key] else {
-        throw DecodingError.MissingKey(key: key, object: dict, path: [])
+        let info = DecodingError.Info(object: object)
+        throw DecodingError.MissingKey(key: key, info: info)
     }
     return result
 }
@@ -26,7 +27,7 @@ private func catchErrorAndAppendPath<T>(path: String, block: ((AnyObject) throws
         do {
             return try block(obj)
         } catch var error as DecodingError {
-            error.path = [path] + error.path
+            error.info.path = [path] + error.info.path
             throw error
         }
     }
@@ -46,7 +47,13 @@ public func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((
 public func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -> T)
 {
     return lhs => { obj in
-        try T.decode(parse(obj, key: key))
+        let dict = try parse(obj, key: key)
+        do {
+            return try T.decode(dict)
+        } catch var error as DecodingError {
+            error.info.path = [key] + error.info.path
+            throw error
+        }
     }
 }
 

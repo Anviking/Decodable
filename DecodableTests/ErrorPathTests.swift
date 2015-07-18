@@ -11,14 +11,28 @@ import XCTest
 
 class ErrorPathTests: XCTestCase {
     
-    func testPath() {
+    func testMissingKeyErrorPath() {
         
         let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
         
         do {
             try dict => "object" => "repo" => "owner" => "oops" as String
-        } catch DecodingError.MissingKey( _, _, let path) {
-            XCTAssertEqual(".".join(path), "object.repo.owner")
+        } catch DecodingError.MissingKey(_, let info) {
+            XCTAssertEqual(info.formattedPath, "object.repo.owner")
+        } catch let error {
+            XCTFail("should not throw this exception: \(error)")
+        }
+    }
+    
+    func testTypeMismatchErrorPath() {
+        
+        let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": 0]]]]
+        
+        do {
+            try dict => "object" => "repo" => "owner" => "login" as String
+        } catch DecodingError.TypeMismatch(_, let info) {
+            XCTAssertEqual(info.formattedPath, "object.repo.owner.login")
+            XCTAssertEqual(info.object as! Int, 0)
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }

@@ -13,44 +13,50 @@ import Foundation
 public enum DecodingError: ErrorType, CustomDebugStringConvertible {
     
     public struct Info {
+        
+        public init(object: AnyObject, rootObject: AnyObject? = nil, path: [String] = []) {
+            self.object = object
+            self.rootObject = rootObject
+            self.path = path
+        }
+        
         var path: [String]
-        var object: AnyObject
-        var rootObject: AnyObject
+        var object: AnyObject?
+        var rootObject: AnyObject?
+        
+        var formattedPath: String {
+            return ".".join(path)
+        }
     }
     
     case MissingKey(key: String, info: Info)
     case TypeMismatch(type: Any.Type, info: Info)
     
-    var path: [String] {
+    var info: Info {
         get {
             switch self {
-            case let .MissingKey(key: _, object: _, path: path):
-                return path
-            case let .TypeMismatch(type: _, object: _, path: path):
-                return path
+            case MissingKey(key: _, let info):
+                return info
+            case TypeMismatch(_, let info):
+                return info
             }
         }
         set {
             switch self {
-            case let .MissingKey(key: key, object: object, path: _):
-                self = MissingKey(key: key, object: object, path: newValue)
-            case let .TypeMismatch(type: type, object: object, path: _):
-                self = .TypeMismatch(type: type, object: object, path: path)
+            case MissingKey(let key, _):
+                self = MissingKey(key: key, info: newValue)
+            case TypeMismatch(let type, _):
+                self = TypeMismatch(type: type, info: newValue)
             }
         }
     }
     
-    var formattedPath: String {
-        return ".".join(path)
-    }
-    
-    
     public var debugDescription: String {
         switch self {
-        case .MissingKey(let key, let object, _):
-            return "Missing Key \(key) in \(formattedPath) \(object)"
-        case .TypeMismatch(let type, let object, _):
-            return "TypeMismatch \(formattedPath) type: \(type), object: \(object)"
+        case .MissingKey(let key, let info):
+            return "Missing Key \(key) in \(info.formattedPath) \(info.object)"
+        case .TypeMismatch(let type, let info):
+            return "TypeMismatch \(info.formattedPath) type: \(type), object: \(info.object)"
         }
     }
 }
