@@ -10,8 +10,12 @@
 		17FB81011B530FED0012F106 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 17FB80F71B530FED0012F106 /* Decodable.framework */; };
 		17FB810E1B5311840012F106 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B57C1B4CA01400837609 /* Decodable.swift */; };
 		17FB810F1B5311870012F106 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
+		8F87BCBB1B580CE200E53A8C /* ErrorPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */; };
+		8F87BCBC1B580CE200E53A8C /* ErrorPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */; };
 		8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
+		8F87BCC11B58643200E53A8C /* PlsFixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC01B58643200E53A8C /* PlsFixSwift.swift */; };
+		8F87BCC21B58643200E53A8C /* PlsFixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC01B58643200E53A8C /* PlsFixSwift.swift */; };
 		8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
 		8FE7B5661B4C9FB900837609 /* Decodable.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE7B5651B4C9FB900837609 /* Decodable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FE7B56D1B4C9FB900837609 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7B5621B4C9FB900837609 /* Decodable.framework */; };
@@ -54,7 +58,9 @@
 /* Begin PBXFileReference section */
 		17FB80F71B530FED0012F106 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17FB81001B530FED0012F106 /* DecodableTests-Mac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DecodableTests-Mac.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPathTests.swift; sourceTree = "<group>"; };
 		8F87BCC31B592F0E00E53A8C /* DecodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingError.swift; sourceTree = "<group>"; };
+		8F87BCC01B58643200E53A8C /* PlsFixSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlsFixSwift.swift; sourceTree = "<group>"; };
 		8F956D1E1B4D6FF700243072 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		8FE7B5621B4C9FB900837609 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE7B5651B4C9FB900837609 /* Decodable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Decodable.h; sourceTree = "<group>"; };
@@ -132,6 +138,7 @@
 				8FE7B5651B4C9FB900837609 /* Decodable.h */,
 				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
+				8F87BCC01B58643200E53A8C /* PlsFixSwift.swift */,
 				8F87BCC31B592F0E00E53A8C /* DecodingError.swift */,
 				8FE7B5671B4C9FB900837609 /* Info.plist */,
 			);
@@ -145,6 +152,7 @@
 				8FE7B5711B4C9FB900837609 /* DecodableTests.swift */,
 				FF00609D1B5454F400D8CB77 /* DecodableExtensionTests.swift */,
 				FF0060AF1B546FB100D8CB77 /* DecodableOperatorsTests.swift */,
+				8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */,
 				FFE77E1E1B5391AD00E52F28 /* Repository.swift */,
 				8FE7B5731B4C9FB900837609 /* Info.plist */,
 			);
@@ -346,6 +354,7 @@
 				8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */,
 				17FB810E1B5311840012F106 /* Decodable.swift in Sources */,
 				17FB810F1B5311870012F106 /* Operators.swift in Sources */,
+				8F87BCC21B58643200E53A8C /* PlsFixSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -353,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F87BCBC1B580CE200E53A8C /* ErrorPathTests.swift in Sources */,
 				FF00609F1B5454F400D8CB77 /* DecodableExtensionTests.swift in Sources */,
 				FF0060B11B546FB100D8CB77 /* DecodableOperatorsTests.swift in Sources */,
 				FFE77E211B5396FB00E52F28 /* Repository.swift in Sources */,
@@ -367,6 +377,7 @@
 				8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */,
 				8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */,
 				8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */,
+				8F87BCC11B58643200E53A8C /* PlsFixSwift.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -374,6 +385,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F87BCBB1B580CE200E53A8C /* ErrorPathTests.swift in Sources */,
 				FF00609E1B5454F400D8CB77 /* DecodableExtensionTests.swift in Sources */,
 				FF0060B01B546FB100D8CB77 /* DecodableOperatorsTests.swift in Sources */,
 				8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */,

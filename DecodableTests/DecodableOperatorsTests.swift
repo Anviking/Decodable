@@ -30,7 +30,7 @@ class DecodableOperatorsTests: XCTestCase {
         let value: NSDictionary = [key : "value"]
         let dictionary: NSDictionary = [key: value]
         // when
-        let result = try! dictionary => key
+        let result: [String: AnyObject] = try! dictionary => key
         // then
         XCTAssertEqual(result, value)
     }
@@ -138,16 +138,16 @@ class DecodableOperatorsTests: XCTestCase {
     
     func testDecodeNestedDictionaryCastingFailure() {
         // given
-        let key = "key"
-        let value: NSDictionary = ["aKey" : 2]
-        let dictionary: NSDictionary = [key: [key: value]]
+        let value: NSDictionary = ["apple" : 2]
+        let dictionary: NSDictionary = ["firstKey": ["secondKey": value]]
         // when
         do {
-            let _: [String: String] = try dictionary => key => key
+            let _: [String: String] = try dictionary => "firstKey" => "secondKey"
             XCTFail()
-        } catch DecodingError.TypeMismatch(let type, let object, _) {
+        } catch DecodingError.TypeMismatch(let type, let info) {
             // then
-            XCTAssertEqual(object as! NSDictionary, value)
+            XCTAssertEqual(info.formattedPath, "firstKey.secondKey")
+            XCTAssertEqual(info.object as! NSDictionary, value)
             XCTAssertTrue(type == Dictionary<Swift.String, Swift.String>.self)
         } catch {
             XCTFail("should not throw this exception")
@@ -162,9 +162,12 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try dictionary => "nokey" as String
-        } catch DecodingError.MissingKey(let key, _, _) {
+        } catch DecodingError.MissingKey(let key, let info) {
             // then
             XCTAssertEqual(key, "nokey")
+            XCTAssertEqual(info.path, [])
+            XCTAssertEqual(info.formattedPath, "")
+            XCTAssertEqual(info.object as! NSDictionary, dictionary)
         } catch {
             XCTFail("should not throw this exception")
         }
@@ -177,9 +180,12 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try noDictionary => key as String
-        } catch DecodingError.TypeMismatch {
+        } catch DecodingError.TypeMismatch(let type, let info) {
             // then
             XCTAssertTrue(true)
+            XCTAssertEqual(info.formattedPath, "")
+            XCTAssert(type == [String: AnyObject].self)
+            XCTAssertEqual(info.object as! NSString, noDictionary)
         } catch {
             XCTFail("should not throw this exception")
         }
@@ -193,9 +199,12 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try dictionary => "nokey"
-        } catch DecodingError.MissingKey(let key, _, _) {
+        } catch DecodingError.MissingKey(let key, let info) {
             // then
             XCTAssertEqual(key, "nokey")
+            XCTAssertEqual(info.formattedPath, "")
+            XCTAssertEqual(info.path, [])
+            XCTAssertEqual(info.object as! NSDictionary, dictionary)
         } catch {
             XCTFail("should not throw this exception")
         }
@@ -208,9 +217,12 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try noDictionary => key
-        } catch DecodingError.TypeMismatch {
+        } catch DecodingError.TypeMismatch(let type, let info) {
             // then
             XCTAssertTrue(true)
+            XCTAssert(type == [String: AnyObject].self)
+            XCTAssertEqual(info.formattedPath, "")
+            XCTAssertEqual(info.object as! NSString, noDictionary)
         } catch {
             XCTFail("should not throw this exception")
         }

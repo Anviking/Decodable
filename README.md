@@ -35,11 +35,27 @@ extension Repository: Decodable {
 ## How does it work?
 By using this operator in a variety of forms.
 ```swift
-func => <T: Decodable>(json: AnyObject, key: String) throws -> T
+func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((AnyObject) throws -> T)
 ```
+With a lot of other overloads which should enable automagical chaining:
+```
+let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
 
-There are also overloads for returning T?, [String: AnyObject], [T] and [T]?.
-
+do {
+    let username: String = try dict => "object" => "repo" => "owner" => "lllloogon"
+} catch let error {
+    print(error)
+}
+```
+With descriptive errors:
+```swift
+print(error)
+===============================
+MissingKey at object.repo.owner: lllloogon in {
+    id = 1;
+    login = anviking;
+}
+```
 ## Flexibility
 The `Decodable`-protocol and the `=>`-operator should in no way make you committed to use them everywhere.
 
