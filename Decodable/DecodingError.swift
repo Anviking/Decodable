@@ -8,9 +8,18 @@
 
 import Foundation
 
+
+
 public enum DecodingError: ErrorType, CustomDebugStringConvertible {
-    case MissingKey(key: String, object: AnyObject, path: [String])
-    case TypeMismatch(type: Any.Type, object: AnyObject, path: [String])
+    
+    public struct Info {
+        var path: [String]
+        var object: AnyObject
+        var rootObject: AnyObject
+    }
+    
+    case MissingKey(key: String, info: Info)
+    case TypeMismatch(type: Any.Type, info: Info)
     
     var path: [String] {
         get {
