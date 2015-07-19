@@ -12,6 +12,12 @@ public protocol Decodable {
     static func decode(json: AnyObject) throws -> Self
 }
 
+public protocol MetaDecodable {
+    typealias MetaType
+    var objects: MetaType {get}
+    static func decode(json: AnyObject, type: Decodable.Type) throws -> MetaType
+}
+
 public protocol Castable: Decodable {}
 extension Castable {
     public static func decode(j: AnyObject) throws -> Self {

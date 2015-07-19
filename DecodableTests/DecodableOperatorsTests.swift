@@ -51,7 +51,7 @@ class DecodableOperatorsTests: XCTestCase {
         // given
         let key = "key"
         let value: NSDictionary = ["aKey" : "value"]
-        let dictionary: NSDictionary = [key: [key: value]]
+        let dictionary: [String: AnyObject] = [key: [key: value]]
         // when
         let result: [String: AnyObject]? = dictionary => key => key
         // then
@@ -91,48 +91,6 @@ class DecodableOperatorsTests: XCTestCase {
         XCTAssertNil(string)
     }
     
-    func testDecodeAnyDecodableArraySuccess() {
-        // given
-        let key = "key"
-        let value: NSArray = ["value1", "value2", "value3"]
-        let dictionary: NSDictionary = [key: value]
-        // when
-        let result = try! dictionary => key as Array<String>
-        // then
-        XCTAssertEqual(result, value)
-    }
-    
-    func testDecodeAnyDecodableOptionalArraySuccess() {
-        // given
-        let key = "key"
-        let value = ["value"]
-        let dictionary: NSDictionary = [key: value]
-        // when
-        let string = dictionary => key as [String]?
-        // then
-        XCTAssertEqual(string!, value)
-    }
-    
-    func testDecodeAnyDecodableOptionalArrayNilSuccess() {
-        // given
-        let key = "key"
-        let dictionary: NSDictionary = [key: NSNull()]
-        // when
-        let string = dictionary => key as [String]?
-        // then
-        XCTAssertNil(string)
-    }
-    
-    func testDecodeAnyDecodableOptionalArrayMissingKeySuccess() {
-        // given
-        let key = "key"
-        let dictionary = NSDictionary()
-        // when
-        let string = dictionary => key as [String]?
-        // then
-        XCTAssertNil(string)
-    }
-
     
     // MARK: => Errors
     
@@ -241,62 +199,5 @@ class DecodableOperatorsTests: XCTestCase {
         } catch {
             XCTFail("should not throw this exception")
         }
-    }
-    
-    // MARK: =>?
-    
-    func testDecodeSafeArraySuccess() {
-        // given
-        let key = "key"
-        let value = ["A", "B", "C"]
-        let dictionary: NSDictionary = [key: value]
-        // when
-        let string = try! dictionary =>? key as [String]
-        // then
-        XCTAssertEqual(string, value)
-    }
-    
-    func testDecodeSafeArrayCatchTypeExceptionMismatch() {
-        // given
-        let key = "key"
-        let value = ["A", 2, "B"]
-        let dictionary: NSDictionary = [key: value]
-        // when
-        let string = try! dictionary =>? key as [String]
-        // then
-        XCTAssertEqual(string, ["A", "B"])
-    }
-    
-    func testDecodeSafeArrayCatchTypeMismatchExceptionInObjects() {
-        // given
-        let key = "key"
-        let value = [["id": "007", "login": "mradams"], ["id": 1, "login": "jenglish"]]
-        let dictionary: NSDictionary = [key: value]
-        // when
-        let array = try! dictionary =>? key as [Owner]
-        // then
-        XCTAssertEqual(array, [Owner(id: 1, login: "jenglish")])
-    }
-    
-    func testDecodeSafeArrayCatchJSONNotObjectException() {
-        // given
-        let key = "key"
-        let value = [["id": 7, "login": "mradams"], 2]
-        let dictionary: NSDictionary = [key: value]
-        // when
-        let array = try! dictionary =>? key as [Owner]
-        // then
-        XCTAssertEqual(array, [Owner(id: 7, login: "mradams")])
-    }
-    
-    func testDecodeSafeArrayCatchMissingKeyException() {
-        // given
-        let key = "key"
-        let value = [["login": "mradams"], ["id": 1, "login": "jenglish"]]
-        let dictionary: NSDictionary = [key: value]
-        // when
-        let array = try! dictionary =>? key as [Owner]
-        // then
-        XCTAssertEqual(array, [Owner(id: 1, login: "jenglish")])
     }
 }

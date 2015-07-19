@@ -52,14 +52,42 @@ public struct NilFilteringArray<T: Decodable>: Decodable {
     }
 }
 
-
-
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
 {
     return try ((lhs => rhs) as DecodableArray<T>).value
 }
 
+
 public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
 {
     return try ((lhs => rhs) as NilFilteringArray<T>).value
+}
+
+public func => <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> DecodableArray<T>)) throws -> [T]
+{
+    return try (rhs(lhs) as DecodableArray<T>).value
+}
+
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> NilFilteringArray<T>)) throws -> [T]
+{
+    return try (rhs(lhs) as NilFilteringArray<T>).value
+}
+
+// Optionals 
+
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]? {
+    do {
+        return try ((lhs => rhs) as DecodableArray<T>).value
+    } catch {
+        return nil
+    }
+}
+
+public func => <T: Decodable>(lhs: AnyObject, rhs: ((AnyObject) throws -> DecodableArray<T>)) -> [T]?
+{
+    do {
+        return try (rhs(lhs) as DecodableArray<T>).value
+    } catch {
+        return nil
+    }
 }

@@ -33,6 +33,15 @@ private func catchErrorAndAppendPath<T>(path: String, block: ((AnyObject) throws
     }
 }
 
+private func catchErrorAndSetRootObject<T>(object: AnyObject, block: (Void throws -> T)) throws -> T {
+        do {
+            return try block()
+        } catch var error as DecodingError {
+            error.info.rootObject = object
+            throw error
+        }
+}
+
 // MARK: Operators
 
 // Middle
@@ -66,7 +75,9 @@ public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
 {
-    return try T.decode(parse(lhs, key: rhs))
+    return try catchErrorAndSetRootObject(lhs) {
+        try T.decode(parse(lhs, key: rhs))
+    }
 }
 
 // MARK: Optionals
@@ -80,12 +91,10 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
     }
 }
 
-// MARK: Optional Arrays
-
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]?
+public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T?
 {
     do {
-        return try lhs => rhs as [T]
+        return try rhs(lhs)
     } catch {
         return nil
     }
@@ -102,7 +111,6 @@ public func => (lhs: AnyObject, rhs: ((AnyObject) throws -> [String: AnyObject])
 {
     return try JSONDictionary.decode(rhs(lhs))
 }
-
 
 private func printArrayError(error: DecodingError) {
     print("Error caught in nil-filtering Array Decoder (=>?): \(error)")
