@@ -91,7 +91,6 @@ class DecodableOperatorsTests: XCTestCase {
         XCTAssertNil(string)
     }
     
-    
     // MARK: => Errors
     
     func testDecodeNestedDictionaryCastingFailure() {
@@ -101,7 +100,6 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             let _: [String: String] = try dictionary => "firstKey" => "secondKey"
-            XCTFail()
         } catch DecodingError.TypeMismatch(let type, let info) {
             // then
             XCTAssertEqual(info.formattedPath, "firstKey.secondKey")
