@@ -19,7 +19,6 @@ public protocol MetaDecodable {
 }
 
 public protocol Castable: Decodable {}
-
 extension Castable {
     public static func decode(j: AnyObject) throws -> Self {
         guard let result = j as? Self else {
@@ -35,4 +34,3 @@ extension Int: Castable {}
 extension Double: Castable {}
 extension Bool: Castable {}
 extension Dictionary: Castable {}
-
