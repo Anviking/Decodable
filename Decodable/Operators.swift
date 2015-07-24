@@ -34,12 +34,12 @@ private func catchErrorAndAppendPath<T>(path: String, block: ((AnyObject) throws
 }
 
 private func catchErrorAndSetRootObject<T>(object: AnyObject, block: (Void throws -> T)) throws -> T {
-        do {
-            return try block()
-        } catch var error as DecodingError {
-            error.info.rootObject = object
-            throw error
-        }
+    do {
+        return try block()
+    } catch var error as DecodingError {
+        error.info.rootObject = object
+        throw error
+    }
 }
 
 // MARK: Operators
@@ -52,6 +52,13 @@ public func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((
    }
 }
 
+public func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> [T])) -> ((AnyObject) throws -> [T])
+{
+    return catchErrorAndAppendPath(lhs) { (obj: AnyObject) in
+        return try rhs(parse(obj, key: lhs))
+    }
+}
+
 // End
 public func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -> T)
 {
@@ -59,6 +66,19 @@ public func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -
         let dict = try parse(obj, key: key)
         do {
             return try T.decode(dict)
+        } catch var error as DecodingError {
+            error.info.path = [key] + error.info.path
+            throw error
+        }
+    }
+}
+
+public func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -> [T])
+{
+    return lhs => { obj in
+        let dict = try parse(obj, key: key)
+        do {
+            return try [T].decode(dict)
         } catch var error as DecodingError {
             error.info.path = [key] + error.info.path
             throw error
@@ -80,6 +100,13 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
     }
 }
 
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
+{
+    return try catchErrorAndSetRootObject(lhs) {
+        try [T].decode(parse(lhs, key: rhs))
+    }
+}
+
 // MARK: Optionals
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
@@ -98,6 +125,20 @@ public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T?
     } catch {
         return nil
     }
+}
+
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]?
+{
+    do {
+        return try [T].decode(parse(lhs, key: rhs))
+    } catch {
+        return nil
+    }
+}
+
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
+{
+    return try [T].decode(parse(lhs, key: rhs))
 }
 
 // MARK: No inffered type

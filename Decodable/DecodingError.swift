@@ -8,8 +8,6 @@
 
 import Foundation
 
-
-
 public enum DecodingError: ErrorType, CustomDebugStringConvertible {
     
     public struct Info {

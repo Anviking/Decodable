@@ -91,7 +91,6 @@ class DecodableOperatorsTests: XCTestCase {
         XCTAssertNil(string)
     }
     
-    
     // MARK: => Errors
     
     func testDecodeNestedDictionaryCastingFailure() {
