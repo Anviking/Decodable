@@ -23,6 +23,10 @@
 		8FE7B56D1B4C9FB900837609 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7B5621B4C9FB900837609 /* Decodable.framework */; };
 		8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B5711B4C9FB900837609 /* DecodableTests.swift */; };
 		8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B57C1B4CA01400837609 /* Decodable.swift */; };
+		D0DC54771B78150900F79CB0 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B57C1B4CA01400837609 /* Decodable.swift */; };
+		D0DC54781B78150900F79CB0 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
+		D0DC54791B78150900F79CB0 /* PlsFixSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC01B58643200E53A8C /* PlsFixSwift.swift */; };
+		D0DC547A1B78150900F79CB0 /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		FF0060981B5453C600D8CB77 /* DecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B5711B4C9FB900837609 /* DecodableTests.swift */; };
 		FF00609E1B5454F400D8CB77 /* DecodableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF00609D1B5454F400D8CB77 /* DecodableExtensionTests.swift */; };
 		FF00609F1B5454F400D8CB77 /* DecodableExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF00609D1B5454F400D8CB77 /* DecodableExtensionTests.swift */; };
@@ -72,6 +76,7 @@
 		8FE7B5711B4C9FB900837609 /* DecodableTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodableTests.swift; sourceTree = "<group>"; };
 		8FE7B5731B4C9FB900837609 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FE7B57C1B4CA01400837609 /* Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
+		D0DC546F1B7814D200F79CB0 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF00609D1B5454F400D8CB77 /* DecodableExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodableExtensionTests.swift; sourceTree = "<group>"; };
 		FF0060A01B5464FD00D8CB77 /* MissingKey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = MissingKey.json; path = JSONExamples/MissingKey.json; sourceTree = "<group>"; };
 		FF0060A11B5464FD00D8CB77 /* NoJsonObject.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = NoJsonObject.json; path = JSONExamples/NoJsonObject.json; sourceTree = "<group>"; };
@@ -112,6 +117,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D0DC546B1B7814D200F79CB0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -131,6 +143,7 @@
 				8FE7B56C1B4C9FB900837609 /* DecodableTests-iOS.xctest */,
 				17FB80F71B530FED0012F106 /* Decodable.framework */,
 				17FB81001B530FED0012F106 /* DecodableTests-Mac.xctest */,
+				D0DC546F1B7814D200F79CB0 /* Decodable.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -189,6 +202,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8FE7B5661B4C9FB900837609 /* Decodable.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0DC546C1B7814D200F79CB0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -267,6 +287,24 @@
 			productReference = 8FE7B56C1B4C9FB900837609 /* DecodableTests-iOS.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D0DC546E1B7814D200F79CB0 /* Decodable-watchOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D0DC54761B7814D200F79CB0 /* Build configuration list for PBXNativeTarget "Decodable-watchOS" */;
+			buildPhases = (
+				D0DC546A1B7814D200F79CB0 /* Sources */,
+				D0DC546B1B7814D200F79CB0 /* Frameworks */,
+				D0DC546C1B7814D200F79CB0 /* Headers */,
+				D0DC546D1B7814D200F79CB0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Decodable-watchOS";
+			productName = "Decodable-watchOS";
+			productReference = D0DC546F1B7814D200F79CB0 /* Decodable.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -289,6 +327,9 @@
 					8FE7B56B1B4C9FB900837609 = {
 						CreatedOnToolsVersion = 7.0;
 					};
+					D0DC546E1B7814D200F79CB0 = {
+						CreatedOnToolsVersion = 7.0;
+					};
 				};
 			};
 			buildConfigurationList = 8FE7B55C1B4C9FB900837609 /* Build configuration list for PBXProject "Decodable" */;
@@ -307,6 +348,7 @@
 				8FE7B56B1B4C9FB900837609 /* DecodableTests-iOS */,
 				17FB80F61B530FED0012F106 /* Decodable-Mac */,
 				17FB80FF1B530FED0012F106 /* DecodableTests-Mac */,
+				D0DC546E1B7814D200F79CB0 /* Decodable-watchOS */,
 			);
 		};
 /* End PBXProject section */
@@ -345,6 +387,13 @@
 				FF0060AA1B5464FD00D8CB77 /* TypeMismatch.json in Resources */,
 				FF0060A81B5464FD00D8CB77 /* Repository.json in Resources */,
 				FF0060A61B5464FD00D8CB77 /* NoJsonObject.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0DC546D1B7814D200F79CB0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -396,6 +445,17 @@
 				8F4B52651B5BAA5700FDCBA7 /* ArrayTests.swift in Sources */,
 				8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */,
 				FFE77E221B5396FC00E52F28 /* Repository.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D0DC546A1B7814D200F79CB0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D0DC54791B78150900F79CB0 /* PlsFixSwift.swift in Sources */,
+				D0DC547A1B78150900F79CB0 /* DecodingError.swift in Sources */,
+				D0DC54771B78150900F79CB0 /* Decodable.swift in Sources */,
+				D0DC54781B78150900F79CB0 /* Operators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -633,6 +693,44 @@
 			};
 			name = Release;
 		};
+		D0DC54741B7814D200F79CB0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Decodable/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = anviking.Decodable;
+				PRODUCT_NAME = Decodable;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Debug;
+		};
+		D0DC54751B7814D200F79CB0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Decodable/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = anviking.Decodable;
+				PRODUCT_NAME = Decodable;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 2.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -680,6 +778,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D0DC54761B7814D200F79CB0 /* Build configuration list for PBXNativeTarget "Decodable-watchOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D0DC54741B7814D200F79CB0 /* Debug */,
+				D0DC54751B7814D200F79CB0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};
