@@ -65,7 +65,7 @@ class DecodableOperatorsTests: XCTestCase {
         let value: NSDictionary = ["aKey" : "value"]
         let dictionary: NSDictionary = [key: [key: value]]
         // when
-        let result: [String: String] = try! dictionary => key => key
+        let result = try! dictionary => key => key as! [String: String]
         // then
         XCTAssertEqual(result, value)
     }
@@ -100,12 +100,12 @@ class DecodableOperatorsTests: XCTestCase {
         let dictionary: NSDictionary = ["firstKey": ["secondKey": value]]
         // when
         do {
-            let _: [String: String] = try dictionary => "firstKey" => "secondKey"
+            _ = try dictionary => "firstKey" => "secondKey" as! [String: String]
             XCTFail()
         } catch DecodingError.TypeMismatch(let type, let info) {
             // then
             XCTAssertEqual(info.formattedPath, "firstKey.secondKey")
-            XCTAssertEqual(info.object as! NSDictionary, value)
+            XCTAssertEqual(info.object as? NSDictionary, value)
             XCTAssertTrue(type == Dictionary<Swift.String, Swift.String>.self)
         } catch {
             XCTFail("should not throw this exception")
@@ -125,7 +125,7 @@ class DecodableOperatorsTests: XCTestCase {
             XCTAssertEqual(key, "nokey")
             XCTAssertEqual(info.path, [])
             XCTAssertEqual(info.formattedPath, "")
-            XCTAssertEqual(info.object as! NSDictionary, dictionary)
+            XCTAssertEqual(info.object as? NSDictionary, dictionary)
         } catch {
             XCTFail("should not throw this exception")
         }
@@ -142,8 +142,8 @@ class DecodableOperatorsTests: XCTestCase {
             // then
             XCTAssertTrue(true)
             XCTAssertEqual(info.formattedPath, "")
-            XCTAssert(type == [String: AnyObject].self)
-            XCTAssertEqual(info.object as! NSString, noDictionary)
+            XCTAssert(type == NSDictionary.self)
+            XCTAssertEqual(info.object as? NSString, noDictionary)
         } catch {
             XCTFail("should not throw this exception")
         }
@@ -162,7 +162,7 @@ class DecodableOperatorsTests: XCTestCase {
             XCTAssertEqual(key, "nokey")
             XCTAssertEqual(info.formattedPath, "")
             XCTAssertEqual(info.path, [])
-            XCTAssertEqual(info.object as! NSDictionary, dictionary)
+            XCTAssertEqual(info.object as? NSDictionary, dictionary)
         } catch {
             XCTFail("should not throw this exception")
         }
@@ -178,9 +178,9 @@ class DecodableOperatorsTests: XCTestCase {
         } catch DecodingError.TypeMismatch(let type, let info) {
             // then
             XCTAssertTrue(true)
-            XCTAssert(type == [String: AnyObject].self)
+            XCTAssert(type == NSDictionary.self)
             XCTAssertEqual(info.formattedPath, "")
-            XCTAssertEqual(info.object as! NSString, noDictionary)
+            XCTAssertEqual(info.object as? NSString, noDictionary)
         } catch {
             XCTFail("should not throw this exception")
         }

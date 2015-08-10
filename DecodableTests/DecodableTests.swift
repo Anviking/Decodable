@@ -12,7 +12,7 @@ import XCTest
 class DecodableTests: XCTestCase {
     
     private func readJsonFile(file: String) -> NSDictionary {
-        let filePath = NSBundle(forClass: object_getClass(self)).resourcePath!.stringByAppendingPathComponent(file)
+        let filePath = (NSBundle(forClass: object_getClass(self)).resourcePath! as NSString).stringByAppendingPathComponent(file)
         let jsonString = try! String(contentsOfFile: filePath)
         let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
         return try! NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
@@ -26,17 +26,17 @@ class DecodableTests: XCTestCase {
         do {
             let repository = try Repository.decode(json)
             // then
-            XCTAssertEqual(repository.id, json["id"] as! Int)
-            XCTAssertEqual(repository.name, json["name"] as! String)
-            XCTAssertEqual(repository.description, json["description"] as! String)
-            XCTAssertEqual(repository.htmlUrlString, json["html_url"] as! String)
+            XCTAssertEqual(repository.id, json["id"] as? Int)
+            XCTAssertEqual(repository.name, json["name"] as? String)
+            XCTAssertEqual(repository.description, json["description"] as? String)
+            XCTAssertEqual(repository.htmlUrlString, json["html_url"] as? String)
             
             let owner = repository.owner
             let ownerDictionary = json["owner"] as! NSDictionary
-            XCTAssertEqual(owner.id, ownerDictionary["id"] as! Int)
-            XCTAssertEqual(owner.login, ownerDictionary["login"] as! String)
+            XCTAssertEqual(owner.id, ownerDictionary["id"] as? Int)
+            XCTAssertEqual(owner.login, ownerDictionary["login"] as? String)
             
-            XCTAssertEqual(repository.coverage, json["coverage"] as! Double)
+            XCTAssertEqual(repository.coverage, json["coverage"] as? Double)
             let files = repository.files
             XCTAssertEqual(files.count, 3)
             let array = json["files"] as! Array<String>
@@ -87,7 +87,7 @@ class DecodableTests: XCTestCase {
     
     func testDecodeRepositoryExampleShouldThrowNoJsonObjectException() {
         // given
-        let filePath = NSBundle(forClass: object_getClass(self)).resourcePath!.stringByAppendingPathComponent("NoJsonObject.json")
+        let filePath = (NSBundle(forClass: object_getClass(self)).resourcePath! as NSString).stringByAppendingPathComponent("NoJsonObject.json")
         let jsonString = try! String(contentsOfFile: filePath)
         
         // when
