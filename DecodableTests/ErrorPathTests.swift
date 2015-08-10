@@ -45,7 +45,7 @@ class ErrorPathTests: XCTestCase {
         XCTAssertEqual(a, 3)
     }
     
-    private func uppercase(json: [String: AnyObject]) -> [String: AnyObject] {
+    private func uppercase(json: NSDictionary) -> NSDictionary {
         var result = [String: AnyObject]()
         for (key, value) in json {
             result[key.uppercaseString] = value

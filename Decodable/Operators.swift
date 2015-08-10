@@ -112,6 +112,28 @@ public func => (lhs: AnyObject, rhs: ((AnyObject) throws -> NSDictionary)) throw
     return try JSONDictionary.decode(rhs(lhs))
 }
 
+// Middle
+public func => (lhs: String, rhs: ((AnyObject) throws -> NSDictionary)) -> ((AnyObject) throws -> NSDictionary)
+{
+    return catchErrorAndAppendPath(lhs) { (obj: AnyObject) in
+        return try rhs(parse(obj, key: lhs))
+    }
+}
+
+// End
+public func => (lhs: String, key: String) -> ((AnyObject) throws -> NSDictionary)
+{
+    return lhs => { obj in
+        let dict = try parse(obj, key: key)
+        do {
+            return try NSDictionary.decode(dict)
+        } catch var error as DecodingError {
+            error.info.path = [key] + error.info.path
+            throw error
+        }
+    }
+}
+
 private func printArrayError(error: DecodingError) {
     print("Error caught in nil-filtering Array Decoder (=>?): \(error)")
 }
