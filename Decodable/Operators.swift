@@ -11,10 +11,8 @@ import Foundation
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
-typealias JSONDictionary = NSDictionary
-
 private func parse(object: AnyObject, key: String) throws -> AnyObject {
-    let dict = try JSONDictionary.decode(object)
+    let dict = try NSDictionary.decode(object)
     guard let result = dict[key] else {
         let info = DecodingError.Info(object: object)
         throw DecodingError.MissingKey(key: key, info: info)
@@ -104,12 +102,12 @@ public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) -> T?
 
 public func => (lhs: AnyObject, rhs: String) throws -> NSDictionary
 {
-    return try JSONDictionary.decode(parse(lhs, key: rhs))
+    return try NSDictionary.decode(parse(lhs, key: rhs))
 }
 
 public func => (lhs: AnyObject, rhs: ((AnyObject) throws -> NSDictionary)) throws -> NSDictionary
 {
-    return try JSONDictionary.decode(rhs(lhs))
+    return try NSDictionary.decode(rhs(lhs))
 }
 
 // Middle
