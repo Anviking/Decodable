@@ -56,6 +56,16 @@ class DecodableOperatorsTests: XCTestCase {
         // then
         XCTAssertEqual(result, value)
     }
+    
+    func testDecodeNestedIntSuccess() {
+        // given
+        let value = 4
+        let dictionary: NSDictionary = ["key1": ["key2": ["key3": value]]]
+        // when
+        let result: Int = try! dictionary => "key1" => "key2" => "key3"
+        // then
+        XCTAssertEqual(result, value)
+    }
 
     
     func testDecodeNestedDictionaryCastingSuccess() {

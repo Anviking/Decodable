@@ -8,8 +8,12 @@
 
 import Foundation
 
+// MARK: - Operators
+
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
+
+// MARK: - Helpers
 
 private func parse(object: AnyObject, key: String) throws -> AnyObject {
     let dict = try NSDictionary.decode(object)
@@ -40,9 +44,11 @@ private func catchErrorAndSetRootObject<T>(object: AnyObject, block: (Void throw
         }
 }
 
-// MARK: Operators
+// MARK: - Operator Overloads
 
-// Middle
+// MARK: Default
+
+/// Middle-overload for chained expression, returning <T: Decodable>.
 public func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((AnyObject) throws -> T)
 {
     return catchErrorAndAppendPath(lhs) { (obj: AnyObject) in
@@ -50,7 +56,7 @@ public func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((
    }
 }
 
-// End
+/// At-end-overload for chained expression, returning <T: Decodable>.
 public func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -> T)
 {
     return lhs => { obj in
@@ -64,13 +70,13 @@ public func => <T: Decodable>(lhs: String, key: String) -> ((AnyObject) throws -
     }
 }
 
-// MARK: Beginning
-
+/// Beginning-overload for chained expression, returning <T>.
 public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T
 {
     return try rhs(lhs)
 }
 
+/// Beginning-overload for a non-nested keypath, returning <T: Decodable>.
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
 {
     return try catchErrorAndSetRootObject(lhs) {
@@ -80,6 +86,7 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
 
 // MARK: Optionals
 
+/// Optional-overload (beginning) for no-nested keypath, returning <T: Decodable>?
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
 {
     do {
@@ -89,6 +96,7 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
     }
 }
 
+/// Optional-overload (beginning) for nested keypath, returning <T: Decodable>?
 public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) -> T?
 {
     do {
@@ -98,19 +106,27 @@ public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) -> T?
     }
 }
 
-// MARK: No inffered type
+// MARK: No inferred type
 
+// If there is no inferred type, return NSDictionary so that chaining works
+// E.g in let a: Int = json => "key1" => "key2" => "key3"
+// the last two operators should "return" (vauge term, since it's probably a bit more complicated) 
+// a NSDictionary
+
+
+/// NSDictionary overload (beginning) for no-nested keypath
 public func => (lhs: AnyObject, rhs: String) throws -> NSDictionary
 {
     return try NSDictionary.decode(parse(lhs, key: rhs))
 }
 
+/// NSDictionary overload (beginning) for nested keypath
 public func => (lhs: AnyObject, rhs: ((AnyObject) throws -> NSDictionary)) throws -> NSDictionary
 {
     return try NSDictionary.decode(rhs(lhs))
 }
 
-// Middle
+/// NSDictionary overload (middle) for nested keypath
 public func => (lhs: String, rhs: ((AnyObject) throws -> NSDictionary)) -> ((AnyObject) throws -> NSDictionary)
 {
     return catchErrorAndAppendPath(lhs) { (obj: AnyObject) in
@@ -118,7 +134,7 @@ public func => (lhs: String, rhs: ((AnyObject) throws -> NSDictionary)) -> ((Any
     }
 }
 
-// End
+/// NSDictionary overload (end) for nested keypath
 public func => (lhs: String, key: String) -> ((AnyObject) throws -> NSDictionary)
 {
     return lhs => { obj in
@@ -130,8 +146,4 @@ public func => (lhs: String, key: String) -> ((AnyObject) throws -> NSDictionary
             throw error
         }
     }
-}
-
-private func printArrayError(error: DecodingError) {
-    print("Error caught in nil-filtering Array Decoder (=>?): \(error)")
 }
