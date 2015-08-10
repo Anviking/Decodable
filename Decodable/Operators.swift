@@ -91,7 +91,7 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
     }
 }
 
-public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T?
+public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) -> T?
 {
     do {
         return try rhs(lhs)
