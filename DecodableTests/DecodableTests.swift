@@ -97,7 +97,7 @@ class DecodableTests: XCTestCase {
             XCTFail("it should not throw this exception")
         } catch DecodingError.TypeMismatch(let type, let info) {
             XCTAssertEqual(info.path, [])
-            XCTAssertTrue(type == [String: AnyObject].self)
+            XCTAssertTrue(type == NSDictionary.self)
             XCTAssertNotNil(info.object)
         } catch {
             XCTFail("it should not throw this exception")

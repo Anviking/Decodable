@@ -46,18 +46,17 @@ class DecodableOperatorsTests: XCTestCase {
         XCTAssertEqual(result, value)
     }
 
-    /* Does not work
     func testDecodeNestedDictionaryOptionalSuccess() {
         // given
         let key = "key"
         let value: NSDictionary = ["aKey" : "value"]
-        let dictionary: [String: AnyObject] = [key: [key: value]]
+        let dictionary: NSDictionary = [key: [key: value]]
         // when
-        let result: [String: AnyObject]? = dictionary => key => key
+        let result: [String: AnyObject]? = try! dictionary => key => key
         // then
         XCTAssertEqual(result, value)
     }
-    */
+
     
     func testDecodeNestedDictionaryCastingSuccess() {
         // given
@@ -100,7 +99,7 @@ class DecodableOperatorsTests: XCTestCase {
         let dictionary: NSDictionary = ["firstKey": ["secondKey": value]]
         // when
         do {
-            _ = try dictionary => "firstKey" => "secondKey" as! [String: String]
+            _ = try dictionary => "firstKey" => "secondKey" as [String: String]
             XCTFail()
         } catch DecodingError.TypeMismatch(let type, let info) {
             // then

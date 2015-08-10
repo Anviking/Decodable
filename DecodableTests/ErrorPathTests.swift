@@ -32,7 +32,7 @@ class ErrorPathTests: XCTestCase {
             try dict => "object" => "repo" => "owner" => "login" as String
         } catch DecodingError.TypeMismatch(_, let info) {
             XCTAssertEqual(info.formattedPath, "object.repo.owner.login")
-            XCTAssertEqual(info.object as! Int, 0)
+            XCTAssertEqual(info.object as? Int, 0)
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }

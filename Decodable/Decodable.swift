@@ -69,6 +69,17 @@ extension Bool: Castable {
         return result
     }
 }
+
+extension Dictionary: Castable {
+    public static func decode(j: AnyObject) throws -> Dictionary {
+        guard let result = j as? Dictionary else {
+            let info = DecodingError.Info(object: j)
+            throw DecodingError.TypeMismatch(type: self, info: info)
+        }
+        return result
+    }
+}
+
 extension NSDictionary {
     public static func decode(j: AnyObject) throws -> NSDictionary {
         guard let result = j as? NSDictionary else {
