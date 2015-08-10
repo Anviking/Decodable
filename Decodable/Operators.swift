@@ -11,7 +11,7 @@ import Foundation
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
-typealias JSONDictionary = [String: AnyObject]
+typealias JSONDictionary = NSDictionary
 
 private func parse(object: AnyObject, key: String) throws -> AnyObject {
     let dict = try JSONDictionary.decode(object)
@@ -102,12 +102,12 @@ public func => <T>(lhs: AnyObject, rhs: ((AnyObject) throws -> T)) throws -> T?
 
 // MARK: No inffered type
 
-public func => (lhs: AnyObject, rhs: String) throws -> [String: AnyObject]
+public func => (lhs: AnyObject, rhs: String) throws -> NSDictionary
 {
     return try JSONDictionary.decode(parse(lhs, key: rhs))
 }
 
-public func => (lhs: AnyObject, rhs: ((AnyObject) throws -> [String: AnyObject])) throws -> [String: AnyObject]
+public func => (lhs: AnyObject, rhs: ((AnyObject) throws -> NSDictionary)) throws -> NSDictionary
 {
     return try JSONDictionary.decode(rhs(lhs))
 }

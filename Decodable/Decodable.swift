@@ -19,6 +19,7 @@ public protocol MetaDecodable {
 }
 
 public protocol Castable: Decodable {}
+
 extension Castable {
     public static func decode(j: AnyObject) throws -> Self {
         guard let result = j as? Self else {
@@ -29,8 +30,51 @@ extension Castable {
     }
 }
 
-extension String: Castable {}
-extension Int: Castable {}
-extension Double: Castable {}
-extension Bool: Castable {}
-extension Dictionary: Castable {}
+// Implicit implementations are provided to aid debugging with time profiler.
+// Most likely redundant, but keeping these here for now.
+
+extension String: Castable {
+    public static func decode(j: AnyObject) throws -> String {
+        guard let result = j as? String else {
+            let info = DecodingError.Info(object: j)
+            throw DecodingError.TypeMismatch(type: self, info: info)
+        }
+        return result
+    }
+}
+extension Int: Castable {
+    public static func decode(j: AnyObject) throws -> Int {
+        guard let result = j as? Int else {
+            let info = DecodingError.Info(object: j)
+            throw DecodingError.TypeMismatch(type: self, info: info)
+        }
+        return result
+    }
+}
+extension Double: Castable {
+    public static func decode(j: AnyObject) throws -> Double {
+        guard let result = j as? Double else {
+            let info = DecodingError.Info(object: j)
+            throw DecodingError.TypeMismatch(type: self, info: info)
+        }
+        return result
+    }
+}
+extension Bool: Castable {
+    public static func decode(j: AnyObject) throws -> Bool{
+        guard let result = j as? Bool else {
+            let info = DecodingError.Info(object: j)
+            throw DecodingError.TypeMismatch(type: self, info: info)
+        }
+        return result
+    }
+}
+extension NSDictionary {
+    public static func decode(j: AnyObject) throws -> NSDictionary {
+        guard let result = j as? NSDictionary else {
+            let info = DecodingError.Info(object: j)
+            throw DecodingError.TypeMismatch(type: self, info: info)
+        }
+        return result
+    }
+}
