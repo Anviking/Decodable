@@ -11,7 +11,7 @@ import Foundation
 // Since we cannot to "extension Array: Decodable where ..."
 
 public struct DecodableArray<T: Decodable>: Decodable {
-    var value: [T]
+    public var value: [T]
     
     public static func decode(json: AnyObject) throws -> DecodableArray<T> {
         guard let array = json as? [AnyObject] else {
