@@ -69,7 +69,7 @@ func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws ->
     do {
         return try block()
     } catch var error as DecodingError {
-        error.info.path = path
+        error.info.path = path + error.info.path
         error.info.rootObject = json
         throw error
     } catch let error {
