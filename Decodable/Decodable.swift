@@ -39,3 +39,10 @@ extension NSDictionary {
         return result
     }
 }
+
+
+extension Array where Element: Decodable {
+    public static func decode(j: AnyObject, ignoreInvalidObject: Bool = false) throws -> [Element] {
+        return try decodeArray(ignoreInvalidObjects: ignoreInvalidObject)(json: j)
+    }
+}
