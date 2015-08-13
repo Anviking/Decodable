@@ -35,7 +35,7 @@ extension Repository: Decodable {
 ## How does it work?
 By using this operator in a variety of forms.
 ```swift
-func => <T: Decodable>(lhs: String, rhs: ((AnyObject) throws -> T)) -> ((AnyObject) throws -> T)
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
 ```
 With a lot of other overloads which should enable automagical chaining:
 ```
