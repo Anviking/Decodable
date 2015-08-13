@@ -28,15 +28,15 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(false))
+    return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(ignoreInvalidObjects: false))
 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]? {
-    return catchAndPrint { try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(false)) }
+    return catchAndPrint { try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(ignoreInvalidObjects: false)) }
 }
 
 public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(true))
+    return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(ignoreInvalidObjects: true))
 }
 
 // MARK: - JSONPath

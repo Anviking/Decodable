@@ -8,7 +8,7 @@
 
 import Foundation
 
-public func decodeArray<T: Decodable>(ignoreInvalidObjects: Bool = false)(json: AnyObject) throws -> [T] {
+public func decodeArray<T: Decodable>(ignoreInvalidObjects ignoreInvalidObjects: Bool = false)(json: AnyObject) throws -> [T] {
     
     guard let array = json as? [AnyObject] else {
         let info = DecodingError.Info(object: json)
