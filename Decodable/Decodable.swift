@@ -24,6 +24,12 @@ extension Castable {
     }
 }
 
+extension String: Castable {}
+extension Int: Castable {}
+extension Double: Castable {}
+extension Bool: Castable {}
+extension Dictionary: Castable {}
+
 extension NSDictionary {
     public static func decode(j: AnyObject) throws -> NSDictionary {
         guard let result = j as? NSDictionary else {
