@@ -46,7 +46,11 @@ public func => (lhs: String, rhs: String) -> String {
     return lhs + JSONPathSeparator + rhs
 }
 
-private let JSONPathSeparator = "\"\"" // "" should be illegal JSON key, because of the unescaped
+// You can't have this as a JSON key. Sorry.
+// This dramatically simplifies the implementation, halves the number of overloads required.
+// If this is a bad idea, please tell me.
+// http://stackoverflow.com/questions/1879860/most-reliable-split-character
+private let JSONPathSeparator = String("\u{0}")
 
 private extension String {
     func toJSONPathArray() -> [String] {
