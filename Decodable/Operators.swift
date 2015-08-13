@@ -39,12 +39,6 @@ public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(true))
 }
 
-/*
-func => (lhs: AnyObject, rhs: String) throws -> AnyObject {
-    return try parse(lhs, path: rhs.toJSONPathArray())
-}
-*/
-
 // MARK: - JSONPath
 
 public func => (lhs: String, rhs: String) -> String {

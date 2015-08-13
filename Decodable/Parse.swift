@@ -8,29 +8,7 @@
 
 import Foundation
 
-func parseArray<T: Decodable>(json: AnyObject, path: [String], ignoreInvalidObjects: Bool = false) throws -> [T] {
-    
-    let object = try parse(json, path: path, decode: {$0})
-    guard let array = object as? [AnyObject] else {
-        let info = DecodingError.Info(object: object)
-        throw DecodingError.TypeMismatch(type: [T].self, info: info)
-    }
-    
-    var newArray = [T]()
-    for obj in array {
-        do {
-            try newArray.append(T.decode(obj))
-        } catch let error {
-            if ignoreInvalidObjects == false {
-                throw error
-            }
-        }
-    }
-    
-    return newArray
-}
-
-func decodeArray<T: Decodable>(ignoreInvalidObjects: Bool = false)(json: AnyObject) throws -> [T] {
+public func decodeArray<T: Decodable>(ignoreInvalidObjects: Bool = false)(json: AnyObject) throws -> [T] {
     
     guard let array = json as? [AnyObject] else {
         let info = DecodingError.Info(object: json)
@@ -51,7 +29,7 @@ func decodeArray<T: Decodable>(ignoreInvalidObjects: Bool = false)(json: AnyObje
     return newArray
 }
 
-func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T {
+public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T {
     
     var object = json
     
@@ -83,23 +61,16 @@ func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) 
     return try catchAndRethrow(json, path) { try decode(object) }
     
 }
-    
-    
 
 
 // MARK: - Helpers
 
-func catchAndRethrow<T>(json: AnyObject?, _ path: [String]?, block: Void throws -> T) throws -> T {
+func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws -> T) throws -> T {
     do {
         return try block()
     } catch var error as DecodingError {
-        if var path = path where path.count > 0 {
-            error.info.path = path
-        }
-        
-        if let json = json {
-            error.info.rootObject = json
-        }
+        error.info.path = path
+        error.info.rootObject = json
         throw error
     } catch let error {
         throw error
