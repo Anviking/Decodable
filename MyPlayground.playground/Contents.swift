@@ -128,6 +128,10 @@ func => <T: Decodable>(lhs: AnyObject, rhs: JSONPath) throws -> T {
     return try T.decode(parseToAnyObject(lhs, path: rhs.path))
 }
 
+func => (lhs: AnyObject, rhs: JSONPath) throws -> AnyObject {
+    return try parseToAnyObject(lhs, path: rhs.path)
+}
+
 
 
 func => (lhs: String, rhs: JSONPath) throws -> JSONPath {
@@ -159,5 +163,11 @@ struct JSONPath: StringLiteralConvertible {
 }
 
 let a: AnyObject = ["test": ["key": 3]]
+
+func + (lhs: AnyObject, rhs: String) -> AnyObject {
+    print(\(rhs)
+    return lhs
+}
+
 try! parse(a, path: "test", "key") as Int?
 try! a => "test" => "key" as Int
