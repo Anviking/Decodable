@@ -28,7 +28,7 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    return try parseArray(lhs, path: rhs.toJSONPathArray())
+    return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(false))
 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]? {
