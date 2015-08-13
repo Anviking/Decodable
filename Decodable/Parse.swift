@@ -80,8 +80,12 @@ func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws ->
 func catchAndPrint<T>(block: Void throws -> T) -> T? {
     do {
         return try block()
-    } catch {
+    } catch DecodingError.MissingKey {
         
+    } catch let error {
+        // This will change soon
+        // https://github.com/Anviking/Decodable/issues/10
+        print(error)
     }
     return nil
 }
