@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/Anviking/Decodable.git",
-    "tag": "v0.3"
+    "tag": "v0.2.1"
   },
   "platforms": {
     "ios": "8.0"
