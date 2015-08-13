@@ -8,28 +8,6 @@
 
 import Foundation
 
-func parseArray<T: Decodable>(json: AnyObject, path: [String], ignoreInvalidObjects: Bool = false) throws -> [T] {
-    
-    let object = try parse(json, path: path, decode: {$0})
-    guard let array = object as? [AnyObject] else {
-        let info = DecodingError.Info(object: object)
-        throw DecodingError.TypeMismatch(type: [T].self, info: info)
-    }
-    
-    var newArray = [T]()
-    for obj in array {
-        do {
-            try newArray.append(T.decode(obj))
-        } catch let error {
-            if ignoreInvalidObjects == false {
-                throw error
-            }
-        }
-    }
-    
-    return newArray
-}
-
 func decodeArray<T: Decodable>(ignoreInvalidObjects: Bool = false)(json: AnyObject) throws -> [T] {
     
     guard let array = json as? [AnyObject] else {

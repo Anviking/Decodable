@@ -28,7 +28,7 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    return try parseArray(lhs, path: rhs.toJSONPathArray())
+    return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(false))
 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]? {
@@ -39,11 +39,6 @@ public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(true))
 }
 
-/*
-func => (lhs: AnyObject, rhs: String) throws -> AnyObject {
-    return try parse(lhs, path: rhs.toJSONPathArray())
-}
-*/
 
 // MARK: - JSONPath
 
@@ -51,9 +46,10 @@ public func => (lhs: String, rhs: String) -> String {
     return lhs + JSONPathSeparator + rhs
 }
 
-private let JSONPathSeparator = "<\">" // <"> should be illegal JSON key, because of the unescaped ". <> are for readability
+private let JSONPathSeparator = "\"\"" // "" should be illegal JSON key, because of the unescaped
+
 private extension String {
     func toJSONPathArray() -> [String] {
-        return (self as NSString).componentsSeparatedByString(JSONPathSeparator)
+        return componentsSeparatedByString(JSONPathSeparator)
     }
 }
