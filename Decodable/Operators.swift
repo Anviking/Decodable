@@ -47,7 +47,7 @@ func => (lhs: AnyObject, rhs: String) throws -> AnyObject {
 
 // MARK: - JSONPath
 
-func => (lhs: String, rhs: String) -> String {
+public func => (lhs: String, rhs: String) -> String {
     return lhs + JSONPathSeparator + rhs
 }
 
