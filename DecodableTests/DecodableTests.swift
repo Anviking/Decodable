@@ -64,7 +64,7 @@ class DecodableTests: XCTestCase {
         }
     }
     
-    func testHadbuildtParseAndMeasureTime() {
+    func testCustomParseAndMeasureTime() {
         let json = readJsonFile("Repository.json")
         let array = NSArray(array: Array(count: 1000, repeatedValue: json))
         
