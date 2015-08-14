@@ -62,3 +62,20 @@ func == (lhs: Owner, rhs: Owner) -> Bool {
 extension Owner: Equatable {
     var hashValue: Int { return id.hashValue }
 }
+
+func == (lhs: Repository, rhs: Repository) -> Bool {
+    return lhs.id == rhs.id &&
+    lhs.name == rhs.name &&
+    lhs.description == rhs.description &&
+    lhs.htmlUrlString == rhs.htmlUrlString &&
+    lhs.owner == rhs.owner &&
+    lhs.coverage == rhs.coverage &&
+    lhs.files == rhs.files &&
+    lhs.optional == rhs.optional &&
+    lhs.active == rhs.active &&
+    lhs.optionalActive == rhs.optionalActive
+}
+
+extension Repository: Equatable {
+    var hashValue: Int { return id.hashValue }
+}
