@@ -51,6 +51,19 @@ class DecodableTests: XCTestCase {
         }
     }
     
+    func testDecodeArrayOfRepositoriesAndMeasureTime() {
+        let json = readJsonFile("Repository.json")
+        let array = NSArray(array: Array(count: 1000, repeatedValue: json))
+        
+        measureBlock {
+            do {
+                try [Repository].decode(array)
+            } catch let error {
+                XCTFail("\(error)")
+            }
+        }
+    }
+    
     func testDecodeRepositoryExampleShouldThrowMissingKeyException() {
         // given
         let json = readJsonFile("MissingKey.json")
@@ -122,5 +135,4 @@ class DecodableTests: XCTestCase {
             XCTFail("it should not throw this exception")
         }
     }
-    
 }
