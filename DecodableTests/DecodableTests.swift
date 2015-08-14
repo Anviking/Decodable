@@ -21,7 +21,7 @@ class DecodableTests: XCTestCase {
     func testDecodeRepositoryExampleShouldSuccess() {
         // given
         let json = readJsonFile("Repository.json")
-    
+        
         // when
         do {
             let repository = try Repository.decode(json)
@@ -62,6 +62,60 @@ class DecodableTests: XCTestCase {
                 XCTFail("\(error)")
             }
         }
+    }
+    
+    func testHadbuildtParseAndMeasureTime() {
+        let json = readJsonFile("Repository.json")
+        let array = NSArray(array: Array(count: 1000, repeatedValue: json))
+        
+        measureBlock {
+            do {
+                try self.customParseRepository(array)
+            } catch let error {
+                XCTFail("\(error)")
+            }
+        }
+        
+    }
+    
+    func customParseRepository(json: AnyObject) throws -> [Repository] {
+        let error = NSError(domain: "test", code: 0, userInfo: nil)
+        guard let array = json as? [NSDictionary] else {
+            throw error
+        }
+        var result: [Repository] = []
+        for dict in array {
+            guard let id = dict["id"] as? Int,
+                let name = dict["name"] as? String,
+                let description = dict["description"] as? String,
+                let htmlUrlString = dict["html_url"] as? String,
+                let userDict = dict["owner"] as? NSDictionary,
+                let ownerID = userDict["id"] as? Int,
+                let ownerLogin = userDict["login"] as? String,
+                let coverage = dict["coverage"] as? Double,
+                let files = dict["files"] as? NSArray as? [String],
+                let active = dict["active"] as? Bool
+                else {
+                    throw error
+            }
+            let optional = dict["optional"] as? String
+            let optionalActive = dict["optionalActive"] as? Bool
+            
+            let owner = Owner(id: ownerID, login: ownerLogin)
+            let repo = Repository(
+                id: id,
+                name: name,
+                description: description,
+                htmlUrlString : htmlUrlString,
+                owner: owner,
+                coverage: coverage,
+                files: files,
+                optional: optional,
+                active: active,
+                optionalActive: optionalActive)
+            result.append(repo)
+        }
+        return result
     }
     
     func testDecodeRepositoryExampleShouldThrowMissingKeyException() {
