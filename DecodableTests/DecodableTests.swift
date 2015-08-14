@@ -55,26 +55,30 @@ class DecodableTests: XCTestCase {
         let json = readJsonFile("Repository.json")
         let array = NSArray(array: Array(count: 1000, repeatedValue: json))
         
+        var result: [Repository] = []
         measureBlock {
             do {
-                try [Repository].decode(array)
+                result = try [Repository].decode(array)
             } catch let error {
                 XCTFail("\(error)")
             }
         }
+        XCTAssertEqual(result.count, 1000)
     }
     
     func testCustomParseAndMeasureTime() {
         let json = readJsonFile("Repository.json")
         let array = NSArray(array: Array(count: 1000, repeatedValue: json))
         
+        var result: [Repository] = []
         measureBlock {
             do {
-                try self.customParseRepository(array)
+                result = try self.customParseRepository(array)
             } catch let error {
                 XCTFail("\(error)")
             }
         }
+        XCTAssertEqual(result.count, 1000)
         
     }
     
