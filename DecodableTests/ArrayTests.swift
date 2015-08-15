@@ -22,6 +22,21 @@ class DecodableArrayTests: XCTestCase {
         XCTAssertEqual(result, value)
     }
     
+    func testDecodeOptionalDecodableArraySuccess() {
+        // given
+        let key = "key"
+        let value: NSArray = ["value1", "value2", 404, "value3"]
+        let dictionary: NSDictionary = [key: value]
+        // when
+        let result = try! dictionary => key as [String?]
+        // then
+        XCTAssertEqual(result.count, 4)
+        XCTAssertEqual(result[0], "value1")
+        XCTAssertEqual(result[1], "value2")
+        XCTAssertEqual(result[2], nil)
+        XCTAssertEqual(result[3], "value3")
+    }
+    
     func testDecodeNestedDecodableArraySuccess() {
         // given
         let key = "key"

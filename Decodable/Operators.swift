@@ -35,6 +35,10 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]? {
     return catchAndPrint { try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(ignoreInvalidObjects: false)) }
 }
 
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?] {
+    return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray)
+}
+
 public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(ignoreInvalidObjects: true))
 }
