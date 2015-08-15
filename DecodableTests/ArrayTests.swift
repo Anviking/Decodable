@@ -54,7 +54,7 @@ class DecodableArrayTests: XCTestCase {
         let value = ["value"]
         let dictionary: NSDictionary = [key: value]
         // when
-        let string = dictionary => key as [String]?
+        let string = try! dictionary => key as [String]?
         // then
         XCTAssertEqual(string!, value)
     }
@@ -65,7 +65,7 @@ class DecodableArrayTests: XCTestCase {
         let value = ["value"]
         let dictionary: NSDictionary = [key: [key: value]]
         // when
-        let string = dictionary => key => key as [String]?
+        let string = try! dictionary => key => key as [String]?
         // then
         XCTAssertEqual(string!, value)
     }
@@ -75,19 +75,24 @@ class DecodableArrayTests: XCTestCase {
         let key = "key"
         let dictionary: NSDictionary = [key: NSNull()]
         // when
-        let string = dictionary => key as [String]?
+        let string = try! dictionary => key as [String]?
         // then
         XCTAssertNil(string)
     }
     
-    func testDecodeAnyDecodableOptionalArrayMissingKeySuccess() {
+    func testDecodeAnyDecodableOptionalArrayMissingKeyFailure() {
         // given
         let key = "key"
         let dictionary = NSDictionary()
         // when
-        let string = dictionary => key as [String]?
-        // then
-        XCTAssertNil(string)
+        do {
+            try dictionary => key as [String]?
+            XCTFail()
+        } catch DecodingError.MissingKey {
+            
+        } catch {
+            XCTFail()
+        }
     }
     
     

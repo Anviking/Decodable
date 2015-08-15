@@ -13,34 +13,38 @@ import Foundation
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
+// MARK: =>
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
-    let path = rhs.toJSONPathArray()
-    return try parse(lhs, path: path, decode: T.decode)
+    return try parse(lhs, path: rhs, decode: T.decode)
 }
 
 public func => (lhs: AnyObject, rhs: String) throws -> NSDictionary {
-    return try parse(lhs, path: rhs.toJSONPathArray(), decode: NSDictionary.decode)
+    return try parse(lhs, path: rhs, decode: NSDictionary.decode)
 }
 
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
-    return catchAndPrint { try parse(lhs, path: rhs.toJSONPathArray(), decode: T.decode) }
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T? {
+    return try catchNull(try parse(lhs, path: rhs, decode: T.decode))
 }
+
+// MARK: Arrays
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(ignoreInvalidObjects: false))
+    return try parse(lhs, path: rhs, decode: decodeArray(ignoreInvalidObjects: false))
 }
 
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]? {
-    return catchAndPrint { try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(ignoreInvalidObjects: false)) }
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]? {
+    return try catchNull(try parse(lhs, path: rhs, decode: decodeArray(ignoreInvalidObjects: false)))
 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?] {
-    return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray)
+    return try parse(lhs, path: rhs, decode: decodeArray)
 }
 
+// MARK: =>?
+
 public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    return try parse(lhs, path: rhs.toJSONPathArray(), decode: decodeArray(ignoreInvalidObjects: true))
+    return try parse(lhs, path: rhs, decode: decodeArray(ignoreInvalidObjects: true))
 }
 
 // MARK: - JSONPath
@@ -60,3 +64,10 @@ private extension String {
         return componentsSeparatedByString(JSONPathSeparator)
     }
 }
+
+// MARK: Helper
+
+public func parse<T>(json: AnyObject, path: String, decode: (AnyObject throws -> T)) throws -> T {
+    return try parse(json, path: path.toJSONPathArray(), decode: decode)
+}
+
