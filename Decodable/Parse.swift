@@ -99,7 +99,7 @@ func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws ->
 func catchAndPrint<T>(block: Void throws -> T) -> T? {
     do {
         return try block()
-    } catch DecodingError.MissingKey {
+    } catch DecodingError.TypeMismatch {
         
     } catch let error {
         // This will change soon
