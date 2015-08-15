@@ -29,32 +29,35 @@ extension Repository: Decodable {
                 )
     }
 }
-
 ```
 
 ## How does it work?
-By using this operator in a variety of forms.
-```swift
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
-```
-With a lot of other overloads which should enable automagical chaining:
-```
-let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
 
-do {
-    let username: String = try dict => "object" => "repo" => "owner" => "lllloogon"
-} catch let error {
-    print(error)
+### A protocol
+```swift
+public protocol Decodable {
+    static func decode(json: AnyObject) throws -> Self
 }
 ```
-With descriptive errors:
+### A parse-function
 ```swift
-print(error)
-===============================
-MissingKey at object.repo.owner: lllloogon in {
-    id = 1;
-    login = anviking;
-}
+public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T
+```
+
+### A lot of operator-overloads
+which call the `parse`-function.
+```swift
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]?
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?]
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
+public func => (lhs: AnyObject, rhs: String) throws -> NSDictionary
+
+// Enables parsing nested objects e.g json => "a" => "b"
+// Uses \u{0} as a separator
+public func => (lhs: String, rhs: String) -> String 
 ```
 
 ## Errors
@@ -63,13 +66,32 @@ public enum DecodingError {
     public struct Info {
         var path: [String]
         var object: AnyObject?
-        var rootObject: AnyObject? // Not implemented yet
+        var rootObject: AnyObject?
     }
     
     case MissingKey(key: String, info: Info)
     case TypeMismatch(type: Any.Type, info: Info)
 }
 ```
+
+Example:
+
+```swift
+let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
+
+do {
+    let username: String = try dict => "object" => "repo" => "owner" => "lllloogon"
+} catch let error {
+    print(error)
+}
+
+===============================
+MissingKey at object.repo.owner: lllloogon in {
+    id = 1;
+    login = anviking;
+}
+```
+
 ## Flexibility
 The `Decodable`-protocol and the `=>`-operator should in no way make you committed to use them everywhere.
 
@@ -77,7 +99,7 @@ For example you could...
 
 - Skip adapting the `Decodable` protocol, and parse things differently depending on the context (like `defaultBranch` in the example code).
 
-- Create your own throwing parsing-functions, e.g for `NSDate`-parsing.
+- Create your own throwing decode-functions, e.g for `NSDate`.
 
 ### Arrays
 The default behaviour for array decoding is to throw if one element throws. The special operator `=>?` will catch errors when decoding elements in an array and filter out faulty objects.
