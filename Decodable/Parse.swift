@@ -96,15 +96,22 @@ func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws ->
     }
 }
 
-func catchAndPrint<T>(block: Void throws -> T) -> T? {
+func catchAll<T>(block: Void throws -> T) -> T? {
+    do {
+        return try block()
+    } catch {
+        return nil
+    }
+}
+
+func catchNull<T>(block: Void throws -> T) throws -> T? {
     do {
         return try block()
     } catch DecodingError.TypeMismatch {
-        
-    } catch let error {
-        // This will change soon
-        // https://github.com/Anviking/Decodable/issues/10
-        print(error)
+        // FIXME: Only catch NSNull, not any type mismatch
+        return nil
     }
-    return nil
+    catch let error {
+        throw error
+    }
 }
