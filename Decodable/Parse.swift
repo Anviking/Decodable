@@ -86,7 +86,6 @@ public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws 
 
 /// Allow types to be used in pattern matching
 public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
-    print("\(lhs) ~= \(rhs)")
     return lhs == rhs
 }
 

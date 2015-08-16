@@ -55,8 +55,8 @@ public enum DecodingError: ErrorType, CustomDebugStringConvertible {
         switch self {
         case .MissingKey(let key, let info):
             return "Missing Key \(key) in \(info.formattedPath) \(info.object)"
-        case .TypeMismatch(_, let expectedType, let info):
-            return "TypeMismatch \(info.formattedPath) type: \(expectedType), object: \(info.object)"
+        case .TypeMismatch(let type, let expectedType, let info):
+            return "TypeMismatch \(type), expected: \(expectedType) in \(info.formattedPath) object: \(info.object)"
         }
     }
 }

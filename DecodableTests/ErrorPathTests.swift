@@ -30,7 +30,8 @@ class ErrorPathTests: XCTestCase {
         
         do {
             try dict => "object" => "repo" => "owner" => "login" as String
-        } catch DecodingError.TypeMismatch(String.self, Int.self, let info) {
+        } catch DecodingError.TypeMismatch(let type, String.self, let info) {
+            XCTAssertEqual(String(type), "__NSCFNumber")
             XCTAssertEqual(info.formattedPath, "object.repo.owner.login")
             XCTAssertEqual(info.object as? Int, 0)
         } catch let error {
