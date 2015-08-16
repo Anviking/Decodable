@@ -48,12 +48,14 @@ public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws 
 which call the `parse`-function.
 ```swift
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T?
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) -> [T]?
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]?
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?]
-public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
 public func => (lhs: AnyObject, rhs: String) throws -> NSDictionary
+
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
 
 // Enables parsing nested objects e.g json => "a" => "b"
 // Uses \u{0} as a separator
