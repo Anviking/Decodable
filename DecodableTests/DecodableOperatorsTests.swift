@@ -100,6 +100,22 @@ class DecodableOperatorsTests: XCTestCase {
         XCTAssertNil(string)
     }
     
+    func testDecodeAnyDecodableOptionalTypeMismatchFailure() {
+        // given
+        let key = "key"
+        let dictionary: NSDictionary = [key: 2]
+        // when
+        do {
+            try dictionary => key as String?
+            XCTFail()
+        } catch DecodingError.TypeMismatch(Int.self, _, _) {
+            
+        } catch {
+            XCTFail()
+        }
+        XCTFail()
+    }
+    
     
     // MARK: => Errors
     
@@ -111,11 +127,10 @@ class DecodableOperatorsTests: XCTestCase {
         do {
             _ = try dictionary => "firstKey" => "secondKey" as [String: String]
             XCTFail()
-        } catch DecodingError.TypeMismatch(let type, let info) {
+        } catch DecodingError.TypeMismatch(NSDictionary.self, Dictionary<String, String>.self, let info) {
             // then
             XCTAssertEqual(info.formattedPath, "firstKey.secondKey")
             XCTAssertEqual(info.object as? NSDictionary, value)
-            XCTAssertTrue(type == Dictionary<Swift.String, Swift.String>.self)
         } catch {
             XCTFail("should not throw this exception")
         }
@@ -147,11 +162,10 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try noDictionary => key as String
-        } catch DecodingError.TypeMismatch(let type, let info) {
+        } catch DecodingError.TypeMismatch(String.self, NSDictionary.self, let info) {
             // then
             XCTAssertTrue(true)
             XCTAssertEqual(info.formattedPath, "")
-            XCTAssert(type == NSDictionary.self)
             XCTAssertEqual(info.object as? NSString, noDictionary)
         } catch {
             XCTFail("should not throw this exception")
@@ -184,10 +198,9 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try noDictionary => key
-        } catch DecodingError.TypeMismatch(let type, let info) {
+        } catch DecodingError.TypeMismatch(NSString.self, NSDictionary.self, let info) {
             // then
             XCTAssertTrue(true)
-            XCTAssert(type == NSDictionary.self)
             XCTAssertEqual(info.formattedPath, "")
             XCTAssertEqual(info.object as? NSString, noDictionary)
         } catch {

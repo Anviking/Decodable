@@ -12,7 +12,7 @@ public func decodeArray<T: Decodable>(ignoreInvalidObjects ignoreInvalidObjects:
     
     guard let array = json as? [AnyObject] else {
         let info = DecodingError.Info(object: json)
-        throw DecodingError.TypeMismatch(type: [T].self, info: info)
+        throw DecodingError.TypeMismatch(type: json.dynamicType, expectedType: [T].self, info: info)
     }
     
     var newArray = [T]()
@@ -33,7 +33,7 @@ public func decodeArray<T: Decodable>(json: AnyObject) throws -> [T?] {
     
     guard let array = json as? [AnyObject] else {
         let info = DecodingError.Info(object: json)
-        throw DecodingError.TypeMismatch(type: [T].self, info: info)
+        throw DecodingError.TypeMismatch(type: json.dynamicType, expectedType: [T].self, info: info)
     }
     
     var newArray = [T?]()
@@ -84,6 +84,12 @@ public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws 
 
 // MARK: - Helpers
 
+/// Allow types to be used in pattern matching
+public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
+    print("\(lhs) ~= \(rhs)")
+    return lhs == rhs
+}
+
 func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws -> T) throws -> T {
     do {
         return try block()
@@ -107,8 +113,7 @@ public func catchAll<T>(block: Void throws -> T) -> T? {
 public func catchNull<T>(block: Void throws -> T) throws -> T? {
     do {
         return try block()
-    } catch DecodingError.TypeMismatch {
-        // FIXME: Only catch NSNull, not any type mismatch
+    } catch DecodingError.TypeMismatch(NSNull.self, _, _) {
         return nil
     }
     catch let error {

@@ -18,7 +18,8 @@ extension Castable {
     public static func decode(j: AnyObject) throws -> Self {
         guard let result = j as? Self else {
             let info = DecodingError.Info(object: j)
-            throw DecodingError.TypeMismatch(type: self, info: info)
+            throw DecodingError.TypeMismatch(type: j.dynamicType, expectedType: self, info: info)
+
         }
         return result
     }
@@ -34,7 +35,7 @@ extension NSDictionary {
     public static func decode(j: AnyObject) throws -> NSDictionary {
         guard let result = j as? NSDictionary else {
             let info = DecodingError.Info(object: j)
-            throw DecodingError.TypeMismatch(type: self, info: info)
+            throw DecodingError.TypeMismatch(type: j.dynamicType, expectedType: self, info: info)
         }
         return result
     }
