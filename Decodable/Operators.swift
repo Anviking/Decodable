@@ -24,7 +24,7 @@ public func => (lhs: AnyObject, rhs: String) throws -> NSDictionary {
 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T? {
-    return try catchNull(try parse(lhs, path: rhs, decode: T.decode))
+    return try catchNull { try parse(lhs, path: rhs, decode: T.decode) }
 }
 
 // MARK: Arrays
@@ -34,7 +34,7 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]? {
-    return try catchNull(try parse(lhs, path: rhs, decode: decodeArray(ignoreInvalidObjects: false)))
+    return try catchNull { try parse(lhs, path: rhs, decode: decodeArray(ignoreInvalidObjects: false)) }
 }
 
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?] {
@@ -48,7 +48,7 @@ public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
 }
 
 public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
-    return catchAll(try lhs => rhs)
+    return catchAll { try lhs => rhs }
 }
 
 // MARK: - JSONPath

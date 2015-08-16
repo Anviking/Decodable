@@ -96,7 +96,7 @@ func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws ->
     }
 }
 
-public func catchAll<T>(@autoclosure block: Void throws -> T) -> T? {
+public func catchAll<T>(block: Void throws -> T) -> T? {
     do {
         return try block()
     } catch {
@@ -104,7 +104,7 @@ public func catchAll<T>(@autoclosure block: Void throws -> T) -> T? {
     }
 }
 
-public func catchNull<T>(@autoclosure block: Void throws -> T) throws -> T? {
+public func catchNull<T>(block: Void throws -> T) throws -> T? {
     do {
         return try block()
     } catch DecodingError.TypeMismatch {
