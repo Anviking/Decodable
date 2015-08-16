@@ -47,6 +47,10 @@ public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
     return try parse(lhs, path: rhs, decode: decodeArray(ignoreInvalidObjects: true))
 }
 
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
+    return catchAll(try lhs => rhs)
+}
+
 // MARK: - JSONPath
 
 public func => (lhs: String, rhs: String) -> String {
