@@ -9,6 +9,31 @@
 import XCTest
 @testable import Decodable
 
+private struct Color: Decodable {
+    let name: String
+    
+    private static func decode(json: AnyObject) throws -> Color {
+        return try Color(name: json => "name")
+    }
+}
+
+private struct Apple: Decodable {
+    let id: Int
+    let color: Color
+    
+    private static func decode(json: AnyObject) throws -> Apple {
+        return try Apple(id: json => "id", color: json => "color")
+    }
+}
+
+private struct Tree: Decodable {
+    let apples: [Apple]
+    
+    private static func decode(json: AnyObject) throws -> Tree {
+        return try Tree(apples: json => "apples")
+    }
+}
+
 class ErrorPathTests: XCTestCase {
     
     func testMissingKeyErrorPath() {
@@ -39,7 +64,22 @@ class ErrorPathTests: XCTestCase {
         }
     }
     
-
+    func testNestedObjectTypeMismatchPath() {
+        let dict: NSDictionary = ["apples": [["id": 2, "color": ["name": "red"]],
+            ["id": 2, "color": ["name": "green"]],
+            ["id": 2, "color": ["name": 3]]]]
+        do {
+            try Tree.decode(dict)
+            XCTFail()
+        } catch DecodingError.TypeMismatch(let type, String.self, let info) {
+            XCTAssertEqual(String(type), "__NSCFNumber")
+            XCTAssertEqual(info.formattedPath, "apples.color.name")
+        } catch let error {
+            XCTFail("should not throw this exception: \(error)")
+        }
+    }
+    
+    
     func testFoo() {
         let dictionary: NSDictionary = ["key": ["test": 3]]
         let a: Int = try! uppercase(dictionary => "key") as AnyObject => "TEST"
@@ -54,5 +94,5 @@ class ErrorPathTests: XCTestCase {
         print(result)
         return result
     }
-
+    
 }

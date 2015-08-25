@@ -20,7 +20,9 @@ public func decodeArray<T: Decodable>(ignoreInvalidObjects ignoreInvalidObjects:
         do {
             try newArray.append(T.decode(obj))
         } catch let error {
-            if ignoreInvalidObjects == false {
+            if ignoreInvalidObjects {
+                print("Error decoding array of \(T.self): \(error)")
+            } else {
                 throw error
             }
         }
@@ -41,6 +43,7 @@ public func decodeArray<T: Decodable>(json: AnyObject) throws -> [T?] {
         do {
             try newArray.append(T.decode(obj))
         } catch {
+            print("Error decoding array of \(T.self): \(error)")
             newArray.append(nil)
         }
     }
