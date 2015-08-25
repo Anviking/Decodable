@@ -48,7 +48,7 @@ public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
 }
 
 public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
-    return catchAll { try lhs => rhs }
+    return try? lhs => rhs
 }
 
 // MARK: - JSONPath

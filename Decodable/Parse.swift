@@ -22,6 +22,7 @@ public func decodeArray<T: Decodable>(ignoreInvalidObjects ignoreInvalidObjects:
         } catch let error {
             if ignoreInvalidObjects {
                 print("Error decoding array of \(T.self): \(error)")
+                print(obj)
             } else {
                 throw error
             }
@@ -101,14 +102,6 @@ func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws ->
         throw error
     } catch let error {
         throw error
-    }
-}
-
-public func catchAll<T>(block: Void throws -> T) -> T? {
-    do {
-        return try block()
-    } catch {
-        return nil
     }
 }
 
