@@ -25,7 +25,7 @@ public enum DecodingError: ErrorType, CustomDebugStringConvertible {
         var rootObject: AnyObject?
         
         var formattedPath: String {
-            return ".".join(path)
+            return path.joinWithSeparator(".")
         }
     }
     
