@@ -84,7 +84,7 @@ private extension String {
 
 // MARK: Helper
 
-public func parse<T>(json: AnyObject, path: String, decode: (AnyObject throws -> T)) throws -> T {
+private func parse<T>(json: AnyObject, path: String, decode: (AnyObject throws -> T)) throws -> T {
     return try parse(json, path: path.toJSONPathArray(), decode: decode)
 }
 
