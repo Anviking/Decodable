@@ -101,7 +101,18 @@ For example you could...
 
 - Skip adapting the `Decodable` protocol, and parse things differently depending on the context (like `defaultBranch` in the example code).
 
-- Create your own throwing decode-functions, e.g for `NSDate`.
+- Create your own throwing decode-functions, e.g for `NSDate`, or convenience-extensions with your own date-formatter.
+```swift
+public class func decode(json: AnyObject) throws -> Self {
+        let string = try String.decode(json)
+
+        guard let date = ISO8601DateFormatter.dateFromString(string) else {
+            throw NSDateDecodingError.InvalidStringFormat
+        }
+
+        return self.init(timeIntervalSince1970: date.timeIntervalSince1970)
+}
+```
 
 ### Arrays
 The default behaviour for array decoding is to throw if one element throws. The special operator `=>?` will catch errors when decoding elements in an array and filter out faulty objects.
