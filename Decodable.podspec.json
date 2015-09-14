@@ -1,6 +1,6 @@
 {
   "name": "Decodable",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "summary": "Swift 2 JSON parsing done (more) right",
   "description": "Simple yet powerful object mapping made possible by Swift 2's new error handling. Greatly inspired by Argo, but without any functional programming and bizillion operators.",
   "homepage": "https://github.com/Anviking/Decodable",
@@ -10,7 +10,7 @@
   },
   "source": {
     "git": "https://github.com/Anviking/Decodable.git",
-    "tag": "v0.3.1"
+    "tag": "v0.3.2"
   },
   "platforms": {
     "ios": "8.0"
