@@ -19,5 +19,5 @@
     "watchos": "2.0"
   },
   "requires_arc": true,
-  "source_files": "Decodable/*"
+  "source_files": "Decodable/*.{swift,h}"
 }
