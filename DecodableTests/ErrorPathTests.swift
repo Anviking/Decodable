@@ -19,7 +19,7 @@ private struct Color: Decodable {
 
 private struct Apple: Decodable {
     let id: Int
-    let color: Color
+    let color: Color?
     
     private static func decode(json: AnyObject) throws -> Apple {
         return try Apple(id: json => "id", color: json => "color")
@@ -44,6 +44,20 @@ class ErrorPathTests: XCTestCase {
             try dict => "object" => "repo" => "owner" => "oops" as String
         } catch DecodingError.MissingKey(_, let info) {
             XCTAssertEqual(info.formattedPath, "object.repo.owner")
+        } catch let error {
+            XCTFail("should not throw this exception: \(error)")
+        }
+    }
+    
+    // FIXME: #
+    func testNestedUnexpectedNSNull() {
+        let dict: NSDictionary = ["id": 1, "color": ["name": NSNull()]]
+        do {
+            let apple = try Apple.decode(dict)
+            print(apple)
+            XCTFail()
+        } catch DecodingError.TypeMismatch(NSNull.self, _, _) {
+            
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }
