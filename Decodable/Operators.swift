@@ -11,7 +11,6 @@ import Foundation
 // MARK: - Operators
 
 infix operator => { associativity right precedence 150 }
-infix operator =>? { associativity right precedence 150 }
 
 // MARK: =>
 
@@ -47,20 +46,6 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?] {
     return try parse(lhs, path: rhs, decode: decodeArray)
 }
 
-// MARK: =>?
-
-// At this moment there is no simple definition of what this operator does. The best abstraction
-// is simply that =>? decodes in a safer way, than the corresponding => overload.
-
-/// Try to decode as NSArray, and decode each element as T. If decoding of an element fails, the error is printed and the element is excluded from the return array.
-public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    return try parse(lhs, path: rhs, decode: decodeArray(ignoreInvalidObjects: true))
-}
-
-/// Try to decode as T, or return nil if it fails in any way. (try?)
-public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) -> T? {
-    return try? lhs => rhs
-}
 
 // MARK: - JSONPath
 
