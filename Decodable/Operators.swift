@@ -19,9 +19,9 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
     return try parse(lhs, path: rhs, decode: T.decode)
 }
 
-/// Try to decode as NSDictionary. Without an inferred return type, this overload will be called.
-public func => (lhs: AnyObject, rhs: String) throws -> NSDictionary {
-    return try parse(lhs, path: rhs, decode: NSDictionary.decode)
+/// Do not decode. Without an inferred return type, this overload will be called.
+public func => (lhs: AnyObject, rhs: String) throws -> AnyObject {
+    return try parse(lhs, path: rhs, decode: { $0 })
 }
 
 /// Try to decode as T, or throw. Will return nil if the object at the keypath is NSNull.

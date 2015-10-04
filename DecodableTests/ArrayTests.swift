@@ -115,9 +115,9 @@ class DecodableArrayTests: XCTestCase {
         let value = ["A", 2, "B"]
         let dictionary: NSDictionary = [key: value]
         // when
-        let array = try? [String].decode(dictionary => "key")
+        let array = try! [String].decode(dictionary => "key", ignoreInvalidObjects: true)
         // then
-        XCTAssertEqual(array!, ["A", "B"])
+        XCTAssertEqual(array, ["A", "B"])
     }
     
     func testDecodeSafeArrayCatchTypeMismatchExceptionInObjects() {
@@ -126,9 +126,9 @@ class DecodableArrayTests: XCTestCase {
         let value = [["id": "007", "login": "mradams"], ["id": 1, "login": "jenglish"]]
         let dictionary: NSDictionary = [key: value]
         // when
-        let array = try? [Owner].decode(dictionary => "key")
+        let array = try! [Owner].decode(dictionary => "key", ignoreInvalidObjects: true)
         // then
-        XCTAssertEqual(array!, [Owner(id: 1, login: "jenglish")])
+        XCTAssertEqual(array, [Owner(id: 1, login: "jenglish")])
     }
     
     func testDecodeSafeArrayCatchJSONNotObjectException() {
@@ -137,9 +137,9 @@ class DecodableArrayTests: XCTestCase {
         let value = [["id": 7, "login": "mradams"], 2]
         let dictionary: NSDictionary = [key: value]
         // when
-        let array = try? [Owner].decode(dictionary => "key", ignoreInvalidObjects: true)
+        let array = try! [Owner].decode(dictionary => "key", ignoreInvalidObjects: true)
         // then
-        XCTAssertEqual(array!, [Owner(id: 7, login: "mradams")])
+        XCTAssertEqual(array, [Owner(id: 7, login: "mradams")])
     }
     
     func testDecodeSafeArrayCatchMissingKeyException() {
@@ -148,8 +148,8 @@ class DecodableArrayTests: XCTestCase {
         let value = [["login": "mradams"], ["id": 1, "login": "jenglish"]]
         let dictionary: NSDictionary = [key: value]
         // when
-        let array = try? [Owner].decode(dictionary => "key")
+        let array = try! [Owner].decode(dictionary => key, ignoreInvalidObjects: true)
         // then
-        XCTAssertEqual(array!, [Owner(id: 1, login: "jenglish")])
+        XCTAssertEqual(array, [Owner(id: 1, login: "jenglish")])
     }
 }

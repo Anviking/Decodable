@@ -96,7 +96,7 @@ class ErrorPathTests: XCTestCase {
     
     func testFoo() {
         let dictionary: NSDictionary = ["key": ["test": 3]]
-        let a: Int = try! uppercase(dictionary => "key") as AnyObject => "TEST"
+        let a: Int = try! uppercase(dictionary => "key" as! NSDictionary) as AnyObject => "TEST"
         XCTAssertEqual(a, 3)
     }
     

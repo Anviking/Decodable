@@ -30,7 +30,7 @@ class DecodableOperatorsTests: XCTestCase {
         let value: NSDictionary = [key : "value"]
         let dictionary: NSDictionary = [key: value]
         // when
-        let result: NSDictionary = try! dictionary => key
+        let result: NSDictionary = try! dictionary => key as! NSDictionary
         // then
         XCTAssertEqual(result, value)
     }
@@ -43,7 +43,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         let result = try! dictionary => key => key
         // then
-        XCTAssertEqual(result, value)
+        XCTAssertEqual(result as? NSDictionary, value)
     }
 
     func testDecodeNestedDictionaryOptionalSuccess() {
