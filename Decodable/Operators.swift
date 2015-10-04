@@ -12,8 +12,6 @@ import Foundation
 
 infix operator => { associativity right precedence 150 }
 
-// MARK: =>
-
 /// Try to decode as T, or throw
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
     return try parse(lhs, path: rhs, decode: T.decode)

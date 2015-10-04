@@ -22,7 +22,6 @@ extension NSDictionary {
     }
 }
 
-
 extension Array where Element: Decodable {
     public static func decode(j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
         return try decodeArray(ignoreInvalidObjects: ignoreInvalidObjects)(json: j)
