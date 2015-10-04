@@ -73,7 +73,7 @@
 		17FB80F71B530FED0012F106 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		17FB81001B530FED0012F106 /* DecodableTests-Mac.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DecodableTests-Mac.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		57FCDE651BA283C900130C48 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8F012EEF1BB414D4007D0B5C /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; };
+		8F012EEF1BB414D4007D0B5C /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
 		8F012EF41BB5A920007D0B5C /* Castable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Castable.swift; sourceTree = "<group>"; };
 		8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
 		8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPathTests.swift; sourceTree = "<group>"; };
@@ -171,7 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				8FE7B5651B4C9FB900837609 /* Decodable.h */,
-				8F012EEF1BB414D4007D0B5C /* MyPlayground.playground */,
+				8F012EEF1BB414D4007D0B5C /* Playground.playground */,
 				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
 				8F012EF41BB5A920007D0B5C /* Castable.swift */,
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
