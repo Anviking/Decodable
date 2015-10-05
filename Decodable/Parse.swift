@@ -60,14 +60,3 @@ func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws ->
         throw error
     }
 }
-
-public func catchNull<T>(block: Void throws -> T) throws -> T? {
-    do {
-        return try block()
-    } catch DecodingError.TypeMismatch(NSNull.self, _, _) {
-        return nil
-    }
-    catch let error {
-        throw error
-    }
-}
