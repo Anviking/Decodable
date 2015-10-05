@@ -44,11 +44,6 @@ public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws 
 
 // MARK: - Helpers
 
-/// Allow types to be used in pattern matching
-public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
-    return lhs == rhs
-}
-
 func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws -> T) throws -> T {
     do {
         return try block()

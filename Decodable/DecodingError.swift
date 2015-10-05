@@ -58,3 +58,12 @@ public enum DecodingError: ErrorType, CustomDebugStringConvertible {
         }
     }
 }
+
+// Allow types to be used in pattern matching
+// E.g case TypeMismatch(NSNull.self, _, _) but be careful
+// You probably rather want to modify the decode-closure
+// There are overloads for this
+public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
+    return lhs == rhs
+}
+
