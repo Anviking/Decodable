@@ -31,17 +31,17 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T? {
 
 /// Try to decode as NSArray, and decode each element as T. Will throw if decoding of any element in the array throws. I.e, if one element is faulty the entire array is "thrown away".
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    return try parse(lhs, path: rhs, decode: decodeArray(ignoreInvalidObjects: false))
+    return try parse(lhs, path: rhs, decode: decodeArray(T.decode))
 }
 
 /// Try to decode as NSArray, and decode each element as T. Will return nil if the object at the keypath is NSNull. Will throw if decoding of any element in the array throws. I.e, if one element is faulty the entire array is "thrown away".
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]? {
-    return try parse(lhs, path: rhs, decode: catchNull(decodeArray(ignoreInvalidObjects: false)))
+    return try parse(lhs, path: rhs, decode: catchNull(decodeArray(T.decode)))
 }
 
 /// Try to decode as NSArray, and decode each element as T or nil, if the element is NSNull.
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?] {
-    return try parse(lhs, path: rhs, decode: decodeArray)
+    return try parse(lhs, path: rhs, decode: decodeArray(catchNull(T.decode)))
 }
 
 
@@ -67,7 +67,7 @@ private extension String {
 
 // MARK: Helpers
 
-private func catchNull<T>(decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
+func catchNull<T>(decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
     return { json in
         if json is NSNull {
             return nil

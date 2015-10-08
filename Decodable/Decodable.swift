@@ -24,6 +24,10 @@ extension NSDictionary {
 
 extension Array where Element: Decodable {
     public static func decode(j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
-        return try decodeArray(ignoreInvalidObjects: ignoreInvalidObjects)(json: j)
+        if ignoreInvalidObjects {
+            return (try decodeArray { try? Element.decode($0) }(json: j) as [Element?]).flatMap {$0}
+        } else {
+            return try decodeArray(Element.decode)(json: j)
+        }
     }
 }

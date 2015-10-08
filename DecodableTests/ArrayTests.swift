@@ -25,7 +25,7 @@ class DecodableArrayTests: XCTestCase {
     func testDecodeOptionalDecodableArraySuccess() {
         // given
         let key = "key"
-        let value: NSArray = ["value1", "value2", 404, "value3"]
+        let value: NSArray = ["value1", "value2", NSNull(), "value3"]
         let dictionary: NSDictionary = [key: value]
         // when
         let result = try! dictionary => key as [String?]
@@ -35,6 +35,22 @@ class DecodableArrayTests: XCTestCase {
         XCTAssertEqual(result[1], "value2")
         XCTAssertEqual(result[2], nil)
         XCTAssertEqual(result[3], "value3")
+    }
+    
+    func testDecodeOptionalDecodableArrayFailure() {
+        // given
+        let key = "key"
+        let value: NSArray = ["value1", "value2", 0x8BADF00D, "value3"]
+        let dictionary: NSDictionary = [key: value]
+        // when
+        do {
+            try dictionary => key as [String?]
+            XCTFail("should throw")
+        } catch DecodingError.TypeMismatch {
+            // Yay
+        } catch {
+            XCTFail("should not throw \(error)")
+        }
     }
     
     func testDecodeNestedDecodableArraySuccess() {
