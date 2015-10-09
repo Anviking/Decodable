@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "57FCDE591BA283C900130C48"
-               BuildableName = "Decodable-tvOS.framework"
+               BuildableName = "Decodable.framework"
                BlueprintName = "Decodable-tvOS"
                ReferencedContainer = "container:Decodable.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "57FCDE591BA283C900130C48"
-            BuildableName = "Decodable-tvOS.framework"
+            BuildableName = "Decodable.framework"
             BlueprintName = "Decodable-tvOS"
             ReferencedContainer = "container:Decodable.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "57FCDE591BA283C900130C48"
-            BuildableName = "Decodable-tvOS.framework"
+            BuildableName = "Decodable.framework"
             BlueprintName = "Decodable-tvOS"
             ReferencedContainer = "container:Decodable.xcodeproj">
          </BuildableReference>
