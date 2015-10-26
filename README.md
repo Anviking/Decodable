@@ -50,34 +50,26 @@ which call the `parse`-function.
 /// Try to decode as T, or throw
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
 
+/// Do not decode. Without an inferred return type, this overload will be called.
+public func => (lhs: AnyObject, rhs: String) throws -> AnyObject
+
 /// Try to decode as T, or throw. Will return nil if the object at the keypath is NSNull.
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T?
 
-/// Try to decode as NSArray, and decode each element as T. Will throw if decoding of any 
-/// element in the array throws. I.e, if one element is faulty the entire array is "thrown away".
+// MARK: Arrays
+
+/// Try to decode as NSArray, and decode each element as T. Will throw if decoding of any element in the array throws. I.e, if one element is faulty the entire array is "thrown away".
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
 
-/// Try to decode as NSArray, and decode each element as T. Will return nil if the object at the 
-/// keypath is NSNull. Will throw if decoding of any element in the array throws. I.e, if one 
-/// element is faulty the entire array is "thrown away".
+/// Try to decode as NSArray, and decode each element as T. Will return nil if the object at the keypath is NSNull. Will throw if decoding of any element in the array throws. I.e, if one element is faulty the entire array is "thrown away".
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]?
 
 /// Try to decode as NSArray, and decode each element as T or nil, if the element is NSNull.
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?]
 
-/// Try to decode as NSDictionary. Without an inferred return type, this overload will be called.
-public func => (lhs: AnyObject, rhs: String) throws -> NSDictionary
-
-/// Try to decode as NSArray, and decode each element as T. If decoding of an element fails, the error
-/// is printed and the element is excluded from the return array.
-public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
-
-/// Try to decode as T, or return nil if it fails in any way. (try?)
-public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) -> T?
-
-// Enables parsing nested objects e.g json => "a" => "b"
-// Uses \u{0} as a separator
-public func => (lhs: String, rhs: String) -> String 
+/// Enables parsing nested objects e.g json => "a" => "b"
+/// Uses \u{0} (null) as a separator
+public func => (lhs: String, rhs: String) -> String
 ```
 
 ## Errors
@@ -131,6 +123,3 @@ public class func decode(json: AnyObject) throws -> Self {
         return self.init(timeIntervalSince1970: date.timeIntervalSince1970)
 }
 ```
-
-### Arrays
-The default behaviour for array decoding is to throw if one element throws. The special operator `=>?` will catch errors when decoding elements in an array and filter out faulty objects.
