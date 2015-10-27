@@ -10,6 +10,7 @@ struct Repository {
     let description: String
     let stargazersCount: Int
     let language: String?
+    let sometimesMissingKey: String?
     
     let owner: User // Struct conforming to Decodable
     let defaultBranch: Branch // Struct NOT conforming to Decodable
@@ -24,6 +25,7 @@ extension Repository: Decodable {
                     description: j => "description", 
                     stargazersCount: j => "stargazers_count", 
                     language: j => "language", 
+                    sometimesMissingKey: try? j => "sometimesMissingKey",
                     owner: j => "owner", 
                     defaultBranch: Branch(name: j => "default_branch")
                 )
