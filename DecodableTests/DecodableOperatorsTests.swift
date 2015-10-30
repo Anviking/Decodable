@@ -119,6 +119,7 @@ class DecodableOperatorsTests: XCTestCase {
     
     // MARK: => Errors
     
+    /* // 
     func testDecodeNestedDictionaryCastingFailure() {
         // given
         let value: NSDictionary = ["apple" : 2]
@@ -135,6 +136,7 @@ class DecodableOperatorsTests: XCTestCase {
             XCTFail("should not throw \(error)")
         }
     }
+    */
     
     func testDecodeAnyDecodableThrowMissingKeyException() {
         // given

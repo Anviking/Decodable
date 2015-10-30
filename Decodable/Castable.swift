@@ -25,4 +25,3 @@ extension String: Castable {}
 extension Int: Castable {}
 extension Double: Castable {}
 extension Bool: Castable {}
-extension Dictionary: Castable {}

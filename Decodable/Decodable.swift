@@ -31,3 +31,10 @@ extension Array where Element: Decodable {
         }
     }
 }
+
+extension Dictionary where Key: Decodable, Value: Decodable {
+    public static func decode(j: AnyObject) throws -> Dictionary {
+        return try decodeDictionary(Key.decode)(elementDecodeClosure: Value.decode)(json: j)
+    }
+    
+}
