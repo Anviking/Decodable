@@ -106,7 +106,7 @@ MissingKey at object.repo.owner: lllloogon in {
 }
 ```
 
-## Flexibility
+## Tips
 The `Decodable`-protocol and the `=>`-operator should in no way make you committed to use them everywhere.
 
 For example you could...
@@ -125,3 +125,5 @@ public class func decode(json: AnyObject) throws -> Self {
         return self.init(timeIntervalSince1970: date.timeIntervalSince1970)
 }
 ```
+
+- You can use `Decodable` with classes. Just make sure to either call a `required` initializer on self (e.g `self.init`) and return `Self`, or make your class `final`. ( [This](http://stackoverflow.com/questions/26495586/best-practice-to-implement-a-failable-initializer-in-swift) might be a problem though)
