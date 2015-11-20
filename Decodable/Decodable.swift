@@ -22,6 +22,16 @@ extension NSDictionary {
     }
 }
 
+extension NSArray {
+    public static func decode(j: AnyObject) throws -> NSArray {
+        guard let result = j as? NSArray else {
+            let info = DecodingError.Info(object: j)
+            throw DecodingError.TypeMismatch(type: j.dynamicType, expectedType: self, info: info)
+        }
+        return result
+    }
+}
+
 extension Dictionary where Key: Decodable, Value: Decodable {
     public static func decode(j: AnyObject) throws -> Dictionary {
         return try decodeDictionary(Key.decode)(elementDecodeClosure: Value.decode)(json: j)
@@ -43,11 +53,7 @@ extension Array where Element: Decodable {
 
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
 public func decodeArray<T>(elementDecodeClosure: AnyObject throws -> T)(json: AnyObject) throws -> [T] {
-    guard let array = json as? [AnyObject] else {
-        let info = DecodingError.Info(object: json)
-        throw DecodingError.TypeMismatch(type: json.dynamicType, expectedType: [T].self, info: info)
-    }
-    return try array.map { try elementDecodeClosure($0) }
+    return try NSArray.decode(json).map { try elementDecodeClosure($0) }
 }
 
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried. For everyday use, prefer using [K: V].decode(json) instead (declared in Decodable.swift).
