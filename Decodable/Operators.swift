@@ -44,6 +44,11 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?] {
     return try parse(lhs, path: rhs, decode: decodeArray(catchNull(T.decode)))
 }
 
+/// Try to decode as NSArray, and decode each element as T or nil, if the element is NSNull, and the entire array will also be nil if the object at the keypath is NSNull.
+public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?]? {
+    return try parse(lhs, path: rhs, decode: catchNull(decodeArray(catchNull(T.decode))))
+}
+
 // MARK: Dictionary 
 
 /// Try to decode as NSDictionary. Map the dictionary using the decode function on K and T. Does not handle, or object to duplicate keys (last to be set wins).
