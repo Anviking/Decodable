@@ -33,3 +33,7 @@ DerivedData
 Carthage/Build
 
 *.xcscmblueprint
+
+# Swift Package Manager
+
+.build/
