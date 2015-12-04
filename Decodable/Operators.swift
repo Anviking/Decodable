@@ -72,18 +72,18 @@ public func => <K: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: AnyObje
 /// Enables parsing nested objects e.g json => "a" => "b"
 /// Uses \u{0} (null) as a separator
 public func => (lhs: String, rhs: String) -> String {
-    return lhs + JSONPathSeparator + rhs
+    return lhs + String(JSONPathSeparator) + rhs
 }
 
 // You can't have this in a key. Sorry.
 // This dramatically simplifies the implementation, halves the number of overloads required.
 // If this is a bad idea, please tell me.
 // http://stackoverflow.com/questions/1879860/most-reliable-split-character
-private let JSONPathSeparator = String("\u{0}")
+private let JSONPathSeparator = Character("\u{0}")
 
 private extension String {
     func toJSONPathArray() -> [String] {
-        return componentsSeparatedByString(JSONPathSeparator)
+		return self.characters.split(JSONPathSeparator).map(String.init)
     }
 }
 
