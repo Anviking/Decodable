@@ -18,11 +18,11 @@ public enum DecodingError: ErrorType, CustomDebugStringConvertible {
             self.path = path
         }
         
-        var path: [String]
-        var object: AnyObject?
-        var rootObject: AnyObject?
+        public var path: [String]
+        public var object: AnyObject?
+        public var rootObject: AnyObject?
         
-        var formattedPath: String {
+        public var formattedPath: String {
             return path.joinWithSeparator(".")
         }
     }
