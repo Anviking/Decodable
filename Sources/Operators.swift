@@ -11,6 +11,7 @@ import Foundation
 // MARK: - Operators
 
 infix operator => { associativity right precedence 150 }
+infix operator =>? { associativity right precedence 150 }
 
 /// Try to decode as T, or throw
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
@@ -66,6 +67,42 @@ public func => <K: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: AnyObje
     return try parse(lhs, path: rhs, decode: catchNull(decodeDictionary(K.decode)(elementDecodeClosure: {$0})))
 }
 
+// MARK: =>?
+
+/// Do not decode. Without an inferred return type, this overload will be called. Will return nil if the object at the keypath is NSNull or the keypath is missing.
+public func =>? (lhs: AnyObject, rhs: String) throws -> AnyObject? {
+    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: { $0 })
+}
+
+/// Try to decode as T, or throw. Will return nil if the object at the keypath is NSNull or the keypath is missing.
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T? {
+    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: T.decode)
+}
+
+// MARK: Arrays
+
+/// Try to decode as NSArray, and decode each element as T. Will return nil if the object at the keypath is NSNull or the keypath is missing. Will throw if decoding of any element in the array throws. I.e, if one element is faulty the entire array is "thrown away".
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]? {
+    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: decodeArray(T.decode))
+}
+
+/// Try to decode as NSArray, and decode each element as T or nil, if the element is NSNull. Will return nil if the object at the keypath is NSNull or the keypath is missing.
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?]? {
+    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: decodeArray(catchNull(T.decode)))
+}
+
+// MARK: Dictionary
+
+/// Try to decode as NSDictionary?. Returns nil if the object at the keypath is NSNull or the keypath is missing. Maps the dictionary using the decode function on K and T. Does not handle, or object to duplicate keys (last to be set wins).
+public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [String: T]? {
+    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: decodeDictionary(String.decode)(elementDecodeClosure: T.decode) )
+}
+
+/// Try to decode as NSDictionary?. Returns nil if object at the keypath is NSNull or the keypath is missing. Maps key with K.decode. This is a workaround to ensure that there is only one => overload without generic types to avoid ambiguity.
+public func =>? <K: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: AnyObject]? {
+    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: decodeDictionary(K.decode)(elementDecodeClosure: {$0}))
+}
+
 
 // MARK: - JSONPath
 
@@ -101,5 +138,9 @@ func catchNull<T>(decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws 
 
 private func parse<T>(json: AnyObject, path: String, decode: (AnyObject throws -> T)) throws -> T {
     return try parse(json, path: path.toJSONPathArray(), decode: decode)
+}
+
+private func parseAndAcceptMissingKey<T>(json: AnyObject, path: String, decode: (AnyObject throws -> T)) throws -> T? {
+    return try parseAndAcceptMissingKey(json, path: path.toJSONPathArray(), decode: decode)
 }
 

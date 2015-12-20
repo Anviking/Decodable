@@ -27,6 +27,8 @@
 		8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
+		8FD3D92F1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */; };
+		8FD3D9301C270A2D00D1AF4E /* MissingKeyOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */; };
 		8FE7B5661B4C9FB900837609 /* Decodable.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE7B5651B4C9FB900837609 /* Decodable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8FE7B56D1B4C9FB900837609 /* Decodable.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8FE7B5621B4C9FB900837609 /* Decodable.framework */; };
 		8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B5711B4C9FB900837609 /* DecodableTests.swift */; };
@@ -82,6 +84,7 @@
 		8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPathTests.swift; sourceTree = "<group>"; };
 		8F87BCC31B592F0E00E53A8C /* DecodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingError.swift; sourceTree = "<group>"; };
 		8F956D1E1B4D6FF700243072 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingKeyOperatorTests.swift; sourceTree = "<group>"; };
 		8FE7B5621B4C9FB900837609 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE7B5651B4C9FB900837609 /* Decodable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Decodable.h; sourceTree = "<group>"; };
 		8FE7B5671B4C9FB900837609 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -193,6 +196,7 @@
 				8FE7B5711B4C9FB900837609 /* DecodableTests.swift */,
 				FF00609D1B5454F400D8CB77 /* DecodableExtensionTests.swift */,
 				FF0060AF1B546FB100D8CB77 /* DecodableOperatorsTests.swift */,
+				8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */,
 				8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */,
 				8F53521C1BE4112900E3563A /* DictionaryTests.swift */,
 				8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */,
@@ -478,6 +482,7 @@
 			files = (
 				8F87BCBC1B580CE200E53A8C /* ErrorPathTests.swift in Sources */,
 				FF00609F1B5454F400D8CB77 /* DecodableExtensionTests.swift in Sources */,
+				8FD3D9301C270A2D00D1AF4E /* MissingKeyOperatorTests.swift in Sources */,
 				8F53521E1BE4112900E3563A /* DictionaryTests.swift in Sources */,
 				FF0060B11B546FB100D8CB77 /* DecodableOperatorsTests.swift in Sources */,
 				8F4B52661B5BAA5700FDCBA7 /* ArrayTests.swift in Sources */,
@@ -516,6 +521,7 @@
 			files = (
 				8F87BCBB1B580CE200E53A8C /* ErrorPathTests.swift in Sources */,
 				FF00609E1B5454F400D8CB77 /* DecodableExtensionTests.swift in Sources */,
+				8FD3D92F1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift in Sources */,
 				8F53521D1BE4112900E3563A /* DictionaryTests.swift in Sources */,
 				FF0060B01B546FB100D8CB77 /* DecodableOperatorsTests.swift in Sources */,
 				8F4B52651B5BAA5700FDCBA7 /* ArrayTests.swift in Sources */,
