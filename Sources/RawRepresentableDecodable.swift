@@ -12,12 +12,10 @@
  * I could not find a way to implicitly declare RawRepresentable conforming to Decodable, what would make all enums Decodable automatically.
  * Because of that for an enum to be compatible with Decodable operators it must be declared as implementing Decodable protocol.
  */
-public extension RawRepresentable where Self:Decodable {
+public extension RawRepresentable where RawValue: Decodable, Self: Decodable {
     
     static func decode(json: AnyObject) throws -> Self {
-        guard let rawValue = json as? Self.RawValue else {
-            throw DecodingError.TypeMismatch(type: json.dynamicType, expectedType: Self.RawValue.self, info: DecodingError.Info(object: json))
-        }
+        let rawValue = try RawValue.decode(json)
         guard let rawRepresentable = Self(rawValue: rawValue) else {
             throw DecodingError.UnexpectedValue(value: rawValue as! AnyObject, info: DecodingError.Info(object: json))
         }
