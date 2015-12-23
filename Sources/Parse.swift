@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Use reduce to traverse through a dictionary and find the object at a given path
+/// Use reduce to traverse through a nested dictionary and find the object at a given path
 func parse(json: AnyObject, _ path: [String]) throws -> AnyObject {
     return try path.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
         let currentDict = try NSDictionary.decode(a.object)
@@ -29,7 +29,7 @@ public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws 
 }
 
 /// Accepts null and missingKey
-public func parseAndAcceptMissingKey<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T? {
+func parseAndAcceptMissingKey<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T? {
     guard let object = try catchMissingKeyAndReturnNil({ try parse(json, path) }) else {
         return nil
     }
