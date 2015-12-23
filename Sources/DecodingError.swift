@@ -29,6 +29,7 @@ public enum DecodingError: ErrorType, CustomDebugStringConvertible {
     
     case MissingKey(key: String, info: Info)
     case TypeMismatch(type: Any.Type, expectedType: Any.Type, info: Info)
+    /// thrown when a type matches but a value is unexpected while decoding into RawRepresentable enum
     case UnexpectedValue(value: AnyObject, info: Info)
     
     var info: Info {
