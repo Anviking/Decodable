@@ -106,8 +106,20 @@ MissingKey at object.repo.owner: lllloogon in {
 }
 ```
 
+## Handling Errors
+Expressions like `j => "key"` will throw directly, and `catch`-statements can be used to create the most complex error handling behaviours. This also means that `try?` can be used to return nil if *anything* goes wrong instead of throwing.
+
+For convenience there is an operator, `=>?`, that only returns nil on missing keys, for API's that indicate `null` in that manner, and to aid working with different response formats.
+
+| Overload | Null behaviour | Missing Key Behavior  |Type Mismatch Behaviour | Errors in subobjects | 
+| ------------- |:-------------:|:-----:|:-----:|:-----:|
+|  `=> -> T`| throws | throws | throws | uncaught (throws) | 
+|  `=> -> T?`| nil | throws | throws | uncaught (throws) | 
+|  `=>? -> T?`| nil | nil | throws | uncaught (throws) | 
+|  `try? => -> T `| nil | nil | nil | caught (nil) | 
+
+
 ## Tips
-- You can use `try? json => "key"`
 - You can use `Decodable` with classes. Just make sure to either call a `required` initializer on self (e.g `self.init`) and return `Self`, or make your class `final`. ( [This](http://stackoverflow.com/questions/26495586/best-practice-to-implement-a-failable-initializer-in-swift) might be a problem though)
 - The `Decodable`-protocol and the `=>`-operator should in no way make you committed to use them everywhere.
 
