@@ -25,7 +25,7 @@ extension Repository: Decodable {
                     description: j => "description", 
                     stargazersCount: j => "stargazers_count", 
                     language: j => "language", 
-                    sometimesMissingKey: try? j => "sometimesMissingKey",
+                    sometimesMissingKey: j =>? "sometimesMissingKey",
                     owner: j => "owner", 
                     defaultBranch: Branch(name: j => "default_branch")
                 )
@@ -46,33 +46,15 @@ public protocol Decodable {
 public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T
 ```
 
-### A lot of operator-overloads
-which call the `parse`-function.
+### And shameless operator-overloading
+The overloads, all calling the `parse`-function, can be found in [Operators.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Operators.swift)
+
+An overload may look like this:
 ```swift
-/// Try to decode as T, or throw
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
-
-/// Do not decode. Without an inferred return type, this overload will be called.
-public func => (lhs: AnyObject, rhs: String) throws -> AnyObject
-
-/// Try to decode as T, or throw. Will return nil if the object at the keypath is NSNull.
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T?
-
-// MARK: Arrays
-
-/// Try to decode as NSArray, and decode each element as T. Will throw if decoding of any element in the array throws. I.e, if one element is faulty the entire array is "thrown away".
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]
-
-/// Try to decode as NSArray, and decode each element as T. Will return nil if the object at the keypath is NSNull. Will throw if decoding of any element in the array throws. I.e, if one element is faulty the entire array is "thrown away".
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]?
-
-/// Try to decode as NSArray, and decode each element as T or nil, if the element is NSNull.
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?]
-
-/// Enables parsing nested objects e.g json => "a" => "b"
-/// Uses \u{0} (null) as a separator
-public func => (lhs: String, rhs: String) -> String
 ```
+
+Then there are also overloads for returning `T?`, `[T?]`, `[T?]?`, `AnyObject`, `[String: T]?` and more. 
 
 ## Errors
 ```swift
@@ -84,7 +66,7 @@ public enum DecodingError {
     }
     
     case MissingKey(key: String, info: Info)
-    case TypeMismatch(type: Any.Type, info: Info)
+    case TypeMismatch(type: Any.Type, expectedType: Any.Type, info: Info)
 }
 ```
 
