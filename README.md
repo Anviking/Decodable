@@ -109,9 +109,9 @@ MissingKey at object.repo.owner: lllloogon in {
 ## Handling Errors
 Expressions like `j => "key"` will throw directly, and `catch`-statements can be used to create the most complex error handling behaviours. This also means that `try?` can be used to return nil if *anything* goes wrong instead of throwing.
 
-For convenience there is an operator, `=>?`, that only returns nil on missing keys, for API's that indicate `null` in that manner, and to aid working with different response formats.
+For convenience there is an operator, `=>?`, that only returns nil on missing keys, for APIs that indicate `null` in that manner, and to aid working with different response formats.
 
-| Overload | Null behaviour | Missing Key Behavior  |Type Mismatch Behaviour | Errors in subobjects | 
+| Overload | Null Behaviour | Missing Key Behavior  |Type Mismatch Behaviour | Errors in subobjects | 
 | ------------- |:-------------:|:-----:|:-----:|:-----:|
 |  `=> -> T`| throws | throws | throws | uncaught (throws) | 
 |  `=> -> T?`| nil | throws | throws | uncaught (throws) | 
