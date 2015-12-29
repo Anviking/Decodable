@@ -8,62 +8,53 @@
 
 import Foundation
 
-public enum DecodingError: ErrorType, CustomDebugStringConvertible {
-    
-    public struct Info {
-        
-        public init(object: AnyObject, rootObject: AnyObject? = nil, path: [String] = []) {
-            self.object = object
-            self.rootObject = rootObject
-            self.path = path
-        }
-        
-        public var path: [String]
-        public var object: AnyObject?
-        public var rootObject: AnyObject?
-        
-        public var formattedPath: String {
-            return path.joinWithSeparator(".")
-        }
+public protocol DecodingError: ErrorType {
+    var path: [String] {get set}
+    var object: AnyObject? {get set}
+    var rootObject: AnyObject? {get set}
+    var formattedPath: String {get}
+}
+
+extension DecodingError {
+    public var formattedPath: String {
+        return path.joinWithSeparator(".")
     }
+}
+
+public struct TypeMismatch: DecodingError {
+    public let expectedType: Any.Type
+    public let recievedType: Any.Type
     
-    case MissingKey(key: String, info: Info)
-    case TypeMismatch(type: Any.Type, expectedType: Any.Type, info: Info)
-    /// thrown when a type matches but a value is unexpected while decoding into RawRepresentable enum
-    case UnexpectedValue(value: AnyObject, info: Info)
-    
-    var info: Info {
-        get {
-            switch self {
-            case MissingKey(key: _, let info):
-                return info
-            case TypeMismatch(_, _, let info):
-                return info
-            case UnexpectedValue(_, let info):
-                return info
-            }
-        }
-        set {
-            switch self {
-            case MissingKey(let key, _):
-                self = MissingKey(key: key, info: newValue)
-            case TypeMismatch(let type, let expectedType, _):
-                self = TypeMismatch(type: type, expectedType: expectedType, info: newValue)
-            case UnexpectedValue(let value, _):
-                self = UnexpectedValue(value: value, info: newValue)
-            }
-        }
-    }
+    public var path: [String]
+    public var object: AnyObject?
+    public var rootObject: AnyObject?
     
     public var debugDescription: String {
-        switch self {
-        case .MissingKey(let key, let info):
-            return "Missing Key \(key) in \(info.formattedPath) \(info.object)"
-        case .TypeMismatch(let type, let expectedType, let info):
-            return "TypeMismatch \(type), expected: \(expectedType) in \(info.formattedPath) object: \(info.object)"
-        case .UnexpectedValue(let value, let info):
-            return "UnexpectedValue \(value) in \(info.formattedPath) object: \(info.object)"
-        }
+        return "TypeMismatch expected: \(expectedType) but \(object) is of type \(recievedType) in \(formattedPath)"    }
+}
+
+public struct MissingKey: DecodingError {
+    public let key: String
+    
+    public var path: [String]
+    public var object: AnyObject?
+    public var rootObject: AnyObject?
+    
+    public var debugDescription: String {
+        return "Missing Key \(key) in \(formattedPath) \(object)"
+    }
+}
+
+public struct RawRepresentableInitializationFailure: DecodingError {
+    public let type: Any.Type
+    public let rawValue: Any
+    
+    public var path: [String]
+    public var object: AnyObject?
+    public var rootObject: AnyObject?
+    
+    public var debugDescription: String {
+        return "RawRepresentableInitializationFailure: \(rawValue) could not be used to initialize \(type). (path: \(path))"
     }
 }
 

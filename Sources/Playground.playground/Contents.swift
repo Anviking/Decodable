@@ -6,6 +6,40 @@
 import UIKit
 import Decodable
 
+public protocol Transformable: Decodable {
+    typealias RawDecodableType: Decodable
+    static func transform(rawValue: RawDecodableType) throws -> Self?
+}
+
+extension Transformable {
+    public static func decode(json: AnyObject) throws -> Self {
+        let rawValue = try RawDecodableType.decode(json)
+        guard let value = try tras
+        return try transform()
+    }
+}
+
+
+struct WrappedError: ErrorType {
+    let code: Int
+    let error: ErrorType
+}
+
+enum Error: ErrorType {
+    case InvalidWorld
+    case BrokenSea
+}
+
+do {
+    throw WrappedError(code: 404, error: Error.BrokenSea)
+} catch let error as WrappedError where error.code == 404 {
+    print("test")
+}
+
+
+
+
+
 
 
 

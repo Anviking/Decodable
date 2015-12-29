@@ -37,8 +37,8 @@ class MissingKeyOperatorTests: XCTestCase {
         do {
             let _: Int? = try dictionary =>? "key"
             XCTFail("should throw")
-        } catch DecodingError.TypeMismatch(_, let expectedType, _) {
-            XCTAssert(expectedType == Int.self, "\(expectedType) != Int.self")
+        } catch let error as TypeMismatch {
+            XCTAssert(error.expectedType == Int.self, "\(error.expectedType) != Int.self")
         } catch {
             XCTFail("Should not throw \(error)")
         }

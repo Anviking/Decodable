@@ -17,7 +17,7 @@ public extension RawRepresentable where RawValue: Decodable, Self: Decodable {
     static func decode(json: AnyObject) throws -> Self {
         let rawValue = try RawValue.decode(json)
         guard let rawRepresentable = Self(rawValue: rawValue) else {
-            throw DecodingError.UnexpectedValue(value: rawValue as! AnyObject, info: DecodingError.Info(object: json))
+            throw RawRepresentableInitializationFailure(type: self, rawValue: rawValue, path: [], object: json, rootObject: nil)
         }
         return rawRepresentable
     }

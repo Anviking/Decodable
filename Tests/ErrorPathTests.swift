@@ -42,8 +42,8 @@ class ErrorPathTests: XCTestCase {
         
         do {
             try dict => "object" => "repo" => "owner" => "oops" as String
-        } catch DecodingError.MissingKey(_, let info) {
-            XCTAssertEqual(info.formattedPath, "object.repo.owner")
+        } catch let error as MissingKey {
+            XCTAssertEqual(error.formattedPath, "object.repo.owner")
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }
@@ -56,7 +56,7 @@ class ErrorPathTests: XCTestCase {
             let apple = try Apple.decode(dict)
             print(apple)
             XCTFail()
-        } catch DecodingError.TypeMismatch(NSNull.self, _, _) {
+        } catch let error as TypeMismatch where error.object is NSNull {
             
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
@@ -69,10 +69,10 @@ class ErrorPathTests: XCTestCase {
         
         do {
             try dict => "object" => "repo" => "owner" => "login" as String
-        } catch DecodingError.TypeMismatch(let type, String.self, let info) {
-            XCTAssertEqual(String(type), "__NSCFNumber")
-            XCTAssertEqual(info.formattedPath, "object.repo.owner.login")
-            XCTAssertEqual(info.object as? Int, 0)
+        } catch let error as TypeMismatch {
+            XCTAssertEqual(String(error.recievedType), "__NSCFNumber")
+            XCTAssertEqual(error.formattedPath, "object.repo.owner.login")
+            XCTAssertEqual(error.object as? Int, 0)
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }
@@ -85,9 +85,9 @@ class ErrorPathTests: XCTestCase {
         do {
             try Tree.decode(dict)
             XCTFail()
-        } catch DecodingError.TypeMismatch(let type, String.self, let info) {
-            XCTAssertEqual(String(type), "__NSCFNumber")
-            XCTAssertEqual(info.formattedPath, "apples.color.name")
+        } catch let error as TypeMismatch {
+            XCTAssertEqual(String(error.recievedType), "__NSCFNumber")
+            XCTAssertEqual(error.formattedPath, "apples.color.name")
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }
