@@ -21,7 +21,7 @@ extension DecodingError {
     }
 }
 
-public struct TypeMismatch: DecodingError {
+public struct TypeMismatchError: DecodingError {
     public let expectedType: Any.Type
     public let recievedType: Any.Type
     
@@ -30,10 +30,10 @@ public struct TypeMismatch: DecodingError {
     public var rootObject: AnyObject?
     
     public var debugDescription: String {
-        return "TypeMismatch expected: \(expectedType) but \(object) is of type \(recievedType) in \(formattedPath)"    }
+        return "TypeMismatchError expected: \(expectedType) but \(object) is of type \(recievedType) in \(formattedPath)"    }
 }
 
-public struct MissingKey: DecodingError {
+public struct MissingKeyError: DecodingError {
     public let key: String
     
     public var path: [String]
@@ -59,7 +59,7 @@ public struct RawRepresentableInitializationFailure: DecodingError {
 }
 
 // Allow types to be used in pattern matching
-// E.g case TypeMismatch(NSNull.self, _, _) but be careful
+// E.g case TypeMismatchError(NSNull.self, _, _) but be careful
 // You probably rather want to modify the decode-closure
 // There are overloads for this
 public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {

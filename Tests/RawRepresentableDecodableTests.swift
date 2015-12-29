@@ -55,7 +55,7 @@ class RawRepresentableDecodableTests: XCTestCase {
         do {
             try json => key as CMYKColor
             XCTFail()
-        } catch let error as TypeMismatch where error.expectedType == CMYKColor.RawValue.self {
+        } catch let error as TypeMismatchError where error.expectedType == CMYKColor.RawValue.self {
             // then
             XCTAssertNotNil(error.object)
         } catch {

@@ -131,7 +131,7 @@ class DecodableTests: XCTestCase {
         // when
         do {
             try Repository.decode(json)
-        } catch let error as MissingKey {
+        } catch let error as MissingKeyError {
             // then
             XCTAssertEqual(error.key, "id")
         } catch let error as DecodingError {
@@ -148,9 +148,9 @@ class DecodableTests: XCTestCase {
         // when
         do {
             try Repository.decode(json)
-        } catch is MissingKey {
+        } catch is MissingKeyError {
             XCTFail("it should not throw this exception")
-        } catch let error as TypeMismatch where error.expectedType == Int.self {
+        } catch let error as TypeMismatchError where error.expectedType == Int.self {
             // then
             XCTAssertEqual(error.formattedPath, "id")
         } catch let error {
@@ -165,9 +165,9 @@ class DecodableTests: XCTestCase {
         // when
         do {
             try parse(json, path: ["key"], decode: Repository.decode)
-        } catch is MissingKey {
+        } catch is MissingKeyError {
             XCTFail("it should not throw this exception")
-        } catch let error as TypeMismatch where error.expectedType == Int.self {
+        } catch let error as TypeMismatchError where error.expectedType == Int.self {
             // then
             XCTAssertEqual(error.formattedPath, "key.id")
         } catch let error {
@@ -183,9 +183,9 @@ class DecodableTests: XCTestCase {
         // when
         do {
             try Repository.decode(jsonString)
-        } catch is MissingKey {
+        } catch is MissingKeyError {
             XCTFail("it should not throw this exception")
-        } catch let error as TypeMismatch where error.expectedType == NSDictionary.self {
+        } catch let error as TypeMismatchError where error.expectedType == NSDictionary.self {
             XCTAssertEqual(error.path, [])
             XCTAssertNotNil(error.object)
         } catch {

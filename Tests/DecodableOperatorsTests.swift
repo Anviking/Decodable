@@ -109,7 +109,7 @@ class DecodableOperatorsTests: XCTestCase {
             let a = try dictionary => key as String?
             print(a)
             XCTFail()
-        } catch let error as TypeMismatch {
+        } catch let error as TypeMismatchError {
             XCTAssertEqual(String(error.recievedType), "__NSCFNumber")
         } catch let error {
             XCTFail("should not throw \(error)")
@@ -128,7 +128,7 @@ class DecodableOperatorsTests: XCTestCase {
         do {
             _ = try dictionary => "firstKey" => "secondKey" as [String: String]
             XCTFail()
-        } catch DecodingError.TypeMismatch(_, Dictionary<String, String>.self, let info) {
+        } catch DecodingError.TypeMismatchError(_, Dictionary<String, String>.self, let info) {
             // then
             XCTAssertEqual(info.formattedPath, "firstKey.secondKey")
             XCTAssertEqual(info.object as? NSDictionary, value)
@@ -146,7 +146,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try dictionary => "nokey" as String
-        } catch let error as MissingKey {
+        } catch let error as MissingKeyError {
             // then
             XCTAssertEqual(error.key, "nokey")
             XCTAssertEqual(error.path, [])
@@ -164,7 +164,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try noDictionary => key as String
-        } catch let error as TypeMismatch where error.expectedType == NSDictionary.self {
+        } catch let error as TypeMismatchError where error.expectedType == NSDictionary.self {
             // then
             XCTAssertTrue(true)
             XCTAssertEqual(String(error.recievedType), "__NSCFString")
@@ -183,7 +183,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try dictionary => "nokey"
-        } catch let error as MissingKey {
+        } catch let error as MissingKeyError {
             // then
             XCTAssertEqual(error.key, "nokey")
             XCTAssertEqual(error.formattedPath, "")
@@ -201,7 +201,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try noDictionary => key
-        } catch let error as TypeMismatch where error.expectedType == NSDictionary.self {
+        } catch let error as TypeMismatchError where error.expectedType == NSDictionary.self {
             // then
             XCTAssertTrue(true)
             XCTAssertEqual(String(error.recievedType), "__NSCFString")
@@ -219,7 +219,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             try dictionary => key
-        } catch is TypeMismatch {
+        } catch is TypeMismatchError {
             // then
             XCTAssertTrue(true)
         } catch let error {

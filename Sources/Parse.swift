@@ -13,7 +13,7 @@ func parse(json: AnyObject, _ path: [String]) throws -> AnyObject {
     return try path.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
         let currentDict = try NSDictionary.decode(a.object)
         guard let result = currentDict[NSString(string: key)] else {
-            throw MissingKey(key: key, path: a.currentPath, object: currentDict, rootObject: json)
+            throw MissingKeyError(key: key, path: a.currentPath, object: currentDict, rootObject: json)
         }
         
         var path = a.currentPath
@@ -27,7 +27,7 @@ public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws 
     return try catchAndRethrow(json, path) { try decode(object) }
 }
 
-/// Accepts null and missingKey
+/// Accepts null and MissingKeyError
 func parseAndAcceptMissingKey<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T? {
     guard let object = try catchMissingKeyAndReturnNil({ try parse(json, path) }) else {
         return nil
@@ -41,7 +41,7 @@ func parseAndAcceptMissingKey<T>(json: AnyObject, path: [String], decode: (AnyOb
 func catchMissingKeyAndReturnNil<T>(closure: Void throws -> T) throws -> T? {
     do {
         return try closure()
-    } catch is MissingKey {
+    } catch is MissingKeyError {
         return nil
     }
 }

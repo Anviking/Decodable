@@ -13,7 +13,7 @@ public protocol Castable: Decodable {}
 extension Castable {
     public static func decode(j: AnyObject) throws -> Self {
         guard let result = j as? Self else {
-            throw TypeMismatch(expectedType: self, recievedType: j.dynamicType, path: [], object: j, rootObject: nil)
+            throw TypeMismatchError(expectedType: self, recievedType: j.dynamicType, path: [], object: j, rootObject: nil)
         }
         return result
     }

@@ -42,7 +42,7 @@ class ErrorPathTests: XCTestCase {
         
         do {
             try dict => "object" => "repo" => "owner" => "oops" as String
-        } catch let error as MissingKey {
+        } catch let error as MissingKeyError {
             XCTAssertEqual(error.formattedPath, "object.repo.owner")
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
@@ -56,7 +56,7 @@ class ErrorPathTests: XCTestCase {
             let apple = try Apple.decode(dict)
             print(apple)
             XCTFail()
-        } catch let error as TypeMismatch where error.object is NSNull {
+        } catch let error as TypeMismatchError where error.object is NSNull {
             
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
@@ -69,7 +69,7 @@ class ErrorPathTests: XCTestCase {
         
         do {
             try dict => "object" => "repo" => "owner" => "login" as String
-        } catch let error as TypeMismatch {
+        } catch let error as TypeMismatchError {
             XCTAssertEqual(String(error.recievedType), "__NSCFNumber")
             XCTAssertEqual(error.formattedPath, "object.repo.owner.login")
             XCTAssertEqual(error.object as? Int, 0)
@@ -85,7 +85,7 @@ class ErrorPathTests: XCTestCase {
         do {
             try Tree.decode(dict)
             XCTFail()
-        } catch let error as TypeMismatch {
+        } catch let error as TypeMismatchError {
             XCTAssertEqual(String(error.recievedType), "__NSCFNumber")
             XCTAssertEqual(error.formattedPath, "apples.color.name")
         } catch let error {
