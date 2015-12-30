@@ -10,7 +10,7 @@ import Foundation
 
 public protocol DecodingError: ErrorType {
     var path: [String] {get set}
-    var object: AnyObject? {get}
+    var object: AnyObject {get}
     var rootObject: AnyObject? {get set}
     var formattedPath: String {get}
 }
@@ -26,7 +26,7 @@ public struct TypeMismatchError: DecodingError {
     public let recievedType: Any.Type
     
     public var path: [String]
-    public let object: AnyObject?
+    public let object: AnyObject
     public var rootObject: AnyObject?
     
     public var debugDescription: String {
@@ -37,7 +37,7 @@ public struct MissingKeyError: DecodingError {
     public let key: String
     
     public var path: [String]
-    public let object: AnyObject?
+    public let object: AnyObject
     public var rootObject: AnyObject?
     
     public var debugDescription: String {
@@ -50,7 +50,7 @@ public struct RawRepresentableInitializationFailure: DecodingError {
     public let rawValue: Any
     
     public var path: [String]
-    public let object: AnyObject?
+    public let object: AnyObject
     public var rootObject: AnyObject?
     
     public var debugDescription: String {
