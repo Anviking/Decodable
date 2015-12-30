@@ -15,7 +15,7 @@ public protocol Decodable {
 extension NSDictionary {
     public static func decode(j: AnyObject) throws -> NSDictionary {
         guard let result = j as? NSDictionary else {
-            throw TypeMismatchError(expectedType: self, recievedType: j.dynamicType, path: [], object: j, rootObject: nil)
+            throw TypeMismatchError(expectedType: self, recievedType: j.dynamicType, object: j)
         }
         return result
     }
@@ -24,7 +24,7 @@ extension NSDictionary {
 extension NSArray {
     public static func decode(j: AnyObject) throws -> NSArray {
         guard let result = j as? NSArray else {
-            throw TypeMismatchError(expectedType: self, recievedType: j.dynamicType, path: [], object: j, rootObject: nil)
+            throw TypeMismatchError(expectedType: self, recievedType: j.dynamicType, object: j)
         }
         return result
     }

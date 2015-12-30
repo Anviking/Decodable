@@ -22,6 +22,14 @@ extension DecodingError {
 }
 
 public struct TypeMismatchError: DecodingError {
+
+    public init(expectedType: Any.Type, recievedType: Any.Type, object: AnyObject) {
+        self.expectedType = expectedType
+        self.recievedType = recievedType
+        self.object = object
+        self.path = []
+    }
+
     public let expectedType: Any.Type
     public let recievedType: Any.Type
     
@@ -34,11 +42,18 @@ public struct TypeMismatchError: DecodingError {
 }
 
 public struct MissingKeyError: DecodingError {
+
     public let key: String
     
     public var path: [String]
     public let object: AnyObject
     public var rootObject: AnyObject?
+    
+    public init(key: String, object: AnyObject) {
+        self.key = key
+        self.object = object
+        self.path = []
+    }
     
     public var debugDescription: String {
         return "Missing Key \(key) in \(formattedPath) \(object)"
@@ -52,6 +67,13 @@ public struct RawRepresentableInitializationFailure: DecodingError {
     public var path: [String]
     public let object: AnyObject
     public var rootObject: AnyObject?
+    
+    public init(type: Any.Type, rawValue: Any, object: AnyObject) {
+        self.rawValue = rawValue
+        self.type = type
+        self.object = object
+        self.path = []
+    }
     
     public var debugDescription: String {
         return "RawRepresentableInitializationFailure: \(rawValue) could not be used to initialize \(type). (path: \(path))"

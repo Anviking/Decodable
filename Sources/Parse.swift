@@ -13,7 +13,10 @@ func parse(json: AnyObject, _ path: [String]) throws -> AnyObject {
     return try path.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
         let currentDict = try NSDictionary.decode(a.object)
         guard let result = currentDict[NSString(string: key)] else {
-            throw MissingKeyError(key: key, path: a.currentPath, object: currentDict, rootObject: json)
+            var error = MissingKeyError(key: key, object: currentDict)
+            error.path = a.currentPath
+            error.rootObject = json
+            throw error
         }
         
         var path = a.currentPath
