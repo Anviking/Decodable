@@ -28,6 +28,6 @@ extension NSValueCastable {
         
         let pointer = PointerOfSelf.alloc(1)
         value.getValue(pointer)
-        return pointer.memory
+        return pointer.move()
     }
 }
