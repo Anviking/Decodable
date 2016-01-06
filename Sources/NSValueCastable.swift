@@ -17,6 +17,7 @@ extension UInt32: NSValueCastable {}
 extension UInt16: NSValueCastable {}
 extension UInt8: NSValueCastable {}
 
+/// Provides a default implementation of decode() which casts the object to a NSValue and unsafely casts its value as Self. Used to enable decoding to different IntegerTypes from NSNumber.
 public protocol NSValueCastable: Decodable {}
 
 extension NSValueCastable {
