@@ -23,10 +23,8 @@ class NSValueDecodableTests: XCTestCase {
         XCTAssertEqual(try! UInt8.decode(number), number.unsignedCharValue)
     }
     
-    func testIntegerDecodingFromInt8() {
-        let number = NSNumber(char: 100)
-        
-        // It's ok
+    func testIntegerDecodingFromInt32() {
+        let number = NSNumber(int: 100)
         // XCTAssertEqual(try! Int64.decode(number), number.longLongValue)
         XCTAssertEqual(try! Int32.decode(number), number.intValue)
         XCTAssertEqual(try! Int16.decode(number), number.shortValue)
@@ -38,8 +36,10 @@ class NSValueDecodableTests: XCTestCase {
         XCTAssertEqual(try! UInt8.decode(number), number.unsignedCharValue)
     }
     
-    func testIntegerDecodingFromInt32() {
-        let number = NSNumber(int: 100)
+    func testIntegerDecodingFromInt8() {
+        let number = NSNumber(char: 100)
+        
+        // It's ok
         // XCTAssertEqual(try! Int64.decode(number), number.longLongValue)
         XCTAssertEqual(try! Int32.decode(number), number.intValue)
         XCTAssertEqual(try! Int16.decode(number), number.shortValue)

@@ -8,12 +8,12 @@
 
 import Foundation
 
-extension Int32: NSValueCastable {}
 extension Int64: NSValueCastable {}
+extension Int32: NSValueCastable {}
 extension Int16: NSValueCastable {}
 extension Int8: NSValueCastable {}
-extension UInt32: NSValueCastable {}
 extension UInt64: NSValueCastable {}
+extension UInt32: NSValueCastable {}
 extension UInt16: NSValueCastable {}
 extension UInt8: NSValueCastable {}
 
