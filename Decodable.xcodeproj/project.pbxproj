@@ -42,6 +42,7 @@
 		8FFAB8121B7CFA9500E2D724 /* Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFAB8111B7CFA9500E2D724 /* Parse.swift */; };
 		8FFAB8131B7CFA9500E2D724 /* Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFAB8111B7CFA9500E2D724 /* Parse.swift */; };
 		8FFAB8141B7CFA9500E2D724 /* Parse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FFAB8111B7CFA9500E2D724 /* Parse.swift */; };
+		ABA8C1221C3CA6BE00B6D86F /* NumberCastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABA8C1211C3CA6BE00B6D86F /* NumberCastable.swift */; };
 		D0DC54771B78150900F79CB0 /* Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE7B57C1B4CA01400837609 /* Decodable.swift */; };
 		D0DC54781B78150900F79CB0 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
 		D0DC547A1B78150900F79CB0 /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
@@ -101,6 +102,7 @@
 		8FE7B5731B4C9FB900837609 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8FE7B57C1B4CA01400837609 /* Decodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decodable.swift; sourceTree = "<group>"; };
 		8FFAB8111B7CFA9500E2D724 /* Parse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parse.swift; sourceTree = "<group>"; };
+		ABA8C1211C3CA6BE00B6D86F /* NumberCastable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberCastable.swift; sourceTree = "<group>"; };
 		D0DC546F1B7814D200F79CB0 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF00609D1B5454F400D8CB77 /* DecodableExtensionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodableExtensionTests.swift; sourceTree = "<group>"; };
 		FF0060A01B5464FD00D8CB77 /* MissingKey.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = MissingKey.json; path = JSONExamples/MissingKey.json; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
 				65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */,
 				8F012EF41BB5A920007D0B5C /* Castable.swift */,
+				ABA8C1211C3CA6BE00B6D86F /* NumberCastable.swift */,
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
 				8FFAB8111B7CFA9500E2D724 /* Parse.swift */,
 				8F87BCC31B592F0E00E53A8C /* DecodingError.swift */,
@@ -522,6 +525,7 @@
 			files = (
 				8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */,
 				8FFAB8121B7CFA9500E2D724 /* Parse.swift in Sources */,
+				ABA8C1221C3CA6BE00B6D86F /* NumberCastable.swift in Sources */,
 				8F012EF51BB5A920007D0B5C /* Castable.swift in Sources */,
 				8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */,
 				8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */,
