@@ -58,7 +58,20 @@ class DecodableExtensionTests: XCTestCase {
             XCTFail("should not throw this exception")
         }
     }
-    
+
+    func testSpecificIntDecodable() {
+        //given
+        let anyNumber = NSNumber(longLong: 100)
+        //when
+        let int64 = try! Int64.decode(anyNumber)
+        let int32 = try! Int32.decode(anyNumber)
+        let int16 = try! Int16.decode(anyNumber)
+        //then
+        XCTAssertEqual(int64, anyNumber.longLongValue)
+        XCTAssertEqual(int32, anyNumber.intValue)
+        XCTAssertEqual(int16, anyNumber.shortValue)
+    }
+
     // MARK: Double
     func testDoubleDecodable() {
         //given
