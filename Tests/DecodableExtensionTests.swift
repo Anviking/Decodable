@@ -58,7 +58,7 @@ class DecodableExtensionTests: XCTestCase {
             XCTFail("should not throw this exception")
         }
     }
-    
+
     // MARK: Double
     func testDoubleDecodable() {
         //given
