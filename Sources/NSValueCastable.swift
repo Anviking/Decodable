@@ -17,7 +17,8 @@ extension UInt32: NSValueCastable {}
 extension UInt16: NSValueCastable {}
 extension UInt8: NSValueCastable {}
 
-public protocol NSValueCastable {}
+public protocol NSValueCastable: Decodable {}
+
 extension NSValueCastable {
     private typealias PointerOfSelf = UnsafeMutablePointer<Self> // Why do we have to do this?
     public static func decode(j: AnyObject) throws -> Self {
