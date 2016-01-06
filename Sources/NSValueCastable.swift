@@ -27,6 +27,7 @@ extension NSValueCastable {
         }
         
         let pointer = PointerOfSelf.alloc(1)
+        defer { pointer.dealloc(1) }
         value.getValue(pointer)
         return pointer.move()
     }
