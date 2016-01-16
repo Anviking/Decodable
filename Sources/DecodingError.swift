@@ -69,7 +69,7 @@ public struct MissingKeyError: DecodingError {
     }
 }
 
-public struct RawRepresentableInitializationFailure: DecodingError {
+public struct RawRepresentableInitializationError: DecodingError {
     public let type: Any.Type
     public let rawValue: Any
     
@@ -85,7 +85,7 @@ public struct RawRepresentableInitializationFailure: DecodingError {
     }
     
     public var debugDescription: String {
-        return "RawRepresentableInitializationFailure: \(rawValue) could not be used to initialize \(type). (path: \(path))"
+        return "RawRepresentableInitializationError: \(rawValue) could not be used to initialize \(type). (path: \(path))"
     }
 }
 

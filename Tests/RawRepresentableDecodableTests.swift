@@ -38,7 +38,7 @@ class RawRepresentableDecodableTests: XCTestCase {
         do {
             try json => key as CMYKColor
             XCTFail()
-        } catch let error as RawRepresentableInitializationFailure {
+        } catch let error as RawRepresentableInitializationError {
             // then
             XCTAssertNotNil(error.object)
         } catch {
