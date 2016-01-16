@@ -57,7 +57,7 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
 Then there are also overloads for returning `T?`, `[T?]`, `[T?]?`, `AnyObject`, `[String: T]?` and more. 
 
 ## Errors
-`ErrorTypes` conforming to `DecodingError` will be caught and rethrown in the decoding process, setting metadata as the JSON object that failed decoding, the key path to it, and the root JSON object. There are currently three error-structs conforming to it:
+`ErrorTypes` conforming to `DecodingError` will be caught and rethrown in the decoding process to set metadata, like the JSON object that failed decoding, the key path to it, and the root JSON object. There are currently three error-structs conforming to it:
 - `TypeMismachError`
 - `MissingKeyError`
 - `RawRepresentableInitializationError`
