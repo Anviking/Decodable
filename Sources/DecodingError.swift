@@ -8,14 +8,23 @@
 
 import Foundation
 
+/// Errors conforming DecodingError will be caught and rethrown in the decoding process with updated metadata.
 public protocol DecodingError: ErrorType {
+    /// The JSON key path to the object that failed to be decoded
     var path: [String] {get set}
+
+    /// The object that failed to be decoded
     var object: AnyObject {get}
+    
+    /// The root JSON object for which the `path` can be used to find `object`
     var rootObject: AnyObject? {get set}
+    
+    
     var formattedPath: String {get}
 }
 
 extension DecodingError {
+    /// Represents the path to the object that failed decoding with "." as a separator.
     public var formattedPath: String {
         return path.joinWithSeparator(".")
     }
