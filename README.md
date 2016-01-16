@@ -57,35 +57,24 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
 Then there are also overloads for returning `T?`, `[T?]`, `[T?]?`, `AnyObject`, `[String: T]?` and more. 
 
 ## Errors
-```swift
-public enum DecodingError {
-    public struct Info {
-        var path: [String]
-        var object: AnyObject?
-        var rootObject: AnyObject?
-    }
-    
-    case MissingKey(key: String, info: Info)
-    case TypeMismatch(type: Any.Type, expectedType: Any.Type, info: Info)
-}
-```
-
-Example:
+`ErrorTypes` conforming to `DecodingError` will be caught and rethrown in the decoding process, setting metadata as the JSON object that failed decoding, the key path to it, and the root JSON object. There are currently three error-structs conforming to it:
+- `TypeMismachError`
+- `MissingKeyError`
+- `RawRepresentableInitializationError`
 
 ```swift
 let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
 
 do {
-    let username: String = try dict => "object" => "repo" => "owner" => "lllloogon"
+    let username: String = try dict => "object" => "repo" => "owner" => "name"
 } catch let error {
     print(error)
 }
-
-===============================
-MissingKey at object.repo.owner: lllloogon in {
-    id = 1;
-    login = anviking;
-}
+//
+// MissingKeyError at object.repo.owner: name in {
+//    id = 1;
+//    login = anviking;
+// }
 ```
 
 ## Handling Errors
