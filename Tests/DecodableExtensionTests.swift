@@ -27,7 +27,7 @@ class DecodableExtensionTests: XCTestCase {
         //when
         do {
             try String.decode(anyObject)
-        } catch DecodingError.TypeMismatch {
+        } catch is TypeMismatchError {
             //then
             XCTAssertTrue(true)
         } catch {
@@ -51,7 +51,7 @@ class DecodableExtensionTests: XCTestCase {
         //when
         do {
             try Int.decode(anyObject)
-        } catch DecodingError.TypeMismatch {
+        } catch is TypeMismatchError {
             //then
             XCTAssertTrue(true)
         } catch {
@@ -75,7 +75,7 @@ class DecodableExtensionTests: XCTestCase {
         //when
         do {
             try Double.decode(anyObject)
-        } catch DecodingError.TypeMismatch {
+        } catch is TypeMismatchError {
             //then
             XCTAssertTrue(true)
         } catch {
@@ -99,7 +99,7 @@ class DecodableExtensionTests: XCTestCase {
         //when
         do {
             try Bool.decode(anyObject)
-        } catch DecodingError.TypeMismatch {
+        } catch is TypeMismatchError {
             //then
             XCTAssertTrue(true)
         } catch {

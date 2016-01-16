@@ -14,14 +14,14 @@ class MissingKeyOperatorTests: XCTestCase {
     func testMissingKey() {
         // Should return nil
         let dictionary: NSDictionary = ["key": 3]
-        let result: Int? = try! dictionary =>? "missingKey"
+        let result: Int? = try! dictionary =>? "MissingKeyError"
         XCTAssertEqual(result, nil)
     }
     
     func testNSNull() {
         // Should return nil
         let dictionary: NSDictionary = ["key": NSNull()]
-        let result: Int? = try! dictionary =>? "missingKey"
+        let result: Int? = try! dictionary =>? "MissingKeyError"
         XCTAssertEqual(result, nil)
     }
     
@@ -37,8 +37,8 @@ class MissingKeyOperatorTests: XCTestCase {
         do {
             let _: Int? = try dictionary =>? "key"
             XCTFail("should throw")
-        } catch DecodingError.TypeMismatch(_, let expectedType, _) {
-            XCTAssert(expectedType == Int.self, "\(expectedType) != Int.self")
+        } catch let error as TypeMismatchError {
+            XCTAssert(error.expectedType == Int.self, "\(error.expectedType) != Int.self")
         } catch {
             XCTFail("Should not throw \(error)")
         }

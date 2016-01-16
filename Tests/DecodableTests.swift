@@ -131,9 +131,9 @@ class DecodableTests: XCTestCase {
         // when
         do {
             try Repository.decode(json)
-        } catch DecodingError.MissingKey(let key, _) {
+        } catch let error as MissingKeyError {
             // then
-            XCTAssertEqual(key, "id")
+            XCTAssertEqual(error.key, "id")
         } catch let error as DecodingError {
             XCTFail("it should not throw \(error)")
         } catch {
@@ -148,11 +148,11 @@ class DecodableTests: XCTestCase {
         // when
         do {
             try Repository.decode(json)
-        } catch DecodingError.MissingKey {
+        } catch is MissingKeyError {
             XCTFail("it should not throw this exception")
-        } catch DecodingError.TypeMismatch(_, Int.self, let info) {
+        } catch let error as TypeMismatchError where error.expectedType == Int.self {
             // then
-            XCTAssertEqual(info.formattedPath, "id")
+            XCTAssertEqual(error.formattedPath, "id")
         } catch let error {
             XCTFail("should not throw \(error)")
         }
@@ -165,11 +165,11 @@ class DecodableTests: XCTestCase {
         // when
         do {
             try parse(json, path: ["key"], decode: Repository.decode)
-        } catch DecodingError.MissingKey {
+        } catch is MissingKeyError {
             XCTFail("it should not throw this exception")
-        } catch DecodingError.TypeMismatch(_, Int.self, let info) {
+        } catch let error as TypeMismatchError where error.expectedType == Int.self {
             // then
-            XCTAssertEqual(info.formattedPath, "key.id")
+            XCTAssertEqual(error.formattedPath, "key.id")
         } catch let error {
             XCTFail("should not throw \(error)")
         }
@@ -183,11 +183,11 @@ class DecodableTests: XCTestCase {
         // when
         do {
             try Repository.decode(jsonString)
-        } catch DecodingError.MissingKey {
+        } catch is MissingKeyError {
             XCTFail("it should not throw this exception")
-        } catch DecodingError.TypeMismatch(_, NSDictionary.self, let info) {
-            XCTAssertEqual(info.path, [])
-            XCTAssertNotNil(info.object)
+        } catch let error as TypeMismatchError where error.expectedType == NSDictionary.self {
+            XCTAssertEqual(error.path, [])
+            XCTAssertNotNil(error.object)
         } catch {
             XCTFail("should not throw \(error)")
         }
