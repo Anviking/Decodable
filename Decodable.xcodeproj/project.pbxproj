@@ -194,11 +194,11 @@
 			children = (
 				8FE7B5651B4C9FB900837609 /* Decodable.h */,
 				8F012EEF1BB414D4007D0B5C /* Playground.playground */,
-				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
 				65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */,
-				8F012EF41BB5A920007D0B5C /* Castable.swift */,
 				8F72DC551C3CB8C500A39E10 /* NSValueCastable.swift */,
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
+				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
+				8F012EF41BB5A920007D0B5C /* Castable.swift */,
 				8FFAB8111B7CFA9500E2D724 /* Parse.swift */,
 				8F87BCC31B592F0E00E53A8C /* DecodingError.swift */,
 				8FE7B5671B4C9FB900837609 /* Info.plist */,

@@ -21,7 +21,7 @@ class MissingKeyOperatorTests: XCTestCase {
     func testNSNull() {
         // Should return nil
         let dictionary: NSDictionary = ["key": NSNull()]
-        let result: Int? = try! dictionary =>? "MissingKeyError"
+        let result: Int? = try! dictionary =>? "key"
         XCTAssertEqual(result, nil)
     }
     

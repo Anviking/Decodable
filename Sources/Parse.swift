@@ -35,7 +35,7 @@ func parseAndAcceptMissingKey<T>(json: AnyObject, path: [String], decode: (AnyOb
     guard let object = try catchMissingKeyAndReturnNil({ try parse(json, path) }) else {
         return nil
     }
-    return try catchAndRethrow(json, path) { try decode(object) }
+    return try catchAndRethrow(json, path) { try catchNull(decode)(object) }
 }
 
 
