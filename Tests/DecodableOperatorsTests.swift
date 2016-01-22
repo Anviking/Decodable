@@ -110,7 +110,7 @@ class DecodableOperatorsTests: XCTestCase {
             print(a)
             XCTFail()
         } catch let error as TypeMismatchError {
-            XCTAssertEqual(String(error.recievedType), "__NSCFNumber")
+            XCTAssertEqual(String(error.receivedType), "__NSCFNumber")
         } catch let error {
             XCTFail("should not throw \(error)")
         }
@@ -167,7 +167,7 @@ class DecodableOperatorsTests: XCTestCase {
         } catch let error as TypeMismatchError where error.expectedType == NSDictionary.self {
             // then
             XCTAssertTrue(true)
-            XCTAssertEqual(String(error.recievedType), "__NSCFString")
+            XCTAssertEqual(String(error.receivedType), "__NSCFString")
             XCTAssertEqual(error.formattedPath, "")
             XCTAssertEqual(error.object as? NSString, noDictionary)
         } catch let error {
@@ -204,7 +204,7 @@ class DecodableOperatorsTests: XCTestCase {
         } catch let error as TypeMismatchError where error.expectedType == NSDictionary.self {
             // then
             XCTAssertTrue(true)
-            XCTAssertEqual(String(error.recievedType), "__NSCFString")
+            XCTAssertEqual(String(error.receivedType), "__NSCFString")
             XCTAssertEqual(error.formattedPath, "")
             XCTAssertEqual(error.object as? NSString, noDictionary)
         } catch let error {

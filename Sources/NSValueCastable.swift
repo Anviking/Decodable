@@ -24,7 +24,7 @@ extension NSValueCastable {
     private typealias PointerOfSelf = UnsafeMutablePointer<Self> // Why do we have to do this?
     public static func decode(j: AnyObject) throws -> Self {
         guard let value = j as? NSValue else {
-            throw TypeMismatchError(expectedType: NSValue.self, recievedType: j.dynamicType, object: j)
+            throw TypeMismatchError(expectedType: NSValue.self, receivedType: j.dynamicType, object: j)
         }
         
         let pointer = PointerOfSelf.alloc(1)
