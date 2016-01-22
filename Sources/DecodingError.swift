@@ -32,22 +32,22 @@ extension DecodingError {
 
 public struct TypeMismatchError: DecodingError {
 
-    public init(expectedType: Any.Type, recievedType: Any.Type, object: AnyObject) {
+    public init(expectedType: Any.Type, receivedType: Any.Type, object: AnyObject) {
         self.expectedType = expectedType
-        self.recievedType = recievedType
+        self.receivedType = receivedType
         self.object = object
         self.path = []
     }
 
     public let expectedType: Any.Type
-    public let recievedType: Any.Type
+    public let receivedType: Any.Type
     
     public var path: [String]
     public let object: AnyObject
     public var rootObject: AnyObject?
     
     public var debugDescription: String {
-        return "TypeMismatchError expected: \(expectedType) but \(object) is of type \(recievedType) in \(formattedPath)"    }
+        return "TypeMismatchError expected: \(expectedType) but \(object) is of type \(receivedType) in \(formattedPath)"    }
 }
 
 public struct MissingKeyError: DecodingError {

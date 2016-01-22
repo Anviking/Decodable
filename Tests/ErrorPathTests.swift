@@ -70,7 +70,7 @@ class ErrorPathTests: XCTestCase {
         do {
             try dict => "object" => "repo" => "owner" => "login" as String
         } catch let error as TypeMismatchError {
-            XCTAssertEqual(String(error.recievedType), "__NSCFNumber")
+            XCTAssertEqual(String(error.receivedType), "__NSCFNumber")
             XCTAssertEqual(error.formattedPath, "object.repo.owner.login")
             XCTAssertEqual(error.object as? Int, 0)
         } catch let error {
@@ -86,7 +86,7 @@ class ErrorPathTests: XCTestCase {
             try Tree.decode(dict)
             XCTFail()
         } catch let error as TypeMismatchError {
-            XCTAssertEqual(String(error.recievedType), "__NSCFNumber")
+            XCTAssertEqual(String(error.receivedType), "__NSCFNumber")
             XCTAssertEqual(error.formattedPath, "apples.color.name")
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
