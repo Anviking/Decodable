@@ -13,7 +13,7 @@ public protocol DecodingError: ErrorType {
     /// The JSON key path to the object that failed to be decoded
     var path: [String] {get set}
 
-    /// The object that failed to be decoded
+    /// The JSON object that failed to be decoded
     var object: AnyObject {get}
     
     /// The root JSON object for which the `path` can be used to find `object`

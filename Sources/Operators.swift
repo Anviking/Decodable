@@ -54,17 +54,17 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?]? {
 
 /// Try to decode as NSDictionary. Map the dictionary using the decode function on K and T. Does not handle, or object to duplicate keys (last to be set wins).
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [String: T] {
-    return try parse(lhs, path: rhs, decode: decodeDictionary(String.decode)(elementDecodeClosure: T.decode))
+    return try parse(lhs, path: rhs, decode: decodeDictionary(String.decode, elementDecodeClosure: T.decode))
 }
 
 /// Try to decode as NSDictionary?. Returns nil if object at path is NSNull. Map the dictionary using the decode function on K and T. Does not handle, or object to duplicate keys (last to be set wins).
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [String: T]? {
-    return try parse(lhs, path: rhs, decode: catchNull(decodeDictionary(String.decode)(elementDecodeClosure: T.decode)))
+    return try parse(lhs, path: rhs, decode: catchNull(decodeDictionary(String.decode, elementDecodeClosure: T.decode)))
 }
 
 /// Try to decode as NSDictionary?. Returns nil if object at path is NSNull. Maps key with K.decode. This is a workaround to ensure that there is only one => overload without generic types to avoid ambiguity.
 public func => <K: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: AnyObject]? {
-    return try parse(lhs, path: rhs, decode: catchNull(decodeDictionary(K.decode)(elementDecodeClosure: {$0})))
+    return try parse(lhs, path: rhs, decode: catchNull(decodeDictionary(K.decode, elementDecodeClosure: {$0})))
 }
 
 // MARK: =>?
@@ -95,12 +95,12 @@ public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?]? {
 
 /// Try to decode as NSDictionary?. Returns nil if the object at the keypath is NSNull or the keypath is missing. Maps the dictionary using the decode function on K and T. Does not handle, or object to duplicate keys (last to be set wins).
 public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [String: T]? {
-    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: decodeDictionary(String.decode)(elementDecodeClosure: T.decode) )
+    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: decodeDictionary(String.decode, elementDecodeClosure: T.decode) )
 }
 
 /// Try to decode as NSDictionary?. Returns nil if object at the keypath is NSNull or the keypath is missing. Maps key with K.decode. This is a workaround to ensure that there is only one => overload without generic types to avoid ambiguity.
 public func =>? <K: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: AnyObject]? {
-    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: decodeDictionary(K.decode)(elementDecodeClosure: {$0}))
+    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: decodeDictionary(K.decode, elementDecodeClosure: {$0}))
 }
 
 
