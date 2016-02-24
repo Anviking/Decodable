@@ -62,6 +62,11 @@ public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [String: T]
     return try parse(lhs, path: rhs, decode: catchNull(decodeDictionary(String.decode, elementDecodeClosure: T.decode)))
 }
 
+/// FIXME: Documentation and more overloads
+public func => <K: Decodable, T: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: [T]] {
+    return try parse(lhs, path: rhs, decode: decodeDictionary(K.decode, elementDecodeClosure: decodeArray(T.decode)))
+}
+
 /// Try to decode as NSDictionary?. Returns nil if object at path is NSNull. Maps key with K.decode. This is a workaround to ensure that there is only one => overload without generic types to avoid ambiguity.
 public func => <K: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: AnyObject]? {
     return try parse(lhs, path: rhs, decode: catchNull(decodeDictionary(K.decode, elementDecodeClosure: {$0})))
@@ -102,6 +107,12 @@ public func =>? <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [String: T
 public func =>? <K: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: AnyObject]? {
     return try parseAndAcceptMissingKey(lhs, path: rhs, decode: decodeDictionary(K.decode, elementDecodeClosure: {$0}))
 }
+
+/// FIXME: Documentation and more overloads
+public func =>? <K: Decodable, T: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: [T]]? {
+    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: decodeDictionary(K.decode, elementDecodeClosure: decodeArray(T.decode)))
+}
+
 
 
 // MARK: - JSONPath
