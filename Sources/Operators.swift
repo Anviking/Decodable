@@ -13,64 +13,59 @@ import Foundation
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
-/// Try to decode as T, or throw
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T {
-    return try parse(lhs, path: rhs, decode: T.decode)
+public func => <A: Decodable>(json: AnyObject, path: String) throws -> A?? {
+    return try parse(json, path: path, decode: catchNull(catchNull(A.decode)))
+}
+public func => <A: Decodable>(json: AnyObject, path: String) throws -> [A]? {
+    return try parse(json, path: path, decode: catchNull(decodeArray(A.decode)))
+}
+public func => <A: Decodable, B: Decodable>(json: AnyObject, path: String) throws -> [A: B]? {
+    return try parse(json, path: path, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
+}
+public func => <A: Decodable>(json: AnyObject, path: String) throws -> A? {
+    return try parse(json, path: path, decode: catchNull(A.decode))
+}
+public func => (json: AnyObject, path: String) throws -> AnyObject? {
+    return try parse(json, path: path, decode: catchNull({$0}))
+}
+public func => <A: Decodable>(json: AnyObject, path: String) throws -> [A?] {
+    return try parse(json, path: path, decode: decodeArray(catchNull(A.decode)))
+}
+public func => <A: Decodable>(json: AnyObject, path: String) throws -> [[A]] {
+    return try parse(json, path: path, decode: decodeArray(decodeArray(A.decode)))
+}
+public func => <A: Decodable, B: Decodable>(json: AnyObject, path: String) throws -> [[A: B]] {
+    return try parse(json, path: path, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
+}
+public func => <A: Decodable>(json: AnyObject, path: String) throws -> [A] {
+    return try parse(json, path: path, decode: decodeArray(A.decode))
+}
+public func => (json: AnyObject, path: String) throws -> [AnyObject] {
+    return try parse(json, path: path, decode: decodeArray({$0}))
+}
+public func => <A: Decodable, B: Decodable>(json: AnyObject, path: String) throws -> [A: B?] {
+    return try parse(json, path: path, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))
+}
+public func => <A: Decodable, B: Decodable>(json: AnyObject, path: String) throws -> [A: [B]] {
+    return try parse(json, path: path, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))
+}
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, path: String) throws -> [A: [B: C]] {
+    return try parse(json, path: path, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))
+}
+public func => <A: Decodable, B: Decodable>(json: AnyObject, path: String) throws -> [A: B] {
+    return try parse(json, path: path, decode: decodeDictionary(A.decode, elementDecodeClosure: B.decode))
+}
+public func => <A: Decodable>(json: AnyObject, path: String) throws -> [A: AnyObject] {
+    return try parse(json, path: path, decode: decodeDictionary(A.decode, elementDecodeClosure: {$0}))
+}
+public func => <A: Decodable>(json: AnyObject, path: String) throws -> A {
+    return try parse(json, path: path, decode: A.decode)
+}
+public func => (json: AnyObject, path: String) throws -> AnyObject {
+    return try parse(json, path: path, decode: {$0})
 }
 
-/// Do not decode. Without an inferred return type, this overload will be called.
-public func => (lhs: AnyObject, rhs: String) throws -> AnyObject {
-    return try parse(lhs, path: rhs, decode: { $0 })
-}
 
-/// Try to decode as T, or throw. Will return nil if the object at the keypath is NSNull.
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T? {
-    return try parse(lhs, path: rhs, decode: catchNull(T.decode))
-}
-
-// MARK: Arrays
-
-/// Try to decode as NSArray, and decode each element as T. Will throw if decoding of any element in the array throws. I.e, if one element is faulty the entire array is "thrown away".
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T] {
-    return try parse(lhs, path: rhs, decode: decodeArray(T.decode))
-}
-
-/// Try to decode as NSArray, and decode each element as T. Will return nil if the object at the keypath is NSNull. Will throw if decoding of any element in the array throws. I.e, if one element is faulty the entire array is "thrown away".
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T]? {
-    return try parse(lhs, path: rhs, decode: catchNull(decodeArray(T.decode)))
-}
-
-/// Try to decode as NSArray, and decode each element as T or nil, if the element is NSNull.
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?] {
-    return try parse(lhs, path: rhs, decode: decodeArray(catchNull(T.decode)))
-}
-
-/// Try to decode as NSArray, and decode each element as T or nil, if the element is NSNull, and the entire array will also be nil if the object at the keypath is NSNull.
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [T?]? {
-    return try parse(lhs, path: rhs, decode: catchNull(decodeArray(catchNull(T.decode))))
-}
-
-// MARK: Dictionary 
-
-/// Try to decode as NSDictionary. Map the dictionary using the decode function on K and T. Does not handle, or object to duplicate keys (last to be set wins).
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [String: T] {
-    return try parse(lhs, path: rhs, decode: decodeDictionary(String.decode, elementDecodeClosure: T.decode))
-}
-
-/// Try to decode as NSDictionary?. Returns nil if object at path is NSNull. Map the dictionary using the decode function on K and T. Does not handle, or object to duplicate keys (last to be set wins).
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> [String: T]? {
-    return try parse(lhs, path: rhs, decode: catchNull(decodeDictionary(String.decode, elementDecodeClosure: T.decode)))
-}
-
-/// FIXME: Documentation and more overloads
-public func => <K: Decodable, T: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: [T]] {
-    return try parse(lhs, path: rhs, decode: decodeDictionary(K.decode, elementDecodeClosure: decodeArray(T.decode)))
-}
-
-/// Try to decode as NSDictionary?. Returns nil if object at path is NSNull. Maps key with K.decode. This is a workaround to ensure that there is only one => overload without generic types to avoid ambiguity.
-public func => <K: Decodable>(lhs: AnyObject, rhs: String) throws -> [K: AnyObject]? {
-    return try parse(lhs, path: rhs, decode: catchNull(decodeDictionary(K.decode, elementDecodeClosure: {$0})))
-}
 
 // MARK: =>?
 
