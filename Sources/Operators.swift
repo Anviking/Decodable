@@ -13,32 +13,36 @@ import Foundation
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
-public func => (lhs: AnyObject, rhs: String) throws -> AnyObject {
-    return try parse(lhs, path: [rhs], decode: { $0 })
+public func => (object: AnyObject, rhs: String) throws -> AnyObject {
+    return try parse(object, key: rhs)
 }
 
-public func =>? (lhs: AnyObject, rhs: String) throws -> AnyObject? {
-    return try parseAndAcceptMissingKey(lhs, path: [rhs] , decode: { $0 })
+public func =>? (object: AnyObject, rhs: String) throws -> AnyObject? {
+    return try? parse(object, key: rhs)
 }
 
-public func => (lhs: AnyObject, rhs: [String]) throws -> AnyObject {
-    return try parse(lhs, path: rhs, decode: { $0 })
+public func => (object: AnyObject, rhs: (AnyObject throws -> AnyObject)) throws -> AnyObject {
+    return try rhs(object)
 }
 
-public func =>? (lhs: AnyObject, rhs: [String]) throws -> AnyObject? {
-    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: { $0 })
+public func =>? (object: AnyObject, parseClosure: (AnyObject throws -> AnyObject)) throws -> AnyObject? {
+    return try parseClosure(object)
 }
 
-
-// MARK: - JSONPath
-
-/// Enables parsing nested objects e.g json => "a" => "b"
-public func => (lhs: String, rhs: String) -> [String] {
-    return [lhs, rhs]
+func parse(object: AnyObject, key: String) throws -> AnyObject {
+    return try parse(object, key)
 }
 
-public func => (lhs: String, rhs: [String]) -> [String] {
-    return [lhs] + rhs
+public func => (lhs: String, rhs: String) -> (AnyObject throws -> AnyObject) {
+    return { json in
+        return try parse(parse(json, key: lhs), key: rhs)
+    }
+}
+
+public func => (lhs: String, rhs: (AnyObject throws -> AnyObject)) -> (AnyObject throws -> AnyObject) {
+    return { json in
+        return try rhs(parse(json, key: lhs))
+    }
 }
 
 // MARK: Helpers

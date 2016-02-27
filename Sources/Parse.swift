@@ -9,35 +9,14 @@
 import Foundation
 
 /// Use reduce to traverse through a nested dictionary and find the object at a given path
-func parse(json: AnyObject, _ path: [String]) throws -> AnyObject {
-    return try path.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
-        let currentDict = try NSDictionary.decode(a.object)
-        guard let result = currentDict[NSString(string: key)] else {
-            var error = MissingKeyError(key: key, object: currentDict)
-            error.path = a.currentPath
-            error.rootObject = json
-            throw error
-        }
-        
-        var path = a.currentPath
-        path.append(key)
-        return (result, path)
-    }).object
-}
-
-public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T {
-    let object = try parse(json, path)
-    return try catchAndRethrow(json, path) { try decode(object) }
-}
-
-/// Accepts null and MissingKeyError
-func parseAndAcceptMissingKey<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T? {
-    guard let object = try catchMissingKeyAndReturnNil({ try parse(json, path) }) else {
-        return nil
+func parse(object: AnyObject, _ key: String) throws -> AnyObject {
+    let currentDict = try NSDictionary.decode(object)
+    guard let result = currentDict[NSString(string: key)] else {
+        let error = MissingKeyError(key: key, object: currentDict)
+        throw error
     }
-    return try catchAndRethrow(json, path) { try catchNull(decode)(object) }
+    return result
 }
-
 
 // MARK: - Helpers
 
