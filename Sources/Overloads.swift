@@ -18,7 +18,7 @@
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[A]?]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(catchNull(decodeArray(A.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(catchNull(decodeArray(A.decode)))) }
 }
 
 /**
@@ -42,7 +42,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B]?]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))) }
 }
 
 /**
@@ -66,7 +66,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [A?]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(catchNull(A.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(catchNull(A.decode))) }
 }
 
 /**
@@ -90,7 +90,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[A?]]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(decodeArray(catchNull(A.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(decodeArray(catchNull(A.decode)))) }
 }
 
 /**
@@ -114,7 +114,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[[A]]]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(decodeArray(decodeArray(A.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(decodeArray(decodeArray(A.decode)))) }
 }
 
 /**
@@ -138,7 +138,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: B]]]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))) }
 }
 
 /**
@@ -162,7 +162,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[A]]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(decodeArray(A.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(decodeArray(A.decode))) }
 }
 
 /**
@@ -186,7 +186,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B?]]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))) }
 }
 
 /**
@@ -210,7 +210,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [B]]]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))) }
 }
 
 /**
@@ -234,7 +234,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: C]]]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -258,7 +258,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B]]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))) }
 }
 
 /**
@@ -282,7 +282,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [A]? {
-    return try object |> parse(key) |>  catchNull(decodeArray(A.decode))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeArray(A.decode)) }
 }
 
 /**
@@ -306,7 +306,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B]?]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode)))) }
 }
 
 /**
@@ -330,7 +330,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C]?]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -354,7 +354,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: B?]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))) }
 }
 
 /**
@@ -378,7 +378,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B?]]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode)))) }
 }
 
 /**
@@ -402,7 +402,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[B]]]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode)))) }
 }
 
 /**
@@ -426,7 +426,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: C]]]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -450,7 +450,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B]]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))) }
 }
 
 /**
@@ -474,7 +474,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C?]]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))) }
 }
 
 /**
@@ -498,7 +498,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C]]]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))) }
 }
 
 /**
@@ -522,7 +522,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: D]]]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))) }
 }
 
 /**
@@ -546,7 +546,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: 
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C]]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))) }
 }
 
 /**
@@ -570,7 +570,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: B]? {
-    return try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode))
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)) }
 }
 
 /**
@@ -594,7 +594,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> A? {
-    return try object |> parse(key) |>  catchNull(A.decode)
+    return try propagate(object, key) { try object |> parse(key) |>  catchNull(A.decode) }
 }
 
 /**
@@ -617,7 +617,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[A?]?] {
-    return try object |> parse(key) |>  decodeArray(catchNull(decodeArray(catchNull(A.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(catchNull(decodeArray(catchNull(A.decode)))) }
 }
 
 /**
@@ -639,7 +639,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[[A]]?] {
-    return try object |> parse(key) |>  decodeArray(catchNull(decodeArray(decodeArray(A.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(catchNull(decodeArray(decodeArray(A.decode)))) }
 }
 
 /**
@@ -661,7 +661,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: B]]?] {
-    return try object |> parse(key) |>  decodeArray(catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))) }
 }
 
 /**
@@ -683,7 +683,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[A]?] {
-    return try object |> parse(key) |>  decodeArray(catchNull(decodeArray(A.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(catchNull(decodeArray(A.decode))) }
 }
 
 /**
@@ -705,7 +705,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B?]?] {
-    return try object |> parse(key) |>  decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))) }
 }
 
 /**
@@ -727,7 +727,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [B]]?] {
-    return try object |> parse(key) |>  decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))) }
 }
 
 /**
@@ -749,7 +749,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: C]]?] {
-    return try object |> parse(key) |>  decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -771,7 +771,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B]?] {
-    return try object |> parse(key) |>  decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode))) }
 }
 
 /**
@@ -793,7 +793,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [A?] {
-    return try object |> parse(key) |>  decodeArray(catchNull(A.decode))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(catchNull(A.decode)) }
 }
 
 /**
@@ -815,7 +815,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[[A]?]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(catchNull(decodeArray(A.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(catchNull(decodeArray(A.decode)))) }
 }
 
 /**
@@ -837,7 +837,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: B]?]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))) }
 }
 
 /**
@@ -859,7 +859,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[A?]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(catchNull(A.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(catchNull(A.decode))) }
 }
 
 /**
@@ -881,7 +881,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[[A?]]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(decodeArray(catchNull(A.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(decodeArray(catchNull(A.decode)))) }
 }
 
 /**
@@ -903,7 +903,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[[[A]]]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(decodeArray(decodeArray(A.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(decodeArray(decodeArray(A.decode)))) }
 }
 
 /**
@@ -925,7 +925,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[[A: B]]]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))) }
 }
 
 /**
@@ -947,7 +947,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[[A]]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(decodeArray(A.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(decodeArray(A.decode))) }
 }
 
 /**
@@ -969,7 +969,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: B?]]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))) }
 }
 
 /**
@@ -991,7 +991,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: [B]]]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))) }
 }
 
 /**
@@ -1013,7 +1013,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[[A: [B: C]]]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -1035,7 +1035,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: B]]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))) }
 }
 
 /**
@@ -1057,7 +1057,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [[A]] {
-    return try object |> parse(key) |>  decodeArray(decodeArray(A.decode))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeArray(A.decode)) }
 }
 
 /**
@@ -1079,7 +1079,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [B]?]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode)))) }
 }
 
 /**
@@ -1101,7 +1101,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: C]?]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -1123,7 +1123,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B?]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))) }
 }
 
 /**
@@ -1145,7 +1145,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [B?]]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode)))) }
 }
 
 /**
@@ -1167,7 +1167,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [[B]]]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode)))) }
 }
 
 /**
@@ -1189,7 +1189,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [[B: C]]]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -1211,7 +1211,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [B]]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))) }
 }
 
 /**
@@ -1233,7 +1233,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: C?]]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))) }
 }
 
 /**
@@ -1255,7 +1255,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: [C]]]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))) }
 }
 
 /**
@@ -1277,7 +1277,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: [C: D]]]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))) }
 }
 
 /**
@@ -1299,7 +1299,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: 
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: C]]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))) }
 }
 
 /**
@@ -1321,7 +1321,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B]] {
-    return try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)) }
 }
 
 /**
@@ -1343,7 +1343,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> [A] {
-    return try object |> parse(key) |>  decodeArray(A.decode)
+    return try propagate(object, key) { try object |> parse(key) |>  decodeArray(A.decode) }
 }
 
 /**
@@ -1365,7 +1365,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B?]?] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(catchNull(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(catchNull(B.decode)))) }
 }
 
 /**
@@ -1387,7 +1387,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[B]]?] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeArray(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeArray(B.decode)))) }
 }
 
 /**
@@ -1409,7 +1409,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: C]]?] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -1431,7 +1431,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B]?] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode))) }
 }
 
 /**
@@ -1453,7 +1453,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C?]?] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))) }
 }
 
 /**
@@ -1475,7 +1475,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C]]?] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))) }
 }
 
 /**
@@ -1497,7 +1497,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: D]]?] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))) }
 }
 
 /**
@@ -1519,7 +1519,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: 
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C]?] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode))) }
 }
 
 /**
@@ -1541,7 +1541,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: B?] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)) }
 }
 
 /**
@@ -1563,7 +1563,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[B]?]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeArray(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeArray(B.decode)))) }
 }
 
 /**
@@ -1585,7 +1585,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: C]?]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -1607,7 +1607,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B?]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode))) }
 }
 
 /**
@@ -1629,7 +1629,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[B?]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(catchNull(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(catchNull(B.decode)))) }
 }
 
 /**
@@ -1651,7 +1651,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[[B]]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeArray(B.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeArray(B.decode)))) }
 }
 
 /**
@@ -1673,7 +1673,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[[B: C]]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -1695,7 +1695,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[B]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode))) }
 }
 
 /**
@@ -1717,7 +1717,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: C?]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))) }
 }
 
 /**
@@ -1739,7 +1739,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: [C]]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))) }
 }
 
 /**
@@ -1761,7 +1761,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: [C: D]]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))) }
 }
 
 /**
@@ -1783,7 +1783,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: 
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: C]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))) }
 }
 
 /**
@@ -1805,7 +1805,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)) }
 }
 
 /**
@@ -1827,7 +1827,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C]?]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeArray(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeArray(C.decode)))) }
 }
 
 /**
@@ -1849,7 +1849,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: D]?]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeDictionary(C.decode, elementDecodeClosure: D.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeDictionary(C.decode, elementDecodeClosure: D.decode)))) }
 }
 
 /**
@@ -1871,7 +1871,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: 
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C?]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))) }
 }
 
 /**
@@ -1893,7 +1893,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C?]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(catchNull(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(catchNull(C.decode)))) }
 }
 
 /**
@@ -1915,7 +1915,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [[C]]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeArray(C.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeArray(C.decode)))) }
 }
 
 /**
@@ -1937,7 +1937,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [[C: D]]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeDictionary(C.decode, elementDecodeClosure: D.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeDictionary(C.decode, elementDecodeClosure: D.decode)))) }
 }
 
 /**
@@ -1959,7 +1959,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: 
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))) }
 }
 
 /**
@@ -1981,7 +1981,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: D?]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: catchNull(D.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: catchNull(D.decode)))) }
 }
 
 /**
@@ -2003,7 +2003,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: 
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: [D]]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeArray(D.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeArray(D.decode)))) }
 }
 
 /**
@@ -2025,7 +2025,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: 
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: [D: E]]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeDictionary(D.decode, elementDecodeClosure: E.decode))))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeDictionary(D.decode, elementDecodeClosure: E.decode)))) }
 }
 
 /**
@@ -2047,7 +2047,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decod
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: D]]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))) }
 }
 
 /**
@@ -2069,7 +2069,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: 
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C]] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)) }
 }
 
 /**
@@ -2091,7 +2091,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, par
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: B] {
-    return try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: B.decode)
+    return try propagate(object, key) { try object |> parse(key) |>  decodeDictionary(A.decode, elementDecodeClosure: B.decode) }
 }
 
 /**
@@ -2113,7 +2113,7 @@ public func => <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (An
  - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(object: AnyObject, key: String)throws-> A {
-    return try object |> parse(key) |>  A.decode
+    return try propagate(object, key) { try object |> parse(key) |>  A.decode }
 }
 
 /**
@@ -2134,7 +2134,7 @@ public func => <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throws
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [[A?]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeArray(catchNull(A.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeArray(catchNull(A.decode))))) }
 }
 
 /**
@@ -2154,7 +2154,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [[[A]]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeArray(decodeArray(A.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeArray(decodeArray(A.decode))))) }
 }
 
 /**
@@ -2174,7 +2174,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: B]]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))) }
 }
 
 /**
@@ -2194,7 +2194,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [[A]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeArray(A.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeArray(A.decode)))) }
 }
 
 /**
@@ -2214,7 +2214,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B?]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))) }
 }
 
 /**
@@ -2234,7 +2234,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [B]]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))) }
 }
 
 /**
@@ -2254,7 +2254,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: C]]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))) }
 }
 
 /**
@@ -2274,7 +2274,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))) }
 }
 
 /**
@@ -2294,7 +2294,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [A?]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(catchNull(A.decode)))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(catchNull(A.decode))) }
 }
 
 /**
@@ -2314,7 +2314,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [[[A]?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(catchNull(decodeArray(A.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(catchNull(decodeArray(A.decode))))) }
 }
 
 /**
@@ -2334,7 +2334,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: B]?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))) }
 }
 
 /**
@@ -2354,7 +2354,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [[A?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(catchNull(A.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(catchNull(A.decode)))) }
 }
 
 /**
@@ -2374,7 +2374,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [[[A?]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeArray(catchNull(A.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeArray(catchNull(A.decode))))) }
 }
 
 /**
@@ -2394,7 +2394,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [[[[A]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeArray(decodeArray(A.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeArray(decodeArray(A.decode))))) }
 }
 
 /**
@@ -2414,7 +2414,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[[A: B]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))) }
 }
 
 /**
@@ -2434,7 +2434,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [[[A]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeArray(A.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeArray(A.decode)))) }
 }
 
 /**
@@ -2454,7 +2454,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: B?]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))) }
 }
 
 /**
@@ -2474,7 +2474,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: [B]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))) }
 }
 
 /**
@@ -2494,7 +2494,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[[A: [B: C]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))) }
 }
 
 /**
@@ -2514,7 +2514,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[[A: B]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))) }
 }
 
 /**
@@ -2534,7 +2534,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [[A]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(A.decode)))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeArray(A.decode))) }
 }
 
 /**
@@ -2554,7 +2554,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [B]?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode))))) }
 }
 
 /**
@@ -2574,7 +2574,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: C]?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))) }
 }
 
 /**
@@ -2594,7 +2594,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))) }
 }
 
 /**
@@ -2614,7 +2614,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [B?]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode))))) }
 }
 
 /**
@@ -2634,7 +2634,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [[B]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode))))) }
 }
 
 /**
@@ -2654,7 +2654,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [[B: C]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))) }
 }
 
 /**
@@ -2674,7 +2674,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: [B]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))) }
 }
 
 /**
@@ -2694,7 +2694,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: C?]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))) }
 }
 
 /**
@@ -2714,7 +2714,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: [C]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))) }
 }
 
 /**
@@ -2734,7 +2734,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: [C: D]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))) }
 }
 
 /**
@@ -2754,7 +2754,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object:
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [[A: [B: C]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -2774,7 +2774,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [[A: B]]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))) }
 }
 
 /**
@@ -2794,7 +2794,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> [A]? {
-    return try object |>? parse(key) |>  catchNull(decodeArray(A.decode))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeArray(A.decode)) }
 }
 
 /**
@@ -2814,7 +2814,7 @@ public func =>? <A: Decodable>(object: AnyObject, parseClosure: (AnyObject throw
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B?]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(catchNull(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(catchNull(B.decode))))) }
 }
 
 /**
@@ -2834,7 +2834,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[B]]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeArray(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeArray(B.decode))))) }
 }
 
 /**
@@ -2854,7 +2854,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: C]]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))) }
 }
 
 /**
@@ -2874,7 +2874,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode)))) }
 }
 
 /**
@@ -2894,7 +2894,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C?]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))) }
 }
 
 /**
@@ -2914,7 +2914,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C]]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))) }
 }
 
 /**
@@ -2934,7 +2934,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: D]]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))) }
 }
 
 /**
@@ -2954,7 +2954,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object:
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C]?]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -2974,7 +2974,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: B?]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))) }
 }
 
 /**
@@ -2994,7 +2994,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[B]?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeArray(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeArray(B.decode))))) }
 }
 
 /**
@@ -3014,7 +3014,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: C]?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))) }
 }
 
 /**
@@ -3034,7 +3034,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode)))) }
 }
 
 /**
@@ -3054,7 +3054,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[B?]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(catchNull(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(catchNull(B.decode))))) }
 }
 
 /**
@@ -3074,7 +3074,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[[B]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeArray(B.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeArray(B.decode))))) }
 }
 
 /**
@@ -3094,7 +3094,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[[B: C]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))) }
 }
 
 /**
@@ -3114,7 +3114,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [[B]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode)))) }
 }
 
 /**
@@ -3134,7 +3134,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: C?]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))) }
 }
 
 /**
@@ -3154,7 +3154,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: [C]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))) }
 }
 
 /**
@@ -3174,7 +3174,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: [C: D]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))) }
 }
 
 /**
@@ -3194,7 +3194,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object:
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [[B: C]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))) }
 }
 
 /**
@@ -3214,7 +3214,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: [B]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))) }
 }
 
 /**
@@ -3234,7 +3234,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C]?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeArray(C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeArray(C.decode))))) }
 }
 
 /**
@@ -3254,7 +3254,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: D]?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeDictionary(C.decode, elementDecodeClosure: D.decode))))) }
 }
 
 /**
@@ -3274,7 +3274,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object:
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C?]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))) }
 }
 
 /**
@@ -3294,7 +3294,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C?]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(catchNull(C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(catchNull(C.decode))))) }
 }
 
 /**
@@ -3314,7 +3314,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [[C]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeArray(C.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeArray(C.decode))))) }
 }
 
 /**
@@ -3334,7 +3334,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [[C: D]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeDictionary(C.decode, elementDecodeClosure: D.decode))))) }
 }
 
 /**
@@ -3354,7 +3354,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object:
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))) }
 }
 
 /**
@@ -3374,7 +3374,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: D?]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: catchNull(D.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: catchNull(D.decode))))) }
 }
 
 /**
@@ -3394,7 +3394,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object:
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: [D]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeArray(D.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeArray(D.decode))))) }
 }
 
 /**
@@ -3414,7 +3414,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object:
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: [D: E]]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeDictionary(D.decode, elementDecodeClosure: E.decode)))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeDictionary(D.decode, elementDecodeClosure: E.decode))))) }
 }
 
 /**
@@ -3434,7 +3434,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Deco
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object: AnyObject, key: String)throws-> [A: [B: [C: D]]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))) }
 }
 
 /**
@@ -3454,7 +3454,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(object:
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, key: String)throws-> [A: [B: C]]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))) }
 }
 
 /**
@@ -3474,7 +3474,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(object: AnyObject, pa
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(object: AnyObject, key: String)throws-> [A: B]? {
-    return try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode))
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)) }
 }
 
 /**
@@ -3494,7 +3494,7 @@ public func =>? <A: Decodable, B: Decodable>(object: AnyObject, parseClosure: (A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(object: AnyObject, key: String)throws-> A? {
-    return try object |>? parse(key) |>  catchNull(A.decode)
+    return try propagate(object, key) { try object |>? parse(key) |>  catchNull(A.decode) }
 }
 
 /**

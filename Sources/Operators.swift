@@ -13,12 +13,12 @@ import Foundation
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
-public func => (object: AnyObject, rhs: String) throws -> AnyObject {
-    return try parse(object, key: rhs)
+public func => (object: AnyObject, key: String) throws -> AnyObject {
+    return try parse(object, key)
 }
 
-public func =>? (object: AnyObject, rhs: String) throws -> AnyObject? {
-    return try? parse(object, key: rhs)
+public func =>? (object: AnyObject, key: String) throws -> AnyObject? {
+    return try? parse(object, key)
 }
 
 public func => (object: AnyObject, rhs: (AnyObject throws -> AnyObject)) throws -> AnyObject {
@@ -29,19 +29,19 @@ public func =>? (object: AnyObject, parseClosure: (AnyObject throws -> AnyObject
     return try parseClosure(object)
 }
 
-func parse(object: AnyObject, key: String) throws -> AnyObject {
-    return try parse(object, key)
-}
-
 public func => (lhs: String, rhs: String) -> (AnyObject throws -> AnyObject) {
     return { json in
-        return try parse(parse(json, key: lhs), key: rhs)
+        return try propagate(json, lhs) {
+            try parse(
+                propagate(json, lhs) { try parse(json, lhs
+                    ) }, rhs)
+        }
     }
 }
 
-public func => (lhs: String, rhs: (AnyObject throws -> AnyObject)) -> (AnyObject throws -> AnyObject) {
+public func => (key: String, rhs: (AnyObject throws -> AnyObject)) -> (AnyObject throws -> AnyObject) {
     return { json in
-        return try propagate(json, lhs) { try rhs(parse(json, key: lhs)) }
+        return try propagate(json, key) { try rhs(parse(json, key)) }
     }
 }
 
