@@ -333,6 +333,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 57FCDE621BA283C900130C48 /* Build configuration list for PBXNativeTarget "Decodable-tvOS" */;
 			buildPhases = (
+				8F00624B1C81F6F1007BCF48 /* ShellScript */,
 				57FCDE5A1BA283C900130C48 /* Sources */,
 				57FCDE5F1BA283C900130C48 /* Frameworks */,
 				57FCDE601BA283C900130C48 /* Headers */,
@@ -517,7 +518,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ${SRCROOT}/Generator\nswift Generator.swift";
+			shellScript = "if [ -z \"$CI\" ]; then\n    cd ${SRCROOT}/Generator\n    swift Generator.swift\nfi";
 		};
 		8F0062451C81F348007BCF48 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -530,7 +531,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd ${SRCROOT}/Generator\nswift Generator.swift";
+			shellScript = "if [ -z \"$CI\" ]; then\n    cd ${SRCROOT}/Generator\n    swift Generator.swift\nfi";
 		};
 		8F0062461C81F350007BCF48 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -543,7 +544,20 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "if [ -z \"$CI\" ]; then\n    cd ${SRCROOT}/Generator\n    swift Generator.swift\nfi";
+		};
+		8F00624B1C81F6F1007BCF48 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ -z \"$CI\" ]; then\n    cd ${SRCROOT}/Generator\n    swift Generator.swift\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
