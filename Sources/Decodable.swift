@@ -36,12 +36,6 @@ extension Dictionary where Key: Decodable, Value: Decodable {
     }
 }
 
-extension AnyObject {
-    public static func decode(j: AnyObject) throws -> Dictionary {
-        return try decodeDictionary(Key.decode, elementDecodeClosure: Value.decode)(json: j)
-    }
-}
-
 extension Array where Element: Decodable {
     public static func decode(j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
         if ignoreInvalidObjects {

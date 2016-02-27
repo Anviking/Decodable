@@ -20,6 +20,10 @@
 		65DB18B11C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */; };
 		65DB18B21C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */; };
 		65DB18B31C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */; };
+		8F0062371C81C551007BCF48 /* GeneratedOverloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0062361C81C551007BCF48 /* GeneratedOverloads.swift */; };
+		8F0062381C81C576007BCF48 /* GeneratedOverloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0062361C81C551007BCF48 /* GeneratedOverloads.swift */; };
+		8F0062391C81C577007BCF48 /* GeneratedOverloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0062361C81C551007BCF48 /* GeneratedOverloads.swift */; };
+		8F00623A1C81C578007BCF48 /* GeneratedOverloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0062361C81C551007BCF48 /* GeneratedOverloads.swift */; };
 		8F012EF51BB5A920007D0B5C /* Castable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F012EF41BB5A920007D0B5C /* Castable.swift */; };
 		8F012EF61BB5A920007D0B5C /* Castable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F012EF41BB5A920007D0B5C /* Castable.swift */; };
 		8F012EF71BB5A920007D0B5C /* Castable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F012EF41BB5A920007D0B5C /* Castable.swift */; };
@@ -91,6 +95,7 @@
 		57FCDE651BA283C900130C48 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		651A8C961C29AC5E00DE4D53 /* RawRepresentableDecodableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawRepresentableDecodableTests.swift; sourceTree = "<group>"; };
 		65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawRepresentableDecodable.swift; sourceTree = "<group>"; };
+		8F0062361C81C551007BCF48 /* GeneratedOverloads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneratedOverloads.swift; sourceTree = "<group>"; };
 		8F012EEF1BB414D4007D0B5C /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
 		8F012EF41BB5A920007D0B5C /* Castable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Castable.swift; sourceTree = "<group>"; };
 		8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
@@ -197,6 +202,7 @@
 				65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */,
 				8F72DC551C3CB8C500A39E10 /* NSValueCastable.swift */,
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
+				8F0062361C81C551007BCF48 /* GeneratedOverloads.swift */,
 				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
 				8F012EF41BB5A920007D0B5C /* Castable.swift */,
 				8FFAB8111B7CFA9500E2D724 /* Parse.swift */,
@@ -489,6 +495,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */,
+				8F0062381C81C576007BCF48 /* GeneratedOverloads.swift in Sources */,
 				8FFAB8131B7CFA9500E2D724 /* Parse.swift in Sources */,
 				8F012EF61BB5A920007D0B5C /* Castable.swift in Sources */,
 				17FB810E1B5311840012F106 /* Decodable.swift in Sources */,
@@ -520,6 +527,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57FCDE5B1BA283C900130C48 /* DecodingError.swift in Sources */,
+				8F00623A1C81C578007BCF48 /* GeneratedOverloads.swift in Sources */,
 				57FCDE5C1BA283C900130C48 /* Parse.swift in Sources */,
 				8F012EF81BB5A928007D0B5C /* Castable.swift in Sources */,
 				57FCDE5D1BA283C900130C48 /* Decodable.swift in Sources */,
@@ -538,6 +546,7 @@
 				8F012EF51BB5A920007D0B5C /* Castable.swift in Sources */,
 				8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */,
 				8F72DC561C3CB8C500A39E10 /* NSValueCastable.swift in Sources */,
+				8F0062371C81C551007BCF48 /* GeneratedOverloads.swift in Sources */,
 				8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */,
 				65DB18B01C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 			);
@@ -565,6 +574,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0DC547A1B78150900F79CB0 /* DecodingError.swift in Sources */,
+				8F0062391C81C577007BCF48 /* GeneratedOverloads.swift in Sources */,
 				8FFAB8141B7CFA9500E2D724 /* Parse.swift in Sources */,
 				8F012EF71BB5A920007D0B5C /* Castable.swift in Sources */,
 				D0DC54771B78150900F79CB0 /* Decodable.swift in Sources */,
