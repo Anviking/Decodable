@@ -36,7 +36,7 @@ func == (a: Unique, b: Unique) -> Bool {
 
 indirect enum Decodable {
     case T(Unique)
-//    case AnyObject
+    //    case AnyObject
     case Array(Decodable)
     case Optional(Decodable)
     case Dictionary(Decodable, Decodable)
@@ -45,8 +45,8 @@ indirect enum Decodable {
         switch self {
         case T(let key):
             return "\(provider[key]).decode"
-//        case .AnyObject:
-//            return "{$0}"
+            //        case .AnyObject:
+        //            return "{$0}"
         case Optional(let T):
             return "catchNull(\(T.decodeClosure(provider)))"
         case Array(let T):
@@ -66,8 +66,8 @@ indirect enum Decodable {
             return "[\(T.typeString(provider))]"
         case .Dictionary(let K, let T):
             return "[\(K.typeString(provider)): \(T.typeString(provider))]"
-//        case .AnyObject:
-//            return "AnyObject"
+            //        case .AnyObject:
+            //            return "AnyObject"
         }
     }
     
@@ -90,6 +90,15 @@ indirect enum Decodable {
             return .Optional(self)
         }
     }
+    
+    var doesThrow: Bool {
+        switch self {
+        case .Optional:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 func filterChainedOptionals(type: Decodable) -> Decodable? {
@@ -101,30 +110,68 @@ func filterChainedOptionals(type: Decodable) -> Decodable? {
     }
 }
 
-let a = Decodable.T(Unique()).generateAllPossibleChildren(2).map { type in
-    let provider = TypeNameProvider()
-    let returnType = type.typeString(provider)
-    let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
-    let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
-    return  "public func => \(generics)(json: AnyObject, path: String) throws -> \(returnType) {\n" +
-            "    return try parse(json, path: path.toJSONPathArray(), decode: \(type.decodeClosure(provider)))\n" +
-            "}"
-}.joinWithSeparator("\n")
+struct Behaviour {
+    let throwsIfKeyMissing: Bool
+    let throwsFromDecodeClosure: Bool
+    var doesThrow: Bool { return throwsIfKeyMissing || throwsFromDecodeClosure }
+}
 
-let b = (Decodable.T(Unique())
-    .generateAllPossibleChildren(2)
-    .map { type in
-    let provider = TypeNameProvider()
-    let returnType = type.typeString(provider) + "?"
-    let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
-    let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
-    return  "public func =>? \(generics)(json: AnyObject, path: String) throws -> \(returnType) {\n" +
-            "    return try parseAndAcceptMissingKey(json, path: path.toJSONPathArray(), decode: \(type.decodeClosure(provider)))\n" +
-            "}"
-    }).joinWithSeparator("\n")
+func generateDocumentationComment(behaviour: Behaviour) -> String {
+    var string =
+        "/**\n" +
+            " Retrieves the object at `path` from `json` and decodes it according to the return type\n" +
+            "\n" +
+            " - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.\n" +
+    " - parameter path: A null-separated key-path string. Can be generated with `\"keyA\" => \"keyB\"`\n"
+    switch (behaviour.throwsIfKeyMissing, behaviour.throwsFromDecodeClosure) {
+    case (true, true):
+        string += " - Throws: `MissingKeyError` if `path` does not exist in `json`, or any error thrown in the decode closure.\n"
+    case (true, false):
+        string += " - Throws: `MissingKeyError` if `path` does not exist in `json`.\n"
+    case (false, true):
+        string += " - Throws: Rethrows errors thrown in the decode closure.\n"
+    case (false, false):
+        break
+    }
+    return string + "*/\n"
+}
 
-print(a)
-print(b)
+func generateOverloads(operatorString: String) -> [String] {
+    return (Decodable.T(Unique())
+        .generateAllPossibleChildren(2)
+        .map { type in
+            let provider = TypeNameProvider()
+            let returnType: String
+            let parseCallString: String
+            let behaviour: Behaviour
+            
+            switch operatorString {
+            case "=>":
+                returnType = type.typeString(provider)
+                behaviour = Behaviour(throwsIfKeyMissing: true, throwsFromDecodeClosure: true)
+                parseCallString = "parse"
+            case "=>?":
+                returnType = type.typeString(provider) + "?"
+                behaviour = Behaviour(throwsIfKeyMissing: false, throwsFromDecodeClosure: true)
+                parseCallString = "parseAndAcceptMissingKey"
+            default:
+                fatalError()
+            }
+            
+            let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
+            let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
+            
+            let documentation = generateDocumentationComment(behaviour)
+            let throwKeyword =  behaviour.doesThrow ? " throws " : " "
+            return  documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
+                "    return try \(parseCallString)(json, path: path.toJSONPathArray(), decode: \(type.decodeClosure(provider)))\n" +
+            "}"
+        })
+}
+
+for overload in generateOverloads("=>") + generateOverloads("=>?") {
+    print(overload)
+}
 
 
 
