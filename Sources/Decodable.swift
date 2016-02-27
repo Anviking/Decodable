@@ -32,16 +32,16 @@ extension NSArray {
 
 extension Dictionary where Key: Decodable, Value: Decodable {
     public static func decode(j: AnyObject) throws -> Dictionary {
-        return try decodeDictionary(Key.decode, elementDecodeClosure: Value.decode)(json: j)
+        return try decodeDictionary(Key.decode, elementDecodeClosure: Value.decode)(j)
     }
 }
 
 extension Array where Element: Decodable {
     public static func decode(j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
         if ignoreInvalidObjects {
-            return try decodeArray { try? Element.decode($0) }(json: j).flatMap {$0}
+            return try decodeArray { try? Element.decode($0) }(j).flatMap {$0}
         } else {
-            return try decodeArray(Element.decode)(json: j)
+            return try decodeArray(Element.decode)(j)
         }
     }
 }
@@ -50,14 +50,14 @@ extension Array where Element: Decodable {
 // MARK: Helpers
 
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
-public func decodeArray<T>(elementDecodeClosure: AnyObject throws -> T) -> (json: AnyObject) throws -> [T] {
+public func decodeArray<T>(elementDecodeClosure: AnyObject throws -> T) -> (AnyObject) throws -> [T] {
     return { json in
         return try NSArray.decode(json).map { try elementDecodeClosure($0) }
     }
 }
 
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried. For everyday use, prefer using [K: V].decode(json) instead (declared in Decodable.swift).
-public func decodeDictionary<K,V>(keyDecodeClosure: AnyObject throws -> K, elementDecodeClosure: AnyObject throws -> V) -> (json: AnyObject) throws -> [K: V] {
+public func decodeDictionary<K,V>(keyDecodeClosure: AnyObject throws -> K, elementDecodeClosure: AnyObject throws -> V) -> (AnyObject) throws -> [K: V] {
     return { json in
         var dict = [K: V]()
         for (key, value) in try NSDictionary.decode(json) {
