@@ -106,6 +106,35 @@ indirect enum Decodable {
             return false
         }
     }
+    
+    func generateOverload(operatorString: String) -> String {
+        let provider = TypeNameProvider()
+        let returnType: String
+        let parseCallString: String
+        let behaviour: Behaviour
+        
+        switch operatorString {
+        case "=>":
+            returnType = typeString(provider)
+            behaviour = Behaviour(throwsIfKeyMissing: true, throwsFromDecodeClosure: true)
+            parseCallString = "parse"
+        case "=>?":
+            returnType = typeString(provider) + "?"
+            behaviour = Behaviour(throwsIfKeyMissing: false, throwsFromDecodeClosure: true)
+            parseCallString = "parseAndAcceptMissingKey"
+        default:
+            fatalError()
+        }
+        
+        let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
+        let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
+        
+        let documentation = generateDocumentationComment(behaviour)
+        let throwKeyword =  behaviour.doesThrow ? " throws " : " "
+        return  documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
+            "    return try \(parseCallString)(json, path: path.toJSONPathArray(), decode: \(decodeClosure(provider)))\n" +
+        "}"
+    }
 }
 
 func filterChainedOptionals(type: Decodable) -> Decodable? {
@@ -114,6 +143,15 @@ func filterChainedOptionals(type: Decodable) -> Decodable? {
         return nil
     default:
         return .Optional(type)
+    }
+}
+
+func filterOptionals(type: Decodable) -> Decodable? {
+    switch type {
+    case .Optional:
+        return nil
+    default:
+        return type
     }
 }
 
@@ -143,46 +181,10 @@ func generateDocumentationComment(behaviour: Behaviour) -> String {
     return string + "*/\n"
 }
 
-func generateOverloads(operatorString: String) -> [String] {
-    return (Decodable.T(Unique())
-        .generateAllPossibleChildren(2)
-        .map { type in
-            let provider = TypeNameProvider()
-            let returnType: String
-            let parseCallString: String
-            let behaviour: Behaviour
-            
-            switch operatorString {
-            case "=>":
-                returnType = type.typeString(provider)
-                behaviour = Behaviour(throwsIfKeyMissing: true, throwsFromDecodeClosure: true)
-                parseCallString = "parse"
-            case "=>?":
-                returnType = type.typeString(provider) + "?"
-                behaviour = Behaviour(throwsIfKeyMissing: false, throwsFromDecodeClosure: true)
-                parseCallString = "parseAndAcceptMissingKey"
-            default:
-                fatalError()
-            }
-            
-            let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
-            let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
-            
-            let documentation = generateDocumentationComment(behaviour)
-            let throwKeyword =  behaviour.doesThrow ? " throws " : " "
-            return  documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
-                "    return try \(parseCallString)(json, path: path.toJSONPathArray(), decode: \(type.decodeClosure(provider)))\n" +
-            "}"
-        })
-}
-
-
 let file = "Overloads.swift"
 let fileManager = NSFileManager.defaultManager()
 let sourcesDirectory = fileManager.currentDirectoryPath + "/../Sources"
 
-
-let source = (generateOverloads("=>") + generateOverloads("=>?")).joinWithSeparator("\n")
 
 let filename = "Overloads.swift"
 let path = sourcesDirectory + "/" + filename
@@ -192,12 +194,17 @@ dateFormatter.dateStyle = .ShortStyle
 
 let date = dateFormatter.stringFromDate(NSDate())
 
+let overloads = Decodable.T(Unique()).generateAllPossibleChildren(4)
+let types = overloads.map { $0.typeString(TypeNameProvider()) }
+
 do {
     var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Template.swift")
     template = template.stringByReplacingOccurrencesOfString("{filename}", withString: filename)
     template = template.stringByReplacingOccurrencesOfString("{by}", withString: "Generator.swift")
-    //template = template.stringByReplacingOccurrencesOfString("{date}", withString: date)
-    let text = template + "\n" + source
+    template = template.stringByReplacingOccurrencesOfString("{overloads}", withString: types.joinWithSeparator(", "))
+    template = template.stringByReplacingOccurrencesOfString("{count}", withString: "\(types.count)")
+    let all = overloads.map { $0.generateOverload("=>") } + overloads.flatMap(filterOptionals).map { $0.generateOverload("=>?") }
+    let text = template + "\n" + all.joinWithSeparator("\n")
     try text.writeToFile(sourcesDirectory + "/Overloads.swift", atomically: false, encoding: NSUTF8StringEncoding)
 }
 catch {
