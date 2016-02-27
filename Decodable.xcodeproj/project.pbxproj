@@ -28,6 +28,10 @@
 		8F012EF61BB5A920007D0B5C /* Castable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F012EF41BB5A920007D0B5C /* Castable.swift */; };
 		8F012EF71BB5A920007D0B5C /* Castable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F012EF41BB5A920007D0B5C /* Castable.swift */; };
 		8F012EF81BB5A928007D0B5C /* Castable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F012EF41BB5A920007D0B5C /* Castable.swift */; };
+		8F0291571C82373300D09BA0 /* PrivateOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0291561C82373300D09BA0 /* PrivateOperators.swift */; };
+		8F0291581C82373300D09BA0 /* PrivateOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0291561C82373300D09BA0 /* PrivateOperators.swift */; };
+		8F0291591C82373300D09BA0 /* PrivateOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0291561C82373300D09BA0 /* PrivateOperators.swift */; };
+		8F02915A1C82373300D09BA0 /* PrivateOperators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F0291561C82373300D09BA0 /* PrivateOperators.swift */; };
 		8F4B52651B5BAA5700FDCBA7 /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */; };
 		8F4B52661B5BAA5700FDCBA7 /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */; };
 		8F53521D1BE4112900E3563A /* DictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F53521C1BE4112900E3563A /* DictionaryTests.swift */; };
@@ -100,6 +104,7 @@
 		8F0062491C81F4A2007BCF48 /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		8F012EEF1BB414D4007D0B5C /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
 		8F012EF41BB5A920007D0B5C /* Castable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Castable.swift; sourceTree = "<group>"; };
+		8F0291561C82373300D09BA0 /* PrivateOperators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivateOperators.swift; sourceTree = "<group>"; };
 		8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
 		8F53521C1BE4112900E3563A /* DictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTests.swift; sourceTree = "<group>"; };
 		8F72DC551C3CB8C500A39E10 /* NSValueCastable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSValueCastable.swift; sourceTree = "<group>"; };
@@ -215,6 +220,7 @@
 				65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */,
 				8F72DC551C3CB8C500A39E10 /* NSValueCastable.swift */,
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
+				8F0291561C82373300D09BA0 /* PrivateOperators.swift */,
 				8F00623E1C81EF61007BCF48 /* Overloads.swift */,
 				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
 				8F012EF41BB5A920007D0B5C /* Castable.swift */,
@@ -571,6 +577,7 @@
 				8F012EF61BB5A920007D0B5C /* Castable.swift in Sources */,
 				17FB810E1B5311840012F106 /* Decodable.swift in Sources */,
 				17FB810F1B5311870012F106 /* Operators.swift in Sources */,
+				8F0291581C82373300D09BA0 /* PrivateOperators.swift in Sources */,
 				8F0062401C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B11C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 				8F72DC571C3CB8C800A39E10 /* NSValueCastable.swift in Sources */,
@@ -603,6 +610,7 @@
 				8F012EF81BB5A928007D0B5C /* Castable.swift in Sources */,
 				57FCDE5D1BA283C900130C48 /* Decodable.swift in Sources */,
 				57FCDE5E1BA283C900130C48 /* Operators.swift in Sources */,
+				8F02915A1C82373300D09BA0 /* PrivateOperators.swift in Sources */,
 				8F0062421C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B31C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 				8F72DC591C3CB8C900A39E10 /* NSValueCastable.swift in Sources */,
@@ -618,6 +626,7 @@
 				8F012EF51BB5A920007D0B5C /* Castable.swift in Sources */,
 				8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */,
 				8F72DC561C3CB8C500A39E10 /* NSValueCastable.swift in Sources */,
+				8F0291571C82373300D09BA0 /* PrivateOperators.swift in Sources */,
 				8F00623F1C81EF61007BCF48 /* Overloads.swift in Sources */,
 				8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */,
 				65DB18B01C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
@@ -650,6 +659,7 @@
 				8F012EF71BB5A920007D0B5C /* Castable.swift in Sources */,
 				D0DC54771B78150900F79CB0 /* Decodable.swift in Sources */,
 				D0DC54781B78150900F79CB0 /* Operators.swift in Sources */,
+				8F0291591C82373300D09BA0 /* PrivateOperators.swift in Sources */,
 				8F0062411C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B21C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 				8F72DC581C3CB8C900A39E10 /* NSValueCastable.swift in Sources */,

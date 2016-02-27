@@ -2,6 +2,22 @@
 
 import UIKit
 
+infix operator |>   { precedence 50 associativity left }
+infix operator |>?  { precedence 50 associativity left }
+infix operator |>*  { precedence 50 associativity left }
+
+public func |> <T,U>(lhs: T, rhs: T -> U) -> U {
+    return rhs(lhs)
+}
+
+public func |> <T,U>(lhs: T, rhs: T throws -> U) throws -> U {
+    return try rhs(lhs)
+}
+
+public func |>? <T,U>(lhs: T?, rhs: T -> U) -> U? {
+    return lhs.map(rhs)
+}
+
 extension NSDictionary {
     public static func decode(j: AnyObject) throws -> NSDictionary {
         guard let result = j as? NSDictionary else {
@@ -30,7 +46,7 @@ public func => (lhs: String, rhs: (AnyObject throws -> AnyObject)) -> (AnyObject
 }
 
 public func => (lhs: AnyObject, rhs: (AnyObject throws -> AnyObject)) throws -> AnyObject {
-    return try rhs(lhs)
+    return try lhs |> rhs
 }
 
 let dict: NSDictionary = ["a": ["b": 2]]

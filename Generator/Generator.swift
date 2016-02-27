@@ -112,16 +112,19 @@ indirect enum Decodable {
         let returnType: String
         let parseCallString: String
         let behaviour: Behaviour
+        let decode: String
         
         switch operatorString {
         case "=>":
             returnType = typeString(provider)
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parse"
+            parseCallString = "|>"
+            decode = decodeClosure(provider)
         case "=>?":
             returnType = typeString(provider) + "?"
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parseAndAcceptMissingKey"
+            parseCallString = "|>?"
+            decode = Decodable.Optional(self).decodeClosure(provider)
         default:
             fatalError()
         }
@@ -132,9 +135,9 @@ indirect enum Decodable {
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
         return [documentation + "public func \(operatorString) \(generics)(object: AnyObject, key: String)\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(decodeClosure(provider))(parse(object, key))\n" +
+            "    return try object \(parseCallString) parse(key) |>  \(decode)\n" +
             "}", documentation + "public func \(operatorString) \(generics)(object: AnyObject, parseClosure: (AnyObject throws -> AnyObject))\(throwKeyword)-> \(returnType) {\n" +
-                "    return try \(decodeClosure(provider))(parseClosure(object))\n" +
+                "    return try \(decode)(parseClosure(object))\n" +
             "}"
         ]
     }

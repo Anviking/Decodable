@@ -18,6 +18,17 @@ func parse(object: AnyObject, _ key: String) throws -> AnyObject {
     return result
 }
 
+func parse(key: String) -> (AnyObject throws -> AnyObject) {
+    return { object in
+        let currentDict = try NSDictionary.decode(object)
+        guard let result = currentDict[NSString(string: key)] else {
+            let error = MissingKeyError(key: key, object: currentDict)
+            throw error
+        }
+        return result
+    }
+}
+
 // MARK: - Helpers
 
 func catchMissingKeyAndReturnNil<T>(closure: Void throws -> T) throws -> T? {
@@ -28,12 +39,12 @@ func catchMissingKeyAndReturnNil<T>(closure: Void throws -> T) throws -> T? {
     }
 }
 
-func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws -> T) throws -> T {
+func propagate<T>(json: AnyObject, _ path: String, block: Void throws -> T) throws -> T {
     do {
         return try block()
     } catch let error as DecodingError {
         var error = error
-        error.path = path + error.path
+        error.path = [path] + error.path
         error.rootObject = json
         throw error
     } catch let error {

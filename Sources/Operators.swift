@@ -41,7 +41,7 @@ public func => (lhs: String, rhs: String) -> (AnyObject throws -> AnyObject) {
 
 public func => (lhs: String, rhs: (AnyObject throws -> AnyObject)) -> (AnyObject throws -> AnyObject) {
     return { json in
-        return try rhs(parse(json, key: lhs))
+        return try propagate(json, lhs) { try rhs(parse(json, key: lhs)) }
     }
 }
 
