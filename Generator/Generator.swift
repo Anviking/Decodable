@@ -107,7 +107,7 @@ indirect enum Decodable {
         }
     }
     
-    func generateOverload(operatorString: String) -> String {
+    func generateOverloads(operatorString: String) -> [String] {
         let provider = TypeNameProvider()
         let returnType: String
         let parseCallString: String
@@ -131,9 +131,12 @@ indirect enum Decodable {
         
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
-        return  documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(parseCallString)(json, path: path.toJSONPathArray(), decode: \(decodeClosure(provider)))\n" +
-        "}"
+        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
+            "    return try \(parseCallString)(json, path: [path], decode: \(decodeClosure(provider)))\n" +
+            "}", documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: [String])\(throwKeyword)-> \(returnType) {\n" +
+                "    return try \(parseCallString)(json, path: path, decode: \(decodeClosure(provider)))\n" +
+            "}"
+        ]
     }
 }
 
@@ -198,14 +201,14 @@ let date = dateFormatter.stringFromDate(NSDate())
 
 let overloads = Decodable.T(Unique()).generateAllPossibleChildren(4)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
+let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).flatMap { $0.generateOverloads("=>?") }
 
 do {
     var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Template.swift")
     template = template.stringByReplacingOccurrencesOfString("{filename}", withString: filename)
     template = template.stringByReplacingOccurrencesOfString("{by}", withString: "Generator.swift")
     template = template.stringByReplacingOccurrencesOfString("{overloads}", withString: types.joinWithSeparator(", "))
-    template = template.stringByReplacingOccurrencesOfString("{count}", withString: "\(types.count)")
-    let all = overloads.map { $0.generateOverload("=>") } + overloads.flatMap(filterOptionals).map { $0.generateOverload("=>?") }
+    template = template.stringByReplacingOccurrencesOfString("{count}", withString: "\(all.count)")
     let text = template + "\n" + all.joinWithSeparator("\n\n")
     try text.writeToFile(sourcesDirectory + "/Overloads.swift", atomically: false, encoding: NSUTF8StringEncoding)
 }

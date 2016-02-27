@@ -6,5 +6,5 @@
 //  Copyright © 2016 anviking. All rights reserved.
 //
 
-// The following {count} overloads were generated (not including =>?)
+// {count} overloads were generated with the following return types:
 // {overloads}
