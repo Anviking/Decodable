@@ -63,7 +63,7 @@ class DecodableOperatorsTests: XCTestCase {
         let value: NSDictionary = ["aKey" : "value"]
         let dictionary: NSDictionary = [key: [key: value]]
         // when
-        let result: [String: AnyObject]? = try! dictionary => key => key
+        let result: [String: AnyObject]? = try! dictionary => key => key as! [String : AnyObject]
         // then
         XCTAssertEqual(result, value)
     }
