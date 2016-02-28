@@ -28,7 +28,7 @@ public struct IntermediateResult {
             return try _parse(key)
         } catch let error as DecodingError {
             var error = error
-            error.path = path
+            error.path = path + error.path
             error.rootObject = rootObject
             throw error
         } catch let error {
@@ -45,7 +45,7 @@ public struct IntermediateResult {
             return try decodeClosure(self.object)
         } catch let error as DecodingError {
             var error = error
-            error.path = path
+            error.path = path + error.path
             error.rootObject = rootObject
             throw error
         } catch let error {
