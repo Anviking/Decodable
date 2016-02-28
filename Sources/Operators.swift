@@ -14,11 +14,11 @@ infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
 public func => (object: AnyObject, key: String) throws -> AnyObject {
-    return try parse(object, key)
+    return try IntermediateResult(object: object, rootObject: object, path: []).parse(key).object
 }
 
 public func =>? (object: AnyObject, key: String) throws -> AnyObject? {
-    return try? parse(object, key)
+    return IntermediateResult(object: object, rootObject: object, path: []).parseSafely(key)?.object
 }
 
 
@@ -33,13 +33,13 @@ public func =>? (object: AnyObject, parseClosure: (IntermediateResult throws -> 
 
 public func => (lhs: String, rhs: String) -> (IntermediateResult throws -> IntermediateResult) {
     return { object in
-        return try object.parseKey(lhs).parseKey(rhs)
+        return try object.parse(lhs).parse(rhs)
     }
 }
 
 public func => (key: String, rhs: (IntermediateResult throws -> IntermediateResult)) -> (IntermediateResult throws -> IntermediateResult) {
     return { object in
-        return try rhs(object.parseKey(key))
+        return try rhs(object.parse(key))
     }
 }
 

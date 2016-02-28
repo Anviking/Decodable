@@ -14,9 +14,18 @@ public struct IntermediateResult {
     public var rootObject: AnyObject
     public var path: [String]
     
-    func parseKey(key: String) throws -> IntermediateResult {
+    private func _parse(key: String) throws -> IntermediateResult {
+        let currentDict = try NSDictionary.decode(object)
+        guard let result = currentDict[NSString(string: key)] else {
+            let error = MissingKeyError(key: key, object: currentDict)
+            throw error
+        }
+        return IntermediateResult(object: result, rootObject: rootObject, path: path + [key])
+    }
+    
+    func parse(key: String) throws -> IntermediateResult {
         do {
-            return try IntermediateResult(object: parse(object, key), rootObject: rootObject, path: path + [key])
+            return try _parse(key)
         } catch let error as DecodingError {
             var error = error
             error.path = path
@@ -28,7 +37,7 @@ public struct IntermediateResult {
     }
     
     func parseSafely(key: String) -> IntermediateResult? {
-        return try? IntermediateResult(object: parse(object, key), rootObject: rootObject, path: path + [key])
+        return try? _parse(key)
     }
     
     func decode<T>(decodeClosure: AnyObject throws -> T) throws -> T {

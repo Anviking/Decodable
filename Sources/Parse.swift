@@ -9,14 +9,6 @@
 import Foundation
 
 /// Use reduce to traverse through a nested dictionary and find the object at a given path
-func parse(object: AnyObject, _ key: String) throws -> AnyObject {
-    let currentDict = try NSDictionary.decode(object)
-    guard let result = currentDict[NSString(string: key)] else {
-        let error = MissingKeyError(key: key, object: currentDict)
-        throw error
-    }
-    return result
-}
 
 func parse(key: String) -> (AnyObject throws -> AnyObject) {
     return { object in

@@ -118,7 +118,7 @@ indirect enum Decodable {
         case "=>":
             returnType = typeString(provider)
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parseKey(key)"
+            parseCallString = "parse(key)"
             decode = decodeClosure(provider)
         case "=>?":
             returnType = typeString(provider) + "?"
