@@ -98,7 +98,7 @@ indirect enum Decodable {
         }
     }
     
-    var doesThrow: Bool {
+    var isOptional: Bool {
         switch self {
         case .Optional:
             return true
@@ -107,7 +107,7 @@ indirect enum Decodable {
         }
     }
     
-    func generateOverload(operatorString: String) -> String {
+    func generateOverloads(operatorString: String) -> [String] {
         let provider = TypeNameProvider()
         let returnType: String
         let parseCallString: String
@@ -116,11 +116,11 @@ indirect enum Decodable {
         switch operatorString {
         case "=>":
             returnType = typeString(provider)
-            behaviour = Behaviour(throwsIfKeyMissing: true, throwsFromDecodeClosure: true)
+            behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
             parseCallString = "parse"
         case "=>?":
             returnType = typeString(provider) + "?"
-            behaviour = Behaviour(throwsIfKeyMissing: false, throwsFromDecodeClosure: true)
+            behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
             parseCallString = "parseAndAcceptMissingKey"
         default:
             fatalError()
@@ -130,10 +130,13 @@ indirect enum Decodable {
         let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
         
         let documentation = generateDocumentationComment(behaviour)
-        let throwKeyword =  behaviour.doesThrow ? " throws " : " "
-        return  documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(parseCallString)(json, path: path.toJSONPathArray(), decode: \(decodeClosure(provider)))\n" +
-        "}"
+        let throwKeyword =  "throws"
+        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
+            "    return try \(parseCallString)(json, path: [path], decode: \(decodeClosure(provider)))\n" +
+            "}", documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: [String])\(throwKeyword)-> \(returnType) {\n" +
+                "    return try \(parseCallString)(json, path: path, decode: \(decodeClosure(provider)))\n" +
+            "}"
+        ]
     }
 }
 
@@ -157,8 +160,8 @@ func filterOptionals(type: Decodable) -> Decodable? {
 
 struct Behaviour {
     let throwsIfKeyMissing: Bool
+    let throwsIfNull: Bool
     let throwsFromDecodeClosure: Bool
-    var doesThrow: Bool { return throwsIfKeyMissing || throwsFromDecodeClosure }
 }
 
 func generateDocumentationComment(behaviour: Behaviour) -> String {
@@ -168,14 +171,16 @@ func generateDocumentationComment(behaviour: Behaviour) -> String {
             "\n" +
             " - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.\n" +
     " - parameter path: A null-separated key-path string. Can be generated with `\"keyA\" => \"keyB\"`\n"
-    switch (behaviour.throwsIfKeyMissing, behaviour.throwsFromDecodeClosure) {
+    switch (behaviour.throwsIfKeyMissing, behaviour.throwsIfNull) {
     case (true, true):
-        string += " - Throws: `MissingKeyError` if `path` does not exist in `json`, or any error thrown in the decode closure.\n"
+        string += " - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure\n"
     case (true, false):
-        string += " - Throws: `MissingKeyError` if `path` does not exist in `json`.\n"
-    case (false, true):
-        string += " - Throws: Rethrows errors thrown in the decode closure.\n"
+        string += " - Returns: nil if the pre-decoded object at `path` is `NSNull`.\n"
+        string += " - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure\n"
     case (false, false):
+        string += " - Returns: nil if `path` does not exist in `json`, or if that object is `NSNull`.\n"
+        string += " - Throws: `TypeMismatchError` or any other error thrown in the decode-closure\n"
+    case (false, true):
         break
     }
     return string + "*/\n"
@@ -196,15 +201,15 @@ let date = dateFormatter.stringFromDate(NSDate())
 
 let overloads = Decodable.T(Unique()).generateAllPossibleChildren(4)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
+let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).flatMap { $0.generateOverloads("=>?") }
 
 do {
     var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Template.swift")
     template = template.stringByReplacingOccurrencesOfString("{filename}", withString: filename)
     template = template.stringByReplacingOccurrencesOfString("{by}", withString: "Generator.swift")
     template = template.stringByReplacingOccurrencesOfString("{overloads}", withString: types.joinWithSeparator(", "))
-    template = template.stringByReplacingOccurrencesOfString("{count}", withString: "\(types.count)")
-    let all = overloads.map { $0.generateOverload("=>") } + overloads.flatMap(filterOptionals).map { $0.generateOverload("=>?") }
-    let text = template + "\n" + all.joinWithSeparator("\n")
+    template = template.stringByReplacingOccurrencesOfString("{count}", withString: "\(all.count)")
+    let text = template + "\n" + all.joinWithSeparator("\n\n")
     try text.writeToFile(sourcesDirectory + "/Overloads.swift", atomically: false, encoding: NSUTF8StringEncoding)
 }
 catch {
