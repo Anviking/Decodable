@@ -13,32 +13,34 @@ import Foundation
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
-public func => (lhs: AnyObject, rhs: String) throws -> AnyObject {
-    return try parse(lhs, path: [rhs], decode: { $0 })
+public func => (object: AnyObject, key: String) throws -> AnyObject {
+    return try IntermediateResult(object: object, rootObject: object, path: []).parse(key).object
 }
 
-public func =>? (lhs: AnyObject, rhs: String) throws -> AnyObject? {
-    return try parseAndAcceptMissingKey(lhs, path: [rhs] , decode: { $0 })
-}
-
-public func => (lhs: AnyObject, rhs: [String]) throws -> AnyObject {
-    return try parse(lhs, path: rhs, decode: { $0 })
-}
-
-public func =>? (lhs: AnyObject, rhs: [String]) throws -> AnyObject? {
-    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: { $0 })
+public func =>? (object: AnyObject, key: String) throws -> AnyObject? {
+    return IntermediateResult(object: object, rootObject: object, path: []).parseSafely(key)?.object
 }
 
 
-// MARK: - JSONPath
 
-/// Enables parsing nested objects e.g json => "a" => "b"
-public func => (lhs: String, rhs: String) -> [String] {
-    return [lhs, rhs]
+public func => (object: AnyObject, rhs: (IntermediateResult throws -> IntermediateResult)) throws -> AnyObject {
+    return try rhs(IntermediateResult(object: object, rootObject: object, path: [])).object
 }
 
-public func => (lhs: String, rhs: [String]) -> [String] {
-    return [lhs] + rhs
+public func =>? (object: AnyObject, parseClosure: (IntermediateResult throws -> IntermediateResult)) throws -> AnyObject? {
+    return try parseClosure(IntermediateResult(object: object, rootObject: object, path: [])).object
+}
+
+public func => (lhs: String, rhs: String) -> (IntermediateResult throws -> IntermediateResult) {
+    return { object in
+        return try object.parse(lhs).parse(rhs)
+    }
+}
+
+public func => (key: String, rhs: (IntermediateResult throws -> IntermediateResult)) -> (IntermediateResult throws -> IntermediateResult) {
+    return { object in
+        return try rhs(object.parse(key))
+    }
 }
 
 // MARK: Helpers

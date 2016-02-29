@@ -112,16 +112,19 @@ indirect enum Decodable {
         let returnType: String
         let parseCallString: String
         let behaviour: Behaviour
+        let decode: String
         
         switch operatorString {
         case "=>":
             returnType = typeString(provider)
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parse"
+            parseCallString = "parse(key)"
+            decode = decodeClosure(provider)
         case "=>?":
             returnType = typeString(provider) + "?"
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parseAndAcceptMissingKey"
+            parseCallString = "parseSafely(key)?"
+            decode = Decodable.Optional(self).decodeClosure(provider)
         default:
             fatalError()
         }
@@ -131,10 +134,10 @@ indirect enum Decodable {
         
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
-        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(parseCallString)(json, path: [path], decode: \(decodeClosure(provider)))\n" +
-            "}", documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: [String])\(throwKeyword)-> \(returnType) {\n" +
-                "    return try \(parseCallString)(json, path: path, decode: \(decodeClosure(provider)))\n" +
+        return [documentation + "public func \(operatorString) \(generics)(object: AnyObject, key: String)\(throwKeyword)-> \(returnType) {\n" +
+            "    return try IntermediateResult(object: object, rootObject: object, path: []).\(parseCallString).decode(\(decode))\n" +
+            "}", documentation + "public func \(operatorString) \(generics)(object: AnyObject, parseClosure: (IntermediateResult throws -> IntermediateResult))\(throwKeyword)-> \(returnType) {\n" +
+                "    return try parseClosure(IntermediateResult(object: object, rootObject: object, path: [])).decode(\(decode))\n" +
             "}"
         ]
     }
