@@ -41,7 +41,7 @@ class ErrorPathTests: XCTestCase {
         let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
         
         do {
-            try dict => "object" => "repo" => "owner" => "oops" as String
+            let _: String = try dict => "object" => "repo" => "owner" => "oops"
         } catch let error as MissingKeyError {
             XCTAssertEqual(error.formattedPath, "object.repo.owner")
         } catch let error {

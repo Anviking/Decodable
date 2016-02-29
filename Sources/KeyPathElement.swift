@@ -9,16 +9,20 @@
 import Foundation
 
 // Keep it simple for now
-public struct KeyPathElement {
+public struct OptionalKey {
     let key: String
     let optional: Bool
 }
 
-public func => (lhs: String, rhs: String) -> [KeyPathElement] {
-    return [lhs, rhs].map { KeyPathElement(key: $0, optional: false) }
+public func => (lhs: [OptionalKey], rhs: String) -> [OptionalKey] {
+    return lhs + [OptionalKey(key: rhs, optional: false)]
 }
 
-public func => (lhs: String, rhs: [KeyPathElement]) -> [KeyPathElement] {
-    return [KeyPathElement(key: lhs, optional: false)] + rhs
+public func =>? (lhs: [OptionalKey], rhs: String) -> [OptionalKey] {
+    return lhs + [OptionalKey(key: rhs, optional: true)]
+}
+
+public func => (lhs: [String], rhs: String) -> [String] {
+    return lhs + [rhs]
 }
 
