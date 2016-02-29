@@ -1,5 +1,5 @@
 //
-//  KeyPathElement.swift
+// OptionalKey.swift
 //  Decodable
 //
 //  Created by Johannes Lund on 2016-02-29.
@@ -9,20 +9,76 @@
 import Foundation
 
 // Keep it simple for now
-public struct OptionalKey {
+
+private protocol KeyType {
+    var key: String {get}
+}
+
+private protocol OptionalKeyType {
+    var key: String {get}
+    var optional: Bool {get set}
+}
+
+public struct Key: KeyType {
     let key: String
-    let optional: Bool
 }
 
-public func => (lhs: [OptionalKey], rhs: String) -> [OptionalKey] {
-    return lhs + [OptionalKey(key: rhs, optional: false)]
+public struct OptionalKey: OptionalKeyType {
+    var key: String
+    var optional: Bool
 }
 
-public func =>? (lhs: [OptionalKey], rhs: String) -> [OptionalKey] {
-    return lhs + [OptionalKey(key: rhs, optional: true)]
+private func makeOptional(key: Key) -> OptionalKey {
+    return OptionalKey(key: key.key, optional: false)
 }
 
-public func => (lhs: [String], rhs: String) -> [String] {
+extension Array where Element: OptionalKeyType {
+    private func markFirstElement(optional: Bool) -> Array {
+        guard var first = first else {
+            return self
+        }
+        first.optional = optional
+        return [first] + dropLast()
+    }
+}
+
+extension Array where Element: KeyType {
+    private func markFirstElement(optional: Bool) -> [OptionalKey] {
+        guard let first = first else {
+            return []
+        }
+        return [OptionalKey(key: first.key, optional: true)] + dropLast().map { OptionalKey(key: $0.key, optional: false) }
+    }
+}
+
+
+public func => (lhs: String, rhs: String) -> [Key] {
+    return [Key(key: lhs), Key(key: rhs)]
+}
+
+public func =>? (lhs: String, rhs: String) -> [OptionalKey] {
+    return [OptionalKey(key: lhs, optional: false), OptionalKey(key: rhs, optional: true)]
+}
+
+
+public func => (lhs: String, rhs: [OptionalKey]) -> [OptionalKey] {
+    return [OptionalKey(key: lhs, optional: false)] + rhs.markFirstElement(false)
+}
+
+public func => (lhs: String, rhs: [Key]) -> [Key] {
+    return [Key(key: lhs)] + rhs
+}
+
+public func =>? (lhs: String, rhs: [OptionalKey]) -> [OptionalKey] {
+    return [OptionalKey(key: lhs, optional: true)] + rhs.markFirstElement(true)
+}
+
+public func =>? (lhs: String, rhs: [Key]) -> [OptionalKey] {
+    return [OptionalKey(key: lhs, optional: true)] + rhs.markFirstElement(true)
+}
+
+
+public func => (lhs: [Key], rhs: Key) -> [Key] {
     return lhs + [rhs]
 }
 

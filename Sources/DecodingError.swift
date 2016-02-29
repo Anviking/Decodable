@@ -58,10 +58,10 @@ public struct MissingKeyError: DecodingError {
     public let object: AnyObject
     public var rootObject: AnyObject?
     
-    public init(key: String, object: AnyObject) {
+    public init(key: String, object: AnyObject, path: [String] = []) {
         self.key = key
         self.object = object
-        self.path = []
+        self.path = path
     }
     
     public var debugDescription: String {
