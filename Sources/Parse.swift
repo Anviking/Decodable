@@ -46,6 +46,8 @@ func parseOptionally(json: AnyObject, _ path: [OptionalKey]) throws -> AnyObject
         return json
     }
     
+    print(path)
+    
     var path = path
     path.removeLast()
     
@@ -57,7 +59,7 @@ func parseOptionally(json: AnyObject, _ path: [OptionalKey]) throws -> AnyObject
             if key.optional {
                 return nil
             } else {
-                throw MissingKeyError(key: key.key, object: object)
+                throw MissingKeyError(key: key.key, object: object, path: currentPath)
             }
         }
         return result
@@ -82,6 +84,10 @@ public func parse<T>(json: AnyObject, path: [Key], decode: (AnyObject throws -> 
 public func parseOptionally<T>(json: AnyObject, path: [OptionalKey], decode: (AnyObject throws -> T?)) throws -> T? {
     guard let object = try parseOptionally(json, path) else {
         return nil
+    }
+    let lastPathIsOptional = path.last?.optional ?? false
+    if lastPathIsOptional {
+        return try catchAndRethrow(json, path.map {$0.key}) { try catchNull(decode)(object) }
     }
     return try catchAndRethrow(json, path.map {$0.key}) { try decode(object) }
 }

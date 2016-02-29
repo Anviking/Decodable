@@ -137,10 +137,18 @@ indirect enum Decodable {
         
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
-        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(parseCallString)(json, path: [\(pathCallString)], decode: \(decodeClosure(provider)))\n" +
-            "}", documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: [\(path)])\(throwKeyword)-> \(returnType) {\n" +
-                "    return try \(parseCallString)(json, path: path, decode: \(decodeClosure(provider)))\n" +
+        return [documentation + "public func => \(generics)(json: AnyObject, path: String) throws -> \(returnType) {\n" +
+            "    return try parse(json, path: [Key(key: path)], decode: \(decodeClosure(provider)))\n" +
+            "}", "public func =>? \(generics)(json: AnyObject, path: String) throws -> \(returnType)? {\n" +
+                "    return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)], decode: \(decodeClosure(provider)))\n" +
+            "}", "public func => \(generics)(json: AnyObject, path: [OptionalKey]) throws -> \(returnType)? {\n" +
+                "    return try parseOptionally(json, path: path.markFirstElement(false), decode: \(decodeClosure(provider)))\n" +
+            "}", "public func =>? \(generics)(json: AnyObject, path: [OptionalKey]) throws -> \(returnType)? {\n" +
+                "    return try parseOptionally(json, path: path.markFirstElement(true), decode: \(decodeClosure(provider)))\n" +
+            "}", "public func => \(generics)(json: AnyObject, path: [Key]) throws -> \(returnType) {\n" +
+                    "    return try parse(json, path: path, decode: \(decodeClosure(provider)))\n" +
+            "}", "public func =>? \(generics)(json: AnyObject, path: [Key]) throws -> \(returnType)? {\n" +
+                "    return try parseOptionally(json, path: path.markFirstElement(true), decode: \(decodeClosure(provider)))\n" +
             "}"
         ]
     }
@@ -207,7 +215,7 @@ let date = dateFormatter.stringFromDate(NSDate())
 
 let overloads = Decodable.T(Unique()).generateAllPossibleChildren(2)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
-let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).map{Decodable.Optional($0)}.flatMap { $0.generateOverloads("=>?") }
+let all = overloads.flatMap { $0.generateOverloads("=>") }
 
 do {
     var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Template.swift")

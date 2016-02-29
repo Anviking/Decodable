@@ -10,11 +10,11 @@ import Foundation
 
 // Keep it simple for now
 
-private protocol KeyType {
+protocol KeyType {
     var key: String {get}
 }
 
-private protocol OptionalKeyType {
+protocol OptionalKeyType {
     var key: String {get}
     var optional: Bool {get set}
 }
@@ -33,17 +33,18 @@ private func makeOptional(key: Key) -> OptionalKey {
 }
 
 extension Array where Element: OptionalKeyType {
-    private func markFirstElement(optional: Bool) -> Array {
+    func markFirstElement(optional: Bool) -> Array {
         guard var first = first else {
             return self
         }
         first.optional = optional
-        return [first] + dropLast()
+        print([first] + dropFirst())
+        return [first] + dropFirst()
     }
 }
 
 extension Array where Element: KeyType {
-    private func markFirstElement(optional: Bool) -> [OptionalKey] {
+    func markFirstElement(optional: Bool) -> [OptionalKey] {
         guard let first = first else {
             return []
         }
