@@ -18,6 +18,13 @@ class MissingKeyOperatorTests: XCTestCase {
         XCTAssertEqual(result, nil)
     }
     
+    func testDoubleMissingKey() {
+        // Should return nil
+        let dictionary: NSDictionary = ["a": ["b": 3]]
+        let result: Int? = try! dictionary => "a" => "MissingKeyError"
+        XCTAssertEqual(result, nil)
+    }
+    
     func testNSNull() {
         // Should return nil
         let dictionary: NSDictionary = ["key": NSNull()]
@@ -36,6 +43,19 @@ class MissingKeyOperatorTests: XCTestCase {
         let dictionary: NSDictionary = ["key": "3"]
         do {
             let _: Int? = try dictionary =>? "key"
+            XCTFail("should throw")
+        } catch let error as TypeMismatchError {
+            XCTAssert(error.expectedType == Int.self, "\(error.expectedType) != Int.self")
+        } catch {
+            XCTFail("Should not throw \(error)")
+        }
+    }
+    
+    func testTypeMismatch() {
+        // Should throw
+        let dictionary: NSDictionary = ["a": ["b": 3]]
+        do {
+            let _: Int? = try dictionary => "a" =>? "c"
             XCTFail("should throw")
         } catch let error as TypeMismatchError {
             XCTAssert(error.expectedType == Int.self, "\(error.expectedType) != Int.self")

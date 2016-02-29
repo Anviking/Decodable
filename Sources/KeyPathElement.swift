@@ -60,7 +60,6 @@ public func =>? (lhs: String, rhs: String) -> [OptionalKey] {
     return [OptionalKey(key: lhs, optional: false), OptionalKey(key: rhs, optional: true)]
 }
 
-
 public func => (lhs: String, rhs: [OptionalKey]) -> [OptionalKey] {
     return [OptionalKey(key: lhs, optional: false)] + rhs.markFirstElement(false)
 }
