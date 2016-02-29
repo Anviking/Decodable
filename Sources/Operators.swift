@@ -29,18 +29,6 @@ public func =>? (lhs: AnyObject, rhs: [String]) throws -> AnyObject? {
     return try parseAndAcceptMissingKey(lhs, path: rhs, decode: { $0 })
 }
 
-
-// MARK: - JSONPath
-
-/// Enables parsing nested objects e.g json => "a" => "b"
-public func => (lhs: String, rhs: String) -> [String] {
-    return [lhs, rhs]
-}
-
-public func => (lhs: String, rhs: [String]) -> [String] {
-    return [lhs] + rhs
-}
-
 // MARK: Helpers
 
 func catchNull<T>(decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
