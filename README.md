@@ -27,15 +27,22 @@ struct Repository {
 extension Repository: Decodable {
     static func decode(j: AnyObject) throws -> Repository {
         return try Repository(
-                    name:                   j => "name", 
-                    description:            j => "description", 
-                    stargazersCount:        j => "stargazers_count", 
-                    language:               j => "language", 
-                    sometimesMissingKey:    j =>? "sometimesMissingKey",
-                    owner:                  j => "owner", 
-                    defaultBranch:          Branch(name: j => "default_branch")
+                    name: j => "name", 
+                    description: j => "description", 
+                    stargazersCount: j => "stargazers_count", 
+                    language: j => "language", 
+                    sometimesMissingKey: j =>? "sometimesMissingKey",
+                    owner: j => "owner", 
+                    defaultBranch: Branch(name: j => "default_branch")
                 )
     }
+}
+
+do {
+    let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
+    let repo = try Repository.decode(json)
+} catch {
+    print(error)
 }
 ```
 
