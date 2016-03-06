@@ -167,11 +167,7 @@ indirect enum Decodable {
     
     func generateOverloads(operatorString: String) -> [String] {
         
-        let path: String
-        
-        let shouldConvertToOptional = operatorString == "=>?"
-        let pathCallString = shouldConvertToOptional ? "OptionalKey(key: path, optional: true)" : "Key(key: path)"
-        
+        let shouldConvertToOptional = operatorString == "=>?"        
         var overloads = [Overload]()
         
         if isOptional == shouldConvertToOptional {
@@ -247,7 +243,6 @@ let sourcesDirectory = fileManager.currentDirectoryPath + "/../Sources"
 
 
 let filename = "Overloads.swift"
-let path = sourcesDirectory + "/" + filename
 
 let dateFormatter = NSDateFormatter()
 dateFormatter.dateStyle = .ShortStyle
