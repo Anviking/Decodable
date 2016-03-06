@@ -78,12 +78,6 @@ func catchNull<T>(decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws 
 }
 
 func catchNull<T>(decodeClosure: (AnyObject) throws -> T?) -> (AnyObject) throws -> T? {
-    return { json in
-        if json is NSNull {
-            return nil
-        } else {
-            return try decodeClosure(json)
-        }
-    }
+    return catchNull(decodeClosure)
 }
 
