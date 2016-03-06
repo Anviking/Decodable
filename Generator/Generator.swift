@@ -152,29 +152,21 @@ indirect enum Decodable {
         
         if isOptional == shouldConvertToOptional {
             overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "String", call: "[Key(key: path)]"), parseCall: "parse"))
-            if shouldConvertToOptional {
-                overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[Key]", call: "path.markFirstElement(true)"), parseCall: "parseOptionally"))
-            } else {
-                overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[Key]", call: "path"), parseCall: "parse"))
-            }
-            
-            if isOptional {
-                if shouldConvertToOptional {
-                    overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "String", call: "[OptionalKey(key: path, optional: true)]"), parseCall: "parseOptionally"))
-                } else {
-                    overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "String", call: "[OptionalKey(key: path, optional: true)]"), parseCall: "parse"))
-                }
-                
-            }
         }
         
-        if isOptional {
-            if shouldConvertToOptional {
-                overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[OptionalKey]", call: "path.markFirstElement(true)"), parseCall: "parseOptionally"))
-            } else {
-                overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[OptionalKey]", call: "path.markFirstElement(false)"), parseCall: "parseOptionally"))
-            }
-        }
+        switch (isOptional, shouldConvertToOptional) {
+        case (true, true):
+            overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "[Key]", call: "path.markFirstElement(true)"), parseCall: "parseOptionally"))
+            overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "String", call: "[OptionalKey(key: path, optional: true)]"), parseCall: "parseOptionally"))
+            overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "[OptionalKey]", call: "path.markFirstElement(true)"), parseCall: "parseOptionally"))
+        case (true, false):
+            overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "[Key]", call: "path"), parseCall: "parse"))
+            overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "[OptionalKey]", call: "path.markFirstElement(false)"), parseCall: "parseOptionally"))
+        case (false, false):
+            overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "[Key]", call: "path"), parseCall: "parse"))
+        default:
+            break
+    }
         return overloads.map {$0.description}
     }
 }
