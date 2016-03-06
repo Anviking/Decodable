@@ -41,6 +41,25 @@ func == (a: Unique, b: Unique) -> Bool {
     return a.value == b.value
 }
 
+struct Overload: CustomStringConvertible {
+    let operatorString: String
+    let returnType: Decodable
+    let rhs: (type: String, call: String)
+    let parseCall: String
+    
+    var description: String {
+        let provider = TypeNameProvider()
+        let type = returnType.typeString(provider)
+        let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
+        let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
+        return [
+        "public func \(operatorString) \(generics)(json: AnyObject, path: \(rhs.type)) throws -> \(type) {",
+        "return try \(parseCall)(json, path: \(rhs.call), decode: \(returnType.decodeClosure(provider)))",
+        "}"
+        ].joinWithSeparator("\n")
+    }
+}
+
 enum OverloadParameters {
     case String
     case OptionalPath
@@ -123,9 +142,6 @@ indirect enum Decodable {
     }
     
     func generateOverloads(operatorString: String) -> [String] {
-        let provider = TypeNameProvider()
-        let returnType = typeString(provider)
-        
         
         let path: String
         
@@ -134,30 +150,21 @@ indirect enum Decodable {
         let parseCallString = shouldConvertToOptional ? "parseOptionally" : "parse"
         let str = shouldConvertToOptional ? "path.markFirstElement(true)" : "path"
         
-        let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
-        let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
-        
-        let throwKeyword =  "throws"
-        var array = [String]()
-        
+        var overloads = [Overload]()
         
         if isOptional == shouldConvertToOptional {
-            array.append("public func => \(generics)(json: AnyObject, path: String) throws -> \(returnType) {\n" +
-                "    return try parse(json, path: [Key(key: path)], decode: \(decodeClosure(provider)))\n}")
-            array.append("public func \(operatorString) \(generics)(json: AnyObject, path: [Key]) throws -> \(returnType) {\n" +
-                "    return try \(parseCallString)(json, path: \(str), decode: \(decodeClosure(provider)))\n}")
+            overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "String", call: "[Key(key: path)]"), parseCall: "parse"))
+            overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[Key]", call: str), parseCall: parseCallString))
             
             if isOptional {
-                array.append("public func =>? \(generics)(json: AnyObject, path: String) throws -> \(returnType) {\n" +
-                    "    return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)], decode: \(decodeClosure(provider)))\n}")
+                overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "String", call: "[OptionalKey(key: path, optional: true)]"), parseCall: parseCallString))
             }
         }
         
         if isOptional {
-            array.append("public func \(operatorString) \(generics)(json: AnyObject, path: [OptionalKey]) throws -> \(returnType) {\n" +
-                "    return try parseOptionally(json, path: path.markFirstElement(\(shouldConvertToOptional ? "true" : "false")), decode: \(decodeClosure(provider)))\n}")
+            overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[OptionalKey]", call: "path.markFirstElement(\(shouldConvertToOptional ? "true" : "false"))"), parseCall: "parseOptionally"))
         }
-        return array
+        return overloads.map {$0.description}
     }
 }
 
