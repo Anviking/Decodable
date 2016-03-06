@@ -28,25 +28,3 @@ public func => (lhs: AnyObject, rhs: [Key]) throws -> AnyObject {
 public func =>? (lhs: AnyObject, rhs: [OptionalKey]) throws -> AnyObject? {
     return try parseOptionally(lhs, path: rhs, decode: { $0 })
 }
-
-// MARK: Helpers
-
-func catchNull<T>(decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
-    return { json in
-        if json is NSNull {
-            return nil
-        } else {
-            return try decodeClosure(json)
-        }
-    }
-}
-
-func catchNull<T>(decodeClosure: (AnyObject) throws -> T?) -> (AnyObject) throws -> T? {
-    return { json in
-        if json is NSNull {
-            return nil
-        } else {
-            return try decodeClosure(json)
-        }
-    }
-}
