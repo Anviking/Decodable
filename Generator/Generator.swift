@@ -41,9 +41,28 @@ func == (a: Unique, b: Unique) -> Bool {
     return a.value == b.value
 }
 
+enum OverloadParameters {
+    case String
+    case OptionalPath
+    case NonOptionalPath
+}
+
+enum OverloadType: String {
+    case Throwing = "=>"
+    case Optional = "=>?"
+    
+    var parseCall: String {
+        switch self {
+        case .Throwing:
+            return "parse"
+        case .Optional:
+            return "parseOptionally"
+        }
+    }
+}
+
 indirect enum Decodable {
     case T(Unique)
-    //    case AnyObject
     case Array(Decodable)
     case Optional(Decodable)
     case Dictionary(Decodable, Decodable)
@@ -52,8 +71,6 @@ indirect enum Decodable {
         switch self {
         case T(let key):
             return "\(provider[key]).decode"
-            //        case .AnyObject:
-        //            return "{$0}"
         case Optional(let T):
             return "catchNull(\(T.decodeClosure(provider)))"
         case Array(let T):
@@ -73,8 +90,6 @@ indirect enum Decodable {
             return "[\(T.typeString(provider))]"
         case .Dictionary(let K, let T):
             return "[\(K.typeString(provider)): \(T.typeString(provider))]"
-            //        case .AnyObject:
-            //            return "AnyObject"
         }
     }
     
@@ -109,48 +124,40 @@ indirect enum Decodable {
     
     func generateOverloads(operatorString: String) -> [String] {
         let provider = TypeNameProvider()
-        let returnType: String
-        let parseCallString: String
-        let behaviour: Behaviour
-        let path: String
-        let pathCallString: String
+        let returnType = typeString(provider)
         
-        switch operatorString {
-        case "=>":
-            returnType = typeString(provider)
-            behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parse"
-            path = "Key"
-            pathCallString = "Key(key: path)"
-        case "=>?":
-            returnType = typeString(provider)
-            behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parseOptionally"
-            path = "OptionalKey"
-            pathCallString = "OptionalKey(key: path, optional: true)"
-        default:
-            fatalError()
-        }
+        
+        let path: String
+        
+        let shouldConvertToOptional = operatorString == "=>?"
+        let pathCallString = shouldConvertToOptional ? "OptionalKey(key: path, optional: true)" : "Key(key: path)"
+        let parseCallString = shouldConvertToOptional ? "parseOptionally" : "parse"
+        let str = shouldConvertToOptional ? "path.markFirstElement(true)" : "path"
         
         let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
         let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
         
-        let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
-        return [documentation + "public func => \(generics)(json: AnyObject, path: String) throws -> \(returnType) {\n" +
-            "    return try parse(json, path: [Key(key: path)], decode: \(decodeClosure(provider)))\n" +
-            "}", "public func =>? \(generics)(json: AnyObject, path: String) throws -> \(returnType)? {\n" +
-                "    return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)], decode: \(decodeClosure(provider)))\n" +
-            "}", "public func => \(generics)(json: AnyObject, path: [OptionalKey]) throws -> \(returnType)? {\n" +
-                "    return try parseOptionally(json, path: path.markFirstElement(false), decode: \(decodeClosure(provider)))\n" +
-            "}", "public func =>? \(generics)(json: AnyObject, path: [OptionalKey]) throws -> \(returnType)? {\n" +
-                "    return try parseOptionally(json, path: path.markFirstElement(true), decode: \(decodeClosure(provider)))\n" +
-            "}", "public func => \(generics)(json: AnyObject, path: [Key]) throws -> \(returnType) {\n" +
-                    "    return try parse(json, path: path, decode: \(decodeClosure(provider)))\n" +
-            "}", "public func =>? \(generics)(json: AnyObject, path: [Key]) throws -> \(returnType)? {\n" +
-                "    return try parseOptionally(json, path: path.markFirstElement(true), decode: \(decodeClosure(provider)))\n" +
-            "}"
-        ]
+        var array = [String]()
+        
+        
+        if isOptional == shouldConvertToOptional {
+            array.append("public func => \(generics)(json: AnyObject, path: String) throws -> \(returnType) {\n" +
+                "    return try parse(json, path: [Key(key: path)], decode: \(decodeClosure(provider)))\n}")
+            array.append("public func \(operatorString) \(generics)(json: AnyObject, path: [Key]) throws -> \(returnType) {\n" +
+                "    return try \(parseCallString)(json, path: \(str), decode: \(decodeClosure(provider)))\n}")
+            
+            if isOptional {
+                array.append("public func =>? \(generics)(json: AnyObject, path: String) throws -> \(returnType) {\n" +
+                    "    return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)], decode: \(decodeClosure(provider)))\n}")
+            }
+        }
+        
+        if isOptional {
+            array.append("public func \(operatorString) \(generics)(json: AnyObject, path: [OptionalKey]) throws -> \(returnType) {\n" +
+                "    return try parseOptionally(json, path: path.markFirstElement(\(shouldConvertToOptional ? "true" : "false")), decode: \(decodeClosure(provider)))\n}")
+        }
+        return array
     }
 }
 
@@ -213,9 +220,9 @@ dateFormatter.dateStyle = .ShortStyle
 
 let date = dateFormatter.stringFromDate(NSDate())
 
-let overloads = Decodable.T(Unique()).generateAllPossibleChildren(2)
+let overloads = Decodable.T(Unique()).generateAllPossibleChildren(3)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
-let all = overloads.flatMap { $0.generateOverloads("=>") }
+let all = overloads.flatMap { $0.generateOverloads("=>") + $0.generateOverloads("=>?") }
 
 do {
     var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Template.swift")

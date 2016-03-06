@@ -34,11 +34,11 @@ private func makeOptional(key: Key) -> OptionalKey {
 
 extension Array where Element: OptionalKeyType {
     func markFirstElement(optional: Bool) -> Array {
-        guard var first = first else {
+        guard let _first = self.first else {
             return self
         }
+        var first = _first
         first.optional = optional
-        print([first] + dropFirst())
         return [first] + dropFirst()
     }
 }
