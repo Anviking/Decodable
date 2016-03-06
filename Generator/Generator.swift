@@ -53,10 +53,34 @@ struct Overload: CustomStringConvertible {
         let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
         let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
         return [
-        "public func \(operatorString) \(generics)(json: AnyObject, path: \(rhs.type)) throws -> \(type) {",
-        "return try \(parseCall)(json, path: \(rhs.call), decode: \(returnType.decodeClosure(provider)))",
-        "}"
-        ].joinWithSeparator("\n")
+            documentation,
+            "public func \(operatorString) \(generics)(json: AnyObject, path: \(rhs.type)) throws -> \(type) {",
+            "return try \(parseCall)(json, path: \(rhs.call), decode: \(returnType.decodeClosure(provider)))",
+            "}"
+            ].joinWithSeparator("\n")
+    }
+    
+    var documentation: String {
+        var string =
+            "/**\n" +
+                " Retrieves the object at `path` from `json` and decodes it according to the return type\n" +
+                "\n" +
+                " - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.\n" +
+        " - parameter path: A null-separated key-path string. Can be generated with `\"keyA\" => \"keyB\"`\n"
+        switch (returnType.isOptional, operatorString == "=>?") {
+        case (true, true):
+            string += " - Returns: nil if the pre-decoded object at `path` is `NSNull`.\n"
+            string += " - Throws: `TypeMismatchError` or any other error thrown in the decode-closure.\n"
+        case (true, false):
+            string += " - Returns: nil if `path` does not exist in `json`, or if that object is `NSNull`.\n"
+            string += " - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure.\n"
+        case (false, true):
+            fatalError()
+        case (false, false):
+            string += " - Returns: A non-optional object, meaning `null` values will most likely cause the decode-closure to throw.\n"
+            string += " - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure.\n"
+        }
+        return string + "*/\n"
     }
 }
 
@@ -166,7 +190,7 @@ indirect enum Decodable {
             overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "[Key]", call: "path"), parseCall: "parse"))
         default:
             break
-    }
+        }
         return overloads.map {$0.description}
     }
 }
