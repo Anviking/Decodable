@@ -147,22 +147,33 @@ indirect enum Decodable {
         
         let shouldConvertToOptional = operatorString == "=>?"
         let pathCallString = shouldConvertToOptional ? "OptionalKey(key: path, optional: true)" : "Key(key: path)"
-        let parseCallString = shouldConvertToOptional ? "parseOptionally" : "parse"
-        let str = shouldConvertToOptional ? "path.markFirstElement(true)" : "path"
         
         var overloads = [Overload]()
         
         if isOptional == shouldConvertToOptional {
             overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "String", call: "[Key(key: path)]"), parseCall: "parse"))
-            overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[Key]", call: str), parseCall: parseCallString))
+            if shouldConvertToOptional {
+                overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[Key]", call: "path.markFirstElement(true)"), parseCall: "parseOptionally"))
+            } else {
+                overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[Key]", call: "path"), parseCall: "parse"))
+            }
             
             if isOptional {
-                overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "String", call: "[OptionalKey(key: path, optional: true)]"), parseCall: parseCallString))
+                if shouldConvertToOptional {
+                    overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "String", call: "[OptionalKey(key: path, optional: true)]"), parseCall: "parseOptionally"))
+                } else {
+                    overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "String", call: "[OptionalKey(key: path, optional: true)]"), parseCall: "parse"))
+                }
+                
             }
         }
         
         if isOptional {
-            overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[OptionalKey]", call: "path.markFirstElement(\(shouldConvertToOptional ? "true" : "false"))"), parseCall: "parseOptionally"))
+            if shouldConvertToOptional {
+                overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[OptionalKey]", call: "path.markFirstElement(true)"), parseCall: "parseOptionally"))
+            } else {
+                overloads.append(Overload(operatorString: operatorString, returnType: self, rhs: (type: "[OptionalKey]", call: "path.markFirstElement(false)"), parseCall: "parseOptionally"))
+            }
         }
         return overloads.map {$0.description}
     }
