@@ -167,7 +167,7 @@ indirect enum Decodable {
     
     func generateOverloads(operatorString: String) -> [String] {
         
-        let shouldConvertToOptional = operatorString == "=>?"        
+        let shouldConvertToOptional = operatorString == "=>?"
         var overloads = [Overload]()
         
         if isOptional == shouldConvertToOptional {
