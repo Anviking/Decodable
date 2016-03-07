@@ -38,7 +38,7 @@ public enum DecodingError: ErrorType {
     case RawRepresentableInitializationError(rawValue: Any, Metadata)
     case WrappedError(ErrorType, Metadata)
     
-    var metadata: Metadata {
+    public var metadata: Metadata {
         get {
             switch self {
             case .TypeMismatch(expected: _, actual: _, let metadata):
