@@ -8,17 +8,38 @@
 
 import Foundation
 
-extension Int64: NSValueCastable {}
-extension Int32: NSValueCastable {}
-extension Int16: NSValueCastable {}
-extension Int8: NSValueCastable {}
-extension UInt64: NSValueCastable {}
-extension UInt32: NSValueCastable {}
-extension UInt16: NSValueCastable {}
-extension UInt8: NSValueCastable {}
+extension Int64: NSNumberCastable {
+    public static func convertFrom(n: NSNumber) -> Int64 { return n.longLongValue }
+}
+extension Int32: NSNumberCastable {
+    public static func convertFrom(n: NSNumber) -> Int32 { return n.intValue }
+}
+extension Int16: NSNumberCastable {
+    public static func convertFrom(n: NSNumber) -> Int16 { return n.shortValue }
+}
+extension Int8: NSNumberCastable {
+    public static func convertFrom(n: NSNumber) -> Int8 { return n.charValue }
+}
+extension UInt64: NSNumberCastable {
+    public static func convertFrom(n: NSNumber) -> UInt64 { return n.unsignedLongLongValue }
+}
+extension UInt32: NSNumberCastable {
+    public static func convertFrom(n: NSNumber) -> UInt32 { return n.unsignedIntValue }
+}
+extension UInt16: NSNumberCastable {
+    public static func convertFrom(n: NSNumber) -> UInt16 { return n.unsignedShortValue }
+}
+extension UInt8: NSNumberCastable {
+    public static func convertFrom(n: NSNumber) -> UInt8 { return n.unsignedCharValue }
+}
 
-/// Provides a default implementation of decode() which casts the object to a NSValue and unsafely casts its value as Self. Used to enable decoding to different IntegerTypes from NSNumber.
+/// Provides a default implementation of decode() which casts the object to a NSValue and unsafely casts its value as Self.
 public protocol NSValueCastable: Decodable {}
+
+/// Used to enable decoding to different IntegerTypes from NSNumber.
+public protocol NSNumberCastable: NSValueCastable {
+    static func convertFrom(n: NSNumber) -> Self
+}
 
 extension NSValueCastable {
     private typealias PointerOfSelf = UnsafeMutablePointer<Self> // Why do we have to do this?
@@ -26,10 +47,19 @@ extension NSValueCastable {
         guard let value = j as? NSValue else {
             throw TypeMismatchError(expectedType: NSValue.self, receivedType: j.dynamicType, object: j)
         }
-        
+
         let pointer = PointerOfSelf.alloc(1)
         defer { pointer.dealloc(1) }
         value.getValue(pointer)
         return pointer.move()
+    }
+}
+
+extension NSNumberCastable {
+    public static func decode(j: AnyObject) throws -> Self {
+        guard let value = j as? NSNumber else {
+            throw TypeMismatchError(expectedType: NSNumber.self, receivedType: j.dynamicType, object: j)
+        }
+        return convertFrom(value)
     }
 }
