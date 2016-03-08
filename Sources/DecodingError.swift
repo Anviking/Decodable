@@ -8,9 +8,9 @@
 
 import Foundation
 
-public enum DecodingError: ErrorType {
+public enum DecodingError: ErrorType, Equatable {
     
-    public struct Metadata {
+    public struct Metadata: Equatable {
         
         public init(path: [String] = [], object: AnyObject, rootObject: AnyObject? = nil) {
             self.path = path
@@ -89,5 +89,38 @@ public enum DecodingError: ErrorType {
 // There are overloads for this
 public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
     return lhs == rhs
+}
+
+// FIXME: I'm not sure about === equality
+public func ==(lhs: DecodingError.Metadata, rhs: DecodingError.Metadata) -> Bool {
+    return lhs.object === rhs.object
+        && lhs.path == rhs.path
+        && lhs.rootObject === rhs.rootObject
+}
+
+public func ==(lhs: DecodingError, rhs: DecodingError) -> Bool {
+    switch (lhs, rhs) {
+    case let (.TypeMismatch(expected, actual, metadata), .TypeMismatch(expected2, actual2, metadata2)):
+        return expected == expected2
+            && actual == actual2
+            && metadata == metadata2
+    case let (.MissingKey(key, metadata), .MissingKey(key2, metadata2)):
+        return key == key2
+            && metadata == metadata2
+    case let (.RawRepresentableInitializationError(rawValue, metadata), .RawRepresentableInitializationError(rawValue2, metadata2)):
+        // FIXME: Might be strange
+        switch (rawValue, rawValue2, metadata == metadata2) {
+        case let (a as AnyObject, b as AnyObject, true):
+            return a === b
+        default:
+            return false
+        }
+    case (.WrappedError, .WrappedError):
+        // FIXME: What to do?
+        print("FIXME: WrappedError equality is unimplemented/not supported")
+        return false
+    default:
+        return false
+    }
 }
 
