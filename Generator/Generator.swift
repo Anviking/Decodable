@@ -1,3 +1,5 @@
+#!/usr/bin/xcrun --sdk macosx swift
+
 //
 //  Generator.swift
 //  Decodable

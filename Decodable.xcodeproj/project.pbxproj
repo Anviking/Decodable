@@ -518,7 +518,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    swift Generator.swift\nfi";
+			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    ./Generator.swift\nfi";
 		};
 		8F0062451C81F348007BCF48 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -531,7 +531,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    swift Generator.swift\nfi";
+			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    ./Generator.swift\nfi";
 		};
 		8F0062461C81F350007BCF48 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -544,7 +544,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    swift Generator.swift\nfi";
+			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    ./Generator.swift\nfi";
 		};
 		8F00624B1C81F6F1007BCF48 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -557,7 +557,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    swift Generator.swift\nfi";
+			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    ./Generator.swift\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
