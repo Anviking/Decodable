@@ -56,7 +56,7 @@ public func decodeOneOf(json: AnyObject, objects: (Decodable.Type)...) throws ->
 			return decoded
 		}
 	}
-	return try (objects.last!).decode(json)
+	return try objects.last!.decode(json)
 }
 
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
