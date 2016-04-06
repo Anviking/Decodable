@@ -50,7 +50,7 @@ extension Array where Element: Decodable {
 // MARK: Helpers
 
 /// Attempt to decode multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
-public func decodeOneOf(json: AnyObject, objects: (Decodable.Type)...) throws -> Decodable {
+public func decodeOneOf(json: AnyObject, objects: Decodable.Type...) throws -> Decodable {
 	for decodable in objects.dropLast() {
 		if let decoded = try? decodable.decode(json) {
 			return decoded
