@@ -37,3 +37,6 @@ Carthage/Build
 # Swift Package Manager
 
 .build/
+
+# General OS X
+.DS_Store
