@@ -28,13 +28,13 @@ class DecodeAsOneOfTests: XCTestCase {
 			
 			let vehiclesRaw: AnyObject = try json => "vehicles"
 			
-			let vehicles1 = try decodeArrayAsOneOf(vehiclesRaw, objectTypes: Train.self, Truck.self, Car.self).flatMap { $0 as? Vehicle }
+			let vehicles1 = try decodeArrayAsOneOf(vehiclesRaw, objectTypes: Train.self, Truck.self, Car.self)
 			
 			guard let vehiclesArray = vehiclesRaw as? [AnyObject] else {
 				throw TypeMismatchError(expectedType: NSArray.self, receivedType: Mirror(reflecting: vehiclesRaw).subjectType, object: vehiclesRaw)
 			}
 			
-			let vehicles2 = try vehiclesArray.map { try decodeAsOneOf($0, objectTypes: Train.self, Truck.self, Car.self) }.flatMap { $0 as? Vehicle }
+			let vehicles2 = try vehiclesArray.map { try decodeAsOneOf($0, objectTypes: Train.self, Truck.self, Car.self) }
 			
 			XCTAssertEqual(vehicles1.count, vehicles2.count)
 			XCTAssertEqual(vehicles1.count, vehiclesArray.count)
