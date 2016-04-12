@@ -7,8 +7,6 @@ Simple yet powerful object mapping made possible by Swift 2's new error handling
 )](https://cocoadocs.org/docsets/NSStringMask)
 [![Travis](https://img.shields.io/travis/Anviking/Decodable/master.svg)](https://travis-ci.org/Anviking/Decodable/branches)
 
-## Example:
-
 ```swift
 
 struct Repository {
@@ -40,7 +38,7 @@ extension Repository: Decodable {
 
 do {
     let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-    let repo = try Repository.decode(json)
+    let repo = try [Repository].decode(json)
 } catch {
     print(error)
 }
