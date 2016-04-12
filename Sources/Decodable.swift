@@ -59,6 +59,7 @@ public func decodeAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) throw
 	return try objectTypes.last!.decode(json)
 }
 
+/// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
 public func decodeArrayAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) throws -> [Decodable] {
 	guard let jsonArray = json as? [AnyObject] else {
 		throw TypeMismatchError(expectedType: [AnyObject].self, receivedType: Mirror(reflecting: json).subjectType, object: json)
