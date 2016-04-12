@@ -59,6 +59,21 @@ public func decodeAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) throw
 	return try objectTypes.last!.decode(json)
 }
 
+public func decodeArrayAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) throws -> [Decodable] {
+	guard let jsonArray = json as? [AnyObject] else {
+		throw TypeMismatchError(expectedType: [AnyObject].self, receivedType: Mirror(reflecting: json).subjectType, object: json)
+	}
+	
+	return try jsonArray.map {
+		for decodable in objectTypes.dropLast() {
+			if let decoded = try? decodable.decode($0) {
+				return decoded
+			}
+		}
+		return try objectTypes.last!.decode($0)
+	}
+}
+
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
 public func decodeArray<T>(elementDecodeClosure: AnyObject throws -> T) -> (json: AnyObject) throws -> [T] {
     return { json in

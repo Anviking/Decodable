@@ -1,0 +1,23 @@
+{
+    "vehicles": [
+      {
+        "type":"train",
+        "driverless":true,
+        "electric":true
+      },
+      {
+        "type":"car",
+        "driverless":false
+      },
+      {
+        "type":"truck",
+        "driverless":false,
+        "wheels":18
+      },
+      {
+        "type":"truck",
+        "driverless":true,
+		"wheels":18
+      }
+    ]
+}
