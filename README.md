@@ -46,6 +46,17 @@ do {
 }
 ```
 
+### Features
+- Informative errors
+- Decoding depends on inferred type
+- Leverages Swift 2's error handling
+- There is no trickery in decoding e.g an array of optionals `[T?]`. It's just the same, you don't have to do anything.
+- Does not work by "mapping". You should be very flexible, not commited to this library.
+
+### What it doesn't do
+- Encoding
+- Force you to have optional and/or `var` properties
+
 ## How does it work?
 
 ### A protocol
