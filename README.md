@@ -69,14 +69,12 @@ public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws 
 ```
 
 ### And shameless operator-overloading
-The (326!) generated overloads, all calling the `parse`-function, can be found in [Overloads.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Overloads.swift). Swift 3 generics will most likely reduce the overloads required, remove need for code generation, and enable automagic decoding to infinitly nested generic types (like `[[[[[[[[[A???]]: B]]]?]]?]]`).
+The (326!) generated overloads, all calling the `parse`-function, can be found in [Overloads.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Overloads.swift). Return types include `T?`, `[T?]`, `[T?]?`, `AnyObject` and `[String: T]?`. Swift 3 generics will most likely reduce the overloads required, remove need for code generation, and enable automagic decoding to infinitly nested generic types (like `[[[[[[[[[A???]]: B]]]?]]?]]`).
 
 An overload may look like this:
 ```swift
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
 ```
-
-Then there are also overloads for returning `T?`, `[T?]`, `[T?]?`, `AnyObject`, `[String: T]?` and more. 
 
 There are also overloads that enable natural access to nested keys like `json => "a" => "b" => "c"`:
 ```swift
