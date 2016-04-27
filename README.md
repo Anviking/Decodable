@@ -7,8 +7,6 @@ Simple yet powerful object mapping made possible by Swift 2's new error handling
 )](https://cocoadocs.org/docsets/NSStringMask)
 [![Travis](https://img.shields.io/travis/Anviking/Decodable/master.svg)](https://travis-ci.org/Anviking/Decodable/branches)
 
-## Example:
-
 ```swift
 
 struct Repository {
@@ -27,7 +25,7 @@ struct Repository {
 extension Repository: Decodable {
     static func decode(j: AnyObject) throws -> Repository {
         return try Repository(
-                    name: j => "name", 
+                    name: j => "nested" => "name", 
                     description: j => "description", 
                     stargazersCount: j => "stargazers_count", 
                     language: j => "language", 
@@ -40,11 +38,22 @@ extension Repository: Decodable {
 
 do {
     let json = try NSJSONSerialization.JSONObjectWithData(data, options: [])
-    let repo = try Repository.decode(json)
+    let repo = try [Repository].decode(json)
 } catch {
     print(error)
 }
 ```
+
+### Features
+- Informative errors
+- Decoding depends on inferred type
+- Leverages Swift 2's error handling
+- There is no trickery in decoding e.g an array of optionals `[T?]`. It's just the same, you don't have to do anything.
+- Does not work by "mapping". You should be very flexible, not commited to this library.
+
+### What it doesn't do
+- Encoding
+- Force you to have optional and/or `var` properties
 
 ## How does it work?
 
@@ -60,14 +69,18 @@ public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws 
 ```
 
 ### And shameless operator-overloading
-The overloads, all calling the `parse`-function, can be found in [Operators.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Operators.swift)
+The (326!) generated overloads, all calling the `parse`-function, can be found in [Overloads.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Overloads.swift). Return types include `T?`, `[T?]`, `[T?]?`, `AnyObject` and `[String: T]?`. Swift 3 generics will most likely reduce the overloads required, remove need for code generation, and enable automagic decoding to infinitly nested generic types (like `[[[[[[[[[A???]]: B]]]?]]?]]`).
 
 An overload may look like this:
 ```swift
 public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
 ```
 
-Then there are also overloads for returning `T?`, `[T?]`, `[T?]?`, `AnyObject`, `[String: T]?` and more. 
+There are also overloads that enable natural access to nested keys like `json => "a" => "b" => "c"`:
+```swift
+public func => (lhs: String, rhs: String) -> [String]
+public func => <T: Decodable>(lhs: AnyObject, rhs: [String]) throws -> T
+```
 
 ## Errors
 `ErrorTypes` conforming to `DecodingError` will be caught and rethrown in the decoding process to set metadata, like the JSON object that failed decoding, the key path to it, and the root JSON object. There are currently three error-structs conforming to it:

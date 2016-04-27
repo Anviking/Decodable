@@ -51,6 +51,28 @@ extension Array where Element: Decodable {
 
 // MARK: Helpers
 
+/// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
+public func decodeAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) throws -> Decodable {
+	for decodable in objectTypes.dropLast() {
+		if let decoded = try? decodable.decode(json) {
+			return decoded
+		}
+	}
+	return try objectTypes.last!.decode(json)
+}
+
+/// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
+public func decodeArrayAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) throws -> [Decodable] {
+	return try NSArray.decode(json).map {
+		for decodable in objectTypes.dropLast() {
+			if let decoded = try? decodable.decode($0) {
+				return decoded
+			}
+		}
+		return try objectTypes.last!.decode($0)
+	}
+}
+
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
 public func decodeArray<T>(elementDecodeClosure: AnyObject throws -> T) -> (json: AnyObject) throws -> [T] {
     return { json in
