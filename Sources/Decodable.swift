@@ -13,7 +13,7 @@ public protocol Decodable {
     static func decode(json: AnyObject) throws -> DecodedType
 }
 
-extension NSDictionary {
+extension NSDictionary: Decodable {
     public static func decode(j: AnyObject) throws -> NSDictionary {
         guard let result = j as? NSDictionary else {
             let metadata = DecodingError.Metadata(object: j)
@@ -23,7 +23,7 @@ extension NSDictionary {
     }
 }
 
-extension NSArray {
+extension NSArray: Decodable {
     public static func decode(j: AnyObject) throws -> NSArray {
         guard let result = j as? NSArray else {
             let metadata = DecodingError.Metadata(object: j)
@@ -32,7 +32,6 @@ extension NSArray {
         return result
     }
 }
-
 
 extension Dictionary where Key: Decodable, Value: Decodable, Key.DecodedType == Key, Value.DecodedType == Value {
     public static func decode(j: AnyObject) throws -> Dictionary {
@@ -47,6 +46,17 @@ extension Array where Element: Decodable, Element.DecodedType == Element {
         } else {
             return try decodeArray(Element.decode)(json: j)
         }
+    }
+}
+
+extension NSURL: Decodable {
+    public static func decode(json: AnyObject) throws -> NSURL {
+        let string = try String.decode(json)
+        guard let result = NSURL(string: string) else {
+            let metadata = DecodingError.Metadata(object: json)
+            throw DecodingError.RawRepresentableInitializationError(rawValue: string, metadata)
+        }
+        return result
     }
 }
 
