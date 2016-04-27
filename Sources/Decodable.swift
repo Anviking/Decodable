@@ -9,7 +9,8 @@
 import Foundation
 
 public protocol Decodable {
-    static func decode(json: AnyObject) throws -> Self
+    associatedtype DecodedType
+    static func decode(json: AnyObject) throws -> DecodedType
 }
 
 extension NSDictionary {
@@ -32,13 +33,14 @@ extension NSArray {
     }
 }
 
-extension Dictionary where Key: Decodable, Value: Decodable {
+
+extension Dictionary where Key: Decodable, Value: Decodable, Key.DecodedType == Key, Value.DecodedType == Value {
     public static func decode(j: AnyObject) throws -> Dictionary {
         return try decodeDictionary(Key.decode, elementDecodeClosure: Value.decode)(json: j)
     }
 }
 
-extension Array where Element: Decodable {
+extension Array where Element: Decodable, Element.DecodedType == Element {
     public static func decode(j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
         if ignoreInvalidObjects {
             return try decodeArray { try? Element.decode($0) }(json: j).flatMap {$0}
@@ -51,8 +53,10 @@ extension Array where Element: Decodable {
 
 // MARK: Helpers
 
+
+/*
 /// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
-public func decodeAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) throws -> Decodable {
+public func decodeAsOneOf<T: Decodable>(json: AnyObject, objectTypes: Decodable.Type...) throws -> T.DecodedType {
 	for decodable in objectTypes.dropLast() {
 		if let decoded = try? decodable.decode(json) {
 			return decoded
@@ -72,6 +76,7 @@ public func decodeArrayAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) 
 		return try objectTypes.last!.decode($0)
 	}
 }
+*/
 
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
 public func decodeArray<T>(elementDecodeClosure: AnyObject throws -> T) -> (json: AnyObject) throws -> [T] {

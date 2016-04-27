@@ -129,7 +129,8 @@ indirect enum Decodable {
         }
         
         let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
-        let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
+        let whereClause = provider.takenNames.values.sort().map { "\($0).DecodedType == \($0)" }.joinWithSeparator(", ")
+        let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", ")) where \(whereClause)>" : ""
         
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
