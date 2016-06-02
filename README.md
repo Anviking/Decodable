@@ -124,7 +124,7 @@ let c: Int = try json => "user" =>? "followers" // Won't compile
 ```
 This is controlled by the left most operator (where the actual decoding happens). Subsequent `=>` only append keys to an array, and do not affect anything else.
 
-This might be dealt with by #77.
+This might be addressed in the future by #77.
 
 ## Tips
 - You can use `Decodable` with classes. Just make sure to either call a `required` initializer on self (e.g `self.init`) and return `Self`, or make your class `final`. ( [This](http://stackoverflow.com/questions/26495586/best-practice-to-implement-a-failable-initializer-in-swift) might be a problem though)
