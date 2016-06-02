@@ -46,6 +46,8 @@ class DecodableOperatorsTests: XCTestCase {
         XCTAssertEqual(result, value)
     }
     
+    // MARK: - Nested keys
+    
     func testDecodeNestedDictionarySuccess() {
         // given
         let key = "key"
@@ -77,7 +79,6 @@ class DecodableOperatorsTests: XCTestCase {
         // then
         XCTAssertEqual(result, value)
     }
-
     
     func testDecodeNestedDictionaryCastingSuccess() {
         // given
@@ -125,6 +126,33 @@ class DecodableOperatorsTests: XCTestCase {
         } catch let error {
             XCTFail("should not throw \(error)")
         }
+    }
+    
+    // MARK: - Nested =>? operators
+    
+    // Should throw on typemismatch with correct metadata
+    func testDecodeNestedTypeMismatchFailure() {
+        let json: NSDictionary = ["user": ["followers": "not_an_integer"]]
+        do {
+            let _ : Int? = try json =>? "user" => "followers"
+            XCTFail("should throw")
+        } catch let error as TypeMismatchError {
+            XCTAssertEqual(error.formattedPath, "user.followers")
+        } catch {
+            XCTFail("should not throw \(error)")
+        }
+    }
+    
+    // Should currently (though really it shoult not) treat all keys as either optional or non-optional
+    func testDecodeNestedTypeReturnNilForSubobjectMissingKey() {
+        let json: NSDictionary = ["user": ["something_else": "test"]]
+        try! XCTAssertEqual(json =>? "user" => "followers", Optional<Int>.None)
+    }
+    
+    // Sanity check
+    func testDecodeNestedTypeSuccess() {
+        let json: NSDictionary = ["user": ["followers": 3]]
+        try! XCTAssertEqual(json =>? "user" => "followers", 3)
     }
     
     
