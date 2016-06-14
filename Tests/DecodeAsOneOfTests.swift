@@ -11,12 +11,12 @@ import XCTest
 
 class DecodeAsOneOfTests: XCTestCase {
     
-    private func readJsonFile(file: String) -> NSDictionary {
-        let filePath = (NSBundle(forClass: object_getClass(self)).resourcePath! as NSString).stringByAppendingPathComponent(file)
+    private func readJsonFile(_ file: String) -> NSDictionary {
+        let filePath = (Bundle(for: object_getClass(self)).resourcePath! as NSString).appendingPathComponent(file)
 		print(filePath)
         let jsonString = try! String(contentsOfFile: filePath)
-        let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
-        return try! NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+		let jsonData = jsonString.data(using: String.Encoding.utf8)!
+		return try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
     }
     
     func testDecodingSubtypesShouldSucceed() {
