@@ -44,7 +44,7 @@ class DecodableArrayTests: XCTestCase {
         let dictionary: NSDictionary = [key: value]
         // when
         do {
-            try dictionary => key as [String?]
+            _ = try dictionary => key as [String?]
             XCTFail("should throw")
         } catch is TypeMismatchError {
             // Yay
@@ -102,7 +102,7 @@ class DecodableArrayTests: XCTestCase {
         let dictionary = NSDictionary()
         // when
         do {
-            try dictionary => key as [String]?
+            _ = try dictionary => key as [String]?
             XCTFail()
         } catch is MissingKeyError {
             

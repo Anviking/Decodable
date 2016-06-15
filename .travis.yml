@@ -1,4 +1,4 @@
 language: objective-c
 xcode_project: Decodable.xcodeproj # path to your xcodeproj folder
 xcode_scheme: Decodable-Mac
-osx_image: xcode7.3
+osx_image: xcode8
