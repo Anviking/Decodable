@@ -8,86 +8,80 @@
 
 import Foundation
 
-/// Errors conforming DecodingError will be caught and rethrown in the decoding process with updated metadata.
-public protocol DecodingError: ErrorType {
-    /// The JSON key path to the object that failed to be decoded
-    var path: [String] {get set}
-
-    /// The JSON object that failed to be decoded
-    var object: AnyObject {get}
+public enum DecodingError: ErrorType, Equatable {
     
-    /// The root JSON object for which the `path` can be used to find `object`
-    var rootObject: AnyObject? {get set}
-    
-    
-    var formattedPath: String {get}
-}
-
-extension DecodingError {
-    /// Represents the path to the object that failed decoding with "." as a separator.
-    public var formattedPath: String {
-        return path.joinWithSeparator(".")
-    }
-}
-
-public struct TypeMismatchError: DecodingError {
-
-    public init(expectedType: Any.Type, receivedType: Any.Type, object: AnyObject) {
-        self.expectedType = expectedType
-        self.receivedType = receivedType
-        self.object = object
-        self.path = []
-    }
-
-    public let expectedType: Any.Type
-    public let receivedType: Any.Type
-    
-    public var path: [String]
-    public let object: AnyObject
-    public var rootObject: AnyObject?
-    
-    public var debugDescription: String {
-        return "TypeMismatchError expected: \(expectedType) but \(object) is of type \(receivedType) in \(formattedPath)"    }
-}
-
-public struct MissingKeyError: DecodingError {
-
-    public let key: String
-    
-    public var path: [String]
-    public let object: AnyObject
-    public var rootObject: AnyObject?
-    
-    public init(key: String, object: AnyObject) {
-        self.key = key
-        self.object = object
-        self.path = []
+    public struct Metadata: Equatable {
+        
+        public init(path: [String] = [], object: AnyObject, rootObject: AnyObject? = nil) {
+            self.path = path
+            self.object = object
+            self.rootObject = rootObject
+        }
+        
+        /// The JSON key path to the object that failed to be decoded
+        public var path: [String]
+        
+        /// The JSON object that failed to be decoded
+        public let object: AnyObject
+        
+        /// The root JSON object for which the `path` can be used to find `object`
+        public var rootObject: AnyObject?
+        
+        /// Represents the path to the object that failed decoding with "." as a separator.
+        public var formattedPath: String {
+            return path.joinWithSeparator(".")
+        }
     }
     
-    public var debugDescription: String {
-        return "Missing Key \(key) in \(formattedPath) \(object)"
-    }
-}
+    case TypeMismatch(expected: Any.Type, actual: Any.Type, Metadata)
+    case MissingKey(String, Metadata)
+    case RawRepresentableInitializationError(rawValue: Any, Metadata)
+    case WrappedError(ErrorType, Metadata)
+    
+    public var metadata: Metadata {
+        get {
+            switch self {
+            case .TypeMismatch(expected: _, actual: _, let metadata):
+                return metadata
+            case .MissingKey(_, let metadata):
+                return metadata
+            case .RawRepresentableInitializationError(_, let metadata):
+                return metadata
+            case .WrappedError(_, let metadata):
+                return metadata
+            }
+        }
+        
+        set {
+            switch self {
+            case let .TypeMismatch(expected, actual, _):
+                self = .TypeMismatch(expected: expected, actual: actual, newValue)
+            case let .MissingKey(key, _):
+                self = .MissingKey(key, newValue)
+            case let .RawRepresentableInitializationError(rawValue, _):
+                self = RawRepresentableInitializationError(rawValue: rawValue, newValue)
+            case let .WrappedError(error, _):
+                self = .WrappedError(error, newValue)
+            }
+        }
 
-public struct RawRepresentableInitializationError: DecodingError {
-    public let type: Any.Type
-    public let rawValue: Any
-    
-    public var path: [String]
-    public let object: AnyObject
-    public var rootObject: AnyObject?
-    
-    public init(type: Any.Type, rawValue: Any, object: AnyObject) {
-        self.rawValue = rawValue
-        self.type = type
-        self.object = object
-        self.path = []
     }
     
     public var debugDescription: String {
-        return "RawRepresentableInitializationError: \(rawValue) could not be used to initialize \(type). (path: \(path))"
+        switch self {
+        case let .TypeMismatch(expected, actual, metadata):
+            return "TypeMismatchError expected: \(expected) but \(metadata.object) is of type \(actual) in \(metadata.formattedPath)"
+        case let .MissingKey(key, metadata):
+            return "Missing Key \(key) in \(metadata.formattedPath) \(metadata.object)"
+        case let .RawRepresentableInitializationError(rawValue, metadata):
+            return "RawRepresentableInitializationError: \(rawValue) could not be used to initialize \("TYPE"). (path: \(metadata.formattedPath))" // FIXME
+        case let .WrappedError(error, _):
+            return "\(error)"
+        }
     }
+    
 }
+
 
 // Allow types to be used in pattern matching
 // E.g case TypeMismatchError(NSNull.self, _, _) but be careful
@@ -95,5 +89,38 @@ public struct RawRepresentableInitializationError: DecodingError {
 // There are overloads for this
 public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
     return lhs == rhs
+}
+
+// FIXME: I'm not sure about === equality
+public func ==(lhs: DecodingError.Metadata, rhs: DecodingError.Metadata) -> Bool {
+    return lhs.object === rhs.object
+        && lhs.path == rhs.path
+        && lhs.rootObject === rhs.rootObject
+}
+
+public func ==(lhs: DecodingError, rhs: DecodingError) -> Bool {
+    switch (lhs, rhs) {
+    case let (.TypeMismatch(expected, actual, metadata), .TypeMismatch(expected2, actual2, metadata2)):
+        return expected == expected2
+            && actual == actual2
+            && metadata == metadata2
+    case let (.MissingKey(key, metadata), .MissingKey(key2, metadata2)):
+        return key == key2
+            && metadata == metadata2
+    case let (.RawRepresentableInitializationError(rawValue, metadata), .RawRepresentableInitializationError(rawValue2, metadata2)):
+        // FIXME: Might be strange
+        switch (rawValue, rawValue2, metadata == metadata2) {
+        case let (a as AnyObject, b as AnyObject, true):
+            return a === b
+        default:
+            return false
+        }
+    case (.WrappedError, .WrappedError):
+        // FIXME: What to do?
+        print("FIXME: WrappedError equality is unimplemented/not supported")
+        return false
+    default:
+        return false
+    }
 }
 

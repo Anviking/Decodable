@@ -13,12 +13,10 @@ func parse(json: AnyObject, _ path: [String]) throws -> AnyObject {
     return try path.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
         let currentDict = try NSDictionary.decode(a.object)
         guard let result = currentDict[NSString(string: key)] else {
-            var error = MissingKeyError(key: key, object: currentDict)
-            error.path = a.currentPath
-            error.rootObject = json
-            throw error
+            let metadata = DecodingError.Metadata(path: a.currentPath, object: a.object, rootObject: json)
+            throw DecodingError.MissingKey(key, metadata)
         }
-        
+    
         var path = a.currentPath
         path.append(key)
         return (result, path)
@@ -44,7 +42,7 @@ func parseAndAcceptMissingKey<T>(json: AnyObject, path: [String], decode: (AnyOb
 func catchMissingKeyAndReturnNil<T>(closure: Void throws -> T) throws -> T? {
     do {
         return try closure()
-    } catch is MissingKeyError {
+    } catch DecodingError.MissingKey {
         return nil
     }
 }
@@ -54,8 +52,8 @@ func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws ->
         return try block()
     } catch let error as DecodingError {
         var error = error
-        error.path = path + error.path
-        error.rootObject = json
+        error.metadata.path = path + error.metadata.path
+        error.metadata.rootObject = json
         throw error
     } catch let error {
         throw error
