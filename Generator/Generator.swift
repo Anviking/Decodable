@@ -131,10 +131,10 @@ indirect enum Decodable {
         
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
-        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(parseCallString)(json, path: [path], decode: \(decodeClosure(provider)))\n" +
-            "}", documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: [String])\(throwKeyword)-> \(returnType) {\n" +
-                "    return try \(parseCallString)(json, path: path, decode: \(decodeClosure(provider)))\n" +
+        return [documentation + "public func \(operatorString) \(generics)(context: A.Context, path: String)\(throwKeyword)-> \(returnType) {\n" +
+            "    return try \(decodeClosure(provider))(context.\(parseCallString)(key: path))\n" +
+            "}", documentation + "public func \(operatorString) \(generics)(context: A.Context, path: [String])\(throwKeyword)-> \(returnType) {\n" +
+                "    return try \(decodeClosure(provider))(context.\(parseCallString)(keys: path))\n" +
             "}"
         ]
     }
@@ -199,7 +199,7 @@ dateFormatter.dateStyle = .shortStyle
 
 let date = dateFormatter.string(from: Date())
 
-let overloads = Decodable.T(Unique()).generateAllPossibleChildren(4)
+let overloads = Decodable.T(Unique()).generateAllPossibleChildren(1)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
 let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).flatMap { $0.generateOverloads("=>?") }
 
@@ -210,7 +210,7 @@ do {
 	template = template.replacingOccurrences(of: "{overloads}", with: types.joined(separator: ", "))
     template = template.replacingOccurrences(of: "{count}", with: "\(all.count)")
 	let text = (template as String) + "\n" + all.joined(separator: "\n\n")
-	try text.write(toFile: sourcesDirectory + "/Overloads.swift", atomically: false, encoding: String.Encoding.utf8)
+	//try text.write(toFile: sourcesDirectory + "/Overloads.swift", atomically: false, encoding: String.Encoding.utf8)
 }
 catch {
     print(error)
