@@ -9,7 +9,7 @@
 import Foundation
 
 /// Errors conforming DecodingError will be caught and rethrown in the decoding process with updated metadata.
-public protocol DecodingError: ErrorProtocol {
+public protocol DecodingError: ErrorProtocol, CustomDebugStringConvertible {
     /// The JSON key path to the object that failed to be decoded
     var path: [String] {get set}
 
