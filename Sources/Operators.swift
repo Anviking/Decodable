@@ -13,6 +13,7 @@ import Foundation
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
+/*
 public func => (lhs: AnyObject, rhs: String) throws -> AnyObject {
     return try parse(lhs, path: [rhs], decode: { $0 })
 }
@@ -28,6 +29,7 @@ public func => (lhs: AnyObject, rhs: [String]) throws -> AnyObject {
 public func =>? (lhs: AnyObject, rhs: [String]) throws -> AnyObject? {
     return try parseAndAcceptMissingKey(lhs, path: rhs, decode: { $0 })
 }
+ */
 
 
 // MARK: - JSONPath

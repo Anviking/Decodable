@@ -12,7 +12,7 @@ import XCTest
 private struct Color: Decodable {
     let name: String
     
-    private static func decode(_ json: AnyObject) throws -> Color {
+    private static func decode(_ json: DecodingContext<Void>) throws -> Color {
         return try Color(name: json => "name")
     }
 }
@@ -21,7 +21,7 @@ private struct Apple: Decodable {
     let id: Int
     let color: Color?
     
-    private static func decode(_ json: AnyObject) throws -> Apple {
+    private static func decode(_ json: DecodingContext<Void>) throws -> Apple {
         return try Apple(id: json => "id", color: json => "color")
     }
 }
@@ -29,7 +29,7 @@ private struct Apple: Decodable {
 private struct Tree: Decodable {
     let apples: [Apple]
     
-    private static func decode(_ json: AnyObject) throws -> Tree {
+    private static func decode(_ json: DecodingContext<Void>) throws -> Tree {
         return try Tree(apples: json => "apples")
     }
 }
@@ -41,7 +41,7 @@ class ErrorPathTests: XCTestCase {
         let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
         
         do {
-            _ = try dict => "object" => "repo" => "owner" => "oops" as String
+            _ = try (dict => "object" => "repo" => "owner" => "oops") as String
         } catch let error as MissingKeyError {
             XCTAssertEqual(error.formattedPath, "object.repo.owner")
         } catch let error {

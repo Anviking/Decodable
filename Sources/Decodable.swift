@@ -58,7 +58,6 @@ public struct DecodingContext<T> {
     func map<U>(closure: (T) -> U) -> DecodingContext<U> {
         return DecodingContext<U>(json: json, path: path, rootObject: rootObject, parameters: closure(parameters))
     }
-
 }
 
 public protocol Decodable {
