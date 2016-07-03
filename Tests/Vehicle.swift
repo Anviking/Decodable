@@ -17,7 +17,7 @@ struct Car: Vehicle {
 }
 
 extension Car: Decodable {
-	static func decode(_ json: AnyObject) throws -> Car {
+	static func decode(_ json: DecodingContext<Void>) throws -> Car {
 		return try Car(driverless: json => "driverless")
 	}
 }

@@ -62,7 +62,7 @@ public struct DecodingContext<T> {
 }
 
 public protocol Decodable {
-    associatedtype Parameters
+    associatedtype Parameters = Void
     static func decode(_ : DecodingContext<Parameters>) throws -> Self
     //static func decode(_ json: AnyObject) throws -> Self
 }
@@ -70,10 +70,13 @@ public protocol Decodable {
 
 
 extension Decodable where Parameters == Void {
-    /*public static func decode(_ context: Context) throws -> Self {
-        return try Self.decode(context.json)
+    
+    /// Convenience overload for decode(_:DecodingContext<Void>)
+    ///
+    /// - parameter json: JSON object from `NSJSONSerialization`.
+    public static func decode(_ json: AnyObject) throws -> Self {
+        return try Self.decode(json)
     }
-     */
 }
 
 extension NSDictionary {
@@ -87,6 +90,7 @@ extension NSDictionary {
 
 extension NSArray {
     public static func decode<T>(_ context: DecodingContext<T>) throws -> NSArray {
+        
         guard let result = context.json as? NSArray else {
             throw TypeMismatchError(expectedType: self, receivedType: context.json.dynamicType, object: context.json)
         }

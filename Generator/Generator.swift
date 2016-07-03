@@ -48,7 +48,7 @@ indirect enum Decodable {
     //    case AnyObject
     case Array(Decodable)
     case Optional(Decodable)
-    case Dictionary(Decodable, Decodable)
+//    case Dictionary(Decodable, Decodable)
     
     func decodeClosure(_ provider: TypeNameProvider) -> String {
         switch self {
@@ -60,8 +60,8 @@ indirect enum Decodable {
             return "catchNull(\(T.decodeClosure(provider)))"
         case Array(let T):
             return "decodeArray(\(T.decodeClosure(provider)))"
-        case .Dictionary(let K, let T):
-            return "decodeDictionary(\(K.decodeClosure(provider)), elementDecodeClosure: \(T.decodeClosure(provider)))"
+//        case .Dictionary(let K, let T):
+//            return "decodeDictionary(\(K.decodeClosure(provider)), elementDecodeClosure: \(T.decodeClosure(provider)))"
         }
     }
     
@@ -73,8 +73,8 @@ indirect enum Decodable {
             return "\(T.typeString(provider))?"
         case Array(let T):
             return "[\(T.typeString(provider))]"
-        case .Dictionary(let K, let T):
-            return "[\(K.typeString(provider)): \(T.typeString(provider))]"
+//        case .Dictionary(let K, let T):
+//            return "[\(K.typeString(provider)): \(T.typeString(provider))]"
         }
     }
     
@@ -84,7 +84,7 @@ indirect enum Decodable {
         var array = [Decodable]()
         array += generateAllPossibleChildren(deepness - 1).flatMap(filterChainedOptionals)
         array += generateAllPossibleChildren(deepness - 1).map { .Array($0) }
-        array += generateAllPossibleChildren(deepness - 1).map { .Dictionary(.T(Unique()),$0) }
+//        array += generateAllPossibleChildren(deepness - 1).map { .Dictionary(.T(Unique()),$0) }
         array += [.T(Unique())]
         return array
     }
@@ -112,16 +112,18 @@ indirect enum Decodable {
         let returnType: String
         let parseCallString: String
         let behaviour: Behaviour
-        
+        let parseEndString: String
         switch operatorString {
         case "=>":
             returnType = typeString(provider)
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parse"
+            parseCallString = "    let object = try context.parse("
+            parseEndString = ")\n"
         case "=>?":
             returnType = typeString(provider) + "?"
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parseAndAcceptMissingKey"
+            parseCallString = "    guard let object = try context.parseAndAcceptMissingKeys("
+            parseEndString = ") else { return nil }\n"
         default:
             fatalError()
         }
@@ -131,10 +133,14 @@ indirect enum Decodable {
         
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
-        return [documentation + "public func \(operatorString) \(generics)(context: A.Context, path: String)\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(decodeClosure(provider))(context.\(parseCallString)(key: path))\n" +
-            "}", documentation + "public func \(operatorString) \(generics)(context: A.Context, path: [String])\(throwKeyword)-> \(returnType) {\n" +
-                "    return try \(decodeClosure(provider))(context.\(parseCallString)(keys: path))\n" +
+        return [documentation + "public func \(operatorString) \(generics)(context: DecodingContext<A.Parameters>, path: String)\(throwKeyword)-> \(returnType) {\n" +
+            "    let decode = \(decodeClosure(provider))\n" +
+            parseCallString + "keys: [path]" + parseEndString +
+            "    return try decode(object)\n" +
+            "}", documentation + "public func \(operatorString) \(generics)(context: DecodingContext<A.Parameters>, path: [String])\(throwKeyword)-> \(returnType) {\n" +
+                "    let decode = \(decodeClosure(provider))\n" +
+                parseCallString + "keys: path" + parseEndString +
+                "    return try decode(object)\n" +
             "}"
         ]
     }
@@ -210,7 +216,7 @@ do {
 	template = template.replacingOccurrences(of: "{overloads}", with: types.joined(separator: ", "))
     template = template.replacingOccurrences(of: "{count}", with: "\(all.count)")
 	let text = (template as String) + "\n" + all.joined(separator: "\n\n")
-	//try text.write(toFile: sourcesDirectory + "/Overloads.swift", atomically: false, encoding: String.Encoding.utf8)
+	try text.write(toFile: sourcesDirectory + "/Overloads.swift", atomically: false, encoding: String.Encoding.utf8)
 }
 catch {
     print(error)

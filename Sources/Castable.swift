@@ -11,9 +11,10 @@ import Foundation
 public protocol Castable: Decodable {}
 
 extension Castable {
-    public static func decode(_ j: AnyObject) throws -> Self {
-        guard let result = j as? Self else {
-            throw TypeMismatchError(expectedType: self, receivedType: j.dynamicType, object: j)
+    typealias Parameters = Void
+    public static func decode(_ context: DecodingContext<Void>) throws -> Self {
+        guard let result = context.json as? Self else {
+            throw TypeMismatchError(expectedType: self, receivedType: context.json.dynamicType, object: context.json)
         }
         return result
     }
