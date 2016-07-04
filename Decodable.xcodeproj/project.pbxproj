@@ -51,10 +51,10 @@
 		8FCA31F41D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */; };
 		8FCA31F51D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */; };
 		8FCA31F61D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */; };
-		8FCA31F81D2AB3D300BAC4D3 /* DecodeClosures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F71D2AB3D300BAC4D3 /* DecodeClosures.swift */; };
-		8FCA31F91D2AB3D300BAC4D3 /* DecodeClosures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F71D2AB3D300BAC4D3 /* DecodeClosures.swift */; };
-		8FCA31FA1D2AB3D300BAC4D3 /* DecodeClosures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F71D2AB3D300BAC4D3 /* DecodeClosures.swift */; };
-		8FCA31FB1D2AB3D300BAC4D3 /* DecodeClosures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F71D2AB3D300BAC4D3 /* DecodeClosures.swift */; };
+		8FCA31F81D2AB3D300BAC4D3 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F71D2AB3D300BAC4D3 /* Closures.swift */; };
+		8FCA31F91D2AB3D300BAC4D3 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F71D2AB3D300BAC4D3 /* Closures.swift */; };
+		8FCA31FA1D2AB3D300BAC4D3 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F71D2AB3D300BAC4D3 /* Closures.swift */; };
+		8FCA31FB1D2AB3D300BAC4D3 /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F71D2AB3D300BAC4D3 /* Closures.swift */; };
 		8FCA31FD1D2AB3F800BAC4D3 /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31FC1D2AB3F800BAC4D3 /* FoundationExtensions.swift */; };
 		8FCA31FE1D2AB3F800BAC4D3 /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31FC1D2AB3F800BAC4D3 /* FoundationExtensions.swift */; };
 		8FCA31FF1D2AB3F800BAC4D3 /* FoundationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31FC1D2AB3F800BAC4D3 /* FoundationExtensions.swift */; };
@@ -131,7 +131,7 @@
 		8F956D1E1B4D6FF700243072 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		8FCA31ED1D2AA7A600BAC4D3 /* DecodingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingContext.swift; sourceTree = "<group>"; };
 		8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleDecodable.swift; sourceTree = "<group>"; };
-		8FCA31F71D2AB3D300BAC4D3 /* DecodeClosures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodeClosures.swift; sourceTree = "<group>"; };
+		8FCA31F71D2AB3D300BAC4D3 /* Closures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Closures.swift; sourceTree = "<group>"; };
 		8FCA31FC1D2AB3F800BAC4D3 /* FoundationExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoundationExtensions.swift; sourceTree = "<group>"; };
 		8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingKeyOperatorTests.swift; sourceTree = "<group>"; };
 		8FE7B5621B4C9FB900837609 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -246,7 +246,7 @@
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
 				8F00623E1C81EF61007BCF48 /* Overloads.swift */,
 				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
-				8FCA31F71D2AB3D300BAC4D3 /* DecodeClosures.swift */,
+				8FCA31F71D2AB3D300BAC4D3 /* Closures.swift */,
 				8FCA31FC1D2AB3F800BAC4D3 /* FoundationExtensions.swift */,
 				8FCA31ED1D2AA7A600BAC4D3 /* DecodingContext.swift */,
 				8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */,
@@ -615,7 +615,7 @@
 				8F0062401C81EF61007BCF48 /* Overloads.swift in Sources */,
 				8FCA31FE1D2AB3F800BAC4D3 /* FoundationExtensions.swift in Sources */,
 				65DB18B11C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
-				8FCA31F91D2AB3D300BAC4D3 /* DecodeClosures.swift in Sources */,
+				8FCA31F91D2AB3D300BAC4D3 /* Closures.swift in Sources */,
 				8F72DC571C3CB8C800A39E10 /* NSValueCastable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -653,7 +653,7 @@
 				8F0062421C81EF61007BCF48 /* Overloads.swift in Sources */,
 				8FCA32001D2AB3F800BAC4D3 /* FoundationExtensions.swift in Sources */,
 				65DB18B31C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
-				8FCA31FB1D2AB3D300BAC4D3 /* DecodeClosures.swift in Sources */,
+				8FCA31FB1D2AB3D300BAC4D3 /* Closures.swift in Sources */,
 				8F72DC591C3CB8C900A39E10 /* NSValueCastable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -672,7 +672,7 @@
 				8F00623F1C81EF61007BCF48 /* Overloads.swift in Sources */,
 				8FCA31FD1D2AB3F800BAC4D3 /* FoundationExtensions.swift in Sources */,
 				8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */,
-				8FCA31F81D2AB3D300BAC4D3 /* DecodeClosures.swift in Sources */,
+				8FCA31F81D2AB3D300BAC4D3 /* Closures.swift in Sources */,
 				65DB18B01C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -710,7 +710,7 @@
 				8F0062411C81EF61007BCF48 /* Overloads.swift in Sources */,
 				8FCA31FF1D2AB3F800BAC4D3 /* FoundationExtensions.swift in Sources */,
 				65DB18B21C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
-				8FCA31FA1D2AB3D300BAC4D3 /* DecodeClosures.swift in Sources */,
+				8FCA31FA1D2AB3D300BAC4D3 /* Closures.swift in Sources */,
 				8F72DC581C3CB8C900A39E10 /* NSValueCastable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
