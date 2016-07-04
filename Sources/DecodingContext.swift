@@ -8,13 +8,13 @@
 
 import Foundation
 
-public struct DecodingContext<T> {
+public struct DecodingContext<Parameters> {
     var path: [String]
     var json: AnyObject
     var rootObject: AnyObject
-    var parameters: T
+    var parameters: Parameters
     
-    init(json: AnyObject, path: [String] = [], rootObject: AnyObject, parameters: T) {
+    init(json: AnyObject, path: [String] = [], rootObject: AnyObject, parameters: Parameters) {
         self.json = json
         self.path = path
         self.rootObject = rootObject
@@ -55,7 +55,16 @@ public struct DecodingContext<T> {
         return new
     }
     
-    public func map<U>(parameters closure: (T) -> U) -> DecodingContext<U> {
+    public func map<U>(parameters closure: (Parameters) -> U) -> DecodingContext<U> {
         return DecodingContext<U>(json: json, path: path, rootObject: rootObject, parameters: closure(parameters))
+    }
+    
+    
+    // MARK: Decoding with type inference
+    
+    // TODO: This should be generated automatically
+    
+    public func decode<A: Decodable where A.Parameters == Parameters>(keys: [String]) throws -> A  {
+        return try A.decode(parse(keys: keys))
     }
 }
