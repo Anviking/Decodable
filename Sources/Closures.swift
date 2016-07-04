@@ -8,6 +8,14 @@
 
 import Foundation
 
+extension Decodable {
+    internal static func decodeClosure(parameters: Self.Parameters) -> (AnyObject) throws -> Self {
+        return { json in
+            return try Self.decode(json, parameters: parameters)
+        }
+    }
+}
+
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
 public func decodeArray<T>(_ elementDecodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> [T] {
     return { json in

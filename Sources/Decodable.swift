@@ -36,14 +36,6 @@ extension Decodable {
     }
 }
 
-extension Decodable {
-    internal static func decodeClosure(parameters: Self.Parameters) -> (AnyObject) throws -> Self {
-        return { json in
-            return try Self.decode(json, parameters: parameters)
-        }
-    }
-}
-
 /*
 extension Dictionary where Key: Decodable, Value: Decodable {
     public static func decode(_ j: AnyObject) throws -> Dictionary {
