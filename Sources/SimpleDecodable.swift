@@ -8,6 +8,10 @@
 
 import Foundation
 
+/// Convenience protocol to aid transition from Decododable 0.x to 1.x
+///
+/// SimpleDecodable allows you to implement `decode(_:AnyObject)` instead
+/// of `decode(_:DecodingContext<Void>)`
 public protocol SimpleDecodable: Decodable {
     static func decode(_ json: AnyObject) throws -> Self
 }
