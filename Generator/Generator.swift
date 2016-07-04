@@ -107,7 +107,7 @@ indirect enum Decodable {
         }
     }
     
-    func generateOverloads(_ operatorString: String) -> [String] {
+    func generateOverloads(_ operatorString: String, lhsIsAnyObject: Bool = false) -> [String] {
         let provider = TypeNameProvider()
         let returnType: String
         let parseCallString: String
@@ -129,15 +129,31 @@ indirect enum Decodable {
         }
         
         let arguments = provider.takenNames.values.sorted().map { $0 + ": Decodable" }
-		let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))>" : ""
+        
+        let constraints = lhsIsAnyObject ? " where A.Parameters == Void" : ""
+        
+		let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))\(constraints)>" : ""
         
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
-        return [documentation + "public func \(operatorString) \(generics)(context: DecodingContext<A.Parameters>, path: String)\(throwKeyword)-> \(returnType) {\n" +
+        
+        let lhs: String
+        let createContextIfNeeded: String
+        if lhsIsAnyObject {
+            lhs = "json: AnyObject"
+            createContextIfNeeded = "    let context = DecodingContext<Void>(json: json, path: [], rootObject: json, parameters: ())\n"
+        } else {
+            lhs = "context: DecodingContext<A.Parameters>"
+            createContextIfNeeded = ""
+        }
+        
+        return [documentation + "public func \(operatorString) \(generics)(\(lhs), path: String)\(throwKeyword) -> \(returnType) {\n" +
+            createContextIfNeeded +
             "    let decode = \(decodeClosure(provider))\n" +
             parseCallString + "keys: [path]" + parseEndString +
             "    return try decode(object)\n" +
-            "}", documentation + "public func \(operatorString) \(generics)(context: DecodingContext<A.Parameters>, path: [String])\(throwKeyword)-> \(returnType) {\n" +
+            "}", documentation + "public func \(operatorString) \(generics)(\(lhs), path: [String])\(throwKeyword) -> \(returnType) {\n" +
+                createContextIfNeeded +
                 "    let decode = \(decodeClosure(provider))\n" +
                 parseCallString + "keys: path" + parseEndString +
                 "    return try decode(object)\n" +
@@ -205,9 +221,9 @@ dateFormatter.dateStyle = .shortStyle
 
 let date = dateFormatter.string(from: Date())
 
-let overloads = Decodable.T(Unique()).generateAllPossibleChildren(1)
+let overloads = Decodable.T(Unique()).generateAllPossibleChildren(3)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
-let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).flatMap { $0.generateOverloads("=>?") }
+let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).flatMap { $0.generateOverloads("=>?") } + overloads.flatMap { $0.generateOverloads("=>", lhsIsAnyObject: true) } + overloads.flatMap(filterOptionals).flatMap { $0.generateOverloads("=>?", lhsIsAnyObject: true) }
 
 do {
     var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Template.swift") as NSString
