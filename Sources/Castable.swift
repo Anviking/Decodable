@@ -14,7 +14,7 @@ extension Castable {
     typealias Parameters = Void
     public static func decode(_ context: DecodingContext<Void>) throws -> Self {
         guard let result = context.json as? Self else {
-            throw TypeMismatchError(expectedType: self, receivedType: context.json.dynamicType, object: context.json)
+            throw context.typeMismatch(expectedType: self)
         }
         return result
     }

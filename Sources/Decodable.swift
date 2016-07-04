@@ -36,6 +36,14 @@ extension Decodable {
     }
 }
 
+extension Decodable {
+    internal static func decodeClosure(parameters: Self.Parameters) -> (AnyObject) throws -> Self {
+        return { json in
+            return try Self.decode(json, parameters: parameters)
+        }
+    }
+}
+
 extension NSDictionary {
     public static func decode(_ j: AnyObject) throws -> NSDictionary {
         guard let result = j as? NSDictionary else {
@@ -46,6 +54,14 @@ extension NSDictionary {
 }
 
 extension NSArray {
+    public static func decode(_ json: AnyObject) throws -> NSArray {
+        
+        guard let result = json as? NSArray else {
+            throw TypeMismatchError(expectedType: self, receivedType: json.dynamicType, object: json)
+        }
+        return result
+    }
+    
     public static func decode<T>(_ context: DecodingContext<T>) throws -> NSArray {
         
         guard let result = context.json as? NSArray else {
@@ -102,6 +118,15 @@ extension Array where Element: Decodable {
  }
  */
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
+public func decodeArray<T>(_ elementDecodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> [T] {
+    return { json in
+        return try NSArray.decode(json).map {
+            return try elementDecodeClosure($0)
+        }
+    }
+}
+
+
 public func decodeArray<T, Parameters>(_ elementDecodeClosure: (DecodingContext<Parameters>) throws -> T) -> (DecodingContext<Parameters>) throws -> [T] {
     return { context in
         return try NSArray.decode(context).map {
@@ -113,18 +138,13 @@ public func decodeArray<T, Parameters>(_ elementDecodeClosure: (DecodingContext<
 }
 
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried. For everyday use, prefer using [K: V].decode(json) instead (declared in Decodable.swift).
-
-
-
-public func decodeDictionary<K,V, A, B>(_ keyDecodeClosure: (DecodingContext<A>) throws -> K, elementDecodeClosure: (DecodingContext<B>) throws -> V) -> (DecodingContext<(A,B)>) throws -> [K: V] {
-    return { context in
+public func decodeDictionary<K,V>(_ keyDecodeClosure: (AnyObject) throws -> K, elementDecodeClosure: (AnyObject) throws -> V) -> (json: AnyObject) throws -> [K: V] {
+    return { json in
         var dict = [K: V]()
-        for (key, value) in try NSDictionary.decode(context.json) {
-            let keyContext = context.map { $0.0 }
-            let valueContext = context.map { $0.1 }
-            
-            try dict[keyDecodeClosure(keyContext.with(json: key))] = elementDecodeClosure(valueContext.with(json: value))
+        for (key, value) in try NSDictionary.decode(json) {
+            try dict[keyDecodeClosure(key)] = elementDecodeClosure(value)
         }
         return dict
     }
 }
+

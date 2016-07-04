@@ -97,3 +97,10 @@ public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
     return lhs == rhs
 }
 
+extension DecodingContext {
+    /// Helper for creating a `TypeMismatchError`
+    func typeMismatch(expectedType: Any.Type) ->  TypeMismatchError {
+        return TypeMismatchError(expectedType: expectedType, receivedType: json.dynamicType, object: json)
+    }
+}
+
