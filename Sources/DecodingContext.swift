@@ -42,20 +42,20 @@ public struct DecodingContext<T> {
             throw MissingKeyError(key: key, object: json)
         }
         
-        return with(json: obj)
+        return self.map { _ in obj }
     }
     
     public func parseAndAcceptMissingKeys(keys: [String]) throws -> DecodingContext? {
         return try keys.reduce(self) { try $0.0?.parseAndAcceptMissingKey(key: $0.1) }
     }
     
-    public func with(json: AnyObject) -> DecodingContext {
+    public func map(json closure: (AnyObject) -> AnyObject) -> DecodingContext {
         var new = self
-        new.json = json
+        new.json = closure(json)
         return new
     }
     
-    func map<U>(closure: (T) -> U) -> DecodingContext<U> {
+    public func map<U>(parameters closure: (T) -> U) -> DecodingContext<U> {
         return DecodingContext<U>(json: json, path: path, rootObject: rootObject, parameters: closure(parameters))
     }
 }
