@@ -43,6 +43,14 @@
 		8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
+		8FCA31EE1D2AA7A600BAC4D3 /* DecodingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31ED1D2AA7A600BAC4D3 /* DecodingContext.swift */; };
+		8FCA31EF1D2AA7A600BAC4D3 /* DecodingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31ED1D2AA7A600BAC4D3 /* DecodingContext.swift */; };
+		8FCA31F01D2AA7A600BAC4D3 /* DecodingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31ED1D2AA7A600BAC4D3 /* DecodingContext.swift */; };
+		8FCA31F11D2AA7A600BAC4D3 /* DecodingContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31ED1D2AA7A600BAC4D3 /* DecodingContext.swift */; };
+		8FCA31F31D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */; };
+		8FCA31F41D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */; };
+		8FCA31F51D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */; };
+		8FCA31F61D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */; };
 		8FD3D92F1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */; };
 		8FD3D9301C270A2D00D1AF4E /* MissingKeyOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */; };
 		8FE7B5661B4C9FB900837609 /* Decodable.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE7B5651B4C9FB900837609 /* Decodable.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -113,6 +121,8 @@
 		8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPathTests.swift; sourceTree = "<group>"; };
 		8F87BCC31B592F0E00E53A8C /* DecodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingError.swift; sourceTree = "<group>"; };
 		8F956D1E1B4D6FF700243072 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		8FCA31ED1D2AA7A600BAC4D3 /* DecodingContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingContext.swift; sourceTree = "<group>"; };
+		8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleDecodable.swift; sourceTree = "<group>"; };
 		8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingKeyOperatorTests.swift; sourceTree = "<group>"; };
 		8FE7B5621B4C9FB900837609 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE7B5651B4C9FB900837609 /* Decodable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Decodable.h; sourceTree = "<group>"; };
@@ -226,6 +236,8 @@
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
 				8F00623E1C81EF61007BCF48 /* Overloads.swift */,
 				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
+				8FCA31ED1D2AA7A600BAC4D3 /* DecodingContext.swift */,
+				8FCA31F21D2AA7C000BAC4D3 /* SimpleDecodable.swift */,
 				8F012EF41BB5A920007D0B5C /* Castable.swift */,
 				8FFAB8111B7CFA9500E2D724 /* Parse.swift */,
 				8F87BCC31B592F0E00E53A8C /* DecodingError.swift */,
@@ -585,6 +597,8 @@
 				8FFAB8131B7CFA9500E2D724 /* Parse.swift in Sources */,
 				8F012EF61BB5A920007D0B5C /* Castable.swift in Sources */,
 				17FB810E1B5311840012F106 /* Decodable.swift in Sources */,
+				8FCA31EF1D2AA7A600BAC4D3 /* DecodingContext.swift in Sources */,
+				8FCA31F41D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */,
 				17FB810F1B5311870012F106 /* Operators.swift in Sources */,
 				8F0062401C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B11C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
@@ -619,6 +633,8 @@
 				57FCDE5C1BA283C900130C48 /* Parse.swift in Sources */,
 				8F012EF81BB5A928007D0B5C /* Castable.swift in Sources */,
 				57FCDE5D1BA283C900130C48 /* Decodable.swift in Sources */,
+				8FCA31F11D2AA7A600BAC4D3 /* DecodingContext.swift in Sources */,
+				8FCA31F61D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */,
 				57FCDE5E1BA283C900130C48 /* Operators.swift in Sources */,
 				8F0062421C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B31C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
@@ -634,6 +650,8 @@
 				8FFAB8121B7CFA9500E2D724 /* Parse.swift in Sources */,
 				8F012EF51BB5A920007D0B5C /* Castable.swift in Sources */,
 				8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */,
+				8FCA31EE1D2AA7A600BAC4D3 /* DecodingContext.swift in Sources */,
+				8FCA31F31D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */,
 				8F72DC561C3CB8C500A39E10 /* NSValueCastable.swift in Sources */,
 				8F00623F1C81EF61007BCF48 /* Overloads.swift in Sources */,
 				8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */,
@@ -668,6 +686,8 @@
 				8FFAB8141B7CFA9500E2D724 /* Parse.swift in Sources */,
 				8F012EF71BB5A920007D0B5C /* Castable.swift in Sources */,
 				D0DC54771B78150900F79CB0 /* Decodable.swift in Sources */,
+				8FCA31F01D2AA7A600BAC4D3 /* DecodingContext.swift in Sources */,
+				8FCA31F51D2AA7C000BAC4D3 /* SimpleDecodable.swift in Sources */,
 				D0DC54781B78150900F79CB0 /* Operators.swift in Sources */,
 				8F0062411C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B21C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
