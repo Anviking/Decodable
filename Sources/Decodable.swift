@@ -36,25 +36,6 @@ extension Decodable {
     }
 }
 
-/*
-extension Dictionary where Key: Decodable, Value: Decodable {
-    public static func decode(_ j: AnyObject) throws -> Dictionary {
-        return try decodeDictionary(Key.decode, elementDecodeClosure: Value.decode)(j)
-    }
-}
- */
-
-/*
-extension Array where Element: Decodable {
-    public static func decode(_ j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
-        if ignoreInvalidObjects {
-            return try decodeArray { try? Element.decode($0) }(j).flatMap {$0}
-        } else {
-            return try decodeArray(Element.decode)(j)
-        }
-    }
-}
-*/
 
 
 // MARK: Helpers
