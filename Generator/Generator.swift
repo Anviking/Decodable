@@ -187,7 +187,7 @@ func generateDocumentationComment(_ behaviour: Behaviour) -> String {
 }
 
 let file = "Overloads.swift"
-let fileManager = FileManager.default()
+let fileManager = FileManager.default
 let sourcesDirectory = fileManager.currentDirectoryPath + "/../Sources"
 
 
@@ -195,7 +195,7 @@ let filename = "Overloads.swift"
 let path = sourcesDirectory + "/" + filename
 
 var dateFormatter = DateFormatter()
-dateFormatter.dateStyle = .shortStyle
+dateFormatter.dateStyle = .short
 
 let date = dateFormatter.string(from: Date())
 
