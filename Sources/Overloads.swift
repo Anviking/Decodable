@@ -32,7 +32,7 @@ return try parse(json, path: path, decode: catchNull(decodeArray(catchNull(A.dec
 */
 
 public func => <A: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A?]? {
-return try parseOptionally(json, path: path.markFirstElement(false), decode: catchNull(decodeArray(catchNull(A.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: false), decode: catchNull(decodeArray(catchNull(A.decode))))
 }
 
 /**
@@ -58,7 +58,7 @@ return try parse(json, path: [Key(key: path)], decode: catchNull(decodeArray(cat
 */
 
 public func =>? <A: Decodable>(json: AnyObject, path: [Key]) throws -> [A?]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeArray(catchNull(A.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeArray(catchNull(A.decode))))
 }
 
 /**
@@ -84,7 +84,7 @@ return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)],
 */
 
 public func =>? <A: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A?]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeArray(catchNull(A.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeArray(catchNull(A.decode))))
 }
 
 /**
@@ -110,7 +110,7 @@ return try parse(json, path: path, decode: catchNull(decodeArray(decodeArray(A.d
 */
 
 public func => <A: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [[A]]? {
-return try parseOptionally(json, path: path.markFirstElement(false), decode: catchNull(decodeArray(decodeArray(A.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: false), decode: catchNull(decodeArray(decodeArray(A.decode))))
 }
 
 /**
@@ -136,7 +136,7 @@ return try parse(json, path: [Key(key: path)], decode: catchNull(decodeArray(dec
 */
 
 public func =>? <A: Decodable>(json: AnyObject, path: [Key]) throws -> [[A]]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeArray(decodeArray(A.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeArray(decodeArray(A.decode))))
 }
 
 /**
@@ -162,7 +162,7 @@ return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)],
 */
 
 public func =>? <A: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [[A]]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeArray(decodeArray(A.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeArray(decodeArray(A.decode))))
 }
 
 /**
@@ -188,7 +188,7 @@ return try parse(json, path: path, decode: catchNull(decodeArray(decodeDictionar
 */
 
 public func => <A: Decodable, B: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [[A: B]]? {
-return try parseOptionally(json, path: path.markFirstElement(false), decode: catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: false), decode: catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
 }
 
 /**
@@ -214,7 +214,7 @@ return try parse(json, path: [Key(key: path)], decode: catchNull(decodeArray(dec
 */
 
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, path: [Key]) throws -> [[A: B]]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
 }
 
 /**
@@ -240,7 +240,7 @@ return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)],
 */
 
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [[A: B]]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
 }
 
 /**
@@ -266,7 +266,7 @@ return try parse(json, path: path, decode: catchNull(decodeArray(A.decode)))
 */
 
 public func => <A: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A]? {
-return try parseOptionally(json, path: path.markFirstElement(false), decode: catchNull(decodeArray(A.decode)))
+return try parseOptionally(json, path: path.markFirstElement(optional: false), decode: catchNull(decodeArray(A.decode)))
 }
 
 /**
@@ -292,7 +292,7 @@ return try parse(json, path: [Key(key: path)], decode: catchNull(decodeArray(A.d
 */
 
 public func =>? <A: Decodable>(json: AnyObject, path: [Key]) throws -> [A]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeArray(A.decode)))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeArray(A.decode)))
 }
 
 /**
@@ -318,7 +318,7 @@ return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)],
 */
 
 public func =>? <A: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeArray(A.decode)))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeArray(A.decode)))
 }
 
 /**
@@ -344,7 +344,7 @@ return try parse(json, path: path, decode: catchNull(decodeDictionary(A.decode, 
 */
 
 public func => <A: Decodable, B: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A: B?]? {
-return try parseOptionally(json, path: path.markFirstElement(false), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: false), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
 }
 
 /**
@@ -370,7 +370,7 @@ return try parse(json, path: [Key(key: path)], decode: catchNull(decodeDictionar
 */
 
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, path: [Key]) throws -> [A: B?]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
 }
 
 /**
@@ -396,7 +396,7 @@ return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)],
 */
 
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A: B?]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
 }
 
 /**
@@ -422,7 +422,7 @@ return try parse(json, path: path, decode: catchNull(decodeDictionary(A.decode, 
 */
 
 public func => <A: Decodable, B: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A: [B]]? {
-return try parseOptionally(json, path: path.markFirstElement(false), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: false), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
 }
 
 /**
@@ -448,7 +448,7 @@ return try parse(json, path: [Key(key: path)], decode: catchNull(decodeDictionar
 */
 
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, path: [Key]) throws -> [A: [B]]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
 }
 
 /**
@@ -474,7 +474,7 @@ return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)],
 */
 
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A: [B]]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
 }
 
 /**
@@ -500,7 +500,7 @@ return try parse(json, path: path, decode: catchNull(decodeDictionary(A.decode, 
 */
 
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A: [B: C]]? {
-return try parseOptionally(json, path: path.markFirstElement(false), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: false), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
 }
 
 /**
@@ -526,7 +526,7 @@ return try parse(json, path: [Key(key: path)], decode: catchNull(decodeDictionar
 */
 
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, path: [Key]) throws -> [A: [B: C]]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
 }
 
 /**
@@ -552,7 +552,7 @@ return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)],
 */
 
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A: [B: C]]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
 }
 
 /**
@@ -578,7 +578,7 @@ return try parse(json, path: path, decode: catchNull(decodeDictionary(A.decode, 
 */
 
 public func => <A: Decodable, B: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A: B]? {
-return try parseOptionally(json, path: path.markFirstElement(false), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
+return try parseOptionally(json, path: path.markFirstElement(optional: false), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
 }
 
 /**
@@ -604,7 +604,7 @@ return try parse(json, path: [Key(key: path)], decode: catchNull(decodeDictionar
 */
 
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, path: [Key]) throws -> [A: B]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
 }
 
 /**
@@ -630,7 +630,7 @@ return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)],
 */
 
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> [A: B]? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
 }
 
 /**
@@ -656,7 +656,7 @@ return try parse(json, path: path, decode: catchNull(A.decode))
 */
 
 public func => <A: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> A? {
-return try parseOptionally(json, path: path.markFirstElement(false), decode: catchNull(A.decode))
+return try parseOptionally(json, path: path.markFirstElement(optional: false), decode: catchNull(A.decode))
 }
 
 /**
@@ -682,7 +682,7 @@ return try parse(json, path: [Key(key: path)], decode: catchNull(A.decode))
 */
 
 public func =>? <A: Decodable>(json: AnyObject, path: [Key]) throws -> A? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(A.decode))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(A.decode))
 }
 
 /**
@@ -708,7 +708,7 @@ return try parseOptionally(json, path: [OptionalKey(key: path, optional: true)],
 */
 
 public func =>? <A: Decodable>(json: AnyObject, path: [OptionalKey]) throws -> A? {
-return try parseOptionally(json, path: path.markFirstElement(true), decode: catchNull(A.decode))
+return try parseOptionally(json, path: path.markFirstElement(optional: true), decode: catchNull(A.decode))
 }
 
 /**

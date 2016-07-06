@@ -40,11 +40,11 @@ class DecodableArrayTests: XCTestCase {
     func testDecodeOptionalDecodableArrayFailure() {
         // given
         let key = "key"
-        let value: NSArray = ["value1", "value2", 0x8BADF00D, "value3"]
+        let value: NSArray = ["value1", "value2", 0x8BAD, "value3"]
         let dictionary: NSDictionary = [key: value]
         // when
         do {
-            try dictionary => key as [String?]
+            _ = try dictionary => key as [String?]
             XCTFail("should throw")
         } catch is TypeMismatchError {
             // Yay
@@ -102,7 +102,7 @@ class DecodableArrayTests: XCTestCase {
         let dictionary = NSDictionary()
         // when
         do {
-            try dictionary => key as [String]?
+            _ = try dictionary => key as [String]?
             XCTFail()
         } catch is MissingKeyError {
             

@@ -53,7 +53,7 @@ public func =>? (lhs: String, rhs: String) -> [OptionalKey] {
 // MARK: Step two: a => (b => c)
 
 public func => (lhs: String, rhs: [OptionalKey]) -> [OptionalKey] {
-    return [OptionalKey(key: lhs, optional: false)] + rhs.markFirstElement(false)
+    return [OptionalKey(key: lhs, optional: false)] + rhs.markFirstElement(optional: false)
 }
 
 public func => (lhs: String, rhs: [Key]) -> [Key] {
@@ -61,11 +61,11 @@ public func => (lhs: String, rhs: [Key]) -> [Key] {
 }
 
 public func =>? (lhs: String, rhs: [OptionalKey]) -> [OptionalKey] {
-    return [OptionalKey(key: lhs, optional: true)] + rhs.markFirstElement(true)
+    return [OptionalKey(key: lhs, optional: true)] + rhs.markFirstElement(optional: true)
 }
 
 public func =>? (lhs: String, rhs: [Key]) -> [OptionalKey] {
-    return [OptionalKey(key: lhs, optional: true)] + rhs.markFirstElement(true)
+    return [OptionalKey(key: lhs, optional: true)] + rhs.markFirstElement(optional: true)
 }
 
 // Step three is generated, see Overloads.swift

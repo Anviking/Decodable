@@ -8,7 +8,7 @@
 
 import Foundation
 
-func parse(json: AnyObject, _ path: [String]) throws -> AnyObject {
+func parse(_ json: AnyObject, _ path: [String]) throws -> AnyObject {
     
     var currentDict = try NSDictionary.decode(json)
     
@@ -19,7 +19,7 @@ func parse(json: AnyObject, _ path: [String]) throws -> AnyObject {
     var shorterPath = path
     let lastKey = shorterPath.removeLast()
     
-    func objectForKey(dictionary: NSDictionary, key: String) throws -> AnyObject {
+    func objectForKey(_ dictionary: NSDictionary, key: String) throws -> AnyObject {
         guard let result = dictionary[NSString(string: key)] else {
             throw MissingKeyError(key: key, object: dictionary, path: currentPath)
         }
@@ -34,7 +34,7 @@ func parse(json: AnyObject, _ path: [String]) throws -> AnyObject {
     return try objectForKey(currentDict, key: lastKey)
 }
 
-func parseOptionally(json: AnyObject, _ path: [OptionalKey]) throws -> AnyObject? {
+func parseOptionally(_ json: AnyObject, _ path: [OptionalKey]) throws -> AnyObject? {
     var currentDict = try NSDictionary.decode(json)
     
     // For error information
@@ -44,7 +44,7 @@ func parseOptionally(json: AnyObject, _ path: [OptionalKey]) throws -> AnyObject
     var shorterPath = path
     let lastKey = shorterPath.removeLast()
     
-    func objectForKey(dictionary: NSDictionary, key: OptionalKey) throws -> AnyObject? {
+    func objectForKey(_ dictionary: NSDictionary, key: OptionalKey) throws -> AnyObject? {
         guard let result = dictionary[NSString(string: key.key)] else {
             if key.optional {
                 return nil
@@ -66,25 +66,25 @@ func parseOptionally(json: AnyObject, _ path: [OptionalKey]) throws -> AnyObject
     return try objectForKey(currentDict, key: lastKey)
 }
 
-public func parse<T>(json: AnyObject, path: [Key], decode: (AnyObject throws -> T)) throws -> T {
+public func parse<T>(_ json: AnyObject, path: [Key], decode: ((AnyObject) throws -> T)) throws -> T {
     let object = try parse(json, path.map {$0.key})
     return try catchAndRethrow(json, path.map {$0.key}) { try decode(object) }
 }
 
-public func parseOptionally<T>(json: AnyObject, path: [OptionalKey], decode: (AnyObject throws -> T?)) throws -> T? {
+public func parseOptionally<T>(_ json: AnyObject, path: [OptionalKey], decode: ((AnyObject) throws -> T?)) throws -> T? {
     guard let object = try parseOptionally(json, path) else {
         return nil
     }
     let lastPathIsOptional = path.last?.optional ?? false
     if lastPathIsOptional {
-        return try catchAndRethrow(json, path.map {$0.key}) { try catchNull(decode)(object) }
+        return try catchAndRethrow(json, path.map {$0.key}) { try decode(object) }
     }
     return try catchAndRethrow(json, path.map {$0.key}) { try decode(object) }
 }
 
 
 /// Accepts null and MissingKeyError
-func parseAndAcceptMissingKey<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T? {
+func parseAndAcceptMissingKey<T>(_ json: AnyObject, path: [String], decode: ((AnyObject) throws -> T)) throws -> T? {
     guard let object = try catchMissingKeyAndReturnNil({ try parse(json, path) }) else {
         return nil
     }
@@ -94,7 +94,7 @@ func parseAndAcceptMissingKey<T>(json: AnyObject, path: [String], decode: (AnyOb
 
 // MARK: - Helpers
 
-func catchMissingKeyAndReturnNil<T>(closure: Void throws -> T) throws -> T? {
+func catchMissingKeyAndReturnNil<T>(_ closure: (Void) throws -> T) throws -> T? {
     do {
         return try closure()
     } catch is MissingKeyError {
@@ -102,7 +102,7 @@ func catchMissingKeyAndReturnNil<T>(closure: Void throws -> T) throws -> T? {
     }
 }
 
-func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: Void throws -> T) throws -> T {
+func catchAndRethrow<T>(_ json: AnyObject, _ path: [String], block: (Void) throws -> T) throws -> T {
     do {
         return try block()
     } catch let error as DecodingError {

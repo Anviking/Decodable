@@ -11,11 +11,11 @@ import XCTest
 
 class DecodableTests: XCTestCase {
     
-    private func readJsonFile(file: String) -> NSDictionary {
-        let filePath = (NSBundle(forClass: object_getClass(self)).resourcePath! as NSString).stringByAppendingPathComponent(file)
+    private func readJsonFile(_ file: String) -> NSDictionary {
+        let filePath = (Bundle(for: object_getClass(self)).resourcePath! as NSString).appendingPathComponent(file)
         let jsonString = try! String(contentsOfFile: filePath)
-        let jsonData = jsonString.dataUsingEncoding(NSUTF8StringEncoding)!
-        return try! NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions.MutableContainers) as! NSDictionary
+        let jsonData = jsonString.data(using: String.Encoding.utf8)!
+		return try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
     }
     
     func testDecodeRepositoryExampleShouldSuccess() {
@@ -55,10 +55,10 @@ class DecodableTests: XCTestCase {
     
     func testDecodeArrayOfRepositoriesAndMeasureTime() {
         let json = readJsonFile("Repository.json")
-        let array = NSArray(array: Array(count: Count, repeatedValue: json))
+        let array = NSArray(array: Array(repeating: json, count: Count))
         
         var result: [Repository] = []
-        measureBlock {
+        measure {
             do {
                 result = try [Repository].decode(array)
             } catch let error {
@@ -70,10 +70,10 @@ class DecodableTests: XCTestCase {
     
     func testCustomParseAndMeasureTime() {
         let json = readJsonFile("Repository.json")
-        let array = NSArray(array: Array(count: Count, repeatedValue: json))
+        let array = NSArray(array: Array(repeating: json, count: Count))
         
         var result: [Repository] = []
-        measureBlock {
+        measure {
             do {
                 result = try self.customParseRepository(array)
             } catch let error {
@@ -84,7 +84,7 @@ class DecodableTests: XCTestCase {
         
     }
     
-    func customParseRepository(json: AnyObject) throws -> [Repository] {
+    private func customParseRepository(_ json: AnyObject) throws -> [Repository] {
         let error = NSError(domain: "test", code: 0, userInfo: nil)
         guard let array = json as? [NSDictionary] else {
             throw error
@@ -130,7 +130,7 @@ class DecodableTests: XCTestCase {
         
         // when
         do {
-            try Repository.decode(json)
+            _ = try Repository.decode(json)
         } catch let error as MissingKeyError {
             // then
             XCTAssertEqual(error.key, "id")
@@ -147,7 +147,7 @@ class DecodableTests: XCTestCase {
         
         // when
         do {
-            try Repository.decode(json)
+            _ = try Repository.decode(json)
         } catch is MissingKeyError {
             XCTFail("it should not throw this exception")
         } catch let error as TypeMismatchError where error.expectedType == Int.self {
@@ -164,7 +164,8 @@ class DecodableTests: XCTestCase {
         
         // when
         do {
-            try parse(json, path: [Key(key: "key")], decode: Repository.decode)
+
+            _ = try parse(json, path: [Key(key: "key")], decode: Repository.decode)
         } catch is MissingKeyError {
             XCTFail("it should not throw this exception")
         } catch let error as TypeMismatchError where error.expectedType == Int.self {
@@ -177,12 +178,12 @@ class DecodableTests: XCTestCase {
     
     func testDecodeRepositoryExampleShouldThrowNoJsonObjectException() {
         // given
-        let filePath = (NSBundle(forClass: object_getClass(self)).resourcePath! as NSString).stringByAppendingPathComponent("NoJsonObject.json")
+        let filePath = (Bundle(for: object_getClass(self)).resourcePath! as NSString).appendingPathComponent("NoJsonObject.json")
         let jsonString = try! String(contentsOfFile: filePath)
         
         // when
         do {
-            try Repository.decode(jsonString)
+            _ = try Repository.decode(jsonString)
         } catch is MissingKeyError {
             XCTFail("it should not throw this exception")
         } catch let error as TypeMismatchError where error.expectedType == NSDictionary.self {
