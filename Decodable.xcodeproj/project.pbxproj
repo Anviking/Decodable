@@ -43,6 +43,10 @@
 		8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
+		8FBE8AAA1C84AAEC00F2F218 /* KeyPathElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBE8AA91C84AAEC00F2F218 /* KeyPathElement.swift */; };
+		8FBE8AAB1C84AAEC00F2F218 /* KeyPathElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBE8AA91C84AAEC00F2F218 /* KeyPathElement.swift */; };
+		8FBE8AAC1C84AAEC00F2F218 /* KeyPathElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBE8AA91C84AAEC00F2F218 /* KeyPathElement.swift */; };
+		8FBE8AAD1C84AAEC00F2F218 /* KeyPathElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FBE8AA91C84AAEC00F2F218 /* KeyPathElement.swift */; };
 		8FD3D92F1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */; };
 		8FD3D9301C270A2D00D1AF4E /* MissingKeyOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */; };
 		8FE7B5661B4C9FB900837609 /* Decodable.h in Headers */ = {isa = PBXBuildFile; fileRef = 8FE7B5651B4C9FB900837609 /* Decodable.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -113,6 +117,7 @@
 		8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPathTests.swift; sourceTree = "<group>"; };
 		8F87BCC31B592F0E00E53A8C /* DecodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingError.swift; sourceTree = "<group>"; };
 		8F956D1E1B4D6FF700243072 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		8FBE8AA91C84AAEC00F2F218 /* KeyPathElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyPathElement.swift; sourceTree = "<group>"; };
 		8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingKeyOperatorTests.swift; sourceTree = "<group>"; };
 		8FE7B5621B4C9FB900837609 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8FE7B5651B4C9FB900837609 /* Decodable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Decodable.h; sourceTree = "<group>"; };
@@ -224,6 +229,7 @@
 				65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */,
 				8F72DC551C3CB8C500A39E10 /* NSValueCastable.swift */,
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
+				8FBE8AA91C84AAEC00F2F218 /* KeyPathElement.swift */,
 				8F00623E1C81EF61007BCF48 /* Overloads.swift */,
 				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
 				8F012EF41BB5A920007D0B5C /* Castable.swift */,
@@ -588,6 +594,7 @@
 				17FB810F1B5311870012F106 /* Operators.swift in Sources */,
 				8F0062401C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B11C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
+				8FBE8AAB1C84AAEC00F2F218 /* KeyPathElement.swift in Sources */,
 				8F72DC571C3CB8C800A39E10 /* NSValueCastable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -622,6 +629,7 @@
 				57FCDE5E1BA283C900130C48 /* Operators.swift in Sources */,
 				8F0062421C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B31C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
+				8FBE8AAD1C84AAEC00F2F218 /* KeyPathElement.swift in Sources */,
 				8F72DC591C3CB8C900A39E10 /* NSValueCastable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -637,6 +645,7 @@
 				8F72DC561C3CB8C500A39E10 /* NSValueCastable.swift in Sources */,
 				8F00623F1C81EF61007BCF48 /* Overloads.swift in Sources */,
 				8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */,
+				8FBE8AAA1C84AAEC00F2F218 /* KeyPathElement.swift in Sources */,
 				65DB18B01C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -671,6 +680,7 @@
 				D0DC54781B78150900F79CB0 /* Operators.swift in Sources */,
 				8F0062411C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B21C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
+				8FBE8AAC1C84AAEC00F2F218 /* KeyPathElement.swift in Sources */,
 				8F72DC581C3CB8C900A39E10 /* NSValueCastable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

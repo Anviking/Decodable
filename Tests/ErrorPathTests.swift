@@ -41,7 +41,7 @@ class ErrorPathTests: XCTestCase {
         let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
         
         do {
-            _ = try dict => "object" => "repo" => "owner" => "oops" as String
+            _  = try dict => "object" => "repo" => "owner" => "oops" as String
         } catch let error as MissingKeyError {
             XCTAssertEqual(error.formattedPath, "object.repo.owner")
         } catch let error {
@@ -68,7 +68,7 @@ class ErrorPathTests: XCTestCase {
         let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": 0]]]]
         
         do {
-            _ = try dict => "object" => "repo" => "owner" => "login" as String
+            _ = (try dict => "object" => "repo" => "owner" => "login") as String
         } catch let error as TypeMismatchError {
             XCTAssertEqual(String(error.receivedType), "__NSCFNumber")
             XCTAssertEqual(error.formattedPath, "object.repo.owner.login")

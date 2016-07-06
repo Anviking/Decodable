@@ -43,9 +43,71 @@ func == (a: Unique, b: Unique) -> Bool {
     return a.value == b.value
 }
 
+struct Overload: CustomStringConvertible {
+    let operatorString: String
+    let returnType: Decodable
+    let rhs: (type: String, call: String)
+    let parseCall: String
+    
+    var description: String {
+        let provider = TypeNameProvider()
+        let type = returnType.typeString(provider)
+        let arguments = provider.takenNames.values.sorted().map { $0 + ": Decodable" }
+        let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))>" : ""
+        return [
+            documentation,
+            "public func \(operatorString) \(generics)(json: AnyObject, path: \(rhs.type)) throws -> \(type) {",
+            "return try \(parseCall)(json, path: \(rhs.call), decode: \(returnType.decodeClosure(provider)))",
+            "}"
+            ].joined(separator: "\n")
+    }
+    
+    var documentation: String {
+        var string =
+            "/**\n" +
+                " Retrieves the object at `path` from `json` and decodes it according to the return type\n" +
+                "\n" +
+                " - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.\n" +
+        " - parameter path: A null-separated key-path string. Can be generated with `\"keyA\" => \"keyB\"`\n"
+        switch (returnType.isOptional, operatorString == "=>?") {
+        case (true, true):
+            string += " - Returns: nil if the pre-decoded object at `path` is `NSNull`.\n"
+            string += " - Throws: `TypeMismatchError` or any other error thrown in the decode-closure.\n"
+        case (true, false):
+            string += " - Returns: nil if `path` does not exist in `json`, or if that object is `NSNull`.\n"
+            string += " - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure.\n"
+        case (false, true):
+            fatalError()
+        case (false, false):
+            string += " - Returns: A non-optional object, meaning `null` values will most likely cause the decode-closure to throw.\n"
+            string += " - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure.\n"
+        }
+        return string + "*/\n"
+    }
+}
+
+enum OverloadParameters {
+    case String
+    case OptionalPath
+    case NonOptionalPath
+}
+
+enum OverloadType: String {
+    case Throwing = "=>"
+    case Optional = "=>?"
+    
+    var parseCall: String {
+        switch self {
+        case .Throwing:
+            return "parse"
+        case .Optional:
+            return "parseOptionally"
+        }
+    }
+}
+
 indirect enum Decodable {
     case T(Unique)
-    //    case AnyObject
     case Array(Decodable)
     case Optional(Decodable)
     case Dictionary(Decodable, Decodable)
@@ -54,8 +116,6 @@ indirect enum Decodable {
         switch self {
         case T(let key):
             return "\(provider[key]).decode"
-            //        case .AnyObject:
-        //            return "{$0}"
         case Optional(let T):
             return "catchNull(\(T.decodeClosure(provider)))"
         case Array(let T):
@@ -113,30 +173,30 @@ indirect enum Decodable {
         let parseCallString: String
         let behaviour: Behaviour
         
-        switch operatorString {
-        case "=>":
-            returnType = typeString(provider)
-            behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parse"
-        case "=>?":
-            returnType = typeString(provider) + "?"
-            behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parseAndAcceptMissingKey"
-        default:
-            fatalError()
-        }
+        let shouldConvertToOptional = operatorString == "=>?"
+        var overloads = [Overload]()
         
+
+        if isOptional == shouldConvertToOptional {
+            overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "String", call: "[Key(key: path)]"), parseCall: "parse"))
+        }
         let arguments = provider.takenNames.values.sorted().map { $0 + ": Decodable" }
 		let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))>" : ""
         
-        let documentation = generateDocumentationComment(behaviour)
-        let throwKeyword =  "throws"
-        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(parseCallString)(json, path: [path], decode: \(decodeClosure(provider)))\n" +
-            "}", documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: [String])\(throwKeyword)-> \(returnType) {\n" +
-                "    return try \(parseCallString)(json, path: path, decode: \(decodeClosure(provider)))\n" +
-            "}"
-        ]
+        switch (isOptional, shouldConvertToOptional) {
+        case (true, true):
+            overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "[Key]", call: "path.markFirstElement(optional: true)"), parseCall: "parseOptionally"))
+            overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "String", call: "[OptionalKey(key: path, optional: true)]"), parseCall: "parseOptionally"))
+            overloads.append(Overload(operatorString: "=>?", returnType: self, rhs: (type: "[OptionalKey]", call: "path.markFirstElement(optional: true)"), parseCall: "parseOptionally"))
+        case (true, false):
+            overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "[Key]", call: "path"), parseCall: "parse"))
+            overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "[OptionalKey]", call: "path.markFirstElement(optional: false)"), parseCall: "parseOptionally"))
+        case (false, false):
+            overloads.append(Overload(operatorString: "=>", returnType: self, rhs: (type: "[Key]", call: "path"), parseCall: "parse"))
+        default:
+            break
+        }
+        return overloads.map {$0.description}
     }
 }
 
@@ -192,16 +252,15 @@ let sourcesDirectory = fileManager.currentDirectoryPath + "/../Sources"
 
 
 let filename = "Overloads.swift"
-let path = sourcesDirectory + "/" + filename
 
 var dateFormatter = DateFormatter()
 dateFormatter.dateStyle = .short
 
 let date = dateFormatter.string(from: Date())
 
-let overloads = Decodable.T(Unique()).generateAllPossibleChildren(4)
+let overloads = Decodable.T(Unique()).generateAllPossibleChildren(3)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
-let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).flatMap { $0.generateOverloads("=>?") }
+let all = overloads.flatMap { $0.generateOverloads("=>") + $0.generateOverloads("=>?") }
 
 do {
     var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Template.swift") as NSString

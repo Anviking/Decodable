@@ -88,3 +88,25 @@ public func decodeDictionary<K,V>(_ keyDecodeClosure: (AnyObject) throws -> K, e
         return dict
     }
 }
+
+func catchNull<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
+    return { json in
+        if json is NSNull {
+            return nil
+        } else {
+            return try decodeClosure(json)
+        }
+    }
+}
+
+func catchNull<T>(decodeClosure: (AnyObject) throws -> T?) -> (AnyObject) throws -> T? {
+    return { json in
+        if json is NSNull {
+            return nil
+        } else {
+            return try decodeClosure(json)
+        }
+    }
+}
+
+

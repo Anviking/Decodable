@@ -8,27 +8,80 @@
 
 import Foundation
 
-/// Use reduce to traverse through a nested dictionary and find the object at a given path
 func parse(_ json: AnyObject, _ path: [String]) throws -> AnyObject {
-    return try path.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
-        let currentDict = try NSDictionary.decode(a.object)
-        guard let result = currentDict[NSString(string: key)] else {
-            var error = MissingKeyError(key: key, object: currentDict)
-            error.path = a.currentPath
-            error.rootObject = json
-            throw error
+    
+    var currentDict = try NSDictionary.decode(json)
+    
+    // For error information
+    var currentPath: [String] = []
+    
+    // Remove last key – it should not be decoded as NSDictionary
+    var shorterPath = path
+    let lastKey = shorterPath.removeLast()
+    
+    func objectForKey(_ dictionary: NSDictionary, key: String) throws -> AnyObject {
+        guard let result = dictionary[NSString(string: key)] else {
+            throw MissingKeyError(key: key, object: dictionary, path: currentPath)
         }
-        
-        var path = a.currentPath
-        path.append(key)
-        return (result, path)
-    }).object
+        return result
+    }
+    
+    for key in shorterPath {
+        currentDict = try NSDictionary.decode(objectForKey(currentDict, key: key))
+        currentPath.append(key)
+    }
+    
+    return try objectForKey(currentDict, key: lastKey)
 }
 
-public func parse<T>(_ json: AnyObject, path: [String], decode: ((AnyObject) throws -> T)) throws -> T {
-    let object = try parse(json, path)
-    return try catchAndRethrow(json, path) { try decode(object) }
+func parseOptionally(_ json: AnyObject, _ path: [OptionalKey]) throws -> AnyObject? {
+    var currentDict = try NSDictionary.decode(json)
+    
+    // For error information
+    var currentPath: [String] = []
+    
+    // Remove last key – it should not be decoded as NSDictionary
+    var shorterPath = path
+    let lastKey = shorterPath.removeLast()
+    
+    func objectForKey(_ dictionary: NSDictionary, key: OptionalKey) throws -> AnyObject? {
+        guard let result = dictionary[NSString(string: key.key)] else {
+            if key.optional {
+                return nil
+            } else {
+                throw MissingKeyError(key: key.key, object: dictionary, path: currentPath)
+            }
+        }
+        return result
+    }
+    
+    for key in shorterPath {
+        guard let object = try objectForKey(currentDict, key: key) else {
+            return nil
+        }
+        currentDict = try NSDictionary.decode(object)
+        currentPath.append(key.key)
+    }
+    
+    return try objectForKey(currentDict, key: lastKey)
 }
+
+public func parse<T>(_ json: AnyObject, path: [Key], decode: ((AnyObject) throws -> T)) throws -> T {
+    let object = try parse(json, path.map {$0.key})
+    return try catchAndRethrow(json, path.map {$0.key}) { try decode(object) }
+}
+
+public func parseOptionally<T>(_ json: AnyObject, path: [OptionalKey], decode: ((AnyObject) throws -> T?)) throws -> T? {
+    guard let object = try parseOptionally(json, path) else {
+        return nil
+    }
+    let lastPathIsOptional = path.last?.optional ?? false
+    if lastPathIsOptional {
+        return try catchAndRethrow(json, path.map {$0.key}) { try decode(object) }
+    }
+    return try catchAndRethrow(json, path.map {$0.key}) { try decode(object) }
+}
+
 
 /// Accepts null and MissingKeyError
 func parseAndAcceptMissingKey<T>(_ json: AnyObject, path: [String], decode: ((AnyObject) throws -> T)) throws -> T? {

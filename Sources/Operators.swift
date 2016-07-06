@@ -13,42 +13,59 @@ import Foundation
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
+// MARK: Implicit overloads (AnyObject)
+
 public func => (lhs: AnyObject, rhs: String) throws -> AnyObject {
-    return try parse(lhs, path: [rhs], decode: { $0 })
+    return try parse(lhs, path: [Key(key: rhs)], decode: { $0 })
 }
 
-public func =>? (lhs: AnyObject, rhs: String) throws -> AnyObject? {
-    return try parseAndAcceptMissingKey(lhs, path: [rhs] , decode: { $0 })
+public func =>? (lhs: AnyObject, rhs: OptionalKey) throws -> AnyObject? {
+    return try parseOptionally(lhs, path: [rhs], decode: { $0 })
 }
 
-public func => (lhs: AnyObject, rhs: [String]) throws -> AnyObject {
+public func => (lhs: AnyObject, rhs: [Key]) throws -> AnyObject {
     return try parse(lhs, path: rhs, decode: { $0 })
 }
 
-public func =>? (lhs: AnyObject, rhs: [String]) throws -> AnyObject? {
-    return try parseAndAcceptMissingKey(lhs, path: rhs, decode: { $0 })
+public func =>? (lhs: AnyObject, rhs: [OptionalKey]) throws -> AnyObject? {
+    return try parseOptionally(lhs, path: rhs, decode: { $0 })
 }
 
+// MARK: - Generic Overloads
 
-// MARK: - JSONPath
+/*
+ json => "a" => "b" => "c" Return type: T
+ json => "a" => "b" =>? "c" // only c is optional. Return type: T?
+ json => "a" =>? "b" =>? "c" // b and c is optional. Return type: T?
+ json =>? "a" =>? "b" =>? "c" // a, b and c is optional. Return type: T?
+ */
 
-/// Enables parsing nested objects e.g json => "a" => "b"
-public func => (lhs: String, rhs: String) -> [String] {
-    return [lhs, rhs]
+// MARK: Step one: b => c
+
+public func => (lhs: String, rhs: String) -> [Key] {
+    return [Key(key: lhs), Key(key: rhs)]
 }
 
-public func => (lhs: String, rhs: [String]) -> [String] {
-    return [lhs] + rhs
+public func =>? (lhs: String, rhs: String) -> [OptionalKey] {
+    return [OptionalKey(key: lhs, optional: false), OptionalKey(key: rhs, optional: true)]
 }
 
-// MARK: Helpers
+// MARK: Step two: a => (b => c)
 
-func catchNull<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
-    return { json in
-        if json is NSNull {
-            return nil
-        } else {
-            return try decodeClosure(json)
-        }
-    }
+public func => (lhs: String, rhs: [OptionalKey]) -> [OptionalKey] {
+    return [OptionalKey(key: lhs, optional: false)] + rhs.markFirstElement(optional: false)
 }
+
+public func => (lhs: String, rhs: [Key]) -> [Key] {
+    return [Key(key: lhs)] + rhs
+}
+
+public func =>? (lhs: String, rhs: [OptionalKey]) -> [OptionalKey] {
+    return [OptionalKey(key: lhs, optional: true)] + rhs.markFirstElement(optional: true)
+}
+
+public func =>? (lhs: String, rhs: [Key]) -> [OptionalKey] {
+    return [OptionalKey(key: lhs, optional: true)] + rhs.markFirstElement(optional: true)
+}
+
+// Step three is generated, see Overloads.swift
