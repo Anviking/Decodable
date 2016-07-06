@@ -14,6 +14,13 @@ public struct DecodingContext<Parameters> {
     var rootObject: AnyObject
     var parameters: Parameters
     
+    init(json: AnyObject, parameters: Parameters) {
+        self.json = json
+        self.path = []
+        self.rootObject = json
+        self.parameters = parameters
+    }
+    
     init(json: AnyObject, path: [String] = [], rootObject: AnyObject, parameters: Parameters) {
         self.json = json
         self.path = path

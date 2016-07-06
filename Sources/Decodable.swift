@@ -20,7 +20,7 @@ extension Decodable where Parameters == Void {
     ///
     /// - parameter json: JSON object from `NSJSONSerialization`.
     public static func decode(_ json: AnyObject) throws -> Self {
-        let context = DecodingContext(json: json, path: [], rootObject: json, parameters: ())
+        let context = DecodingContext(json: json, parameters: ())
         return try Self.decode(context)
     }
 }
