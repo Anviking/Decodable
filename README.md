@@ -43,6 +43,13 @@ do {
     print(error)
 }
 ```
+#### Compitability
+
+| Swift version | Compitable tag or branch |
+| --- | --- |
+| Swift 3.0 | `master`|
+| Swift 2.3 | `swift-2.3` |
+| Swift 2.2 | `v0.4.3`|
 
 ### Features
 - Informative errors
