@@ -9,7 +9,7 @@
 import Foundation
 
 /// Use reduce to traverse through a nested dictionary and find the object at a given path
-func parse(_ json: AnyObject, _ path: [String]) throws -> AnyObject {
+func parse(json: AnyObject, _ path: [String]) throws -> AnyObject {
     return try path.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
         let currentDict = try NSDictionary.decode(a.object)
         guard let result = currentDict[NSString(string: key)] else {
@@ -25,13 +25,13 @@ func parse(_ json: AnyObject, _ path: [String]) throws -> AnyObject {
     }).object
 }
 
-public func parse<T>(_ json: AnyObject, path: [String], decode: ((AnyObject) throws -> T)) throws -> T {
+public func parse<T>(json: AnyObject, path: [String], decode: ((AnyObject) throws -> T)) throws -> T {
     let object = try parse(json, path)
     return try catchAndRethrow(json, path) { try decode(object) }
 }
 
 /// Accepts null and MissingKeyError
-func parseAndAcceptMissingKey<T>(_ json: AnyObject, path: [String], decode: ((AnyObject) throws -> T)) throws -> T? {
+func parseAndAcceptMissingKey<T>(json: AnyObject, path: [String], decode: ((AnyObject) throws -> T)) throws -> T? {
     guard let object = try catchMissingKeyAndReturnNil({ try parse(json, path) }) else {
         return nil
     }
@@ -41,7 +41,7 @@ func parseAndAcceptMissingKey<T>(_ json: AnyObject, path: [String], decode: ((An
 
 // MARK: - Helpers
 
-func catchMissingKeyAndReturnNil<T>(_ closure: (Void) throws -> T) throws -> T? {
+func catchMissingKeyAndReturnNil<T>(closure: (Void) throws -> T) throws -> T? {
     do {
         return try closure()
     } catch is MissingKeyError {
@@ -49,7 +49,7 @@ func catchMissingKeyAndReturnNil<T>(_ closure: (Void) throws -> T) throws -> T? 
     }
 }
 
-func catchAndRethrow<T>(_ json: AnyObject, _ path: [String], block: (Void) throws -> T) throws -> T {
+func catchAndRethrow<T>(json: AnyObject, _ path: [String], block: (Void) throws -> T) throws -> T {
     do {
         return try block()
     } catch let error as DecodingError {
