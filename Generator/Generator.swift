@@ -131,10 +131,8 @@ indirect enum Decodable {
         
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
-        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(parseCallString)(json, path: [path], decode: \(decodeClosure(provider)))\n" +
-            "}", documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: [String])\(throwKeyword)-> \(returnType) {\n" +
-                "    return try \(parseCallString)(json, path: path, decode: \(decodeClosure(provider)))\n" +
+        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: KeyPath)\(throwKeyword)-> \(returnType) {\n" +
+            "    return try \(parseCallString)(json, keyPath: keyPath, decode: \(decodeClosure(provider)))\n" +
             "}"
         ]
     }

@@ -9,8 +9,8 @@
 import Foundation
 
 /// Use reduce to traverse through a nested dictionary and find the object at a given path
-func parse(_ json: AnyObject, _ path: [String]) throws -> AnyObject {
-    return try path.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
+func parse(_ json: AnyObject, _ keyPath: KeyPath) throws -> AnyObject {
+    return try keyPath.keys.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
         let currentDict = try NSDictionary.decode(a.object)
         guard let result = currentDict[NSString(string: key)] else {
             var error = MissingKeyError(key: key, object: currentDict)
@@ -25,17 +25,17 @@ func parse(_ json: AnyObject, _ path: [String]) throws -> AnyObject {
     }).object
 }
 
-public func parse<T>(_ json: AnyObject, path: [String], decode: ((AnyObject) throws -> T)) throws -> T {
-    let object = try parse(json, path)
-    return try catchAndRethrow(json, path) { try decode(object) }
+public func parse<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((AnyObject) throws -> T)) throws -> T {
+    let object = try parse(json, keyPath)
+    return try catchAndRethrow(json, keyPath) { try decode(object) }
 }
 
 /// Accepts null and MissingKeyError
-func parseAndAcceptMissingKey<T>(_ json: AnyObject, path: [String], decode: ((AnyObject) throws -> T)) throws -> T? {
-    guard let object = try catchMissingKeyAndReturnNil({ try parse(json, path) }) else {
+func parseAndAcceptMissingKey<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((AnyObject) throws -> T)) throws -> T? {
+    guard let object = try catchMissingKeyAndReturnNil({ try parse(json, keyPath) }) else {
         return nil
     }
-    return try catchAndRethrow(json, path) { try catchNull(decode)(object) }
+    return try catchAndRethrow(json, keyPath) { try catchNull(decode)(object) }
 }
 
 
@@ -49,12 +49,12 @@ func catchMissingKeyAndReturnNil<T>(_ closure: (Void) throws -> T) throws -> T? 
     }
 }
 
-func catchAndRethrow<T>(_ json: AnyObject, _ path: [String], block: (Void) throws -> T) throws -> T {
+func catchAndRethrow<T>(_ json: AnyObject, _ keyPath: KeyPath, block: (Void) throws -> T) throws -> T {
     do {
         return try block()
     } catch let error as DecodingError {
         var error = error
-        error.path = path + error.path
+        error.path = keyPath.keys + error.path
         error.rootObject = json
         throw error
     } catch let error {
