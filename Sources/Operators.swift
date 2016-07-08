@@ -43,7 +43,7 @@ public func => (lhs: String, rhs: [String]) -> [String] {
 
 // MARK: Helpers
 
-func catchNull<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
+func catchNull<T>(decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
     return { json in
         if json is NSNull {
             return nil
