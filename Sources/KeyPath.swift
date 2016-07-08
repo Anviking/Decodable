@@ -11,8 +11,12 @@ import Foundation
 public struct KeyPath: StringLiteralConvertible, ArrayLiteralConvertible {
     var keys: [String]
     
-    public init(keys: [String]) {
+    public init(_ keys: [String]) {
         self.keys = keys
+    }
+    
+    public init(_ key: String) {
+        self.keys = [key]
     }
     
     public init(stringLiteral value: String) {
