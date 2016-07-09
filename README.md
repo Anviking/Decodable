@@ -150,5 +150,5 @@ public class func decode(json: AnyObject) throws -> Self {
 | Swift version | Compitable tag or branch |
 | --- | --- |
 | Swift 3.0 | `master` |
-| Swift 2.3 | `swift-2.3` |
+| Swift 2.3 | `v0.4.4`|
 | Swift 2.2 | `v0.4.3`|
