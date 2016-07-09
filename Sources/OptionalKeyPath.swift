@@ -8,6 +8,11 @@
 
 import Foundation
 
+/// A key in a keyPath that may or may not be required.
+/// 
+/// Trying to access a invalid key in a dictionary with an `OptionalKey` will usually result
+/// in a nil return value instead of a thrown error. Unless `isRequired` is `true`, in which 
+/// it behaves as a "normal" `String` inside a "normal" `KeyPath`.
 public struct OptionalKey {
     var key: String
     var isRequired: Bool
@@ -27,14 +32,18 @@ extension OptionalKey: CustomStringConvertible {
 /// let b: OptionalKeyPath = ["a", "b"]
 /// let c: OptionalKeyPath = "a" =>? "b" =>? "c"
 /// ```
-/// Unlike `KeyPath`, `OptionalKeyPath` represents allows each key to be required or optional. 
+/// Unlike `KeyPath`, `OptionalKeyPath` allows each key to be either required or optional.
 ///`isRequired` is `false` by default.
 ///
-/// However when a `KeyPath` is converted to a OptionalKeyPath, `isRequired` is set to `true`.
+/// When a `KeyPath` is converted to a OptionalKeyPath, `isRequired` is set to `true`.
 /// ```
 /// let c: OptionalKeyPath = "a" =>? "b" => "c"
-///                                      ^^- c is required, and inferred as `KeyPath`
+///                                         ^^
+///                             isRequired=true
 /// ```
+/// In the above example `"c"` is inferred as `KeyPath`, then converted to `OptionalKeyPath`
+/// with `isRequired = true`
+
 public struct OptionalKeyPath {
     var keys: [OptionalKey]
     mutating func markFirst(required: Bool) {
