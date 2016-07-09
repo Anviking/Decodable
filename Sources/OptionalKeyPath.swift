@@ -13,6 +13,12 @@ public struct OptionalKey {
     var isRequired: Bool
 }
 
+extension OptionalKey: CustomStringConvertible {
+    public var description: String {
+        return key + (isRequired ? "" : "?")
+    }
+}
+
 /// `OptionalKeyPath` represents the path to a specific node in a tree of nested dictionaries.
 ///
 /// Can be created from string and array literals and can be joined by the `=>?` operator.
@@ -51,4 +57,11 @@ extension OptionalKeyPath: ArrayLiteralConvertible {
     public init(arrayLiteral elements: String...) {
         self.keys = elements.map { OptionalKey(key: $0, isRequired: false) }
     }
+}
+
+// MARK: Equality
+
+extension OptionalKey: Equatable {}
+public func == (lhs: OptionalKey, rhs: OptionalKey) -> Bool {
+    return lhs.key == rhs.key && lhs.isRequired == rhs.isRequired
 }
