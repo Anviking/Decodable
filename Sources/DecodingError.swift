@@ -10,6 +10,9 @@ import Foundation
 
 public enum DecodingError: ErrorProtocol, Equatable {
     
+    /// `DecodingError.Metadata` provides information about
+    /// where an `DecodingError` was thrown in the JSON 
+    /// object graph.
     public struct Metadata: Equatable {
         
         public init(path: [String] = [], object: AnyObject, rootObject: AnyObject? = nil) {
@@ -33,8 +36,18 @@ public enum DecodingError: ErrorProtocol, Equatable {
         }
     }
     
+    /// Thrown when optional casting from `AnyObject` fails.
+    ///
+    /// This can happen both when trying to access a key on a object
+    /// that isn't a `NSDictionary`, and failing to cast a `Castable`
+    /// primitive.
     case typeMismatch(expected: Any.Type, actual: Any.Type, Metadata)
+    
+    /// Thrown when a given, required, key was not found in a dictionary.
     case missingKey(String, Metadata)
+    
+    /// Thrown from the `RawRepresentable` extension when
+    /// `init(rawValue:)` returned `nil`.
     case rawRepresentableInitializationError(rawValue: Any, Metadata)
     
     /// When an error is thrown that isn't `DecodingError`, it 
@@ -74,9 +87,9 @@ public enum DecodingError: ErrorProtocol, Equatable {
     public var debugDescription: String {
         switch self {
         case let .typeMismatch(expected, actual, metadata):
-            return "typeMismatchError expected: \(expected) but \(metadata.object) is of type \(actual) in \(metadata.formattedPath)"
+            return "typeMismatch expected: \(expected) but \(metadata.object) is of type \(actual) in \(metadata.formattedPath)"
         case let .missingKey(key, metadata):
-            return "Missing Key \(key) in \(metadata.formattedPath) \(metadata.object)"
+            return "missingKey \(key) in \(metadata.formattedPath) \(metadata.object)"
         case let .rawRepresentableInitializationError(rawValue, metadata):
             return "rawRepresentableInitializationError: \(rawValue) could not be used to initialize \("TYPE"). (path: \(metadata.formattedPath))" // FIXME
         case let .other(error, _):
