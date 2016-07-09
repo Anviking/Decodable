@@ -13,12 +13,10 @@ func parse(_ json: AnyObject, _ keyPath: KeyPath) throws -> AnyObject {
     return try keyPath.keys.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
         let currentDict = try NSDictionary.decode(a.object)
         guard let result = currentDict[NSString(string: key)] else {
-            var error = MissingKeyError(key: key, object: currentDict)
-            error.path = a.currentPath
-            error.rootObject = json
-            throw error
+            let metadata = DecodingError.Metadata(path: a.currentPath, object: a.object, rootObject: json)
+            throw DecodingError.missingKey(key, metadata)
         }
-        
+    
         var path = a.currentPath
         path.append(key)
         return (result, path)
@@ -30,7 +28,7 @@ public func parse<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((AnyObject) t
     return try catchAndRethrow(json, keyPath) { try decode(object) }
 }
 
-/// Accepts null and MissingKeyError
+/// Accepts null and missingKeyError
 func parseAndAcceptMissingKey<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((AnyObject) throws -> T)) throws -> T? {
     guard let object = try catchMissingKeyAndReturnNil({ try parse(json, keyPath) }) else {
         return nil
@@ -44,7 +42,7 @@ func parseAndAcceptMissingKey<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((
 func catchMissingKeyAndReturnNil<T>(_ closure: (Void) throws -> T) throws -> T? {
     do {
         return try closure()
-    } catch is MissingKeyError {
+    } catch DecodingError.missingKey {
         return nil
     }
 }
@@ -54,8 +52,8 @@ func catchAndRethrow<T>(_ json: AnyObject, _ keyPath: KeyPath, block: (Void) thr
         return try block()
     } catch let error as DecodingError {
         var error = error
-        error.path = keyPath.keys + error.path
-        error.rootObject = json
+        error.metadata.path = keyPath.keys + error.metadata.path
+        error.metadata.rootObject = json
         throw error
     } catch let error {
         throw error
