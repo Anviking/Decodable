@@ -49,32 +49,3 @@ extension KeyPath: ArrayLiteralConvertible {
         self.keys = elements
     }
 }
-
-public struct OptionalKey {
-    var key: String
-    var isRequired: Bool
-}
-
-public struct OptionalKeyPath {
-    var keys: [OptionalKey]
-}
-
-extension OptionalKeyPath: StringLiteralConvertible {
-    public init(stringLiteral value: String) {
-        self.keys = [OptionalKey(key: value, isRequired: false)]
-    }
-    
-    public init(extendedGraphemeClusterLiteral value: String) {
-        self.keys = [OptionalKey(key: value, isRequired: false)]
-    }
-    
-    public init(unicodeScalarLiteral value: String) {
-        self.keys = [OptionalKey(key: value, isRequired: false)]
-    }
-}
-
-extension OptionalKeyPath: ArrayLiteralConvertible {
-    public init(arrayLiteral elements: String...) {
-        self.keys = elements.map { OptionalKey(key: $0, isRequired: false) }
-    }
-}
