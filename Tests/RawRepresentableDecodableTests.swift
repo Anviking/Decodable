@@ -38,9 +38,9 @@ class RawRepresentableDecodableTests: XCTestCase {
         do {
             _ = try json => KeyPath(key) as CMYKColor
             XCTFail()
-        } catch let error as RawRepresentableInitializationError {
+        } catch DecodingError.RawRepresentableInitializationError(_, let metadata) {
             // then
-            XCTAssertNotNil(error.object)
+            XCTAssertNotNil(metadata.object)
         } catch {
             XCTFail("should not throw \(error)")
         }
@@ -55,9 +55,9 @@ class RawRepresentableDecodableTests: XCTestCase {
         do {
             _ = try json => KeyPath(key) as CMYKColor
             XCTFail()
-        } catch let error as TypeMismatchError where error.expectedType == CMYKColor.RawValue.self {
+        } catch let DecodingError.TypeMismatch(expected, _, metadata) where expected == CMYKColor.RawValue.self {
             // then
-            XCTAssertNotNil(error.object)
+            XCTAssertNotNil(metadata.object)
         } catch {
             XCTFail("should not throw \(error)")
         }

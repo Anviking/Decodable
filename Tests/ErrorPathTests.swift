@@ -42,8 +42,8 @@ class ErrorPathTests: XCTestCase {
         
         do {
             _ = try dict => "object" => "repo" => "owner" => "oops" as String
-        } catch let error as MissingKeyError {
-            XCTAssertEqual(error.formattedPath, "object.repo.owner")
+        } catch DecodingError.MissingKey(_ , let metadata) {
+            XCTAssertEqual(metadata.formattedPath, "object.repo.owner")
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }
@@ -56,7 +56,7 @@ class ErrorPathTests: XCTestCase {
             let apple = try Apple.decode(dict)
             print(apple)
             XCTFail()
-        } catch let error as TypeMismatchError where error.object is NSNull {
+        } catch DecodingError.TypeMismatch(_, _, let metadata) where metadata.object is NSNull {
             
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
@@ -69,10 +69,10 @@ class ErrorPathTests: XCTestCase {
         
         do {
             _ = try dict => "object" => "repo" => "owner" => "login" as String
-        } catch let error as TypeMismatchError {
-            XCTAssertEqual(String(error.receivedType), "__NSCFNumber")
-            XCTAssertEqual(error.formattedPath, "object.repo.owner.login")
-            XCTAssertEqual(error.object as? Int, 0)
+        } catch let DecodingError.TypeMismatch(_, actual, metadata) {
+            XCTAssertEqual(String(actual), "__NSCFNumber")
+            XCTAssertEqual(metadata.formattedPath, "object.repo.owner.login")
+            XCTAssertEqual(metadata.object as? Int, 0)
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }
@@ -85,9 +85,9 @@ class ErrorPathTests: XCTestCase {
         do {
             _ = try Tree.decode(dict)
             XCTFail()
-        } catch let error as TypeMismatchError {
-            XCTAssertEqual(String(error.receivedType), "__NSCFNumber")
-            XCTAssertEqual(error.formattedPath, "apples.color.name")
+        } catch let DecodingError.TypeMismatch(_, actual, metadata) {
+            XCTAssertEqual(String(actual), "__NSCFNumber")
+            XCTAssertEqual(metadata.formattedPath, "apples.color.name")
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }
