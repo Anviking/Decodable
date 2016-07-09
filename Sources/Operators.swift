@@ -18,11 +18,9 @@ public func => (lhs: AnyObject, rhs: KeyPath) throws -> AnyObject {
 }
 
 
-public func =>? (lhs: AnyObject, rhs: KeyPath) throws -> AnyObject? {
+public func =>? (lhs: AnyObject, rhs: OptionalKeyPath) throws -> AnyObject? {
     return try parseAndAcceptMissingKey(lhs, keyPath: rhs, decode: { $0 })
 }
-
-
 
 
 // MARK: - JSONPath
