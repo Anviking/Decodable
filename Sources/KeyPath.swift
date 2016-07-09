@@ -16,8 +16,10 @@ import Foundation
 /// let b: KeyPath = ["a", "b"]
 /// let c: KeyPath = "a" => "b" => "c"
 /// ```
-public struct KeyPath: StringLiteralConvertible, ArrayLiteralConvertible {
+
+public struct KeyPath {
     var keys: [String]
+    
     public init(_ keys: [String]) {
         self.keys = keys
     }
@@ -26,6 +28,9 @@ public struct KeyPath: StringLiteralConvertible, ArrayLiteralConvertible {
         self.keys = [key]
     }
     
+}
+
+extension KeyPath: StringLiteralConvertible {
     public init(stringLiteral value: String) {
         self.keys = [value]
     }
@@ -37,7 +42,9 @@ public struct KeyPath: StringLiteralConvertible, ArrayLiteralConvertible {
     public init(unicodeScalarLiteral value: String) {
         self.keys = [value]
     }
-    
+}
+
+extension KeyPath: ArrayLiteralConvertible {
     public init(arrayLiteral elements: String...) {
         self.keys = elements
     }
