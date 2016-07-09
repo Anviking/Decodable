@@ -31,8 +31,11 @@ public func => (lhs: KeyPath, rhs: KeyPath) -> KeyPath {
     return KeyPath(lhs.keys + rhs.keys)
 }
 
-
 public func => (lhs: OptionalKeyPath, rhs: OptionalKeyPath) -> OptionalKeyPath {
+    return OptionalKeyPath(keys: lhs.keys + rhs.keys.map { OptionalKey(key: $0.key, isRequired: true) })
+}
+
+public func =>? (lhs: OptionalKeyPath, rhs: OptionalKeyPath) -> OptionalKeyPath {
     return OptionalKeyPath(keys: lhs.keys + rhs.keys)
 }
 
