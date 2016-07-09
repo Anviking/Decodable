@@ -29,12 +29,8 @@ public func =>? (lhs: AnyObject, rhs: KeyPath) throws -> AnyObject? {
 
 /// Enables parsing nested objects e.g json => "a" => "b"
 
-public func => (lhs: String, rhs: String) -> KeyPath {
-    return KeyPath([lhs, rhs])
-}
-
-public func => (lhs: String, rhs: KeyPath) -> KeyPath {
-    return KeyPath([lhs] + rhs.keys)
+public func => (lhs: KeyPath, rhs: KeyPath) -> KeyPath {
+    return KeyPath(lhs.keys + rhs.keys)
 }
 
 // MARK: Helpers

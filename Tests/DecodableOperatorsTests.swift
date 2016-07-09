@@ -81,11 +81,11 @@ class DecodableOperatorsTests: XCTestCase {
 
     func testDecodeNestedDictionaryCastingSuccess() {
         // given
-        let key = "key"
+
         let value: NSDictionary = ["aKey" : "value"]
-        let dictionary: NSDictionary = [key: [key: value]]
+        let dictionary: NSDictionary = ["key": ["key": value]]
         // when
-        let result = try! dictionary => key => key as! [String: String]
+        let result = try! dictionary => "key" => "key" as! [String: String]
         // then
         XCTAssertEqual(result, value)
     }
@@ -198,7 +198,7 @@ class DecodableOperatorsTests: XCTestCase {
     func testDecodeAnyDecodableThrowNoJsonObjectException() {
         // given
         let key = "key"
-        let noDictionary: AnyObject = "hello"
+        let noDictionary: NSString = "hello"
         // when
         do {
             _ = try noDictionary => KeyPath(key) as String
@@ -207,7 +207,7 @@ class DecodableOperatorsTests: XCTestCase {
             XCTAssertTrue(true)
             XCTAssertEqual(String(error.receivedType), "__NSCFString")
             XCTAssertEqual(error.formattedPath, "")
-            XCTAssertEqual(error.object as? NSString, (noDictionary as! NSString))
+            XCTAssertEqual(error.object as? NSString, (noDictionary))
         } catch let error {
             XCTFail("should not throw \(error)")
         }
@@ -235,7 +235,7 @@ class DecodableOperatorsTests: XCTestCase {
     func testDecodeAnyDecodableDictionaryThrowJSONNotObjectException() {
         // given
         let key = "key"
-        let noDictionary: AnyObject = "noDictionary"
+        let noDictionary: NSString = "noDictionary"
         // when
         do {
             _ = try noDictionary => KeyPath(key)
@@ -244,7 +244,7 @@ class DecodableOperatorsTests: XCTestCase {
             XCTAssertTrue(true)
             XCTAssertEqual(String(error.receivedType), "__NSCFString")
             XCTAssertEqual(error.formattedPath, "")
-            XCTAssertEqual(error.object as? NSString, (noDictionary as! NSString))
+            XCTAssertEqual(error.object as? NSString, noDictionary)
         } catch let error {
             XCTFail("should not throw \(error)")
         }
