@@ -37,6 +37,21 @@ extension OptionalKey: CustomStringConvertible {
 /// ```
 public struct OptionalKeyPath {
     var keys: [OptionalKey]
+    mutating func markFirst(required: Bool) {
+        if var first = keys.first {
+            first.isRequired = required
+            keys[0] = first
+        }
+    }
+    
+    func markingFirst(required: Bool) -> OptionalKeyPath {
+        var new = self
+        if var first = keys.first {
+            first.isRequired = required
+            new.keys[0] = first
+        }
+        return new
+    }
 }
 
 extension OptionalKeyPath: StringLiteralConvertible {

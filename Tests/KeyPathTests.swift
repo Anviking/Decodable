@@ -65,4 +65,37 @@ class OptionalKeyPathTests: XCTestCase {
             OptionalKey(key: "c", isRequired: false)
             ])
     }
+    
+    // MARK: More difficult ones
+    
+    
+    func testConversionFromKeyPath() {
+        let keyPath1: OptionalKeyPath = "a" => "b" => "c"
+        XCTAssertEqual(keyPath1.keys, [
+            OptionalKey(key: "a", isRequired: false),
+            OptionalKey(key: "b", isRequired: true),
+            OptionalKey(key: "c", isRequired: true)
+            ])
+        
+        let keyPath2: OptionalKeyPath = "a" =>? "b" => "c"
+        XCTAssertEqual(keyPath2.keys, [
+            OptionalKey(key: "a", isRequired: false),
+            OptionalKey(key: "b", isRequired: false),
+            OptionalKey(key: "c", isRequired: true)
+            ])
+        
+        let keyPath3: OptionalKeyPath = "a" => "b" =>? "c"
+        XCTAssertEqual(keyPath3.keys, [
+            OptionalKey(key: "a", isRequired: false),
+            OptionalKey(key: "b", isRequired: true),
+            OptionalKey(key: "c", isRequired: false)
+            ])
+        
+        let keyPath4: OptionalKeyPath = "a" =>? "b" =>? "c"
+        XCTAssertEqual(keyPath4.keys, [
+            OptionalKey(key: "a", isRequired: false),
+            OptionalKey(key: "b", isRequired: false),
+            OptionalKey(key: "c", isRequired: false)
+            ])
+    }
 }
