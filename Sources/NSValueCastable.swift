@@ -45,7 +45,7 @@ extension NSValueCastable {
     private typealias PointerOfSelf = UnsafeMutablePointer<Self> // Why do we have to do this?
     public static func decode(_ context: DecodingContext<Void>) throws -> Self {
         guard let value = context.json as? NSValue else {
-            throw TypeMismatchError(expectedType: NSValue.self, receivedType: context.json.dynamicType, object: context.json)
+            throw context.typeMismatch(expectedType: NSValue.self)
         }
 
         let pointer = PointerOfSelf(allocatingCapacity: 1)
@@ -56,10 +56,11 @@ extension NSValueCastable {
 }
 
 extension NSNumberCastable {
+
     public typealias Parameters = Void
     public static func decode(_ context: DecodingContext<Void>) throws -> Self {
         guard let value = context.json as? NSNumber else {
-            throw TypeMismatchError(expectedType: NSNumber.self, receivedType: context.json.dynamicType, object: context.json)
+            throw context.typeMismatch(expectedType: NSNumber.self)
         }
         return convertFrom(value)
     }

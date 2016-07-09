@@ -31,7 +31,8 @@ public struct DecodingContext<Parameters> {
     public func parse(key: String) throws -> DecodingContext {
         let dict = try NSDictionary.decode(json)
         guard let obj = dict[key] else {
-            throw MissingKeyError(key: key, object: json)
+            let metadata = DecodingError.Metadata(object: json)
+            throw DecodingError.missingKey(key, metadata)
         }
         
         var new = self
@@ -39,21 +40,28 @@ public struct DecodingContext<Parameters> {
         return new
     }
     
-    public func parse(keys: [String]) throws -> DecodingContext {
-        return try keys.reduce(self) { try $0.0.parse(key: $0.1) }
-    }
-    
-    public func parseAndAcceptMissingKey(key: String) throws -> DecodingContext? {
+    public func parse(key: OptionalKey) throws -> DecodingContext? {
         let dict = try NSDictionary.decode(json)
-        guard let obj = dict[key] else {
-            throw MissingKeyError(key: key, object: json)
+        guard let obj = dict[key.key] else {
+            if key.isRequired {
+                let metadata = DecodingError.Metadata(object: json)
+                throw DecodingError.missingKey(key.key, metadata)
+            } else {
+                return nil
+            }
         }
         
-        return self.map { _ in obj }
+        var new = self
+        new.json = obj
+        return new
     }
     
-    public func parseAndAcceptMissingKeys(keys: [String]) throws -> DecodingContext? {
-        return try keys.reduce(self) { try $0.0?.parseAndAcceptMissingKey(key: $0.1) }
+    public func parse(keyPath: KeyPath) throws -> DecodingContext {
+        return try keyPath.keys.reduce(self) { try $0.0.parse(key: $0.1) }
+    }
+    
+    public func parse(keyPath: OptionalKeyPath) throws -> DecodingContext? {
+        return try keyPath.keys.reduce(self) { try $0.0?.parse(key: $0.1) }
     }
     
     public func map(json closure: (AnyObject) -> AnyObject) -> DecodingContext {
@@ -71,7 +79,7 @@ public struct DecodingContext<Parameters> {
     
     // TODO: This should be generated automatically
     
-    public func decode<A: Decodable where A.Parameters == Parameters>(keys: [String]) throws -> A  {
-        return try A.decode(parse(keys: keys))
+    public func decode<A: Decodable where A.Parameters == Parameters>(keyPath: KeyPath) throws -> A  {
+        return try A.decode(parse(keyPath: keyPath))
     }
 }

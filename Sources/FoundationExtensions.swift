@@ -11,7 +11,8 @@ import Foundation
 extension NSDictionary {
     public static func decode(_ j: AnyObject) throws -> NSDictionary {
         guard let result = j as? NSDictionary else {
-            throw TypeMismatchError(expectedType: self, receivedType: j.dynamicType, object: j)
+            let metadata = DecodingError.Metadata(object: j)
+            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
         }
         return result
     }
@@ -21,7 +22,8 @@ extension NSArray {
     public static func decode(_ json: AnyObject) throws -> NSArray {
         
         guard let result = json as? NSArray else {
-            throw TypeMismatchError(expectedType: self, receivedType: json.dynamicType, object: json)
+            let metadata = DecodingError.Metadata(object: json)
+            throw DecodingError.typeMismatch(expected: self, actual: json.dynamicType, metadata)
         }
         return result
     }
@@ -29,7 +31,7 @@ extension NSArray {
     public static func decode<T>(_ context: DecodingContext<T>) throws -> NSArray {
         
         guard let result = context.json as? NSArray else {
-            throw TypeMismatchError(expectedType: self, receivedType: context.json.dynamicType, object: context.json)
+            throw context.typeMismatch(expectedType: self)
         }
         return result
     }

@@ -113,17 +113,21 @@ indirect enum Decodable {
         let parseCallString: String
         let behaviour: Behaviour
         let parseEndString: String
+        let keyPathType: String
+
         switch operatorString {
         case "=>":
             returnType = typeString(provider)
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
             parseCallString = "    let object = try context.parse("
             parseEndString = ")\n"
+            keyPathType = "KeyPath"
         case "=>?":
             returnType = typeString(provider) + "?"
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "    guard let object = try context.parseAndAcceptMissingKeys("
+            parseCallString = "    guard let object = try context.parse("
             parseEndString = ") else { return nil }\n"
+            keyPathType = "OptionalKeyPath"
         default:
             fatalError()
         }
@@ -133,14 +137,10 @@ indirect enum Decodable {
         
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
-        return [documentation + "public func \(operatorString) \(generics)(context: DecodingContext<A.Parameters>, path: String)\(throwKeyword)-> \(returnType) {\n" +
+        return [documentation + "public func \(operatorString) \(generics)(context: DecodingContext<A.Parameters>, keyPath: \(keyPathType))\(throwKeyword)-> \(returnType) {\n" +
             "    let decode = \(decodeClosure(provider))\n" +
-            parseCallString + "keys: [path]" + parseEndString +
+            parseCallString + "keyPath: keyPath" + parseEndString +
             "    return try decode(object)\n" +
-            "}", documentation + "public func \(operatorString) \(generics)(context: DecodingContext<A.Parameters>, path: [String])\(throwKeyword)-> \(returnType) {\n" +
-                "    let decode = \(decodeClosure(provider))\n" +
-                parseCallString + "keys: path" + parseEndString +
-                "    return try decode(object)\n" +
             "}"
         ]
     }
@@ -179,13 +179,13 @@ func generateDocumentationComment(_ behaviour: Behaviour) -> String {
     " - parameter path: A null-separated key-path string. Can be generated with `\"keyA\" => \"keyB\"`\n"
     switch (behaviour.throwsIfKeyMissing, behaviour.throwsIfNull) {
     case (true, true):
-        string += " - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure\n"
+        string += " - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure\n"
     case (true, false):
         string += " - Returns: nil if the pre-decoded object at `path` is `NSNull`.\n"
-        string += " - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure\n"
+        string += " - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure\n"
     case (false, false):
         string += " - Returns: nil if `path` does not exist in `json`, or if that object is `NSNull`.\n"
-        string += " - Throws: `TypeMismatchError` or any other error thrown in the decode-closure\n"
+        string += " - Throws: `typeMismatchError` or any other error thrown in the decode-closure\n"
     case (false, true):
         break
     }
