@@ -145,7 +145,7 @@ class DecodableOperatorsTests: XCTestCase {
     // Should currently (though really it shoult not) treat all keys as either optional or non-optional
     func testDecodeNestedTypeReturnNilForSubobjectMissingKey() {
         let json: NSDictionary = ["user": ["something_else": "test"]]
-        try! XCTAssertEqual(json =>? "user" => "followers", Optional<Int>.none)
+        try! XCTAssertEqual(json =>? "user" =>? "followers", Optional<Int>.none)
     }
     
     // Sanity check
