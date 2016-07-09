@@ -145,9 +145,9 @@ public class func decode(json: AnyObject) throws -> Self {
         return self.init(timeIntervalSince1970: date.timeIntervalSince1970)
 }
 ```
-## Compitability
+## Compatibility
 
-| Swift version | Compitable tag or branch |
+| Swift version | Compatible tag or branch |
 | --- | --- |
 | Swift 3.0 | `master` |
 | Swift 2.3 | `v0.4.4`|
