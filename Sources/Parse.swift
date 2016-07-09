@@ -64,7 +64,7 @@ public func parse<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((AnyObject) t
 /// Accepts null and missingKeyError
 func parseAndAcceptMissingKey<T>(_ json: AnyObject, keyPath: OptionalKeyPath, decode: ((AnyObject) throws -> T)) throws -> T? {
     guard let object = try parseOptionally(json, keyPath) else { return nil }
-    return try catchAndRethrow(json, keyPath) { try decode(object) }
+    return try catchAndRethrow(json, keyPath) { try catchNull(decode)(object) }
 }
 
 
