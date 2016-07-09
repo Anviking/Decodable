@@ -8,9 +8,16 @@
 
 import Foundation
 
+/// `KeyPath` represents the path to a specific node in a tree of nested dictionaries.
+///
+/// Can be created from string and array literals and can be joined by the `=>` operator.
+/// ```
+/// let a: KeyPath = "a"
+/// let b: KeyPath = ["a", "b"]
+/// let c: KeyPath = "a" => "b" => "c"
+/// ```
 public struct KeyPath: StringLiteralConvertible, ArrayLiteralConvertible {
     var keys: [String]
-    
     public init(_ keys: [String]) {
         self.keys = keys
     }
