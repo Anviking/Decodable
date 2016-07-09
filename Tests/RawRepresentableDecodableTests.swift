@@ -24,7 +24,7 @@ class RawRepresentableDecodableTests: XCTestCase {
         let color = "Cyan"
         let json: NSDictionary = [key: color]
         // when
-        let cmykColor: CMYKColor = try! json => key
+        let cmykColor: CMYKColor = try! json => KeyPath(key)
         // then
         XCTAssertEqual(cmykColor, CMYKColor.Cyan)
     }
@@ -36,7 +36,7 @@ class RawRepresentableDecodableTests: XCTestCase {
         let json: NSDictionary = [key: color]
         // when
         do {
-            _ = try json => key as CMYKColor
+            _ = try json => KeyPath(key) as CMYKColor
             XCTFail()
         } catch let error as RawRepresentableInitializationError {
             // then
@@ -53,7 +53,7 @@ class RawRepresentableDecodableTests: XCTestCase {
         let json: NSDictionary = [key: color]
         // when
         do {
-            _ = try json => key as CMYKColor
+            _ = try json => KeyPath(key) as CMYKColor
             XCTFail()
         } catch let error as TypeMismatchError where error.expectedType == CMYKColor.RawValue.self {
             // then
