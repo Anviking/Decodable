@@ -17,7 +17,7 @@ class DecodableArrayTests: XCTestCase {
         let value: NSArray = ["value1", "value2", "value3"]
         let dictionary: NSDictionary = [key: value]
         // when
-        let result = try! dictionary => key as Array<String>
+        let result = try! dictionary => KeyPath(key) as Array<String>
         // then
         XCTAssertEqual(result, value)
     }
@@ -28,7 +28,7 @@ class DecodableArrayTests: XCTestCase {
         let value: NSArray = ["value1", "value2", NSNull(), "value3"]
         let dictionary: NSDictionary = [key: value]
         // when
-        let result = try! dictionary => key as [String?]
+        let result = try! dictionary => KeyPath(key) as [String?]
         // then
         XCTAssertEqual(result.count, 4)
         XCTAssertEqual(result[0], "value1")
@@ -44,7 +44,7 @@ class DecodableArrayTests: XCTestCase {
         let dictionary: NSDictionary = [key: value]
         // when
         do {
-            try dictionary => key as [String?]
+            _ = try dictionary => KeyPath(key) as [String?]
             XCTFail("should throw")
         } catch is TypeMismatchError {
             // Yay
@@ -55,11 +55,10 @@ class DecodableArrayTests: XCTestCase {
     
     func testDecodeNestedDecodableArraySuccess() {
         // given
-        let key = "key"
         let value: NSArray = ["value1", "value2", "value3"]
-        let dictionary: NSDictionary = [key: [key: value]]
+        let dictionary: NSDictionary = ["key": ["key": value]]
         // when
-        let result = try! dictionary => key => key as Array<String>
+        let result = try! dictionary => "key" => "key" as Array<String>
         // then
         XCTAssertEqual(result, value)
     }
@@ -70,18 +69,17 @@ class DecodableArrayTests: XCTestCase {
         let value = ["value"]
         let dictionary: NSDictionary = [key: value]
         // when
-        let string = try! dictionary => key as [String]?
+        let string = try! dictionary => KeyPath(key) as [String]?
         // then
         XCTAssertEqual(string!, value)
     }
     
     func testDecodeAnyDecodableNestedOptionalArraySuccess() {
         // given
-        let key = "key"
         let value = ["value"]
-        let dictionary: NSDictionary = [key: [key: value]]
+        let dictionary: NSDictionary = ["key": ["key": value]]
         // when
-        let string = try! dictionary => key => key as [String]?
+        let string = try! dictionary => "key" => "key" as [String]?
         // then
         XCTAssertEqual(string!, value)
     }
@@ -91,7 +89,7 @@ class DecodableArrayTests: XCTestCase {
         let key = "key"
         let dictionary: NSDictionary = [key: NSNull()]
         // when
-        let string = try! dictionary => key as [String]?
+        let string = try! dictionary => KeyPath(key) as [String]?
         // then
         XCTAssertNil(string)
     }
@@ -102,7 +100,7 @@ class DecodableArrayTests: XCTestCase {
         let dictionary = NSDictionary()
         // when
         do {
-            try dictionary => key as [String]?
+            _ = try dictionary => KeyPath(key) as [String]?
             XCTFail()
         } catch is MissingKeyError {
             
@@ -164,7 +162,7 @@ class DecodableArrayTests: XCTestCase {
         let value = [["login": "mradams"], ["id": 1, "login": "jenglish"]]
         let dictionary: NSDictionary = [key: value]
         // when
-        let array = try! [Owner].decode(dictionary => key, ignoreInvalidObjects: true)
+        let array = try! [Owner].decode(dictionary => KeyPath(key), ignoreInvalidObjects: true)
         // then
         XCTAssertEqual(array, [Owner(id: 1, login: "jenglish")])
     }

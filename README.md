@@ -43,7 +43,6 @@ do {
     print(error)
 }
 ```
-
 ### Features
 - Informative errors
 - Decoding depends on inferred type
@@ -115,6 +114,16 @@ For convenience there is an operator, `=>?`, that only returns nil on missing ke
 |  `=>? -> T?`| nil | nil | throws | uncaught (throws) | 
 |  `try? => -> T `| nil | nil | nil | caught (nil) | 
 
+#### Note about nested keys and the `=>?` operator
+Currently, either all keys in an expression throw on a missing key or none of them do.
+```swift
+let a: Int = try json => "user" => "followers" // Will throw if either key is missing
+let b: Int = try json =>? "user" => "followers" // Won't throw if either key is missing
+let c: Int = try json => "user" =>? "followers" // Won't compile
+```
+This is controlled by the left most operator (where the actual decoding happens). Subsequent `=>` only append keys to an array, and do not affect anything else.
+
+This might be addressed in the future by #77.
 
 ## Tips
 - You can use `Decodable` with classes. Just make sure to either call a `required` initializer on self (e.g `self.init`) and return `Self`, or make your class `final`. ( [This](http://stackoverflow.com/questions/26495586/best-practice-to-implement-a-failable-initializer-in-swift) might be a problem though)
@@ -136,3 +145,10 @@ public class func decode(json: AnyObject) throws -> Self {
         return self.init(timeIntervalSince1970: date.timeIntervalSince1970)
 }
 ```
+## Compitability
+
+| Swift version | Compitable tag or branch |
+| --- | --- |
+| Swift 3.0 | `master` |
+| Swift 2.3 | `swift-2.3` |
+| Swift 2.2 | `v0.4.3`|

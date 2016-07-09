@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum DecodingError: ErrorType, Equatable {
+public enum DecodingError: ErrorProtocol, Equatable {
     
     public struct Metadata: Equatable {
         
@@ -29,14 +29,14 @@ public enum DecodingError: ErrorType, Equatable {
         
         /// Represents the path to the object that failed decoding with "." as a separator.
         public var formattedPath: String {
-            return path.joinWithSeparator(".")
+            return path.joined(separator: ".")
         }
     }
     
     case TypeMismatch(expected: Any.Type, actual: Any.Type, Metadata)
     case MissingKey(String, Metadata)
     case RawRepresentableInitializationError(rawValue: Any, Metadata)
-    case WrappedError(ErrorType, Metadata)
+    case WrappedError(ErrorProtocol, Metadata)
     
     public var metadata: Metadata {
         get {

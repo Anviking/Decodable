@@ -13,7 +13,7 @@
 import Foundation
 
 class TypeNameProvider {
-    var names = Array(["A", "B", "C", "D", "E", "F", "G"].reverse())
+    var names = Array(["A", "B", "C", "D", "E", "F", "G"].reversed())
     var takenNames: [Unique: String] = [:]
     subscript(key: Unique) -> String {
         if let name = takenNames[key] {
@@ -50,7 +50,7 @@ indirect enum Decodable {
     case Optional(Decodable)
     case Dictionary(Decodable, Decodable)
     
-    func decodeClosure(provider: TypeNameProvider) -> String {
+    func decodeClosure(_ provider: TypeNameProvider) -> String {
         switch self {
         case T(let key):
             return "\(provider[key]).decode"
@@ -65,7 +65,7 @@ indirect enum Decodable {
         }
     }
     
-    func typeString(provider: TypeNameProvider) -> String {
+    func typeString(_ provider: TypeNameProvider) -> String {
         switch self {
         case .T(let unique):
             return provider[unique]
@@ -75,12 +75,10 @@ indirect enum Decodable {
             return "[\(T.typeString(provider))]"
         case .Dictionary(let K, let T):
             return "[\(K.typeString(provider)): \(T.typeString(provider))]"
-            //        case .AnyObject:
-            //            return "AnyObject"
         }
     }
     
-    func generateAllPossibleChildren(deepness: Int) -> [Decodable] {
+    func generateAllPossibleChildren(_ deepness: Int) -> [Decodable] {
         guard deepness > 0 else { return [.T(Unique())] }
         
         var array = [Decodable]()
@@ -109,7 +107,7 @@ indirect enum Decodable {
         }
     }
     
-    func generateOverloads(operatorString: String) -> [String] {
+    func generateOverloads(_ operatorString: String) -> [String] {
         let provider = TypeNameProvider()
         let returnType: String
         let parseCallString: String
@@ -128,15 +126,13 @@ indirect enum Decodable {
             fatalError()
         }
         
-        let arguments = provider.takenNames.values.sort().map { $0 + ": Decodable" }
-        let generics = arguments.count > 0 ? "<\(arguments.joinWithSeparator(", "))>" : ""
+        let arguments = provider.takenNames.values.sorted().map { $0 + ": Decodable" }
+		let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))>" : ""
         
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
-        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: String)\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(parseCallString)(json, path: [path], decode: \(decodeClosure(provider)))\n" +
-            "}", documentation + "public func \(operatorString) \(generics)(json: AnyObject, path: [String])\(throwKeyword)-> \(returnType) {\n" +
-                "    return try \(parseCallString)(json, path: path, decode: \(decodeClosure(provider)))\n" +
+        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: KeyPath)\(throwKeyword)-> \(returnType) {\n" +
+            "    return try \(parseCallString)(json, keyPath: keyPath, decode: \(decodeClosure(provider)))\n" +
             "}"
         ]
     }
@@ -166,7 +162,7 @@ struct Behaviour {
     let throwsFromDecodeClosure: Bool
 }
 
-func generateDocumentationComment(behaviour: Behaviour) -> String {
+func generateDocumentationComment(_ behaviour: Behaviour) -> String {
     var string =
         "/**\n" +
             " Retrieves the object at `path` from `json` and decodes it according to the return type\n" +
@@ -189,30 +185,30 @@ func generateDocumentationComment(behaviour: Behaviour) -> String {
 }
 
 let file = "Overloads.swift"
-let fileManager = NSFileManager.defaultManager()
+let fileManager = FileManager.default
 let sourcesDirectory = fileManager.currentDirectoryPath + "/../Sources"
 
 
 let filename = "Overloads.swift"
 let path = sourcesDirectory + "/" + filename
 
-let dateFormatter = NSDateFormatter()
-dateFormatter.dateStyle = .ShortStyle
+var dateFormatter = DateFormatter()
+dateFormatter.dateStyle = .short
 
-let date = dateFormatter.stringFromDate(NSDate())
+let date = dateFormatter.string(from: Date())
 
 let overloads = Decodable.T(Unique()).generateAllPossibleChildren(4)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
 let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).flatMap { $0.generateOverloads("=>?") }
 
 do {
-    var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Template.swift")
-    template = template.stringByReplacingOccurrencesOfString("{filename}", withString: filename)
-    template = template.stringByReplacingOccurrencesOfString("{by}", withString: "Generator.swift")
-    template = template.stringByReplacingOccurrencesOfString("{overloads}", withString: types.joinWithSeparator(", "))
-    template = template.stringByReplacingOccurrencesOfString("{count}", withString: "\(all.count)")
-    let text = template + "\n" + all.joinWithSeparator("\n\n")
-    try text.writeToFile(sourcesDirectory + "/Overloads.swift", atomically: false, encoding: NSUTF8StringEncoding)
+    var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Template.swift") as NSString
+	template = template.replacingOccurrences(of: "{filename}", with: filename)
+	template = template.replacingOccurrences(of: "{by}", with: "Generator.swift")
+	template = template.replacingOccurrences(of: "{overloads}", with: types.joined(separator: ", "))
+    template = template.replacingOccurrences(of: "{count}", with: "\(all.count)")
+	let text = (template as String) + "\n" + all.joined(separator: "\n\n")
+	try text.write(toFile: sourcesDirectory + "/Overloads.swift", atomically: false, encoding: String.Encoding.utf8)
 }
 catch {
     print(error)

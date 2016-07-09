@@ -9,11 +9,11 @@
 import Foundation
 
 public protocol Decodable {
-    static func decode(json: AnyObject) throws -> Self
+    static func decode(_ json: AnyObject) throws -> Self
 }
 
 extension NSDictionary {
-    public static func decode(j: AnyObject) throws -> NSDictionary {
+    public static func decode(_ j: AnyObject) throws -> NSDictionary {
         guard let result = j as? NSDictionary else {
             let metadata = DecodingError.Metadata(object: j)
             throw DecodingError.TypeMismatch(expected: self, actual: j.dynamicType, metadata)
@@ -23,7 +23,7 @@ extension NSDictionary {
 }
 
 extension NSArray {
-    public static func decode(j: AnyObject) throws -> NSArray {
+    public static func decode(_ j: AnyObject) throws -> NSArray {
         guard let result = j as? NSArray else {
             let metadata = DecodingError.Metadata(object: j)
             throw DecodingError.TypeMismatch(expected: self, actual: j.dynamicType, metadata)
@@ -33,13 +33,13 @@ extension NSArray {
 }
 
 extension Dictionary where Key: Decodable, Value: Decodable {
-    public static func decode(j: AnyObject) throws -> Dictionary {
+    public static func decode(_ j: AnyObject) throws -> Dictionary {
         return try decodeDictionary(Key.decode, elementDecodeClosure: Value.decode)(json: j)
     }
 }
 
 extension Array where Element: Decodable {
-    public static func decode(j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
+    public static func decode(_ j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
         if ignoreInvalidObjects {
             return try decodeArray { try? Element.decode($0) }(json: j).flatMap {$0}
         } else {
@@ -52,7 +52,7 @@ extension Array where Element: Decodable {
 // MARK: Helpers
 
 /// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
-public func decodeAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) throws -> Decodable {
+public func decodeAsOneOf(_ json: AnyObject, objectTypes: Decodable.Type...) throws -> Decodable {
 	for decodable in objectTypes.dropLast() {
 		if let decoded = try? decodable.decode(json) {
 			return decoded
@@ -62,7 +62,7 @@ public func decodeAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) throw
 }
 
 /// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
-public func decodeArrayAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) throws -> [Decodable] {
+public func decodeArrayAsOneOf(_ json: AnyObject, objectTypes: Decodable.Type...) throws -> [Decodable] {
 	return try NSArray.decode(json).map {
 		for decodable in objectTypes.dropLast() {
 			if let decoded = try? decodable.decode($0) {
@@ -74,14 +74,14 @@ public func decodeArrayAsOneOf(json: AnyObject, objectTypes: Decodable.Type...) 
 }
 
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
-public func decodeArray<T>(elementDecodeClosure: AnyObject throws -> T) -> (json: AnyObject) throws -> [T] {
+public func decodeArray<T>(_ elementDecodeClosure: (AnyObject) throws -> T) -> (json: AnyObject) throws -> [T] {
     return { json in
         return try NSArray.decode(json).map { try elementDecodeClosure($0) }
     }
 }
 
 /// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried. For everyday use, prefer using [K: V].decode(json) instead (declared in Decodable.swift).
-public func decodeDictionary<K,V>(keyDecodeClosure: AnyObject throws -> K, elementDecodeClosure: AnyObject throws -> V) -> (json: AnyObject) throws -> [K: V] {
+public func decodeDictionary<K,V>(_ keyDecodeClosure: (AnyObject) throws -> K, elementDecodeClosure: (AnyObject) throws -> V) -> (json: AnyObject) throws -> [K: V] {
     return { json in
         var dict = [K: V]()
         for (key, value) in try NSDictionary.decode(json) {
