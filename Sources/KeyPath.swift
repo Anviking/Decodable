@@ -49,3 +49,12 @@ extension KeyPath: ArrayLiteralConvertible {
         self.keys = elements
     }
 }
+
+public struct OptionalKey {
+    var key: String
+    var isRequired: Bool
+}
+
+public struct OptionalKeyPath {
+    var keys: [OptionalKey]
+}

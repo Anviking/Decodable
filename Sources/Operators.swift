@@ -33,6 +33,15 @@ public func => (lhs: KeyPath, rhs: KeyPath) -> KeyPath {
     return KeyPath(lhs.keys + rhs.keys)
 }
 
+
+public func => (lhs: OptionalKeyPath, rhs: OptionalKeyPath) -> OptionalKeyPath {
+    return OptionalKeyPath(keys: lhs.keys + rhs.keys)
+}
+
+public func => (lhs: OptionalKeyPath, rhs: KeyPath) -> OptionalKeyPath {
+    return OptionalKeyPath(keys: lhs.keys + rhs.keys.map { OptionalKey(key: $0, isRequired: true) })
+}
+
 // MARK: Helpers
 
 func catchNull<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
