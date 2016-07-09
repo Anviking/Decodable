@@ -46,7 +46,7 @@ extension NSValueCastable {
     public static func decode(_ j: AnyObject) throws -> Self {
         guard let value = j as? NSValue else {
             let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.TypeMismatch(expected: NSValue.self, actual: j.dynamicType, metadata)
+            throw DecodingError.typeMismatch(expected: NSValue.self, actual: j.dynamicType, metadata)
         }
 
         let pointer = PointerOfSelf(allocatingCapacity: 1)
@@ -60,7 +60,7 @@ extension NSNumberCastable {
     public static func decode(_ j: AnyObject) throws -> Self {
         guard let value = j as? NSNumber else {
             let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.TypeMismatch(expected: NSValue.self, actual: j.dynamicType, metadata)
+            throw DecodingError.typeMismatch(expected: NSValue.self, actual: j.dynamicType, metadata)
         }
         return convertFrom(value)
     }

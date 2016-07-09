@@ -120,7 +120,7 @@ class DecodableOperatorsTests: XCTestCase {
             let a = try dictionary => KeyPath(key) as String?
             print(a)
             XCTFail()
-        } catch let DecodingError.TypeMismatch(_, actual, _) {
+        } catch let DecodingError.typeMismatch(_, actual, _) {
             XCTAssertEqual(String(actual), "__NSCFNumber")
         } catch let error {
             XCTFail("should not throw \(error)")
@@ -135,7 +135,7 @@ class DecodableOperatorsTests: XCTestCase {
         do {
             let _ : Int? = try json =>? "user" => "followers"
             XCTFail("should throw")
-        } catch let DecodingError.TypeMismatch(_, _, metadata) {
+        } catch let DecodingError.typeMismatch(_, _, metadata) {
             XCTAssertEqual(metadata.formattedPath, "user.followers")
         } catch {
             XCTFail("should not throw \(error)")
@@ -166,7 +166,7 @@ class DecodableOperatorsTests: XCTestCase {
         do {
             _ = try dictionary => "firstKey" => "secondKey" as [String: String]
             XCTFail()
-        } catch DecodingError.TypeMismatchError(_, Dictionary<String, String>.self, let info) {
+        } catch DecodingError.typeMismatchError(_, Dictionary<String, String>.self, let info) {
             // then
             XCTAssertEqual(info.formattedPath, "firstKey.secondKey")
             XCTAssertEqual(info.object as? NSDictionary, value)
@@ -184,7 +184,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             _ = try dictionary => "nokey" as String
-        } catch let DecodingError.MissingKey(key, metadata) {
+        } catch let DecodingError.missingKey(key, metadata) {
             // then
             XCTAssertEqual(key, "nokey")
             XCTAssertEqual(metadata.path, [])
@@ -202,7 +202,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             _ = try noDictionary => KeyPath(key) as String
-        } catch let DecodingError.TypeMismatch(expected, actual, metadata) where expected == NSDictionary.self {
+        } catch let DecodingError.typeMismatch(expected, actual, metadata) where expected == NSDictionary.self {
             // then
             XCTAssertTrue(true)
             XCTAssertEqual(String(actual), "__NSCFString")
@@ -221,7 +221,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             _ = try dictionary => "nokey"
-        } catch let DecodingError.MissingKey(key, metadata) {
+        } catch let DecodingError.missingKey(key, metadata) {
             // then
             XCTAssertEqual(key, "nokey")
             XCTAssertEqual(metadata.formattedPath, "")
@@ -239,7 +239,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             _ = try noDictionary => KeyPath(key)
-        } catch let DecodingError.TypeMismatch(expected, actual, metadata) where expected == NSDictionary.self {
+        } catch let DecodingError.typeMismatch(expected, actual, metadata) where expected == NSDictionary.self {
             // then
             XCTAssertTrue(true)
             XCTAssertEqual(String(actual), "__NSCFString")
@@ -257,7 +257,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             _ = try dictionary => KeyPath(key)
-        } catch DecodingError.TypeMismatch {
+        } catch DecodingError.typeMismatch {
             // then
             XCTAssertTrue(true)
         } catch let error {

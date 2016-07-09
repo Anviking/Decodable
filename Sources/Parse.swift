@@ -14,7 +14,7 @@ func parse(_ json: AnyObject, _ keyPath: KeyPath) throws -> AnyObject {
         let currentDict = try NSDictionary.decode(a.object)
         guard let result = currentDict[NSString(string: key)] else {
             let metadata = DecodingError.Metadata(path: a.currentPath, object: a.object, rootObject: json)
-            throw DecodingError.MissingKey(key, metadata)
+            throw DecodingError.missingKey(key, metadata)
         }
     
         var path = a.currentPath
@@ -28,7 +28,7 @@ public func parse<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((AnyObject) t
     return try catchAndRethrow(json, keyPath) { try decode(object) }
 }
 
-/// Accepts null and MissingKeyError
+/// Accepts null and missingKeyError
 func parseAndAcceptMissingKey<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((AnyObject) throws -> T)) throws -> T? {
     guard let object = try catchMissingKeyAndReturnNil({ try parse(json, keyPath) }) else {
         return nil
@@ -42,7 +42,7 @@ func parseAndAcceptMissingKey<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((
 func catchMissingKeyAndReturnNil<T>(_ closure: (Void) throws -> T) throws -> T? {
     do {
         return try closure()
-    } catch DecodingError.MissingKey {
+    } catch DecodingError.missingKey {
         return nil
     }
 }

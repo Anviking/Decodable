@@ -16,7 +16,7 @@ extension NSDictionary {
     public static func decode(_ j: AnyObject) throws -> NSDictionary {
         guard let result = j as? NSDictionary else {
             let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.TypeMismatch(expected: self, actual: j.dynamicType, metadata)
+            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
         }
         return result
     }
@@ -26,7 +26,7 @@ extension NSArray {
     public static func decode(_ j: AnyObject) throws -> NSArray {
         guard let result = j as? NSArray else {
             let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.TypeMismatch(expected: self, actual: j.dynamicType, metadata)
+            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
         }
         return result
     }

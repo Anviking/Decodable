@@ -46,7 +46,7 @@ class DecodableArrayTests: XCTestCase {
         do {
             _ = try dictionary => KeyPath(key) as [String?]
             XCTFail("should throw")
-        } catch DecodingError.TypeMismatch {
+        } catch DecodingError.typeMismatch {
             // Yay
         } catch {
             XCTFail("should not throw \(error)")
@@ -102,7 +102,7 @@ class DecodableArrayTests: XCTestCase {
         do {
             _ = try dictionary => KeyPath(key) as [String]?
             XCTFail()
-        } catch DecodingError.MissingKey {
+        } catch DecodingError.missingKey {
             
         } catch {
             XCTFail()

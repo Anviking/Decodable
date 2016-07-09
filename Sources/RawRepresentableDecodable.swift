@@ -18,7 +18,7 @@ public extension RawRepresentable where RawValue: Decodable, Self: Decodable {
         let rawValue = try RawValue.decode(json)
         guard let rawRepresentable = Self(rawValue: rawValue) else {
             let metadata = DecodingError.Metadata(object: json)
-            throw DecodingError.RawRepresentableInitializationError(rawValue: rawValue, metadata)
+            throw DecodingError.rawRepresentableInitializationError(rawValue: rawValue, metadata)
         }
         return rawRepresentable
     }

@@ -171,13 +171,13 @@ func generateDocumentationComment(_ behaviour: Behaviour) -> String {
     " - parameter path: A null-separated key-path string. Can be generated with `\"keyA\" => \"keyB\"`\n"
     switch (behaviour.throwsIfKeyMissing, behaviour.throwsIfNull) {
     case (true, true):
-        string += " - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure\n"
+        string += " - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure\n"
     case (true, false):
         string += " - Returns: nil if the pre-decoded object at `path` is `NSNull`.\n"
-        string += " - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure\n"
+        string += " - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure\n"
     case (false, false):
         string += " - Returns: nil if `path` does not exist in `json`, or if that object is `NSNull`.\n"
-        string += " - Throws: `TypeMismatchError` or any other error thrown in the decode-closure\n"
+        string += " - Throws: `typeMismatchError` or any other error thrown in the decode-closure\n"
     case (false, true):
         break
     }

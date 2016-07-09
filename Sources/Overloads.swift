@@ -15,7 +15,7 @@
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A]?]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(catchNull(decodeArray(A.decode)))))
@@ -27,7 +27,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A]?]?
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: B]?]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
@@ -39,7 +39,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A?]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(catchNull(A.decode))))
@@ -51,7 +51,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A?]? {
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A?]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(decodeArray(catchNull(A.decode)))))
@@ -63,7 +63,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A?]]?
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A]]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(decodeArray(decodeArray(A.decode)))))
@@ -75,7 +75,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A]]]
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A: B]]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
@@ -87,7 +87,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(decodeArray(A.decode))))
@@ -99,7 +99,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A]]? 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: B?]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))))
@@ -111,7 +111,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B]]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))))
@@ -123,7 +123,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B: C]]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
@@ -135,7 +135,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: B]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
@@ -147,7 +147,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeArray(A.decode)))
@@ -159,7 +159,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A]? {
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B]?]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode)))))
@@ -171,7 +171,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: C]?]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
@@ -183,7 +183,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: B?]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
@@ -195,7 +195,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B?]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode)))))
@@ -207,7 +207,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B]]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode)))))
@@ -219,7 +219,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B: C]]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
@@ -231,7 +231,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
@@ -243,7 +243,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: C?]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
@@ -255,7 +255,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C]]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
@@ -267,7 +267,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C: D]]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
@@ -279,7 +279,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: C]]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
@@ -291,7 +291,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: B]? {
     return try parse(json, keyPath: keyPath, decode: catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
@@ -303,7 +303,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
  - Returns: nil if the pre-decoded object at `path` is `NSNull`.
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> A? {
     return try parse(json, keyPath: keyPath, decode: catchNull(A.decode))
@@ -314,7 +314,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> A? {
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A?]?] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(catchNull(A.decode)))))
@@ -325,7 +325,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A?]?]
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A]]?] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(decodeArray(A.decode)))))
@@ -336,7 +336,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A]]?
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A: B]]?] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
@@ -347,7 +347,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A]?] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(A.decode))))
@@ -358,7 +358,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A]?] 
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: B?]?] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))))
@@ -369,7 +369,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B]]?] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))))
@@ -380,7 +380,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B: C]]?] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
@@ -391,7 +391,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: B]?] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
@@ -402,7 +402,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A?] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(A.decode)))
@@ -413,7 +413,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A?] {
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A]?]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(catchNull(decodeArray(A.decode)))))
@@ -424,7 +424,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A]?]
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A: B]?]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
@@ -435,7 +435,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A?]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(catchNull(A.decode))))
@@ -446,7 +446,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A?]] 
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A?]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(catchNull(A.decode)))))
@@ -457,7 +457,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A?]]
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[[A]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(decodeArray(A.decode)))))
@@ -468,7 +468,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[[A]]
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[[A: B]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
@@ -479,7 +479,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(A.decode))))
@@ -490,7 +490,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A]]]
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A: B?]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))))
@@ -501,7 +501,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A: [B]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))))
@@ -512,7 +512,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A: [B: C]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
@@ -523,7 +523,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[[A: B]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
@@ -534,7 +534,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(A.decode)))
@@ -545,7 +545,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A]] {
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B]?]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode)))))
@@ -556,7 +556,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B: C]?]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
@@ -567,7 +567,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: B?]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
@@ -578,7 +578,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B?]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode)))))
@@ -589,7 +589,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [[B]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode)))))
@@ -600,7 +600,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [[B: C]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
@@ -611,7 +611,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
@@ -622,7 +622,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B: C?]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
@@ -633,7 +633,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B: [C]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
@@ -644,7 +644,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B: [C: D]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
@@ -655,7 +655,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: [B: C]]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
@@ -666,7 +666,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [[A: B]] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
@@ -677,7 +677,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A] {
     return try parse(json, keyPath: keyPath, decode: decodeArray(A.decode))
@@ -688,7 +688,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A] {
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B?]?] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(catchNull(B.decode)))))
@@ -699,7 +699,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B]]?] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeArray(B.decode)))))
@@ -710,7 +710,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B: C]]?] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
@@ -721,7 +721,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B]?] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode))))
@@ -732,7 +732,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: C?]?] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
@@ -743,7 +743,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C]]?] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
@@ -754,7 +754,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C: D]]?] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
@@ -765,7 +765,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: C]?] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
@@ -776,7 +776,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: B?] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))
@@ -787,7 +787,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B]?]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeArray(B.decode)))))
@@ -798,7 +798,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B: C]?]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
@@ -809,7 +809,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B?]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode))))
@@ -820,7 +820,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B?]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(catchNull(B.decode)))))
@@ -831,7 +831,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[[B]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeArray(B.decode)))))
@@ -842,7 +842,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[[B: C]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
@@ -853,7 +853,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode))))
@@ -864,7 +864,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B: C?]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
@@ -875,7 +875,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B: [C]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
@@ -886,7 +886,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B: [C: D]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
@@ -897,7 +897,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [[B: C]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
@@ -908,7 +908,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))
@@ -919,7 +919,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C]?]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeArray(C.decode)))))
@@ -930,7 +930,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C: D]?]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
@@ -941,7 +941,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: C?]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))
@@ -952,7 +952,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C?]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(catchNull(C.decode)))))
@@ -963,7 +963,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [[C]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeArray(C.decode)))))
@@ -974,7 +974,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [[C: D]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
@@ -985,7 +985,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))
@@ -996,7 +996,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C: D?]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: catchNull(D.decode)))))
@@ -1007,7 +1007,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C: [D]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeArray(D.decode)))))
@@ -1018,7 +1018,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C: [D: E]]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeDictionary(D.decode, elementDecodeClosure: E.decode)))))
@@ -1029,7 +1029,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decod
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: [C: D]]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))
@@ -1040,7 +1040,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: [B: C]] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))
@@ -1051,7 +1051,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> [A: B] {
     return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: B.decode))
@@ -1062,7 +1062,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath)th
 
  - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
- - Throws: `MissingKeyError` if `path` does not exist in `json`. `TypeMismatchError` or any other error thrown in the decode-closure
+ - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure
 */
 public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> A {
     return try parse(json, keyPath: keyPath, decode: A.decode)

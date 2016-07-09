@@ -33,35 +33,39 @@ public enum DecodingError: ErrorProtocol, Equatable {
         }
     }
     
-    case TypeMismatch(expected: Any.Type, actual: Any.Type, Metadata)
-    case MissingKey(String, Metadata)
-    case RawRepresentableInitializationError(rawValue: Any, Metadata)
-    case WrappedError(ErrorProtocol, Metadata)
+    case typeMismatch(expected: Any.Type, actual: Any.Type, Metadata)
+    case missingKey(String, Metadata)
+    case rawRepresentableInitializationError(rawValue: Any, Metadata)
+    
+    /// When an error is thrown that isn't `DecodingError`, it 
+    /// will be wrapped in `DecodingError.other` in order to also provide
+    /// metadata about where the error was thrown.
+    case other(ErrorProtocol, Metadata)
     
     public var metadata: Metadata {
         get {
             switch self {
-            case .TypeMismatch(expected: _, actual: _, let metadata):
+            case .typeMismatch(expected: _, actual: _, let metadata):
                 return metadata
-            case .MissingKey(_, let metadata):
+            case .missingKey(_, let metadata):
                 return metadata
-            case .RawRepresentableInitializationError(_, let metadata):
+            case .rawRepresentableInitializationError(_, let metadata):
                 return metadata
-            case .WrappedError(_, let metadata):
+            case .other(_, let metadata):
                 return metadata
             }
         }
         
         set {
             switch self {
-            case let .TypeMismatch(expected, actual, _):
-                self = .TypeMismatch(expected: expected, actual: actual, newValue)
-            case let .MissingKey(key, _):
-                self = .MissingKey(key, newValue)
-            case let .RawRepresentableInitializationError(rawValue, _):
-                self = RawRepresentableInitializationError(rawValue: rawValue, newValue)
-            case let .WrappedError(error, _):
-                self = .WrappedError(error, newValue)
+            case let .typeMismatch(expected, actual, _):
+                self = .typeMismatch(expected: expected, actual: actual, newValue)
+            case let .missingKey(key, _):
+                self = .missingKey(key, newValue)
+            case let .rawRepresentableInitializationError(rawValue, _):
+                self = rawRepresentableInitializationError(rawValue: rawValue, newValue)
+            case let .other(error, _):
+                self = .other(error, newValue)
             }
         }
 
@@ -69,13 +73,13 @@ public enum DecodingError: ErrorProtocol, Equatable {
     
     public var debugDescription: String {
         switch self {
-        case let .TypeMismatch(expected, actual, metadata):
-            return "TypeMismatchError expected: \(expected) but \(metadata.object) is of type \(actual) in \(metadata.formattedPath)"
-        case let .MissingKey(key, metadata):
+        case let .typeMismatch(expected, actual, metadata):
+            return "typeMismatchError expected: \(expected) but \(metadata.object) is of type \(actual) in \(metadata.formattedPath)"
+        case let .missingKey(key, metadata):
             return "Missing Key \(key) in \(metadata.formattedPath) \(metadata.object)"
-        case let .RawRepresentableInitializationError(rawValue, metadata):
-            return "RawRepresentableInitializationError: \(rawValue) could not be used to initialize \("TYPE"). (path: \(metadata.formattedPath))" // FIXME
-        case let .WrappedError(error, _):
+        case let .rawRepresentableInitializationError(rawValue, metadata):
+            return "rawRepresentableInitializationError: \(rawValue) could not be used to initialize \("TYPE"). (path: \(metadata.formattedPath))" // FIXME
+        case let .other(error, _):
             return "\(error)"
         }
     }
@@ -84,7 +88,7 @@ public enum DecodingError: ErrorProtocol, Equatable {
 
 
 // Allow types to be used in pattern matching
-// E.g case TypeMismatchError(NSNull.self, _, _) but be careful
+// E.g case typeMismatchError(NSNull.self, _, _) but be careful
 // You probably rather want to modify the decode-closure
 // There are overloads for this
 public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
@@ -100,14 +104,14 @@ public func ==(lhs: DecodingError.Metadata, rhs: DecodingError.Metadata) -> Bool
 
 public func ==(lhs: DecodingError, rhs: DecodingError) -> Bool {
     switch (lhs, rhs) {
-    case let (.TypeMismatch(expected, actual, metadata), .TypeMismatch(expected2, actual2, metadata2)):
+    case let (.typeMismatch(expected, actual, metadata), .typeMismatch(expected2, actual2, metadata2)):
         return expected == expected2
             && actual == actual2
             && metadata == metadata2
-    case let (.MissingKey(key, metadata), .MissingKey(key2, metadata2)):
+    case let (.missingKey(key, metadata), .missingKey(key2, metadata2)):
         return key == key2
             && metadata == metadata2
-    case let (.RawRepresentableInitializationError(rawValue, metadata), .RawRepresentableInitializationError(rawValue2, metadata2)):
+    case let (.rawRepresentableInitializationError(rawValue, metadata), .rawRepresentableInitializationError(rawValue2, metadata2)):
         // FIXME: Might be strange
         switch (rawValue, rawValue2, metadata == metadata2) {
         case let (a as AnyObject, b as AnyObject, true):
@@ -115,9 +119,9 @@ public func ==(lhs: DecodingError, rhs: DecodingError) -> Bool {
         default:
             return false
         }
-    case (.WrappedError, .WrappedError):
+    case (.other, .other):
         // FIXME: What to do?
-        print("FIXME: WrappedError equality is unimplemented/not supported")
+        print("FIXME: other equality is unimplemented/not supported")
         return false
     default:
         return false

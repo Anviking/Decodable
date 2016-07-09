@@ -1,5 +1,5 @@
 //
-//  MissingKeyOperatorTests.swift
+//  missingKeyOperatorTests.swift
 //  Decodable
 //
 //  Created by Johannes Lund on 2015-12-20.
@@ -9,12 +9,12 @@
 import XCTest
 import Decodable
 
-class MissingKeyOperatorTests: XCTestCase {
+class missingKeyOperatorTests: XCTestCase {
     
     func testMissingKey() {
         // Should return nil
         let dictionary: NSDictionary = ["key": 3]
-        let result: Int? = try! dictionary =>? "MissingKeyError"
+        let result: Int? = try! dictionary =>? "missingKeyError"
         XCTAssertEqual(result, nil)
     }
     
@@ -37,7 +37,7 @@ class MissingKeyOperatorTests: XCTestCase {
         do {
             let _: Int? = try dictionary =>? "key"
             XCTFail("should throw")
-        } catch let DecodingError.TypeMismatch(expected, _, _) {
+        } catch let DecodingError.typeMismatch(expected, _, _) {
             XCTAssert(expected == Int.self, "\(expected) != Int.self")
         } catch {
             XCTFail("Should not throw \(error)")

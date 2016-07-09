@@ -32,7 +32,7 @@ class DecodeAsOneOfTests: XCTestCase {
 			
 			guard let vehiclesArray = vehiclesRaw as? [AnyObject] else {
                 let metadata = DecodingError.Metadata(object: vehiclesRaw)
-				throw DecodingError.TypeMismatch(expected: NSArray.self, actual: Mirror(reflecting: vehiclesRaw).subjectType, metadata)
+				throw DecodingError.typeMismatch(expected: NSArray.self, actual: Mirror(reflecting: vehiclesRaw).subjectType, metadata)
 			}
 			
 			let vehicles2 = try vehiclesArray.map { try decodeAsOneOf($0, objectTypes: Train.self, Truck.self, Car.self) }

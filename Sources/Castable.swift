@@ -14,7 +14,7 @@ extension Castable {
     public static func decode(_ j: AnyObject) throws -> Self {
         guard let result = j as? Self else {
             let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.TypeMismatch(expected: self, actual: j.dynamicType, metadata)
+            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
         }
         return result
     }
