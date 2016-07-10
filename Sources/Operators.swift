@@ -14,8 +14,9 @@ infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
 
-public func => (lhs: AnyObject, rhs: KeyPath) throws -> AnyObject {
-    return try parse(lhs, keyPath: rhs, decode: { $0 })
+public func => (lhs: AnyObject, rhs: KeyPath) throws -> DecodingContext<Void> {
+    let context = DecodingContext(json: lhs, parameters: ())
+    return try context.parse(keyPath: rhs)
 }
 
 

@@ -41,15 +41,10 @@ class ErrorPathTests: XCTestCase {
         let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
         
         do {
-<<<<<<< HEAD
-            _ = try (dict => "object" => "repo" => "owner" => "oops") as String
-        } catch let error as MissingKeyError {
-            XCTAssertEqual(error.formattedPath, "object.repo.owner")
-=======
+
             _ = try dict => "object" => "repo" => "owner" => "oops" as String
         } catch DecodingError.missingKey(_ , let metadata) {
             XCTAssertEqual(metadata.formattedPath, "object.repo.owner")
->>>>>>> master
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }

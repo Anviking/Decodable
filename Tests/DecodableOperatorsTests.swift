@@ -198,7 +198,7 @@ class DecodableOperatorsTests: XCTestCase {
     func testDecodeAnyDecodableThrowNoJsonObjectException() {
         // given
         let key = "key"
-        let noDictionary: DecodingContext("hello" as NSString)
+        let noDictionary: NSString = "hello"
         // when
         do {
             _ = try noDictionary => KeyPath(key) as String

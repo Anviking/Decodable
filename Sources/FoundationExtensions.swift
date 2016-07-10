@@ -54,3 +54,14 @@ extension Array where Element: Decodable {
         }
     }
 }
+
+extension Array where Element: Decodable, Element.Parameters == Void {
+    public static func decode(_ json: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
+        let context = DecodingContext(json: json, parameters: ())
+        if ignoreInvalidObjects {
+            return try decodeArray { try? Element.decode($0) }(context).flatMap {$0}
+        } else {
+            return try decodeArray(Element.decode)(context)
+        }
+    }
+}
