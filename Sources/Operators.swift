@@ -42,15 +42,3 @@ public func =>? (lhs: OptionalKeyPath, rhs: OptionalKeyPath) -> OptionalKeyPath 
 public func => (lhs: OptionalKeyPath, rhs: KeyPath) -> OptionalKeyPath {
     return OptionalKeyPath(keys: lhs.keys + rhs.keys.map { OptionalKey(key: $0, isRequired: true) })
 }
-
-// MARK: Helpers
-
-func catchNull<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
-    return { json in
-        if json is NSNull {
-            return nil
-        } else {
-            return try decodeClosure(json)
-        }
-    }
-}
