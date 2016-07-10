@@ -12,6 +12,57 @@
 
 import Foundation
 
+// ----------------------------------------------------------------------------------------
+// MARK: Documentation
+// ----------------------------------------------------------------------------------------
+
+struct Behaviour {
+    let throwsIfKeyMissing: Bool
+    let throwsIfNull: Bool
+    let throwsFromDecodeClosure: Bool
+}
+
+
+let fileManager = FileManager.default
+let documentationTemplate = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Templates/Documentation.swift")
+
+func documentationFromTemplate(path: String, throwsIf: String, returns: String) -> String {
+    return documentationTemplate
+        .replacingOccurrences(of: "{path}", with: path)
+        .replacingOccurrences(of: "{throws}", with: throwsIf)
+        .replacingOccurrences(of: "{returns}", with: returns)
+}
+
+func generateDocumentationComment(_ behaviour: Behaviour) -> String {
+    switch (behaviour.throwsIfKeyMissing, behaviour.throwsIfNull) {
+    case (true, true):
+        return documentationFromTemplate(
+            path: "`KeyPath`– can be appended using with `=>` or `=>?`",
+            throwsIf: "`DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys",
+            returns: "something"
+        )
+    case (true, false):
+        return documentationFromTemplate(
+            path: "`KeyPath`– can be appended using with `=>` or `=>?`",
+            throwsIf: "`DecodingError` if a key is missing or decoding fails.",
+            returns: "`nil` if the object at `path` is `NSNull`"
+            )
+    case (false, false):
+        return documentationFromTemplate(
+            path: "`KeyPath`– can be appended using with `=>` or `=>?`",
+            throwsIf: "`DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys",
+            returns: "`nil` if the object at `path` is `NSNull` or if any optional key is missing."
+        )
+    case (false, true):
+        fatalError("This case should never happen, right?")
+    }
+}
+
+// ----------------------------------------------------------------------------------------
+// MARK:
+// ----------------------------------------------------------------------------------------
+
+
 class TypeNameProvider {
     var names = Array(["A", "B", "C", "D", "E", "F", "G"].reversed())
     var takenNames: [Unique: String] = [:]
@@ -119,7 +170,8 @@ indirect enum Decodable {
             keyPathType = "KeyPath"
         case "=>?":
             returnType = typeString(provider) + "?"
-            behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
+            // Never trows if null
+            behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: false, throwsFromDecodeClosure: true)
             keyPathType = "OptionalKeyPath"
         default:
             fatalError()
@@ -155,36 +207,8 @@ func filterOptionals(type: Decodable) -> Decodable? {
     }
 }
 
-struct Behaviour {
-    let throwsIfKeyMissing: Bool
-    let throwsIfNull: Bool
-    let throwsFromDecodeClosure: Bool
-}
-
-func generateDocumentationComment(_ behaviour: Behaviour) -> String {
-    var string =
-        "/**\n" +
-            " Retrieves the object at `path` from `json` and decodes it according to the return type\n" +
-            "\n" +
-            " - parameter json: An object from NSJSONSerialization, preferably a `NSDictionary`.\n" +
-    " - parameter path: A null-separated key-path string. Can be generated with `\"keyA\" => \"keyB\"`\n"
-    switch (behaviour.throwsIfKeyMissing, behaviour.throwsIfNull) {
-    case (true, true):
-        string += " - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure\n"
-    case (true, false):
-        string += " - Returns: nil if the pre-decoded object at `path` is `NSNull`.\n"
-        string += " - Throws: `missingKeyError` if `path` does not exist in `json`. `typeMismatchError` or any other error thrown in the decode-closure\n"
-    case (false, false):
-        string += " - Returns: nil if `path` does not exist in `json`, or if that object is `NSNull`.\n"
-        string += " - Throws: `typeMismatchError` or any other error thrown in the decode-closure\n"
-    case (false, true):
-        break
-    }
-    return string + "*/\n"
-}
 
 let file = "Overloads.swift"
-let fileManager = FileManager.default
 let sourcesDirectory = fileManager.currentDirectoryPath + "/../Sources"
 
 
@@ -201,7 +225,7 @@ let types = overloads.map { $0.typeString(TypeNameProvider()) }
 let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).flatMap { $0.generateOverloads("=>?") }
 
 do {
-    var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Template.swift") as NSString
+    var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Templates/Header.swift") as NSString
 	template = template.replacingOccurrences(of: "{filename}", with: filename)
 	template = template.replacingOccurrences(of: "{by}", with: "Generator.swift")
 	template = template.replacingOccurrences(of: "{overloads}", with: types.joined(separator: ", "))

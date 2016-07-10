@@ -38,6 +38,7 @@
 		8F3E45A51D327E4500FB71FC /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45A31D327E4500FB71FC /* Closures.swift */; };
 		8F3E45A61D327E4500FB71FC /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45A31D327E4500FB71FC /* Closures.swift */; };
 		8F3E45A71D327E4500FB71FC /* Closures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45A31D327E4500FB71FC /* Closures.swift */; };
+		8F3E45B81D32884700FB71FC /* Documentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45AE1D32853F00FB71FC /* Documentation.swift */; };
 		8F4B52651B5BAA5700FDCBA7 /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */; };
 		8F4B52661B5BAA5700FDCBA7 /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */; };
 		8F53521D1BE4112900E3563A /* DictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F53521C1BE4112900E3563A /* DictionaryTests.swift */; };
@@ -53,6 +54,7 @@
 		8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
+		8FA733591D328D13003A90A7 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45AF1D32853F00FB71FC /* Header.swift */; };
 		8FB48ECA1D306C4700BC50A1 /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB48EC91D306C4700BC50A1 /* KeyPath.swift */; };
 		8FB48ECB1D306C4700BC50A1 /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB48EC91D306C4700BC50A1 /* KeyPath.swift */; };
 		8FB48ECC1D306C4700BC50A1 /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB48EC91D306C4700BC50A1 /* KeyPath.swift */; };
@@ -117,12 +119,13 @@
 		65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawRepresentableDecodable.swift; sourceTree = "<group>"; };
 		8F00623E1C81EF61007BCF48 /* Overloads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overloads.swift; sourceTree = "<group>"; };
 		8F0062481C81F4A2007BCF48 /* Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
-		8F0062491C81F4A2007BCF48 /* Template.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		8F012EEF1BB414D4007D0B5C /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
 		8F012EF41BB5A920007D0B5C /* Castable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Castable.swift; sourceTree = "<group>"; };
 		8F3E45991D31362B00FB71FC /* OptionalKeyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalKeyPath.swift; sourceTree = "<group>"; };
 		8F3E459E1D313A7000FB71FC /* KeyPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyPathTests.swift; sourceTree = "<group>"; };
 		8F3E45A31D327E4500FB71FC /* Closures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Closures.swift; sourceTree = "<group>"; };
+		8F3E45AE1D32853F00FB71FC /* Documentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Documentation.swift; sourceTree = "<group>"; };
+		8F3E45AF1D32853F00FB71FC /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
 		8F53521C1BE4112900E3563A /* DictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTests.swift; sourceTree = "<group>"; };
 		8F72DC551C3CB8C500A39E10 /* NSValueCastable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSValueCastable.swift; sourceTree = "<group>"; };
@@ -205,10 +208,19 @@
 			isa = PBXGroup;
 			children = (
 				8F0062481C81F4A2007BCF48 /* Generator.swift */,
-				8F0062491C81F4A2007BCF48 /* Template.swift */,
+				8F3E45AD1D32853F00FB71FC /* Templates */,
 			);
 			name = "Code Generation";
 			path = Generator;
+			sourceTree = "<group>";
+		};
+		8F3E45AD1D32853F00FB71FC /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				8F3E45AE1D32853F00FB71FC /* Documentation.swift */,
+				8F3E45AF1D32853F00FB71FC /* Header.swift */,
+			);
+			path = Templates;
 			sourceTree = "<group>";
 		};
 		8FE7B5581B4C9FB900837609 = {
@@ -660,6 +672,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */,
+				8FA733591D328D13003A90A7 /* Header.swift in Sources */,
 				8FFAB8121B7CFA9500E2D724 /* Parse.swift in Sources */,
 				8F012EF51BB5A920007D0B5C /* Castable.swift in Sources */,
 				8FB48ECA1D306C4700BC50A1 /* KeyPath.swift in Sources */,
@@ -667,6 +680,7 @@
 				8F72DC561C3CB8C500A39E10 /* NSValueCastable.swift in Sources */,
 				8F3E459A1D31362B00FB71FC /* OptionalKeyPath.swift in Sources */,
 				8F00623F1C81EF61007BCF48 /* Overloads.swift in Sources */,
+				8F3E45B81D32884700FB71FC /* Documentation.swift in Sources */,
 				8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */,
 				65DB18B01C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 				8F3E45A41D327E4500FB71FC /* Closures.swift in Sources */,
