@@ -9,24 +9,26 @@
 import Foundation
 
 public struct DecodingContext<Parameters> {
-    var path: [String]
-    var json: AnyObject
-    var rootObject: AnyObject
-    var parameters: Parameters
+    public var path: [String]
+    public var json: AnyObject
+    public var rootObject: AnyObject
+    public var parameters: Parameters
     
-    init(json: AnyObject, parameters: Parameters) {
+    public init(json: AnyObject, parameters: Parameters) {
         self.json = json
         self.path = []
         self.rootObject = json
         self.parameters = parameters
     }
     
-    init(json: AnyObject, path: [String] = [], rootObject: AnyObject, parameters: Parameters) {
+    public init(json: AnyObject, path: [String] = [], rootObject: AnyObject, parameters: Parameters) {
         self.json = json
         self.path = path
         self.rootObject = rootObject
         self.parameters = parameters
     }
+    
+    // MARK: Parsing
     
     public func parse(key: String) throws -> DecodingContext {
         let dict = try NSDictionary.decode(json)
@@ -57,7 +59,7 @@ public struct DecodingContext<Parameters> {
         new.json = obj
         return new
     }
-    
+
     public func parse(keyPath: KeyPath) throws -> DecodingContext {
         return try keyPath.keys.reduce(self) { try $0.0.parse(key: $0.1) }
     }
@@ -65,6 +67,8 @@ public struct DecodingContext<Parameters> {
     public func parse(keyPath: OptionalKeyPath) throws -> DecodingContext? {
         return try keyPath.keys.reduce(self) { try $0.0?.parse(key: $0.1) }
     }
+    
+    // MARK: Decoding with error properagation
     
     public func decode<A>(keyPath: KeyPath, decode: (DecodingContext) throws -> A) throws -> A {
         let object = try parse(keyPath: keyPath)
@@ -75,6 +79,8 @@ public struct DecodingContext<Parameters> {
         guard let object = try parse(keyPath: keyPath) else { return nil }
         return try catchAndRethrow(json, keyPath) { try catchNull(decode)(object) }
     }
+    
+    // MARK: Map
     
     public func map(json closure: (AnyObject) -> AnyObject) -> DecodingContext {
         var new = self
