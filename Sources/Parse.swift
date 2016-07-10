@@ -24,7 +24,7 @@ func parse(_ json: AnyObject, _ keyPath: KeyPath) throws -> AnyObject {
 }
 
 // FIXME: Make more beautiful
-func parseOptionally(_ json: AnyObject, _ path: OptionalKeyPath) throws -> AnyObject? {
+func parse(_ json: AnyObject, _ path: OptionalKeyPath) throws -> AnyObject? {
     var currentDict = try NSDictionary.decode(json)
     
     // For error information
@@ -62,8 +62,8 @@ public func parse<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((AnyObject) t
 }
 
 /// Accepts null and missingKeyError
-func parseAndAcceptMissingKey<T>(_ json: AnyObject, keyPath: OptionalKeyPath, decode: ((AnyObject) throws -> T)) throws -> T? {
-    guard let object = try parseOptionally(json, keyPath) else { return nil }
+func parse<T>(_ json: AnyObject, keyPath: OptionalKeyPath, decode: ((AnyObject) throws -> T)) throws -> T? {
+    guard let object = try parse(json, keyPath) else { return nil }
     return try catchAndRethrow(json, keyPath) { try catchNull(decode)(object) }
 }
 

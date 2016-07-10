@@ -1075,7 +1075,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath)throws-> A {
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A?]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(catchNull(A.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(catchNull(A.decode)))))
 }
 
 /**
@@ -1085,7 +1085,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A]]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(decodeArray(A.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(decodeArray(A.decode)))))
 }
 
 /**
@@ -1095,7 +1095,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A: B]]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
 }
 
 /**
@@ -1105,7 +1105,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(A.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeArray(A.decode))))
 }
 
 /**
@@ -1115,7 +1115,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: B?]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))))
 }
 
 /**
@@ -1125,7 +1125,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [B]]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))))
 }
 
 /**
@@ -1135,7 +1135,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [B: C]]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
 }
 
 /**
@@ -1145,7 +1145,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: B]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
 }
 
 /**
@@ -1155,7 +1155,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(catchNull(A.decode)))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(catchNull(A.decode)))
 }
 
 /**
@@ -1165,7 +1165,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A]?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(catchNull(decodeArray(A.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(catchNull(decodeArray(A.decode)))))
 }
 
 /**
@@ -1175,7 +1175,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A: B]?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(catchNull(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
 }
 
 /**
@@ -1185,7 +1185,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(catchNull(A.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(catchNull(A.decode))))
 }
 
 /**
@@ -1195,7 +1195,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A?]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(catchNull(A.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(catchNull(A.decode)))))
 }
 
 /**
@@ -1205,7 +1205,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[[A]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(decodeArray(A.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(decodeArray(A.decode)))))
 }
 
 /**
@@ -1215,7 +1215,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[[A: B]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))))
 }
 
 /**
@@ -1225,7 +1225,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(A.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeArray(A.decode))))
 }
 
 /**
@@ -1235,7 +1235,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A: B?]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))))
 }
 
 /**
@@ -1245,7 +1245,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A: [B]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))))
 }
 
 /**
@@ -1255,7 +1255,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A: [B: C]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
 }
 
 /**
@@ -1265,7 +1265,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A: B]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode))))
 }
 
 /**
@@ -1275,7 +1275,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeArray(A.decode)))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeArray(A.decode)))
 }
 
 /**
@@ -1285,7 +1285,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [B]?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode)))))
 }
 
 /**
@@ -1295,7 +1295,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [B: C]?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
 }
 
 /**
@@ -1305,7 +1305,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: B?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode))))
 }
 
 /**
@@ -1315,7 +1315,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [B?]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode)))))
 }
 
 /**
@@ -1325,7 +1325,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [[B]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode)))))
 }
 
 /**
@@ -1335,7 +1335,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [[B: C]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
 }
 
 /**
@@ -1345,7 +1345,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [B]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode))))
 }
 
 /**
@@ -1355,7 +1355,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [B: C?]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
 }
 
 /**
@@ -1365,7 +1365,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [B: [C]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
 }
 
 /**
@@ -1375,7 +1375,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [B: [C: D]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
 }
 
 /**
@@ -1385,7 +1385,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: [B: C]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
 }
 
 /**
@@ -1395,7 +1395,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A: B]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(decodeDictionary(A.decode, elementDecodeClosure: B.decode)))
 }
 
 /**
@@ -1405,7 +1405,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeArray(A.decode))
+    return try parse(json, keyPath: keyPath, decode: decodeArray(A.decode))
 }
 
 /**
@@ -1415,7 +1415,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B?]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(catchNull(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(catchNull(B.decode)))))
 }
 
 /**
@@ -1425,7 +1425,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[B]]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeArray(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeArray(B.decode)))))
 }
 
 /**
@@ -1435,7 +1435,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[B: C]]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
 }
 
 /**
@@ -1445,7 +1445,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeArray(B.decode))))
 }
 
 /**
@@ -1455,7 +1455,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: C?]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
 }
 
 /**
@@ -1465,7 +1465,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [C]]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
 }
 
 /**
@@ -1475,7 +1475,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [C: D]]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
 }
 
 /**
@@ -1485,7 +1485,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: C]?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
 }
 
 /**
@@ -1495,7 +1495,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: B?]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: catchNull(B.decode)))
 }
 
 /**
@@ -1505,7 +1505,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[B]?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeArray(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeArray(B.decode)))))
 }
 
 /**
@@ -1515,7 +1515,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[B: C]?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
 }
 
 /**
@@ -1525,7 +1525,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(catchNull(B.decode))))
 }
 
 /**
@@ -1535,7 +1535,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[B?]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(catchNull(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(catchNull(B.decode)))))
 }
 
 /**
@@ -1545,7 +1545,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[[B]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeArray(B.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeArray(B.decode)))))
 }
 
 /**
@@ -1555,7 +1555,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[[B: C]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode)))))
 }
 
 /**
@@ -1565,7 +1565,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[B]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeArray(B.decode))))
 }
 
 /**
@@ -1575,7 +1575,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[B: C?]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode)))))
 }
 
 /**
@@ -1585,7 +1585,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[B: [C]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode)))))
 }
 
 /**
@@ -1595,7 +1595,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[B: [C: D]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
 }
 
 /**
@@ -1605,7 +1605,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [[B: C]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(decodeDictionary(B.decode, elementDecodeClosure: C.decode))))
 }
 
 /**
@@ -1615,7 +1615,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeArray(B.decode)))
 }
 
 /**
@@ -1625,7 +1625,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [C]?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeArray(C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeArray(C.decode)))))
 }
 
 /**
@@ -1635,7 +1635,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [C: D]?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
 }
 
 /**
@@ -1645,7 +1645,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: C?]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: catchNull(C.decode))))
 }
 
 /**
@@ -1655,7 +1655,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [C?]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(catchNull(C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(catchNull(C.decode)))))
 }
 
 /**
@@ -1665,7 +1665,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [[C]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeArray(C.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeArray(C.decode)))))
 }
 
 /**
@@ -1675,7 +1675,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [[C: D]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(decodeDictionary(C.decode, elementDecodeClosure: D.decode)))))
 }
 
 /**
@@ -1685,7 +1685,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [C]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeArray(C.decode))))
 }
 
 /**
@@ -1695,7 +1695,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [C: D?]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: catchNull(D.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: catchNull(D.decode)))))
 }
 
 /**
@@ -1705,7 +1705,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [C: [D]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeArray(D.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeArray(D.decode)))))
 }
 
 /**
@@ -1715,7 +1715,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [C: [D: E]]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeDictionary(D.decode, elementDecodeClosure: E.decode)))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: decodeDictionary(D.decode, elementDecodeClosure: E.decode)))))
 }
 
 /**
@@ -1725,7 +1725,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Deco
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: [C: D]]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: decodeDictionary(C.decode, elementDecodeClosure: D.decode))))
 }
 
 /**
@@ -1735,7 +1735,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: [B: C]]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: decodeDictionary(B.decode, elementDecodeClosure: C.decode)))
 }
 
 /**
@@ -1745,7 +1745,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A: B]? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: B.decode))
+    return try parse(json, keyPath: keyPath, decode: decodeDictionary(A.decode, elementDecodeClosure: B.decode))
 }
 
 /**
@@ -1755,5 +1755,5 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
  - parameter path: A null-separated key-path string. Can be generated with `"keyA" => "keyB"`
 */
 public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath)throws-> A? {
-    return try parseAndAcceptMissingKey(json, keyPath: keyPath, decode: A.decode)
+    return try parse(json, keyPath: keyPath, decode: A.decode)
 }

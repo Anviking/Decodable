@@ -110,19 +110,16 @@ indirect enum Decodable {
     func generateOverloads(_ operatorString: String) -> [String] {
         let provider = TypeNameProvider()
         let returnType: String
-        let parseCallString: String
         let behaviour: Behaviour
         let keyPathType: String
         switch operatorString {
         case "=>":
             returnType = typeString(provider)
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parse"
             keyPathType = "KeyPath"
         case "=>?":
             returnType = typeString(provider) + "?"
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "parseAndAcceptMissingKey"
             keyPathType = "OptionalKeyPath"
         default:
             fatalError()
@@ -134,7 +131,7 @@ indirect enum Decodable {
         let documentation = generateDocumentationComment(behaviour)
         let throwKeyword =  "throws"
         return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: \(keyPathType))\(throwKeyword)-> \(returnType) {\n" +
-            "    return try \(parseCallString)(json, keyPath: keyPath, decode: \(decodeClosure(provider)))\n" +
+            "    return try parse(json, keyPath: keyPath, decode: \(decodeClosure(provider)))\n" +
             "}"
         ]
     }
