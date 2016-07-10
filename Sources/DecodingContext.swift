@@ -31,11 +31,12 @@ public struct DecodingContext<Parameters> {
     public func parse(key: String) throws -> DecodingContext {
         let dict = try NSDictionary.decode(json)
         guard let obj = dict[key] else {
-            let metadata = DecodingError.Metadata(object: json)
+            let metadata = DecodingError.Metadata(path: path, object: json, rootObject: rootObject)
             throw DecodingError.missingKey(key, metadata)
         }
         
         var new = self
+        new.path.append(key)
         new.json = obj
         return new
     }
@@ -44,7 +45,7 @@ public struct DecodingContext<Parameters> {
         let dict = try NSDictionary.decode(json)
         guard let obj = dict[key.key] else {
             if key.isRequired {
-                let metadata = DecodingError.Metadata(object: json)
+                let metadata = DecodingError.Metadata(path: path, object: json, rootObject: rootObject)
                 throw DecodingError.missingKey(key.key, metadata)
             } else {
                 return nil
@@ -52,6 +53,7 @@ public struct DecodingContext<Parameters> {
         }
         
         var new = self
+        new.path.append(key.key)
         new.json = obj
         return new
     }
@@ -62,6 +64,16 @@ public struct DecodingContext<Parameters> {
     
     public func parse(keyPath: OptionalKeyPath) throws -> DecodingContext? {
         return try keyPath.keys.reduce(self) { try $0.0?.parse(key: $0.1) }
+    }
+    
+    public func decode<A>(keyPath: KeyPath, decode: (DecodingContext) throws -> A) throws -> A {
+        let object = try parse(keyPath: keyPath)
+        return try catchAndRethrow(json, keyPath) { try decode(object) }
+    }
+    
+    public func decode<A>(keyPath: OptionalKeyPath, decode: (DecodingContext) throws -> A) throws -> A? {
+        guard let object = try parse(keyPath: keyPath) else { return nil }
+        return try catchAndRethrow(json, keyPath) { try catchNull(decode)(object) }
     }
     
     public func map(json closure: (AnyObject) -> AnyObject) -> DecodingContext {

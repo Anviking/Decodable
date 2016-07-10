@@ -19,8 +19,7 @@
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [A?]? {
     let decode = catchNull(decodeArray(catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -34,8 +33,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [A?]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = catchNull(decodeArray(catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -48,8 +46,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[A]]? {
     let decode = catchNull(decodeArray(decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -63,8 +60,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[A]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = catchNull(decodeArray(decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -77,8 +73,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[String: A]]? {
     let decode = catchNull(decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -92,8 +87,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[String: A]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = catchNull(decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -106,8 +100,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [A]? {
     let decode = catchNull(decodeArray(A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -121,8 +114,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [A]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = catchNull(decodeArray(A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -135,8 +127,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: A?]? {
     let decode = catchNull(decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -150,8 +141,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: A?]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = catchNull(decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -164,8 +154,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [A]]? {
     let decode = catchNull(decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -179,8 +168,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [A]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = catchNull(decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -193,8 +181,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [String: A]]? {
     let decode = catchNull(decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -208,8 +195,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [String: A]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = catchNull(decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -222,8 +208,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: A]? {
     let decode = catchNull(decodeDictionary(String.decode, elementDecodeClosure: A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -237,8 +222,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: A]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = catchNull(decodeDictionary(String.decode, elementDecodeClosure: A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -251,8 +235,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> A? {
     let decode = catchNull(A.decode)
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -266,8 +249,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> A? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = catchNull(A.decode)
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -279,8 +261,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[A]?] {
     let decode = decodeArray(catchNull(decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -293,8 +274,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[A]?] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(catchNull(decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -306,8 +286,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[String: A]?] {
     let decode = decodeArray(catchNull(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -320,8 +299,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[String: A]?] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(catchNull(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -333,8 +311,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [A?] {
     let decode = decodeArray(catchNull(A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -347,8 +324,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [A?] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(catchNull(A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -360,8 +336,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[A?]] {
     let decode = decodeArray(decodeArray(catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -374,8 +349,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[A?]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeArray(catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -387,8 +361,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[[A]]] {
     let decode = decodeArray(decodeArray(decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -401,8 +374,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[[A]]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeArray(decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -414,8 +386,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[[String: A]]] {
     let decode = decodeArray(decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -428,8 +399,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[[String: A]]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -441,8 +411,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[A]] {
     let decode = decodeArray(decodeArray(A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -455,8 +424,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[A]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeArray(A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -468,8 +436,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[String: A?]] {
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -482,8 +449,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[String: A?]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -495,8 +461,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[String: [A]]] {
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -509,8 +474,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[String: [A]]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -522,8 +486,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[String: [String: A]]] {
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -536,8 +499,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[String: [String: A]]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -549,8 +511,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [[String: A]] {
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -563,8 +524,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [[String: A]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -576,8 +536,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [A] {
     let decode = decodeArray(A.decode)
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -590,8 +549,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [A] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(A.decode)
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -603,8 +561,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [A]?] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -617,8 +574,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [A]?] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -630,8 +586,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [String: A]?] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -644,8 +599,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [String: A]?] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -657,8 +611,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: A?] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -671,8 +624,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: A?] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -684,8 +636,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [A?]] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -698,8 +649,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [A?]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -711,8 +661,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [[A]]] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -725,8 +674,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [[A]]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -738,8 +686,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [[String: A]]] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -752,8 +699,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [[String: A]]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -765,8 +711,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [A]] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -779,8 +724,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [A]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -792,8 +736,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [String: A?]] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -806,8 +749,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [String: A?]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -819,8 +761,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [String: [A]]] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -833,8 +774,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [String: [A]]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -846,8 +786,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [String: [String: A]]] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -860,8 +799,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [String: [String: A]]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -873,8 +811,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: [String: A]] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -887,8 +824,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: [String: A]] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode))
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -900,8 +836,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> [String: A] {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: A.decode)
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -914,8 +849,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> [String: A] {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: A.decode)
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -927,8 +861,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: KeyPath)throws-> A {
     let decode = A.decode
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -941,8 +874,7 @@ public func => <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: K
 public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: KeyPath)throws-> A {
     let context = DecodingContext(json: json, parameters: ())
     let decode = A.decode
-    let object = try context.parse(keyPath: keyPath)
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -953,8 +885,7 @@ public func => <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPat
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [[A]?]? {
     let decode = decodeArray(catchNull(decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -966,8 +897,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A]?]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(catchNull(decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -978,8 +908,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [[String: A]?]? {
     let decode = decodeArray(catchNull(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -991,8 +920,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[String: A]?]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(catchNull(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1003,8 +931,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [A?]? {
     let decode = decodeArray(catchNull(A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1016,8 +943,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A?]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(catchNull(A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1028,8 +954,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [[A?]]? {
     let decode = decodeArray(decodeArray(catchNull(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1041,8 +966,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A?]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeArray(catchNull(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1053,8 +977,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [[[A]]]? {
     let decode = decodeArray(decodeArray(decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1066,8 +989,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[A]]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeArray(decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1078,8 +1000,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [[[String: A]]]? {
     let decode = decodeArray(decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1091,8 +1012,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[[String: A]]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1103,8 +1023,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [[A]]? {
     let decode = decodeArray(decodeArray(A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1116,8 +1035,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[A]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeArray(A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1128,8 +1046,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [[String: A?]]? {
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1141,8 +1058,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[String: A?]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1153,8 +1069,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [[String: [A]]]? {
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1166,8 +1081,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[String: [A]]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1178,8 +1092,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [[String: [String: A]]]? {
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1191,8 +1104,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[String: [String: A]]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1203,8 +1115,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [[String: A]]? {
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1216,8 +1127,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [[String: A]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1228,8 +1138,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [A]? {
     let decode = decodeArray(A.decode)
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1241,8 +1150,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [A]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeArray(A.decode)
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1253,8 +1161,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: [A]?]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1266,8 +1173,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: [A]?]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1278,8 +1184,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: [String: A]?]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1291,8 +1196,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: [String: A]?]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1303,8 +1207,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: A?]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1316,8 +1219,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: A?]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1328,8 +1230,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: [A?]]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(catchNull(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1341,8 +1242,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: [A?]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(catchNull(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1353,8 +1253,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: [[A]]]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1366,8 +1265,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: [[A]]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1378,8 +1276,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: [[String: A]]]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1391,8 +1288,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: [[String: A]]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1403,8 +1299,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: [A]]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1416,8 +1311,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: [A]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1428,8 +1322,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: [String: A?]]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1441,8 +1334,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: [String: A?]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: catchNull(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1453,8 +1345,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: [String: [A]]]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1466,8 +1357,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: [String: [A]]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: decodeArray(A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1478,8 +1368,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: [String: [String: A]]]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1491,8 +1380,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: [String: [String: A]]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode)))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1503,8 +1391,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: [String: A]]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1516,8 +1403,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: [String: A]]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: decodeDictionary(String.decode, elementDecodeClosure: A.decode))
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1528,8 +1414,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> [String: A]? {
     let decode = decodeDictionary(String.decode, elementDecodeClosure: A.decode)
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1541,8 +1426,7 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> [String: A]? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = decodeDictionary(String.decode, elementDecodeClosure: A.decode)
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1553,8 +1437,7 @@ public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPa
 */
 public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: OptionalKeyPath)throws-> A? {
     let decode = A.decode
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }
 
 /**
@@ -1566,6 +1449,5 @@ public func =>? <A: Decodable>(context: DecodingContext<A.Parameters>, keyPath: 
 public func =>? <A: Decodable where A.Parameters == Void>(json: AnyObject, keyPath: OptionalKeyPath)throws-> A? {
     let context = DecodingContext(json: json, parameters: ())
     let decode = A.decode
-    guard let object = try context.parse(keyPath: keyPath) else { return nil }
-    return try decode(object)
+    return try context.decode(keyPath: keyPath, decode: decode)
 }

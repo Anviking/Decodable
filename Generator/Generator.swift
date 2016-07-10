@@ -110,23 +110,17 @@ indirect enum Decodable {
     func generateOverloads(_ operatorString: String) -> [String] {
         let provider = TypeNameProvider()
         let returnType: String
-        let parseCallString: String
         let behaviour: Behaviour
-        let parseEndString: String
         let keyPathType: String
         
         switch operatorString {
         case "=>":
             returnType = typeString(provider)
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "    let object = try context.parse("
-            parseEndString = ")\n"
             keyPathType = "KeyPath"
         case "=>?":
             returnType = typeString(provider) + "?"
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
-            parseCallString = "    guard let object = try context.parse("
-            parseEndString = ") else { return nil }\n"
             keyPathType = "OptionalKeyPath"
         default:
             fatalError()
@@ -139,13 +133,11 @@ indirect enum Decodable {
         let throwKeyword =  "throws"
         return [documentation + "public func \(operatorString) <\(generics)>(context: DecodingContext<A.Parameters>, keyPath: \(keyPathType))\(throwKeyword)-> \(returnType) {\n" +
             "    let decode = \(decodeClosure(provider))\n" +
-            parseCallString + "keyPath: keyPath" + parseEndString +
-            "    return try decode(object)\n" +
+            "    return try context.decode(keyPath: keyPath, decode: decode)\n" +
             "}",documentation + "public func \(operatorString) <\(generics) where A.Parameters == Void>(json: AnyObject, keyPath: \(keyPathType))\(throwKeyword)-> \(returnType) {\n" +
                 "    let context = DecodingContext(json: json, parameters: ())\n" + 
                 "    let decode = \(decodeClosure(provider))\n" +
-                parseCallString + "keyPath: keyPath" + parseEndString +
-                "    return try decode(object)\n" +
+                "    return try context.decode(keyPath: keyPath, decode: decode)\n" +
             "}"
         ]
     }
