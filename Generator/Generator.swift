@@ -160,16 +160,31 @@ indirect enum Decodable {
     
     func generateOverloads(_ operatorString: String) -> [String] {
         let provider = TypeNameProvider()
-        let returnType: String
         let behaviour: Behaviour
         let keyPathType: String
+        
+        var returnType = typeString(provider)
+        var overloads = [String]()
+        
+        let arguments = provider.takenNames.values.sorted().map { $0 + ": Decodable" }
+        let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))>" : ""
+        
         switch operatorString {
         case "=>":
-            returnType = typeString(provider)
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
             keyPathType = "KeyPath"
+            
+            // Start again
+            guard isOptional else { break }
+            let otherBehaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
+            let documentation = generateDocumentationComment(otherBehaviour)
+            overloads.append(documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: OptionalKeyPath) throws -> \(returnType) {\n" +
+                "    return try parse(json, keyPath: keyPath.markingFirst(required: true), decode: \(decodeClosure(provider)))\n" +
+                "}"
+            )
+            
         case "=>?":
-            returnType = typeString(provider) + "?"
+            returnType += "?"
             // Never trows if null
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: false, throwsFromDecodeClosure: true)
             keyPathType = "OptionalKeyPath"
@@ -177,12 +192,8 @@ indirect enum Decodable {
             fatalError()
         }
         
-        let arguments = provider.takenNames.values.sorted().map { $0 + ": Decodable" }
-		let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))>" : ""
-        
         let documentation = generateDocumentationComment(behaviour)
-        let throwKeyword =  "throws"
-        return [documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: \(keyPathType))\(throwKeyword)-> \(returnType) {\n" +
+        return overloads + [documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: \(keyPathType)) throws -> \(returnType) {\n" +
             "    return try parse(json, keyPath: keyPath, decode: \(decodeClosure(provider)))\n" +
             "}"
         ]

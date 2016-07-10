@@ -61,10 +61,10 @@ public func parse<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((AnyObject) t
     return try catchAndRethrow(json, keyPath) { try decode(object) }
 }
 
-/// Accepts null and missingKeyError
-func parse<T>(_ json: AnyObject, keyPath: OptionalKeyPath, decode: ((AnyObject) throws -> T)) throws -> T? {
+// FIXME: Should perhaps not return T?, but this way we don't have to flatMap in certain overloads
+func parse<T>(_ json: AnyObject, keyPath: OptionalKeyPath, decode: ((AnyObject) throws -> T?)) throws -> T? {
     guard let object = try parse(json, keyPath) else { return nil }
-    return try catchAndRethrow(json, keyPath) { try catchNull(decode)(object) }
+    return try catchAndRethrow(json, keyPath) { try decode(object) }
 }
 
 
