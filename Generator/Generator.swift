@@ -48,7 +48,7 @@ indirect enum Decodable {
     //    case AnyObject
     case Array(Decodable)
     case Optional(Decodable)
-    //    case Dictionary(Decodable, Decodable)
+    case Dictionary(Decodable)
     
     func decodeClosure(_ provider: TypeNameProvider) -> String {
         switch self {
@@ -60,8 +60,8 @@ indirect enum Decodable {
             return "catchNull(\(T.decodeClosure(provider)))"
         case Array(let T):
             return "decodeArray(\(T.decodeClosure(provider)))"
-            //        case .Dictionary(let K, let T):
-            //            return "decodeDictionary(\(K.decodeClosure(provider)), elementDecodeClosure: \(T.decodeClosure(provider)))"
+        case .Dictionary(let T):
+            return "decodeDictionary(String.decode, elementDecodeClosure: \(T.decodeClosure(provider)))"
         }
     }
     
@@ -73,8 +73,8 @@ indirect enum Decodable {
             return "\(T.typeString(provider))?"
         case Array(let T):
             return "[\(T.typeString(provider))]"
-            //        case .Dictionary(let K, let T):
-            //            return "[\(K.typeString(provider)): \(T.typeString(provider))]"
+        case .Dictionary(let T):
+            return "[String: \(T.typeString(provider))]"
         }
     }
     
@@ -84,7 +84,7 @@ indirect enum Decodable {
         var array = [Decodable]()
         array += generateAllPossibleChildren(deepness - 1).flatMap(filterChainedOptionals)
         array += generateAllPossibleChildren(deepness - 1).map { .Array($0) }
-        //        array += generateAllPossibleChildren(deepness - 1).map { .Dictionary(.T(Unique()),$0) }
+        array += generateAllPossibleChildren(deepness - 1).map { .Dictionary($0) }
         array += [.T(Unique())]
         return array
     }

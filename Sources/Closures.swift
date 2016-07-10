@@ -47,6 +47,18 @@ public func decodeDictionary<K,V>(_ keyDecodeClosure: (AnyObject) throws -> K, e
     }
 }
 
+public func decodeDictionary<A, Parameters>(_ keyDecodeClosure: (DecodingContext<Void>) throws -> String, elementDecodeClosure: (DecodingContext<Parameters>) throws -> A) -> (DecodingContext<Parameters>) throws -> [String: A] {
+    return { context in
+        var dict = [String: A]()
+        for (key, value) in try NSDictionary.decode(context.json) {
+            let keyContext = context.map { _ in key }.map(parameters: { _ in () })
+            let valueContext = context.map { _ in value }
+            try dict[keyDecodeClosure(keyContext)] = elementDecodeClosure(valueContext)
+        }
+        return dict
+    }
+}
+
 // MARK -
 
 func catchNull<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
