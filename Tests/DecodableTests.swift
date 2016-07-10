@@ -161,10 +161,10 @@ class DecodableTests: XCTestCase {
     func testDecodeRepositoryExampleNestedShouldThrowTypeMismatchException() {
         // given
         let json: NSDictionary = ["key": readJsonFile("typeMismatch.json")]
-        
+        let context = DecodingContext(json: json, parameters: ())
         // when
         do {
-            _ = try parse(json, keyPath: ["key"], decode: Repository.decode)
+            _ = try context.decode(keyPath: KeyPath("key"), decode: Repository.decode)
         } catch DecodingError.missingKey {
             XCTFail("it should not throw this exception")
         } catch let DecodingError.typeMismatch(expected, _, metadata) where expected == Int.self {

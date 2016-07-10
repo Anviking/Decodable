@@ -20,8 +20,9 @@ public func => (lhs: AnyObject, rhs: KeyPath) throws -> DecodingContext<Void> {
 }
 
 
-public func =>? (lhs: AnyObject, rhs: OptionalKeyPath) throws -> AnyObject? {
-    return try parseAndAcceptMissingKey(lhs, keyPath: rhs, decode: { $0 })
+public func =>? (lhs: AnyObject, rhs: OptionalKeyPath) throws -> DecodingContext<Void>? {
+    let context = DecodingContext(json: lhs, parameters: ())
+    return try context.parse(keyPath: rhs)
 }
 
 
