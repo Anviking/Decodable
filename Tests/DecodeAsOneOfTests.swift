@@ -9,6 +9,7 @@
 import XCTest
 @testable import Decodable
 
+/*
 class DecodeAsOneOfTests: XCTestCase {
     
     private func readJsonFile(_ file: String) -> NSDictionary {
@@ -51,3 +52,4 @@ class DecodeAsOneOfTests: XCTestCase {
         }
     }
 }
+*/

@@ -13,13 +13,16 @@ import Foundation
 infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
-public func => (lhs: AnyObject, rhs: KeyPath) throws -> AnyObject {
-    return try parse(lhs, keyPath: rhs, decode: { $0 })
+
+public func => (lhs: AnyObject, rhs: KeyPath) throws -> DecodingContext<Void> {
+    let context = DecodingContext(json: lhs, parameters: ())
+    return try context.parse(keyPath: rhs)
 }
 
 
-public func =>? (lhs: AnyObject, rhs: OptionalKeyPath) throws -> AnyObject? {
-    return try parseAndAcceptMissingKey(lhs, keyPath: rhs, decode: { $0 })
+public func =>? (lhs: AnyObject, rhs: OptionalKeyPath) throws -> DecodingContext<Void>? {
+    let context = DecodingContext(json: lhs, parameters: ())
+    return try context.parse(keyPath: rhs)
 }
 
 
@@ -43,14 +46,3 @@ public func => (lhs: OptionalKeyPath, rhs: KeyPath) -> OptionalKeyPath {
     return OptionalKeyPath(keys: lhs.keys + rhs.keys.map { OptionalKey(key: $0, isRequired: true) })
 }
 
-// MARK: Helpers
-
-func catchNull<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
-    return { json in
-        if json is NSNull {
-            return nil
-        } else {
-            return try decodeClosure(json)
-        }
-    }
-}

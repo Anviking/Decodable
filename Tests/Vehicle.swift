@@ -17,7 +17,7 @@ struct Car: Vehicle {
 }
 
 extension Car: Decodable {
-	static func decode(_ json: AnyObject) throws -> Car {
+	static func decode(_ json: DecodingContext<Void>) throws -> Car {
 		return try Car(driverless: json => "driverless")
 	}
 }
@@ -28,9 +28,9 @@ struct Train: Vehicle {
 }
 
 extension Train: Decodable {
-	static func decode(_ json: AnyObject) throws -> Train {
-		return try Train(driverless: json => "driverless",
-		                 electric: json => "electric")
+	static func decode(_ context: DecodingContext<Void>) throws -> Train {
+		return try Train(driverless: context => "driverless",
+		                 electric: context => "electric")
 	}
 }
 
@@ -40,7 +40,7 @@ struct Truck: Vehicle {
 }
 
 extension Truck: Decodable {
-	static func decode(_ json: AnyObject) throws -> Truck {
+	static func decode(_ json: DecodingContext<Void>) throws -> Truck {
 		return try Truck(driverless: json => "driverless",
 		             wheels: json => "wheels")
 	}

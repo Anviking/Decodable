@@ -14,10 +14,10 @@
  */
 public extension RawRepresentable where RawValue: Decodable, Self: Decodable {
     
-    static func decode(_ json: AnyObject) throws -> Self {
-        let rawValue = try RawValue.decode(json)
+    static func decode(_ context: DecodingContext<RawValue.Parameters>) throws -> Self {
+        let rawValue = try RawValue.decode(context)
         guard let rawRepresentable = Self(rawValue: rawValue) else {
-            let metadata = DecodingError.Metadata(object: json)
+            let metadata = DecodingError.Metadata(object: context.json)
             throw DecodingError.rawRepresentableInitializationError(rawValue: rawValue, metadata)
         }
         return rawRepresentable

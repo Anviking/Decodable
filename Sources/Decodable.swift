@@ -9,84 +9,59 @@
 import Foundation
 
 public protocol Decodable {
-    static func decode(_ json: AnyObject) throws -> Self
+    associatedtype Parameters = Void
+    static func decode(_ context :DecodingContext<Parameters>) throws -> Self
 }
 
-extension NSDictionary {
-    public static func decode(_ j: AnyObject) throws -> NSDictionary {
-        guard let result = j as? NSDictionary else {
-            let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
-        }
-        return result
+
+extension Decodable where Parameters == Void {
+    
+    /// Convenience overload for decode(_:DecodingContext<Void>)
+    ///
+    /// - parameter json: JSON object from `NSJSONSerialization`.
+    public static func decode(_ json: AnyObject) throws -> Self {
+        let context = DecodingContext(json: json, parameters: ())
+        return try Self.decode(context)
     }
 }
 
-extension NSArray {
-    public static func decode(_ j: AnyObject) throws -> NSArray {
-        guard let result = j as? NSArray else {
-            let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
-        }
-        return result
+extension Decodable {
+    
+    /// Convenience overload for decode(_:DecodingContext<Void>)
+    ///
+    /// - parameter json: JSON object from `NSJSONSerialization`.
+    public static func decode(_ json: AnyObject, parameters: Parameters) throws -> Self {
+        let context = DecodingContext(json: json, path: [], rootObject: json, parameters: parameters)
+        return try Self.decode(context)
     }
 }
 
-extension Dictionary where Key: Decodable, Value: Decodable {
-    public static func decode(_ j: AnyObject) throws -> Dictionary {
-        return try decodeDictionary(Key.decode, elementDecodeClosure: Value.decode)(json: j)
-    }
-}
-
-extension Array where Element: Decodable {
-    public static func decode(_ j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
-        if ignoreInvalidObjects {
-            return try decodeArray { try? Element.decode($0) }(json: j).flatMap {$0}
-        } else {
-            return try decodeArray(Element.decode)(json: j)
-        }
-    }
-}
 
 
 // MARK: Helpers
 
 /// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
-public func decodeAsOneOf(_ json: AnyObject, objectTypes: Decodable.Type...) throws -> Decodable {
+/*
+ public func decodeAsOneOf(_ json: AnyObject, objectTypes: Decodable.Type...) throws -> Decodable {
 	for decodable in objectTypes.dropLast() {
-		if let decoded = try? decodable.decode(json) {
-			return decoded
-		}
+ if let decoded = try? decodable.decode(json) {
+ return decoded
+ }
 	}
 	return try objectTypes.last!.decode(json)
-}
-
-/// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
-public func decodeArrayAsOneOf(_ json: AnyObject, objectTypes: Decodable.Type...) throws -> [Decodable] {
+ }
+ 
+ /// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
+ public func decodeArrayAsOneOf(_ json: AnyObject, objectTypes: Decodable.Type...) throws -> [Decodable] {
 	return try NSArray.decode(json).map {
-		for decodable in objectTypes.dropLast() {
-			if let decoded = try? decodable.decode($0) {
-				return decoded
-			}
-		}
-		return try objectTypes.last!.decode($0)
+ for decodable in objectTypes.dropLast() {
+ if let decoded = try? decodable.decode($0) {
+ return decoded
+ }
+ }
+ return try objectTypes.last!.decode($0)
 	}
-}
+ }
+ */
 
-/// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
-public func decodeArray<T>(_ elementDecodeClosure: (AnyObject) throws -> T) -> (json: AnyObject) throws -> [T] {
-    return { json in
-        return try NSArray.decode(json).map { try elementDecodeClosure($0) }
-    }
-}
 
-/// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried. For everyday use, prefer using [K: V].decode(json) instead (declared in Decodable.swift).
-public func decodeDictionary<K,V>(_ keyDecodeClosure: (AnyObject) throws -> K, elementDecodeClosure: (AnyObject) throws -> V) -> (json: AnyObject) throws -> [K: V] {
-    return { json in
-        var dict = [K: V]()
-        for (key, value) in try NSDictionary.decode(json) {
-            try dict[keyDecodeClosure(key)] = elementDecodeClosure(value)
-        }
-        return dict
-    }
-}

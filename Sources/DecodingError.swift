@@ -21,6 +21,12 @@ public enum DecodingError: ErrorProtocol, Equatable {
             self.rootObject = rootObject
         }
         
+        public init<T>(_ context: DecodingContext<T>) {
+            self.path = context.path
+            self.object = context.json
+            self.rootObject = context.rootObject
+        }
+        
         /// The JSON key path to the object that failed to be decoded
         public var path: [String]
         
@@ -106,6 +112,15 @@ public enum DecodingError: ErrorProtocol, Equatable {
 // There are overloads for this
 public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
     return lhs == rhs
+}
+
+
+extension DecodingContext {
+    /// Helper for creating a `TypeMismatchError`
+    func typeMismatch(expectedType: Any.Type) ->  DecodingError {
+        let metadata = DecodingError.Metadata(self)
+        return DecodingError.typeMismatch(expected: expectedType, actual: json.dynamicType, metadata)
+    }
 }
 
 // FIXME: I'm not sure about === equality
