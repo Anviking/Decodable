@@ -4,6 +4,5 @@ xcode_scheme: Decodable-Mac
 osx_image: xcode8
 script:
   - xcodebuild test -project Decodable.xcodeproj/ -scheme 'Decodable-iOS' -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
-  - xcodebuild test -project Decodable.xcodeproj/ -scheme 'Decodable-iOS' -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
   -  xcodebuild test -project Decodable.xcodeproj/ -scheme 'Decodable-Mac' ONLY_ACTIVE_ARCH=NO
 
