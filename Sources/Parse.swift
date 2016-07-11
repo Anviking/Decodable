@@ -10,25 +10,37 @@ import Foundation
 
 /// Use reduce to traverse through a nested dictionary and find the object at a given path
 func parse(_ json: AnyObject, _ keyPath: KeyPath) throws -> AnyObject {
-    return try keyPath.keys.reduce((json, []), combine: { (a:(object: AnyObject, currentPath: [String]), key: String) in
-        let currentDict = try NSDictionary.decode(a.object)
-        guard let result = currentDict[NSString(string: key)] else {
-            let metadata = DecodingError.Metadata(path: a.currentPath, object: a.object, rootObject: json)
+    var currentDict = try NSDictionary.decode(json)
+    
+    // For error information
+    var currentKeyIndex = keyPath.keys.startIndex
+    
+    // Remove last key – it should not be decoded as NSDictionary
+    var shorterPath = keyPath.keys
+    let lastKey = shorterPath.removeLast()
+    
+    func objectForKey(_ dictionary: NSDictionary, key: String) throws -> AnyObject {
+        guard let result = dictionary[NSString(string: key)] else {
+            let currentPath = keyPath.keys[0 ... currentKeyIndex]
+            let metadata = DecodingError.Metadata(path: Array(currentPath), object: dictionary, rootObject: json)
             throw DecodingError.missingKey(key, metadata)
         }
+        return result
+    }
     
-        var path = a.currentPath
-        path.append(key)
-        return (result, path)
-    }).object
+    for key in shorterPath {
+        currentDict = try NSDictionary.decode(objectForKey(currentDict, key: key))
+        currentKeyIndex += 1
+    }
+    
+    return try objectForKey(currentDict, key: lastKey)
 }
 
-// FIXME: Make more beautiful
 func parse(_ json: AnyObject, _ path: OptionalKeyPath) throws -> AnyObject? {
     var currentDict = try NSDictionary.decode(json)
     
     // For error information
-    var currentPath: [String] = []
+    var currentKeyIndex = path.keys.startIndex
     
     // Remove last key – it should not be decoded as NSDictionary
     var shorterPath = path.keys
@@ -37,6 +49,7 @@ func parse(_ json: AnyObject, _ path: OptionalKeyPath) throws -> AnyObject? {
     func objectForKey(_ dictionary: NSDictionary, key: OptionalKey) throws -> AnyObject? {
         guard let result = dictionary[NSString(string: key.key)] else {
             if key.isRequired {
+                let currentPath = path.keys[0 ... currentKeyIndex].map { $0.key }
                 let metadata = DecodingError.Metadata(path: currentPath, object: dictionary, rootObject: json)
                 throw DecodingError.missingKey(key.key, metadata)
             } else {
@@ -51,7 +64,7 @@ func parse(_ json: AnyObject, _ path: OptionalKeyPath) throws -> AnyObject? {
             return nil
         }
         currentDict = try NSDictionary.decode(object)
-        currentPath.append(key.key)
+        currentKeyIndex += 1
     }
     
     return try objectForKey(currentDict, key: lastKey)
