@@ -2,3 +2,8 @@ language: objective-c
 xcode_project: Decodable.xcodeproj # path to your xcodeproj folder
 xcode_scheme: Decodable-Mac
 osx_image: xcode8
+script:
+  - xcodebuild -project Decodable.xcodeproj/ -scheme 'Decodable-iOS' -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  - xcodebuild -project Decodable.xcodeproj/ -scheme 'Decodable-iOS' -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  -  xcodebuild -project Decodable.xcodeproj/ -scheme 'Decodable-Mac' ONLY_ACTIVE_ARCH=NO
+
