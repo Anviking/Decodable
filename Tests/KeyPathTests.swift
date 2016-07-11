@@ -91,9 +91,9 @@ class OptionalKeyPathTests: XCTestCase {
             OptionalKey(key: "c", isRequired: false)
             ])
         
-        let keyPath4: OptionalKeyPath = "a" =>? "b" =>? "c"
+        let keyPath4: OptionalKeyPath = KeyPath("a") =>? "b" =>? "c"
         XCTAssertEqual(keyPath4.keys, [
-            OptionalKey(key: "a", isRequired: false),
+            OptionalKey(key: "a", isRequired: true),
             OptionalKey(key: "b", isRequired: false),
             OptionalKey(key: "c", isRequired: false)
             ])

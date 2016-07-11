@@ -163,8 +163,8 @@ indirect enum Decodable {
         let behaviour: Behaviour
         let keyPathType: String
         
-        var returnType = typeString(provider)
-        var overloads = [String]()
+        let returnType = typeString(provider)
+        let overloads = [String]()
         
         let arguments = provider.takenNames.values.sorted().map { $0 + ": Decodable" }
         let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))>" : ""
@@ -174,6 +174,7 @@ indirect enum Decodable {
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
             keyPathType = "KeyPath"
             
+            /*
             // Start again
             guard isOptional else { break }
             let otherBehaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
@@ -182,9 +183,10 @@ indirect enum Decodable {
                 "    return try parse(json, keyPath: keyPath.markingFirst(required: true), decode: \(decodeClosure(provider)))\n" +
                 "}"
             )
+ */
             
         case "=>?":
-            returnType += "?"
+            //returnType += "?"
             // Never trows if null
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: false, throwsFromDecodeClosure: true)
             keyPathType = "OptionalKeyPath"
@@ -233,7 +235,7 @@ let date = dateFormatter.string(from: Date())
 
 let overloads = Decodable.T(Unique()).generateAllPossibleChildren(4)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
-let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).flatMap { $0.generateOverloads("=>?") }
+let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).map{ $0.wrapInOptionalIfNeeded() }.flatMap { $0.generateOverloads("=>?") }
 
 do {
     var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Templates/Header.swift") as NSString
