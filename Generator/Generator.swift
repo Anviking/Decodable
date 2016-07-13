@@ -108,11 +108,11 @@ indirect enum Decodable {
             //        case .AnyObject:
         //            return "{$0}"
         case Optional(let T):
-            return "catchNull(\(T.decodeClosure(provider)))"
+            return "optional(\(T.decodeClosure(provider)))"
         case Array(let T):
-            return "decodeArray(\(T.decodeClosure(provider)))"
+            return "array(\(T.decodeClosure(provider)))"
         case .Dictionary(let K, let T):
-            return "decodeDictionary(\(K.decodeClosure(provider)), elementDecodeClosure: \(T.decodeClosure(provider)))"
+            return "dictionary(key: \(K.decodeClosure(provider)), value: \(T.decodeClosure(provider)))"
         }
     }
     

@@ -8,7 +8,8 @@
 
 import Foundation
 
-func catchNull<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
+/// Takes a decode closure and returns one that returns nil if the json object is `NSNull`
+func optional<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
     return { json in
         if json is NSNull {
             return nil
@@ -18,15 +19,19 @@ func catchNull<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throw
     }
 }
 
-/// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried and a "top-level" function instead of a function in an array extension. For everyday use, prefer using [T].decode(json) instead.
-public func decodeArray<T>(_ elementDecodeClosure: (AnyObject) throws -> T) -> (json: AnyObject) throws -> [T] {
+/// Create an array-decode-closure from an element decode closure
+///
+/// - returns: A closure that takes an `NSArray` and maps it using the element decode closure
+public func array<T>(_ elementDecodeClosure: (AnyObject) throws -> T) -> (json: AnyObject) throws -> [T] {
     return { json in
         return try NSArray.decode(json).map { try elementDecodeClosure($0) }
     }
 }
 
-/// Designed to be used with parse(json, path, decodeClosure) as the decodeClosure. Thats why it's curried. For everyday use, prefer using [K: V].decode(json) instead (declared in Decodable.swift).
-public func decodeDictionary<K,V>(_ keyDecodeClosure: (AnyObject) throws -> K, elementDecodeClosure: (AnyObject) throws -> V) -> (json: AnyObject) throws -> [K: V] {
+/// Create an dictionary-decode-closure from key- and value- decode closures
+///
+/// - returns: A closure that takes a `NSDictionary` and "maps" it using key and value decode closures 
+public func dictionary<K,V>(key keyDecodeClosure: (AnyObject) throws -> K, value elementDecodeClosure: (AnyObject) throws -> V) -> (json: AnyObject) throws -> [K: V] {
     return { json in
         var dict = [K: V]()
         for (key, value) in try NSDictionary.decode(json) {
