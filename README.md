@@ -7,8 +7,8 @@ Simple yet powerful object mapping made possible by Swift 2's new error handling
 )](https://cocoadocs.org/docsets/NSStringMask)
 [![Travis](https://img.shields.io/travis/Anviking/Decodable/master.svg)](https://travis-ci.org/Anviking/Decodable/branches)
 
-```swift
 
+```swift
 struct Repository {
     let name: String
     let description: String
@@ -43,16 +43,6 @@ do {
     print(error)
 }
 ```
-### Features
-- Informative errors
-- Decoding depends on inferred type
-- Leverages Swift 2's error handling
-- There is no trickery in decoding e.g an array of optionals `[T?]`. It's just the same, you don't have to do anything.
-- Does not work by "mapping". You should be very flexible, not commited to this library.
-
-### What it doesn't do
-- Encoding
-- Force you to have optional and/or `var` properties
 
 ## How does it work?
 
@@ -68,19 +58,26 @@ public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws 
 ```
 
 ### And shameless operator-overloading
-The (326!) generated overloads, all calling the `parse`-function, can be found in [Overloads.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Overloads.swift). Return types include `T?`, `[T?]`, `[T?]?`, `AnyObject` and `[String: T]?`. Swift 3 generics will most likely reduce the overloads required, remove need for code generation, and enable automagic decoding to infinitly nested generic types (like `[[[[[[[[[A???]]: B]]]?]]?]]`).
+The (326!) generated overloads, all calling the `parse`-function, can be found in [Overloads.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Overloads.swift). Return types include `T?`, `[T?]`, `[T?]?`, `AnyObject` and `[String: T]?`. When conditional protocol conformance is supported in Swift this won't be necessary, and automagic decoding of infinitly nested generic types (like `[[[[[[[[[A???]]: B]]]?]]?]]`) would work.
 
 An overload may look like this:
 ```swift
-public func => <T: Decodable>(lhs: AnyObject, rhs: String) throws -> T
+public func => <T: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> T
 ```
 
-There are also overloads that enable natural access to nested keys like `json => "a" => "b" => "c"`:
+## KeyPaths
+Keypaths can be created from string and array literals as well as with explicit initializers. They can also be joined using the operators `=>` and `=>?`. `=>?` is another operator that indicates that `nil` should be returned if the key to the right is missing.
+
+- When composing `=>` and `=>?` operators in the same keypath, the strictness of `=>` is still honoured.
+- Optional key paths (`=>?`) require an optional return type
+
 ```swift
-public func => (lhs: String, rhs: String) -> [String]
-public func => <T: Decodable>(lhs: AnyObject, rhs: [String]) throws -> T
+let a: KeyPath = "a"
+let b: KeyPath = ["a", "b"]
+let c: KeyPath = "a" => "b" => "c"
+let string: String? = json =>? "key1" => "key2" => "key3"`
+                           ^^ allowed to be missing
 ```
-
 ## Errors
 `ErrorTypes` conforming to `DecodingError` will be caught and rethrown in the decoding process to set metadata, like the JSON object that failed decoding, the key path to it, and the root JSON object. There are currently three error-structs conforming to it:
 - `TypeMismachError`
