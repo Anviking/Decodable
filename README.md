@@ -58,7 +58,7 @@ public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws 
 ```
 
 ### And shameless operator-overloading
-The (326!) generated overloads, all calling the `parse`-function, can be found in [Overloads.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Overloads.swift). Return types include `T?`, `[T?]`, `[T?]?`, `AnyObject` and `[String: T]?`. When conditional protocol conformance is supported in Swift this won't be necessary, and automagic decoding of infinitly nested generic types (like `[[[[[[[[[A???]]: B]]]?]]?]]`) would work.
+The too-many generated overloads, all calling the `parse`-function, can be found in [Overloads.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Overloads.swift). Return types include `T?`, `[T?]`, `[T?]?`, `AnyObject` and `[String: T]?`. When conditional protocol conformance is supported in Swift this won't be necessary, and automagic decoding of infinitly nested generic types (like `[[[[[[[[[A???]]: B]]]?]]?]]`) would work.
 
 An overload may look like this:
 ```swift
