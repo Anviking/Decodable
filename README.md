@@ -76,7 +76,7 @@ let a: KeyPath = "a"
 let b: KeyPath = ["a", "b"]
 let c: KeyPath = "a" => "b" => "c"
 let string: String? = json =>? "key1" => "key2" => "key3"`
-                           ^^ allowed to be missing
+                                ^^^^ allowed to be missing
 ```
 ## Errors
 `ErrorTypes` conforming to `DecodingError` will be caught and rethrown in the decoding process to set metadata, like the JSON object that failed decoding, the key path to it, and the root JSON object. There are currently three error-structs conforming to it:
