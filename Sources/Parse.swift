@@ -21,7 +21,7 @@ func parse(_ json: AnyObject, _ keyPath: KeyPath) throws -> AnyObject {
     
     func objectForKey(_ dictionary: NSDictionary, key: String) throws -> AnyObject {
         guard let result = dictionary[NSString(string: key)] else {
-            let currentPath = keyPath.keys[0 ... currentKeyIndex]
+            let currentPath = keyPath.keys[0 ..< currentKeyIndex]
             let metadata = DecodingError.Metadata(path: Array(currentPath), object: dictionary, rootObject: json)
             throw DecodingError.missingKey(key, metadata)
         }
@@ -49,7 +49,7 @@ func parse(_ json: AnyObject, _ path: OptionalKeyPath) throws -> AnyObject? {
     func objectForKey(_ dictionary: NSDictionary, key: OptionalKey) throws -> AnyObject? {
         guard let result = dictionary[NSString(string: key.key)] else {
             if key.isRequired {
-                let currentPath = path.keys[0 ... currentKeyIndex].map { $0.key }
+                let currentPath = path.keys[0 ..< currentKeyIndex].map { $0.key }
                 let metadata = DecodingError.Metadata(path: currentPath, object: dictionary, rootObject: json)
                 throw DecodingError.missingKey(key.key, metadata)
             } else {
