@@ -9,12 +9,24 @@
 import Foundation
 
 /// Takes a decode closure and returns one that returns nil if the json object is `NSNull`
-func optional<T>(_ decodeClosure: (AnyObject) throws -> T) -> (AnyObject) throws -> T? {
-    return { json in
-        if json is NSNull {
-            return nil
-        } else {
-            return try decodeClosure(json)
+
+
+extension Optional {
+    static func decoder(_ decodeClosure: (AnyObject) throws -> Wrapped) -> (AnyObject) throws -> Wrapped? {
+        return { json in
+            if json is NSNull {
+                return nil
+            } else {
+                return try decodeClosure(json)
+            }
+        }
+    }
+}
+
+extension Array {
+    public static func decoder(_ elementDecodeClosure: (AnyObject) throws -> Element) -> (AnyObject) throws -> Array<Element> {
+        return { json in
+            return try NSArray.decode(json).map { try elementDecodeClosure($0) }
         }
     }
 }
