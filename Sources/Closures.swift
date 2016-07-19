@@ -12,6 +12,10 @@ import Foundation
 
 
 extension Optional {
+    
+    /// Create an array-decode-closure from an element decode closure
+    ///
+    /// - returns: A closure that takes an `NSArray` and maps it using the element decode closure
     static func decoder(_ decodeClosure: (AnyObject) throws -> Wrapped) -> (AnyObject) throws -> Wrapped? {
         return { json in
             if json is NSNull {
@@ -24,6 +28,10 @@ extension Optional {
 }
 
 extension Array {
+    
+    /// Create an array-decode-closure from an element decode closure
+    ///
+    /// - returns: A closure that takes an `NSArray` and maps it using the element decode closure
     public static func decoder(_ elementDecodeClosure: (AnyObject) throws -> Element) -> (AnyObject) throws -> Array<Element> {
         return { json in
             return try NSArray.decode(json).map { try elementDecodeClosure($0) }
@@ -31,24 +39,18 @@ extension Array {
     }
 }
 
-/// Create an array-decode-closure from an element decode closure
-///
-/// - returns: A closure that takes an `NSArray` and maps it using the element decode closure
-public func array<T>(_ elementDecodeClosure: (AnyObject) throws -> T) -> (json: AnyObject) throws -> [T] {
-    return { json in
-        return try NSArray.decode(json).map { try elementDecodeClosure($0) }
+extension Dictionary {
+    /// Create an dictionary-decode-closure from key- and value- decode closures
+    ///
+    /// - returns: A closure that takes a `NSDictionary` and "maps" it using key and value decode closures
+    public static func decoder(key keyDecodeClosure: (AnyObject) throws -> Key, value elementDecodeClosure: (AnyObject) throws -> Value) -> (json: AnyObject) throws -> Dictionary {
+        return { json in
+            var dict = Dictionary()
+            for (key, value) in try NSDictionary.decode(json) {
+                try dict[keyDecodeClosure(key)] = elementDecodeClosure(value)
+            }
+            return dict
+        }
     }
 }
 
-/// Create an dictionary-decode-closure from key- and value- decode closures
-///
-/// - returns: A closure that takes a `NSDictionary` and "maps" it using key and value decode closures 
-public func dictionary<K,V>(key keyDecodeClosure: (AnyObject) throws -> K, value elementDecodeClosure: (AnyObject) throws -> V) -> (json: AnyObject) throws -> [K: V] {
-    return { json in
-        var dict = [K: V]()
-        for (key, value) in try NSDictionary.decode(json) {
-            try dict[keyDecodeClosure(key)] = elementDecodeClosure(value)
-        }
-        return dict
-    }
-}

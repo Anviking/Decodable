@@ -34,7 +34,7 @@ extension NSArray {
 
 extension Dictionary where Key: Decodable, Value: Decodable {
     public static func decode(_ j: AnyObject) throws -> Dictionary {
-        return try dictionary(key: Key.decode, value: Value.decode)(json: j)
+        return try decoder(key: Key.decode, value: Value.decode)(json: j)
     }
 }
 
@@ -48,16 +48,16 @@ extension Dictionary where Key: Decodable, Value: AnyObject {
             }
             return a
         }
-        return try dictionary(key: Key.decode, value: valueDecoder)(json: j)
+        return try decoder(key: Key.decode, value: valueDecoder)(json: j)
     }
 }
 
 extension Array where Element: Decodable {
     public static func decode(_ j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
         if ignoreInvalidObjects {
-            return try array { try? Element.decode($0) }(json: j).flatMap {$0}
+            return try [Element?].decoder { try? Element.decode($0) }(j).flatMap {$0}
         } else {
-            return try array(Element.decode)(json: j)
+            return try decoder(Element.decode)(j)
         }
     }
 }

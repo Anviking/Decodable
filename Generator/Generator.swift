@@ -112,7 +112,7 @@ indirect enum Decodable {
         case Array(let T):
             return "Array.decoder(\(T.decodeClosure(provider)))"
         case .Dictionary(let K, let T):
-            return "dictionary(key: \(K.decodeClosure(provider)), value: \(T.decodeClosure(provider)))"
+            return "Dictionary.decoder(key: \(K.decodeClosure(provider)), value: \(T.decodeClosure(provider)))"
         }
     }
     
