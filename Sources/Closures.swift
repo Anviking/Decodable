@@ -43,7 +43,7 @@ extension Dictionary {
     /// Create an dictionary-decode-closure from key- and value- decode closures
     ///
     /// - returns: A closure that takes a `NSDictionary` and "maps" it using key and value decode closures
-    public static func decoder(key keyDecodeClosure: (AnyObject) throws -> Key, value elementDecodeClosure: (AnyObject) throws -> Value) -> (json: AnyObject) throws -> Dictionary {
+    public static func decoder(key keyDecodeClosure: (AnyObject) throws -> Key, value elementDecodeClosure: (AnyObject) throws -> Value) -> (AnyObject) throws -> Dictionary {
         return { json in
             var dict = Dictionary()
             for (key, value) in try NSDictionary.decode(json) {
