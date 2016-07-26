@@ -12,29 +12,10 @@ public protocol Decodable {
     static func decode(_ json: AnyObject) throws -> Self
 }
 
-extension NSDictionary {
-    public static func decode(_ j: AnyObject) throws -> NSDictionary {
-        guard let result = j as? NSDictionary else {
-            let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
-        }
-        return result
-    }
-}
-
-extension NSArray {
-    public static func decode(_ j: AnyObject) throws -> NSArray {
-        guard let result = j as? NSArray else {
-            let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
-        }
-        return result
-    }
-}
 
 extension Dictionary where Key: Decodable, Value: Decodable {
     public static func decode(_ j: AnyObject) throws -> Dictionary {
-        return try decoder(key: Key.decode, value: Value.decode)(json: j)
+        return try decoder(key: Key.decode, value: Value.decode)(j)
     }
 }
 
@@ -48,7 +29,7 @@ extension Dictionary where Key: Decodable, Value: AnyObject {
             }
             return a
         }
-        return try decoder(key: Key.decode, value: valueDecoder)(json: j)
+        return try decoder(key: Key.decode, value: valueDecoder)(j)
     }
 }
 
@@ -61,6 +42,8 @@ extension Array where Element: Decodable {
         }
     }
 }
+
+
 
 
 // MARK: Helpers
