@@ -24,6 +24,26 @@ extension OptionalKey: CustomStringConvertible {
     }
 }
 
+extension String {
+    var optional: OptionalKey {
+        return OptionalKey(key: self, isRequired: false)
+    }
+}
+
+extension OptionalKey: StringLiteralConvertible {
+    public init(stringLiteral value: String) {
+        self.init(key: value, isRequired: false)
+    }
+    
+    public init(extendedGraphemeClusterLiteral value: String) {
+        self.init(key: value, isRequired: false)
+    }
+    
+    public init(unicodeScalarLiteral value: String) {
+        self.init(key: value, isRequired: false)
+    }
+}
+
 /// `OptionalKeyPath` represents the path to a specific node in a tree of nested dictionaries.
 ///
 /// Can be created from string and array literals and can be joined by the `=>?` operator.
@@ -78,8 +98,8 @@ extension OptionalKeyPath: StringLiteralConvertible {
 }
 
 extension OptionalKeyPath: ArrayLiteralConvertible {
-    public init(arrayLiteral elements: String...) {
-        self.keys = elements.map { OptionalKey(key: $0, isRequired: false) }
+    public init(arrayLiteral elements: OptionalKey...) {
+        self.keys = elements
     }
 }
 

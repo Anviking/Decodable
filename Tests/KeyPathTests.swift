@@ -71,6 +71,7 @@ class OptionalKeyPathTests: XCTestCase {
     
     func testConversionFromKeyPath() {
         let keyPath1: OptionalKeyPath = "a" => "b" => "c"
+        let keyPath11: OptionalKeyPath = ["a", "b", "c".optional]
         XCTAssertEqual(keyPath1.keys, [
             OptionalKey(key: "a", isRequired: false),
             OptionalKey(key: "b", isRequired: true),
