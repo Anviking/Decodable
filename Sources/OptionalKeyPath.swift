@@ -77,6 +77,9 @@ extension OptionalKey: StringLiteralConvertible {
 public struct OptionalKeyPath {
     var keys: [OptionalKey]
     
+    public init (_ keys: [OptionalKey]) {
+        self.keys = keys
+    }
     
     mutating func markFirst(required: Bool) {
         if var first = keys.first {

@@ -162,9 +162,10 @@ indirect enum Decodable {
         let provider = TypeNameProvider()
         let behaviour: Behaviour
         let keyPathType: String
+        let keyType: String
         
         let returnType = typeString(provider)
-        let overloads = [String]()
+        var overloads = [String]()
         
         let arguments = provider.takenNames.values.sorted().map { $0 + ": Decodable" }
         let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))>" : ""
@@ -173,7 +174,7 @@ indirect enum Decodable {
         case "=>":
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
             keyPathType = "KeyPath"
-            
+            keyType = "String"
             /*
             // Start again
             guard isOptional else { break }
@@ -190,9 +191,18 @@ indirect enum Decodable {
             // Never trows if null
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: false, throwsFromDecodeClosure: true)
             keyPathType = "OptionalKeyPath"
+            keyType = "OptionalKey"
         default:
             fatalError()
         }
+        
+        overloads.append(
+            "extension NSDictionary {\n" +
+                "    public func decode \(generics)(_ keyPath: \(keyType)...) throws -> \(returnType) {\n" +
+                "        return try parse(self, keyPath: \(keyPathType)(keyPath), decoder: \(decodeClosure(provider)))\n" +
+                "    }" +
+            "}"
+        )
         
         let documentation = generateDocumentationComment(behaviour)
         return overloads + [documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: \(keyPathType)) throws -> \(returnType) {\n" +

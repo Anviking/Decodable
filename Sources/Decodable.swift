@@ -37,17 +37,6 @@ extension Array where Element: Decodable {
     }
 }
 
-extension NSDictionary {
-    public func decode<T: Decodable>(_ keyPath: String...) throws -> T {
-        return try parse(self, keyPath: KeyPath(keyPath), decoder: T.decode)
-    }
-    
-    public func decode<T: Decodable>(_ keyPath: OptionalKey...) throws -> T? {
-        return try parse(self, keyPath: OptionalKeyPath(keys: keyPath), decoder: T.decode)
-    }
-}
-
-
 // MARK: Helpers
 
 /// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
