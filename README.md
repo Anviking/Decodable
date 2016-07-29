@@ -111,6 +111,30 @@ For convenience there is an operator, `=>?`, that only returns nil on missing ke
 |  `=>? -> T?`| nil | nil | throws | uncaught (throws) | 
 |  `try? => -> T `| nil | nil | nil | caught (nil) | 
 
+## Customization
+`Int`, `Double`,`String`, `Bool`, `NSArray`, and `NSDictionary` types that conform to `DynamicDecodable` with the following declaration:
+```swift
+public protocol DynamicDecodable {
+    associatedtype DecodedType
+    static var decoder: (AnyObject) throws -> DecodedType {get set}
+}
+```
+This allows Decodable to implement default decoding closures while allowing you to override them as needed.
+```swift
+// Lets extend Bool.decoder so that it accepts certain strings:
+Bool.decoder = { json in
+    switch json {
+    case let str as String where str == "true":
+        return true
+    case let str as String where str == "false":
+        return false
+    default:
+        return try cast(json)
+    }
+}
+```
+Note that when extending new types to conform to `Decodable` there is really no point in conforming to `DynamicDecodable` since you already control the implementation. Also note that the `decoder` properties are intended as "set once". If you need different behaviour on different occations, please create custom decode functions.
+
 ## Tips
 - You can use `Decodable` with classes. Just make sure to either call a `required` initializer on self (e.g `self.init`) and return `Self`, or make your class `final`. ( [This](http://stackoverflow.com/questions/26495586/best-practice-to-implement-a-failable-initializer-in-swift) might be a problem though)
 - The `Decodable`-protocol and the `=>`-operator should in no way make you committed to use them everywhere.
