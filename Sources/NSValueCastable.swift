@@ -53,11 +53,7 @@ extension NSValueCastable {
 }
 
 extension NSNumberCastable {
-    public static func decode(_ j: AnyObject) throws -> Self {
-        guard let value = j as? NSNumber else {
-            let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.typeMismatch(expected: NSValue.self, actual: j.dynamicType, metadata)
-        }
-        return convertFrom(value)
+    public static func decode(_ json: AnyObject) throws -> Self {
+        return try convertFrom(cast(json))
     }
 }

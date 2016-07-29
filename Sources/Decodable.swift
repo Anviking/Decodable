@@ -15,7 +15,7 @@ public protocol Decodable {
 
 extension Dictionary where Key: Decodable, Value: Decodable {
     public static func decode(_ j: AnyObject) throws -> Dictionary {
-        return try decoder(key: Key.decode, value: Value.decode)(j)
+        return try Dictionary.decoder(key: Key.decode, value: Value.decode)(j)
     }
 }
 
@@ -23,7 +23,7 @@ extension Dictionary where Key: Decodable, Value: AnyObject {
     
     public static func decode(_ j: AnyObject) throws -> Dictionary {
         let valueDecoder: (AnyObject) throws -> Value = { try cast($0) }
-        return try decoder(key: Key.decode, value: valueDecoder)(j)
+        return try Dictionary.decoder(key: Key.decode, value: valueDecoder)(j)
     }
 }
 
@@ -32,7 +32,7 @@ extension Array where Element: Decodable {
         if ignoreInvalidObjects {
             return try [Element?].decoder { try? Element.decode($0) }(j).flatMap {$0}
         } else {
-            return try decoder(Element.decode)(j)
+            return try Array.decoder(Element.decode)(j)
         }
     }
 }
