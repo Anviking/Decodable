@@ -204,7 +204,7 @@ indirect enum Decodable {
             "extension NSDictionary {\n" +
                 "    public func decode \(generics)(_ keyPath: \(keyType)...) throws -> \(returnType) {\n" +
                 "        return try parse(self, keyPath: \(keyPathType)(keyPath)\(keyPathModifier), decoder: \(decodeClosure(provider)))\n" +
-                "    }" +
+                "    }\n" +
             "}"
         )
         
