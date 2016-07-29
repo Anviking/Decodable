@@ -22,13 +22,7 @@ extension Dictionary where Key: Decodable, Value: Decodable {
 extension Dictionary where Key: Decodable, Value: AnyObject {
     
     public static func decode(_ j: AnyObject) throws -> Dictionary {
-        let valueDecoder: (AnyObject) throws -> Value = { json in
-            guard let a = json as? Value else {
-                let metadata = DecodingError.Metadata(object: json)
-                throw DecodingError.typeMismatch(expected: Value.self, actual: json.dynamicType, metadata)
-            }
-            return a
-        }
+        let valueDecoder: (AnyObject) throws -> Value = { try cast($0) }
         return try decoder(key: Key.decode, value: valueDecoder)(j)
     }
 }

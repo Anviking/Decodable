@@ -8,7 +8,7 @@
 
 import Foundation
 
-private func cast<T>(_ json: AnyObject) throws -> T {
+public func cast<T>(_ json: AnyObject) throws -> T {
     guard let result = json as? T else {
         let metadata = DecodingError.Metadata(object: json)
         throw DecodingError.typeMismatch(expected: T.self, actual: json.dynamicType, metadata)
@@ -39,7 +39,6 @@ extension Double: Decodable, DynamicDecodable {
 extension Bool: Decodable, DynamicDecodable {
     public static var decoder: (AnyObject) throws -> Bool = { try cast($0) }
 }
-
 
 extension NSDictionary: Decodable {
     public static func decode(_ json: AnyObject) throws -> Self {
