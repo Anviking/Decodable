@@ -44,11 +44,7 @@ public protocol NSNumberCastable: NSValueCastable {
 extension NSValueCastable {
     private typealias PointerOfSelf = UnsafeMutablePointer<Self> // Why do we have to do this?
     public static func decode(_ j: AnyObject) throws -> Self {
-        guard let value = j as? NSValue else {
-            let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.typeMismatch(expected: NSValue.self, actual: j.dynamicType, metadata)
-        }
-
+        let value: NSValue = try cast(j)
         let pointer = PointerOfSelf(allocatingCapacity: 1)
         defer { pointer.deallocateCapacity(1) }
         value.getValue(pointer)
@@ -57,11 +53,7 @@ extension NSValueCastable {
 }
 
 extension NSNumberCastable {
-    public static func decode(_ j: AnyObject) throws -> Self {
-        guard let value = j as? NSNumber else {
-            let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.typeMismatch(expected: NSValue.self, actual: j.dynamicType, metadata)
-        }
-        return convertFrom(value)
+    public static func decode(_ json: AnyObject) throws -> Self {
+        return try convertFrom(cast(json))
     }
 }

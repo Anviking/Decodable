@@ -8,7 +8,6 @@
 
 import Foundation
 
-/// Use reduce to traverse through a nested dictionary and find the object at a given path
 func parse(_ json: AnyObject, _ keyPath: KeyPath) throws -> AnyObject {
     var currentDict = json
     
@@ -43,15 +42,15 @@ func parse(_ json: AnyObject, _ path: OptionalKeyPath) throws -> AnyObject? {
     
     return currentDict
 }
-public func parse<T>(_ json: AnyObject, keyPath: KeyPath, decode: ((AnyObject) throws -> T)) throws -> T {
+public func parse<T>(_ json: AnyObject, keyPath: KeyPath, decoder: ((AnyObject) throws -> T)) throws -> T {
     let object = try parse(json, keyPath)
-    return try catchAndRethrow(json, keyPath) { try decode(object) }
+    return try catchAndRethrow(json, keyPath) { try decoder(object) }
 }
 
 // FIXME: Should perhaps not return T?, but this way we don't have to flatMap in certain overloads
-func parse<T>(_ json: AnyObject, keyPath: OptionalKeyPath, decode: ((AnyObject) throws -> T?)) throws -> T? {
+public func parse<T>(_ json: AnyObject, keyPath: OptionalKeyPath, decoder: ((AnyObject) throws -> T?)) throws -> T? {
     guard let object = try parse(json, keyPath) else { return nil }
-    return try catchAndRethrow(json, keyPath) { try decode(object) }
+    return try catchAndRethrow(json, keyPath) { try decoder(object) }
 }
 
 

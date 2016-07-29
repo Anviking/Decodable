@@ -164,7 +164,7 @@ class DecodableTests: XCTestCase {
         
         // when
         do {
-            _ = (try parse(json, keyPath: ["key"], decode: Repository.decode)) as Repository
+            _ = (try parse(json, keyPath: ["key"], decoder: Repository.decode)) as Repository
         } catch DecodingError.missingKey {
             XCTFail("it should not throw this exception")
         } catch let DecodingError.typeMismatch(expected, _, metadata) where expected == Int.self {

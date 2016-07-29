@@ -8,20 +8,51 @@
 
 import Foundation
 
-public protocol Castable: Decodable {}
+/// Attempt to cast an `AnyObject` to `T` or throw
+///
+/// - throws: `DecodingError.typeMismatch(expected, actual, metadata)`
+public func cast<T>(_ object: AnyObject) throws -> T {
+    guard let result = object as? T else {
+        let metadata = DecodingError.Metadata(object: object)
+        throw DecodingError.typeMismatch(expected: T.self, actual: object.dynamicType, metadata)
+    }
+    return result
+}
 
-extension Castable {
-    public static func decode(_ j: AnyObject) throws -> Self {
-        guard let result = j as? Self else {
-            let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
-        }
-        return result
+public protocol DynamicDecodable {
+    associatedtype DecodedType
+    static var decoder: (AnyObject) throws -> DecodedType {get set}
+}
+
+extension Decodable where Self: DynamicDecodable, Self.DecodedType == Self {
+    public static func decode(_ json: AnyObject) throws -> Self {
+        return try decoder(json)
     }
 }
 
-extension String: Castable {}
-extension Int: Castable {}
-extension Double: Castable {}
-extension Bool: Castable {}
+extension String: Decodable, DynamicDecodable {
+    public static var decoder: (AnyObject) throws -> String = { try cast($0) }
+}
+extension Int: Decodable, DynamicDecodable {
+    public static var decoder: (AnyObject) throws -> Int = { try cast($0) }
+}
+extension Double: Decodable, DynamicDecodable {
+    public static var decoder: (AnyObject) throws -> Double = { try cast($0) }
+}
+extension Bool: Decodable, DynamicDecodable {
+    public static var decoder: (AnyObject) throws -> Bool = { try cast($0) }
+}
 
+extension NSDictionary: Decodable {
+    public static func decode(_ json: AnyObject) throws -> Self {
+        return try cast(json)
+    }
+}
+
+extension NSArray: DynamicDecodable {
+    public static var decoder: (AnyObject) throws -> NSArray = { try cast($0) }
+    public static func decode(_ json: AnyObject) throws -> NSArray {
+        return try decoder(json)
+    }
+
+}

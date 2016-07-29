@@ -108,11 +108,11 @@ indirect enum Decodable {
             //        case .AnyObject:
         //            return "{$0}"
         case Optional(let T):
-            return "optional(\(T.decodeClosure(provider)))"
+            return "Optional.decoder(\(T.decodeClosure(provider)))"
         case Array(let T):
-            return "array(\(T.decodeClosure(provider)))"
+            return "Array.decoder(\(T.decodeClosure(provider)))"
         case .Dictionary(let K, let T):
-            return "dictionary(key: \(K.decodeClosure(provider)), value: \(T.decodeClosure(provider)))"
+            return "Dictionary.decoder(key: \(K.decodeClosure(provider)), value: \(T.decodeClosure(provider)))"
         }
     }
     
@@ -196,7 +196,7 @@ indirect enum Decodable {
         
         let documentation = generateDocumentationComment(behaviour)
         return overloads + [documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: \(keyPathType)) throws -> \(returnType) {\n" +
-            "    return try parse(json, keyPath: keyPath, decode: \(decodeClosure(provider)))\n" +
+            "    return try parse(json, keyPath: keyPath, decoder: \(decodeClosure(provider)))\n" +
             "}"
         ]
     }

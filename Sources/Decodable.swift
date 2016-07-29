@@ -12,55 +12,32 @@ public protocol Decodable {
     static func decode(_ json: AnyObject) throws -> Self
 }
 
-extension NSDictionary {
-    public static func decode(_ j: AnyObject) throws -> NSDictionary {
-        guard let result = j as? NSDictionary else {
-            let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
-        }
-        return result
-    }
-}
-
-extension NSArray {
-    public static func decode(_ j: AnyObject) throws -> NSArray {
-        guard let result = j as? NSArray else {
-            let metadata = DecodingError.Metadata(object: j)
-            throw DecodingError.typeMismatch(expected: self, actual: j.dynamicType, metadata)
-        }
-        return result
-    }
-}
 
 extension Dictionary where Key: Decodable, Value: Decodable {
     public static func decode(_ j: AnyObject) throws -> Dictionary {
-        return try dictionary(key: Key.decode, value: Value.decode)(json: j)
+        return try Dictionary.decoder(key: Key.decode, value: Value.decode)(j)
     }
 }
 
 extension Dictionary where Key: Decodable, Value: AnyObject {
     
     public static func decode(_ j: AnyObject) throws -> Dictionary {
-        let valueDecoder: (AnyObject) throws -> Value = { json in
-            guard let a = json as? Value else {
-                let metadata = DecodingError.Metadata(object: json)
-                throw DecodingError.typeMismatch(expected: Value.self, actual: json.dynamicType, metadata)
-            }
-            return a
-        }
-        return try dictionary(key: Key.decode, value: valueDecoder)(json: j)
+        let valueDecoder: (AnyObject) throws -> Value = { try cast($0) }
+        return try Dictionary.decoder(key: Key.decode, value: valueDecoder)(j)
     }
 }
 
 extension Array where Element: Decodable {
     public static func decode(_ j: AnyObject, ignoreInvalidObjects: Bool = false) throws -> [Element] {
         if ignoreInvalidObjects {
-            return try array { try? Element.decode($0) }(json: j).flatMap {$0}
+            return try [Element?].decoder { try? Element.decode($0) }(j).flatMap {$0}
         } else {
-            return try array(Element.decode)(json: j)
+            return try Array.decoder(Element.decode)(j)
         }
     }
 }
+
+
 
 
 // MARK: Helpers
