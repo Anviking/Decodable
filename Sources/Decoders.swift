@@ -10,7 +10,7 @@ import Foundation
 
 extension Optional {
     
-    /// Creates an optional decoder from a decoder decoder of the Wrapped type
+    /// Creates an optional decoder from a decoder of the Wrapped type
     ///
     /// This function is used by `=>` and `=>?` overloads when decoding `T?`
     ///
