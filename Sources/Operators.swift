@@ -14,12 +14,12 @@ infix operator => { associativity right precedence 150 }
 infix operator =>? { associativity right precedence 150 }
 
 public func => (lhs: AnyObject, rhs: KeyPath) throws -> AnyObject {
-    return try parse(lhs, keyPath: rhs, decode: { $0 })
+    return try parse(lhs, keyPath: rhs, decoder: { $0 })
 }
 
 
 public func =>? (lhs: AnyObject, rhs: OptionalKeyPath) throws -> AnyObject? {
-    return try parse(lhs, keyPath: rhs, decode: { $0 })
+    return try parse(lhs, keyPath: rhs, decoder: { $0 })
 }
 
 

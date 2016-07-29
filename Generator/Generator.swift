@@ -196,7 +196,7 @@ indirect enum Decodable {
         
         let documentation = generateDocumentationComment(behaviour)
         return overloads + [documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: \(keyPathType)) throws -> \(returnType) {\n" +
-            "    return try parse(json, keyPath: keyPath, decode: \(decodeClosure(provider)))\n" +
+            "    return try parse(json, keyPath: keyPath, decoder: \(decodeClosure(provider)))\n" +
             "}"
         ]
     }
