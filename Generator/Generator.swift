@@ -170,11 +170,14 @@ indirect enum Decodable {
         let arguments = provider.takenNames.values.sorted().map { $0 + ": Decodable" }
         let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))>" : ""
         
+        var keyPathModifier = ""
+        
         switch operatorString {
         case "=>":
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
             keyPathType = "KeyPath"
             keyType = "String"
+            
             /*
             // Start again
             guard isOptional else { break }
@@ -189,6 +192,7 @@ indirect enum Decodable {
         case "=>?":
             //returnType += "?"
             // Never trows if null
+            keyPathModifier = ".markingFirst(required: false)"
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: false, throwsFromDecodeClosure: true)
             keyPathType = "OptionalKeyPath"
             keyType = "OptionalKey"
@@ -199,14 +203,14 @@ indirect enum Decodable {
         overloads.append(
             "extension NSDictionary {\n" +
                 "    public func decode \(generics)(_ keyPath: \(keyType)...) throws -> \(returnType) {\n" +
-                "        return try parse(self, keyPath: \(keyPathType)(keyPath), decoder: \(decodeClosure(provider)))\n" +
+                "        return try parse(self, keyPath: \(keyPathType)(keyPath)\(keyPathModifier), decoder: \(decodeClosure(provider)))\n" +
                 "    }" +
             "}"
         )
         
         let documentation = generateDocumentationComment(behaviour)
         return overloads + [documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: \(keyPathType)) throws -> \(returnType) {\n" +
-            "    return try parse(json, keyPath: keyPath, decoder: \(decodeClosure(provider)))\n" +
+            "    return try parse(json, keyPath: keyPath\(keyPathModifier), decoder: \(decodeClosure(provider)))\n" +
             "}"
         ]
     }

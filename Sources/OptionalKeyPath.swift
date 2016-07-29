@@ -100,15 +100,15 @@ public struct OptionalKeyPath {
 
 extension OptionalKeyPath: StringLiteralConvertible {
     public init(stringLiteral value: String) {
-        self.keys = [OptionalKey(key: value, isRequired: false)]
+        self.keys = [OptionalKey(key: value, isRequired: true)]
     }
     
     public init(extendedGraphemeClusterLiteral value: String) {
-        self.keys = [OptionalKey(key: value, isRequired: false)]
+        self.keys = [OptionalKey(key: value, isRequired: true)]
     }
     
     public init(unicodeScalarLiteral value: String) {
-        self.keys = [OptionalKey(key: value, isRequired: false)]
+        self.keys = [OptionalKey(key: value, isRequired: true)]
     }
 }
 
