@@ -12,7 +12,7 @@
 import Foundation
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[A]?]? {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[A]?]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode)))))
     }
 }
@@ -29,7 +29,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[A]?
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B]?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B]?]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
     }
 }
@@ -46,7 +46,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [A?]? {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [A?]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Optional.decoder(A.decode))))
     }
 }
@@ -63,7 +63,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [A?]?
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[A?]]? {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[A?]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode)))))
     }
 }
@@ -80,7 +80,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[A?]
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[[A]]]? {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[[A]]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode)))))
     }
 }
@@ -97,7 +97,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[[A]
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: B]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: B]]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
     }
 }
@@ -114,7 +114,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[A]]? {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[A]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Array.decoder(A.decode))))
     }
 }
@@ -131,7 +131,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[A]]
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B?]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B?]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
     }
 }
@@ -148,7 +148,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [B]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [B]]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
     }
 }
@@ -165,7 +165,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: C]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: C]]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -182,7 +182,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
     }
 }
@@ -199,7 +199,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [A]? {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [A]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Array.decoder(A.decode)))
     }
 }
@@ -216,7 +216,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [A]? 
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B]?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B]?]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode)))))
     }
 }
@@ -233,7 +233,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C]?]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C]?]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -250,7 +250,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: B?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: B?]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))
     }
 }
@@ -267,7 +267,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B?]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B?]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode)))))
     }
 }
@@ -284,7 +284,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[B]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[B]]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode)))))
     }
 }
@@ -301,7 +301,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: C]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: C]]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -318,7 +318,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))
     }
 }
@@ -335,7 +335,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C?]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C?]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
     }
 }
@@ -352,7 +352,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [C]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [C]]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
     }
 }
@@ -369,7 +369,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: D]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: D]]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
     }
 }
@@ -386,7 +386,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C]]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))
     }
 }
@@ -403,7 +403,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: B]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: B]? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))
     }
 }
@@ -420,7 +420,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> A? {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> A? {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Optional.decoder(A.decode))
     }
 }
@@ -437,7 +437,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> A? {
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[A?]?] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[A?]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Optional.decoder(Array.decoder(Optional.decoder(A.decode)))))
     }
 }
@@ -454,7 +454,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[A?]
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[[A]]?] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[[A]]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Optional.decoder(Array.decoder(Array.decoder(A.decode)))))
     }
 }
@@ -471,7 +471,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[[A]
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: B]]?] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: B]]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
     }
 }
@@ -488,7 +488,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[A]?] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[A]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Optional.decoder(Array.decoder(A.decode))))
     }
 }
@@ -505,7 +505,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[A]?
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B?]?] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B?]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
     }
 }
@@ -522,7 +522,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [B]]?] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [B]]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
     }
 }
@@ -539,7 +539,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: C]]?] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: C]]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -556,7 +556,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B]?] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
     }
 }
@@ -573,7 +573,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [A?] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [A?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Optional.decoder(A.decode)))
     }
 }
@@ -590,7 +590,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [A?] 
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[[A]?]] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[[A]?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode)))))
     }
 }
@@ -607,7 +607,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[[A]
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: B]?]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: B]?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
     }
 }
@@ -624,7 +624,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[A?]] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[A?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Optional.decoder(A.decode))))
     }
 }
@@ -641,7 +641,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[A?]
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[[A?]]] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[[A?]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode)))))
     }
 }
@@ -658,7 +658,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[[A?
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[[[A]]]] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[[[A]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode)))))
     }
 }
@@ -675,7 +675,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[[[A
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[[A: B]]]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[[A: B]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
     }
 }
@@ -692,7 +692,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[[A]]] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[[A]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Array.decoder(A.decode))))
     }
 }
@@ -709,7 +709,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[[A]
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: B?]]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: B?]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
     }
 }
@@ -726,7 +726,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: [B]]]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: [B]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
     }
 }
@@ -743,7 +743,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[[A: [B: C]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[[A: [B: C]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -760,7 +760,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: B]]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[[A: B]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
     }
 }
@@ -777,7 +777,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [[A]] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [[A]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Array.decoder(A.decode)))
     }
 }
@@ -794,7 +794,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [[A]]
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [B]?]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [B]?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode)))))
     }
 }
@@ -811,7 +811,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: C]?]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: C]?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -828,7 +828,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B?]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))
     }
 }
@@ -845,7 +845,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [B?]]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [B?]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode)))))
     }
 }
@@ -862,7 +862,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [[B]]]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [[B]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode)))))
     }
 }
@@ -879,7 +879,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [[B: C]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [[B: C]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -896,7 +896,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [B]]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: [B]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))
     }
 }
@@ -913,7 +913,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: C?]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: C?]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
     }
 }
@@ -930,7 +930,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: [C]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: [C]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
     }
 }
@@ -947,7 +947,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [[A: [B: [C: D]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [[A: [B: [C: D]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
     }
 }
@@ -964,7 +964,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: C]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [[A: [B: C]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))
     }
 }
@@ -981,7 +981,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [[A: B]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))
     }
 }
@@ -998,7 +998,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> [A] {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> [A] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Array.decoder(A.decode))
     }
 }
@@ -1015,7 +1015,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> [A] {
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B?]?] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B?]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Optional.decoder(B.decode)))))
     }
 }
@@ -1032,7 +1032,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[B]]?] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[B]]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Array.decoder(B.decode)))))
     }
 }
@@ -1049,7 +1049,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: C]]?] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: C]]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -1066,7 +1066,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B]?] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode))))
     }
 }
@@ -1083,7 +1083,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C?]?] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C?]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
     }
 }
@@ -1100,7 +1100,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [C]]?] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [C]]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
     }
 }
@@ -1117,7 +1117,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: D]]?] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: D]]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
     }
 }
@@ -1134,7 +1134,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C]?] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C]?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))
     }
 }
@@ -1151,7 +1151,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: B?] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: B?] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))
     }
 }
@@ -1168,7 +1168,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[B]?]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[B]?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Array.decoder(B.decode)))))
     }
 }
@@ -1185,7 +1185,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: C]?]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: C]?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -1202,7 +1202,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B?]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode))))
     }
 }
@@ -1219,7 +1219,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[B?]]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[B?]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Optional.decoder(B.decode)))))
     }
 }
@@ -1236,7 +1236,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[[B]]]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[[B]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Array.decoder(B.decode)))))
     }
 }
@@ -1253,7 +1253,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[[B: C]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[[B: C]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -1270,7 +1270,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[B]]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [[B]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode))))
     }
 }
@@ -1287,7 +1287,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: C?]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: C?]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
     }
 }
@@ -1304,7 +1304,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: [C]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: [C]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
     }
 }
@@ -1321,7 +1321,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [[B: [C: D]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [[B: [C: D]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
     }
 }
@@ -1338,7 +1338,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: C]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [[B: C]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))
     }
 }
@@ -1355,7 +1355,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B]] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: [B]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))
     }
 }
@@ -1372,7 +1372,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [C]?]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [C]?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Array.decoder(C.decode)))))
     }
 }
@@ -1389,7 +1389,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: D]?]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: D]?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Dictionary.decoder(key: C.decode, value: D.decode)))))
     }
 }
@@ -1406,7 +1406,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C?]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C?]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode))))
     }
 }
@@ -1423,7 +1423,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [C?]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [C?]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Optional.decoder(C.decode)))))
     }
 }
@@ -1440,7 +1440,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [[C]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [[C]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Array.decoder(C.decode)))))
     }
 }
@@ -1457,7 +1457,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [[C: D]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [[C: D]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Dictionary.decoder(key: C.decode, value: D.decode)))))
     }
 }
@@ -1474,7 +1474,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [C]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: [C]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode))))
     }
 }
@@ -1491,7 +1491,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: D?]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: D?]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Optional.decoder(D.decode)))))
     }
 }
@@ -1508,7 +1508,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: [D]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: [D]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Array.decoder(D.decode)))))
     }
 }
@@ -1525,7 +1525,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: [D: E]]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: [D: E]]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Dictionary.decoder(key: D.decode, value: E.decode)))))
     }
 }
@@ -1542,7 +1542,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decod
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: D]]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: String...) throws -> [A: [B: [C: D]]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode))))
     }
 }
@@ -1559,7 +1559,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C]] {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: String...) throws -> [A: [B: C]] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))
     }
 }
@@ -1576,7 +1576,7 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyPa
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: B] {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: String...) throws -> [A: B] {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: Dictionary.decoder(key: A.decode, value: B.decode))
     }
 }
@@ -1593,7 +1593,7 @@ public func => <A: Decodable, B: Decodable>(json: AnyObject, keyPath: KeyPath) t
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: String...) throws -> A {
+    public final func decode <A: Decodable>(_ keyPath: String...) throws -> A {
         return try parse(self, keyPath: KeyPath(keyPath), decoder: A.decode)
     }
 }
@@ -1610,7 +1610,7 @@ public func => <A: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> A {
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[A?]?]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[A?]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(Optional.decoder(A.decode))))))
     }
 }
@@ -1627,7 +1627,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A]]?]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A]]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(Array.decoder(A.decode))))))
     }
 }
@@ -1644,7 +1644,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: B]]?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: B]]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))))
     }
 }
@@ -1661,7 +1661,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[A]?]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[A]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode)))))
     }
 }
@@ -1678,7 +1678,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: B?]?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: B?]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))))
     }
 }
@@ -1695,7 +1695,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B]]?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B]]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))))
     }
 }
@@ -1712,7 +1712,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: C]]?]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: C]]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))))
     }
 }
@@ -1729,7 +1729,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: B]?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: B]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
     }
 }
@@ -1746,7 +1746,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [A?]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [A?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Optional.decoder(A.decode))))
     }
 }
@@ -1763,7 +1763,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A]?]]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A]?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode))))))
     }
 }
@@ -1780,7 +1780,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: B]?]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: B]?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))))
     }
 }
@@ -1797,7 +1797,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[A?]]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[A?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode)))))
     }
 }
@@ -1814,7 +1814,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A?]]]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A?]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode))))))
     }
 }
@@ -1831,7 +1831,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[[[A]]]]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[[[A]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode))))))
     }
 }
@@ -1848,7 +1848,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[[A: B]]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[[A: B]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))))
     }
 }
@@ -1865,7 +1865,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A]]]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode)))))
     }
 }
@@ -1882,7 +1882,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: B?]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: B?]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))))
     }
 }
@@ -1899,7 +1899,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: [B]]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: [B]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))))
     }
 }
@@ -1916,7 +1916,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: [B: C]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: [B: C]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))))
     }
 }
@@ -1933,7 +1933,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: B]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[[A: B]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
     }
 }
@@ -1950,7 +1950,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[A]]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [[A]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Array.decoder(A.decode))))
     }
 }
@@ -1967,7 +1967,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B]?]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B]?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode))))))
     }
 }
@@ -1984,7 +1984,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: C]?]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: C]?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))))
     }
 }
@@ -2001,7 +2001,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: B?]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: B?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
     }
 }
@@ -2018,7 +2018,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B?]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B?]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode))))))
     }
 }
@@ -2035,7 +2035,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [[B]]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [[B]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode))))))
     }
 }
@@ -2052,7 +2052,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [[B: C]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [[B: C]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))))
     }
 }
@@ -2069,7 +2069,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
     }
 }
@@ -2086,7 +2086,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: C?]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: C?]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode))))))
     }
 }
@@ -2103,7 +2103,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: [C]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: [C]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode))))))
     }
 }
@@ -2120,7 +2120,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: [C: D]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: [C: D]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode))))))
     }
 }
@@ -2137,7 +2137,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: C]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: [B: C]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -2154,7 +2154,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: B]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [[A: B]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
     }
 }
@@ -2171,7 +2171,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [A]? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> [A]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Array.decoder(A.decode)))
     }
 }
@@ -2188,7 +2188,7 @@ public func =>? <A: Decodable>(json: AnyObject, keyPath: OptionalKeyPath) throws
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B?]?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B?]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Optional.decoder(B.decode))))))
     }
 }
@@ -2205,7 +2205,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B]]?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B]]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Array.decoder(B.decode))))))
     }
 }
@@ -2222,7 +2222,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: C]]?]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: C]]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))))
     }
 }
@@ -2239,7 +2239,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B]?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode)))))
     }
 }
@@ -2256,7 +2256,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: C?]?]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: C?]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode))))))
     }
 }
@@ -2273,7 +2273,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C]]?]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C]]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode))))))
     }
 }
@@ -2290,7 +2290,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: D]]?]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: D]]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode))))))
     }
 }
@@ -2307,7 +2307,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: C]?]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: C]?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -2324,7 +2324,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: B?]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: B?]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))
     }
 }
@@ -2341,7 +2341,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B]?]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B]?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Array.decoder(B.decode))))))
     }
 }
@@ -2358,7 +2358,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: C]?]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: C]?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))))
     }
 }
@@ -2375,7 +2375,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B?]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode)))))
     }
 }
@@ -2392,7 +2392,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B?]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B?]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Optional.decoder(B.decode))))))
     }
 }
@@ -2409,7 +2409,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[[B]]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[[B]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Array.decoder(B.decode))))))
     }
 }
@@ -2426,7 +2426,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[[B: C]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[[B: C]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))))
     }
 }
@@ -2443,7 +2443,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B]]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode)))))
     }
 }
@@ -2460,7 +2460,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: C?]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: C?]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode))))))
     }
 }
@@ -2477,7 +2477,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: [C]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: [C]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode))))))
     }
 }
@@ -2494,7 +2494,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: [C: D]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: [C: D]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode))))))
     }
 }
@@ -2511,7 +2511,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: C]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [[B: C]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
     }
 }
@@ -2528,7 +2528,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B]]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))
     }
 }
@@ -2545,7 +2545,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C]?]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C]?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Array.decoder(C.decode))))))
     }
 }
@@ -2562,7 +2562,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: D]?]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: D]?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Dictionary.decoder(key: C.decode, value: D.decode))))))
     }
 }
@@ -2579,7 +2579,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: C?]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: C?]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
     }
 }
@@ -2596,7 +2596,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C?]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C?]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Optional.decoder(C.decode))))))
     }
 }
@@ -2613,7 +2613,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [[C]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [[C]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Array.decoder(C.decode))))))
     }
 }
@@ -2630,7 +2630,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [[C: D]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [[C: D]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Dictionary.decoder(key: C.decode, value: D.decode))))))
     }
 }
@@ -2647,7 +2647,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
     }
 }
@@ -2664,7 +2664,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: D?]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: D?]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Optional.decoder(D.decode))))))
     }
 }
@@ -2681,7 +2681,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: [D]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: [D]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Array.decoder(D.decode))))))
     }
 }
@@ -2698,7 +2698,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: [D: E]]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: [D: E]]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Dictionary.decoder(key: D.decode, value: E.decode))))))
     }
 }
@@ -2715,7 +2715,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Deco
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: D]]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: [C: D]]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
     }
 }
@@ -2732,7 +2732,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: C]]? {
+    public final func decode <A: Decodable, B: Decodable, C: Decodable>(_ keyPath: OptionalKey...) throws -> [A: [B: C]]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))
     }
 }
@@ -2749,7 +2749,7 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: AnyObject, keyP
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: B]? {
+    public final func decode <A: Decodable, B: Decodable>(_ keyPath: OptionalKey...) throws -> [A: B]? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))
     }
 }
@@ -2766,7 +2766,7 @@ public func =>? <A: Decodable, B: Decodable>(json: AnyObject, keyPath: OptionalK
 }
 
 extension NSDictionary {
-    public func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> A? {
+    public final func decode <A: Decodable>(_ keyPath: OptionalKey...) throws -> A? {
         return try parse(self, keyPath: OptionalKeyPath(keyPath).markingFirst(required: false), decoder: Optional.decoder(A.decode))
     }
 }
