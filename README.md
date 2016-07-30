@@ -79,10 +79,31 @@ let string: String? = json =>? "key1" => "key2" => "key3"`
                                 ^^^^ allowed to be missing
 ```
 ## Errors
-`ErrorTypes` conforming to `DecodingError` will be caught and rethrown in the decoding process to set metadata, like the JSON object that failed decoding, the key path to it, and the root JSON object. There are currently three error-structs conforming to it:
-- `TypeMismachError`
-- `MissingKeyError`
-- `RawRepresentableInitializationError`
+Errors will be caught and rethrown in the decoding process to backpropagate metadata, like the JSON object that failed decoding, the key path to it, and the root JSON object.
+
+From [DecodingError.swift](https://github.com/anviking/decodable/tree/master/Sources/DecodingError.swift):
+```swift
+public enum DecodingError: ErrorProtocol, Equatable {
+    /// Thrown when optional casting from `AnyObject` fails.
+    ///
+    /// This can happen both when trying to access a key on a object
+    /// that isn't a `NSDictionary`, and failing to cast a `Castable`
+    /// primitive.
+    case typeMismatch(expected: Any.Type, actual: Any.Type, Metadata)
+    
+    /// Thrown when a given, required, key was not found in a dictionary.
+    case missingKey(String, Metadata)
+    
+    /// Thrown from the `RawRepresentable` extension when
+    /// `init(rawValue:)` returned `nil`.
+    case rawRepresentableInitializationError(rawValue: Any, Metadata)
+    
+    /// When an error is thrown that isn't `DecodingError`, it 
+    /// will be wrapped in `DecodingError.other` in order to also provide
+    /// metadata about where the error was thrown.
+    case other(ErrorProtocol, Metadata)
+}
+```
 
 ```swift
 let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
