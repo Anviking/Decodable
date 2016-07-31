@@ -133,7 +133,7 @@ For convenience there is an operator, `=>?`, that only returns nil on missing ke
 |  `try? => -> T `| nil | nil | nil | caught (nil) | 
 
 ## Customization
-`Int`, `Double`,`String`, `Bool`, `NSArray`, and `NSDictionary` types that conform to `DynamicDecodable` with the following declaration:
+`Int`, `Double`,`String`, `Bool`, `Date` (ISO8601), `NSArray`, and `NSDictionary` types that conform to `DynamicDecodable` with the following declaration:
 ```swift
 public protocol DynamicDecodable {
     associatedtype DecodedType
@@ -156,26 +156,18 @@ Bool.decoder = { json in
 ```
 Note that when extending new types to conform to `Decodable` there is really no point in conforming to `DynamicDecodable` since you already control the implementation. Also note that the `decoder` properties are intended as "set once". If you need different behaviour on different occations, please create custom decode functions.
 
+## When `Decodable` isn't enough
+Don't be afraid of not conforming to `Decodable`.
+```
+let array = try NSArray.decode(json => "list").map {
+    try Contribution(json: $0, repository: repo)
+}
+```
+
 ## Tips
 - You can use `Decodable` with classes. Just make sure to either call a `required` initializer on self (e.g `self.init`) and return `Self`, or make your class `final`. ( [This](http://stackoverflow.com/questions/26495586/best-practice-to-implement-a-failable-initializer-in-swift) might be a problem though)
 - The `Decodable`-protocol and the `=>`-operator should in no way make you committed to use them everywhere.
 
-For example you could...
-
-- Skip adapting the `Decodable` protocol, and parse things differently depending on the context (like `defaultBranch` in the example code).
-- Make your own protocols!
-- Create your own throwing decode-functions, e.g for `NSDate`, or convenience-extensions with your own date-formatter.
-```swift
-public class func decode(json: AnyObject) throws -> Self {
-        let string = try String.decode(json)
-
-        guard let date = ISO8601DateFormatter.dateFromString(string) else {
-            throw NSDateDecodingError.InvalidStringFormat
-        }
-
-        return self.init(timeIntervalSince1970: date.timeIntervalSince1970)
-}
-```
 ## Compatibility
 
 | Swift version | Compatible tag or branch |
