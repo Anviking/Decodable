@@ -27,6 +27,7 @@ public protocol DynamicDecodable {
 extension Decodable where Self: DynamicDecodable, Self.DecodedType == Self {
     public static func decode(_ json: AnyObject) throws -> Self {
         return try decoder(json)
+        
     }
 }
 
@@ -41,6 +42,24 @@ extension Double: Decodable, DynamicDecodable {
 }
 extension Bool: Decodable, DynamicDecodable {
     public static var decoder: (AnyObject) throws -> Bool = { try cast($0) }
+}
+
+private let iso8601DateFormatter: DateFormatter = {
+    let formatter = DateFormatter()
+    formatter.locale = Locale(localeIdentifier: "en_US_POSIX")
+    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
+    return formatter
+}()
+
+extension Date: Decodable, DynamicDecodable {
+    public static var decoder: (AnyObject) throws -> Date = { object in
+        let string = try String.decode(object)
+        guard let date = iso8601DateFormatter.date(from: string) else {
+            let metadata = DecodingError.Metadata(object: object)
+            throw DecodingError.rawRepresentableInitializationError(rawValue: string, metadata)
+        }
+        return date
+    }
 }
 
 extension NSDictionary: Decodable {
