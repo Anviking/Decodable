@@ -16,11 +16,41 @@ import Foundation
 public struct OptionalKey {
     var key: String
     var isRequired: Bool
+    
+    public init(key: String, isRequired: Bool) {
+        self.key = key
+        self.isRequired = isRequired
+    }
+    
+    public init(_ key: String) {
+        self.key = key
+        self.isRequired = false
+    }
 }
 
 extension OptionalKey: CustomStringConvertible {
     public var description: String {
         return key + (isRequired ? "" : "?")
+    }
+}
+
+extension String {
+    public var optional: OptionalKey {
+        return OptionalKey(key: self, isRequired: false)
+    }
+}
+
+extension OptionalKey: StringLiteralConvertible {
+    public init(stringLiteral value: String) {
+        self.init(key: value, isRequired: true)
+    }
+    
+    public init(extendedGraphemeClusterLiteral value: String) {
+        self.init(key: value, isRequired: true)
+    }
+    
+    public init(unicodeScalarLiteral value: String) {
+        self.init(key: value, isRequired: true)
     }
 }
 
@@ -46,6 +76,11 @@ extension OptionalKey: CustomStringConvertible {
 
 public struct OptionalKeyPath {
     var keys: [OptionalKey]
+    
+    public init (_ keys: [OptionalKey]) {
+        self.keys = keys
+    }
+    
     mutating func markFirst(required: Bool) {
         if var first = keys.first {
             first.isRequired = required
@@ -65,21 +100,21 @@ public struct OptionalKeyPath {
 
 extension OptionalKeyPath: StringLiteralConvertible {
     public init(stringLiteral value: String) {
-        self.keys = [OptionalKey(key: value, isRequired: false)]
+        self.keys = [OptionalKey(key: value, isRequired: true)]
     }
     
     public init(extendedGraphemeClusterLiteral value: String) {
-        self.keys = [OptionalKey(key: value, isRequired: false)]
+        self.keys = [OptionalKey(key: value, isRequired: true)]
     }
     
     public init(unicodeScalarLiteral value: String) {
-        self.keys = [OptionalKey(key: value, isRequired: false)]
+        self.keys = [OptionalKey(key: value, isRequired: true)]
     }
 }
 
 extension OptionalKeyPath: ArrayLiteralConvertible {
-    public init(arrayLiteral elements: String...) {
-        self.keys = elements.map { OptionalKey(key: $0, isRequired: false) }
+    public init(arrayLiteral elements: OptionalKey...) {
+        self.keys = elements
     }
 }
 

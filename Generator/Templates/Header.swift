@@ -8,3 +8,5 @@
 
 // {count} overloads were generated with the following return types:
 // {overloads}
+
+import Foundation

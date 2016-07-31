@@ -37,9 +37,6 @@ extension Array where Element: Decodable {
     }
 }
 
-
-
-
 // MARK: Helpers
 
 /// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
