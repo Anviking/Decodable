@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum DecodingError: ErrorProtocol, Equatable {
+public enum DecodingError: Error, Equatable {
     
     /// `DecodingError.Metadata` provides information about
     /// where an `DecodingError` was thrown in the JSON 
@@ -53,7 +53,7 @@ public enum DecodingError: ErrorProtocol, Equatable {
     /// When an error is thrown that isn't `DecodingError`, it 
     /// will be wrapped in `DecodingError.other` in order to also provide
     /// metadata about where the error was thrown.
-    case other(ErrorProtocol, Metadata)
+    case other(Error, Metadata)
     
     public var metadata: Metadata {
         get {
@@ -76,7 +76,7 @@ public enum DecodingError: ErrorProtocol, Equatable {
             case let .missingKey(key, _):
                 self = .missingKey(key, newValue)
             case let .rawRepresentableInitializationError(rawValue, _):
-                self = rawRepresentableInitializationError(rawValue: rawValue, newValue)
+                self = DecodingError.rawRepresentableInitializationError(rawValue: rawValue, newValue)
             case let .other(error, _):
                 self = .other(error, newValue)
             }

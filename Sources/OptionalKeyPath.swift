@@ -63,7 +63,7 @@ public struct OptionalKeyPath {
     }
 }
 
-extension OptionalKeyPath: StringLiteralConvertible {
+extension OptionalKeyPath: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.keys = [OptionalKey(key: value, isRequired: false)]
     }
@@ -77,7 +77,7 @@ extension OptionalKeyPath: StringLiteralConvertible {
     }
 }
 
-extension OptionalKeyPath: ArrayLiteralConvertible {
+extension OptionalKeyPath: ExpressibleByArrayLiteral {
     public init(arrayLiteral elements: String...) {
         self.keys = elements.map { OptionalKey(key: $0, isRequired: false) }
     }

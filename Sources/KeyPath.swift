@@ -30,7 +30,7 @@ public struct KeyPath {
     
 }
 
-extension KeyPath: StringLiteralConvertible {
+extension KeyPath: ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.keys = [value]
     }
@@ -44,7 +44,7 @@ extension KeyPath: StringLiteralConvertible {
     }
 }
 
-extension KeyPath: ArrayLiteralConvertible {
+extension KeyPath: ExpressibleByArrayLiteral {
     public init(arrayLiteral elements: String...) {
         self.keys = elements
     }

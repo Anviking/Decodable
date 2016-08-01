@@ -45,8 +45,8 @@ extension NSValueCastable {
     private typealias PointerOfSelf = UnsafeMutablePointer<Self> // Why do we have to do this?
     public static func decode(_ j: AnyObject) throws -> Self {
         let value: NSValue = try cast(j)
-        let pointer = PointerOfSelf(allocatingCapacity: 1)
-        defer { pointer.deallocateCapacity(1) }
+        let pointer = PointerOfSelf.allocate(capacity: 1)
+        defer { pointer.deallocate(capacity: 1) }
         value.getValue(pointer)
         return pointer.move()
     }

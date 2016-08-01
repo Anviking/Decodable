@@ -103,13 +103,13 @@ indirect enum Decodable {
     
     func decodeClosure(_ provider: TypeNameProvider) -> String {
         switch self {
-        case T(let key):
+        case .T(let key):
             return "\(provider[key]).decode"
             //        case .AnyObject:
         //            return "{$0}"
-        case Optional(let T):
+        case .Optional(let T):
             return "Optional.decoder(\(T.decodeClosure(provider)))"
-        case Array(let T):
+        case .Array(let T):
             return "Array.decoder(\(T.decodeClosure(provider)))"
         case .Dictionary(let K, let T):
             return "Dictionary.decoder(key: \(K.decodeClosure(provider)), value: \(T.decodeClosure(provider)))"
@@ -120,9 +120,9 @@ indirect enum Decodable {
         switch self {
         case .T(let unique):
             return provider[unique]
-        case Optional(let T):
+        case .Optional(let T):
             return "\(T.typeString(provider))?"
-        case Array(let T):
+        case .Array(let T):
             return "[\(T.typeString(provider))]"
         case .Dictionary(let K, let T):
             return "[\(K.typeString(provider)): \(T.typeString(provider))]"
