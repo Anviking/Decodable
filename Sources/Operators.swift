@@ -10,15 +10,20 @@ import Foundation
 
 // MARK: - Operators
 
-infix operator => { associativity right precedence 150 }
-infix operator =>? { associativity right precedence 150 }
+precedencegroup DecodingPrecendence {
+    associativity: right
+    higherThan: CastingPrecedence
+}
 
-public func => (lhs: AnyObject, rhs: KeyPath) throws -> AnyObject {
+infix operator =>  : DecodingPrecendence
+infix operator =>? : DecodingPrecendence
+
+public func => (lhs: Any, rhs: KeyPath) throws -> Any {
     return try parse(lhs, keyPath: rhs, decoder: { $0 })
 }
 
 
-public func =>? (lhs: AnyObject, rhs: OptionalKeyPath) throws -> AnyObject? {
+public func =>? (lhs: Any, rhs: OptionalKeyPath) throws -> Any? {
     return try parse(lhs, keyPath: rhs, decoder: { $0 })
 }
 

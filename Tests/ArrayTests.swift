@@ -19,7 +19,7 @@ class DecodableArrayTests: XCTestCase {
         // when
         let result = try! dictionary => KeyPath(key) as Array<String>
         // then
-        XCTAssertEqual(result, value)
+        XCTAssertEqual(result, value as! [String])
     }
     
     func testDecodeOptionalDecodableArraySuccess() {
@@ -60,7 +60,7 @@ class DecodableArrayTests: XCTestCase {
         // when
         let result = try! dictionary => "key" => "key" as Array<String>
         // then
-        XCTAssertEqual(result, value)
+        XCTAssertEqual(result, value as! [String])
     }
     
     func testDecodeAnyDecodableOptionalArraySuccess() {
@@ -126,7 +126,7 @@ class DecodableArrayTests: XCTestCase {
     func testDecodeSafeArrayCatchTypeExceptionMismatch() {
         // given
         let key = "key"
-        let value = ["A", 2, "B"]
+        let value = ["A", 2, "B"] as [Any]
         let dictionary: NSDictionary = [key: value]
         // when
         let array = try! [String].decode(dictionary => "key", ignoreInvalidObjects: true)
@@ -148,7 +148,7 @@ class DecodableArrayTests: XCTestCase {
     func testDecodeSafeArrayCatchJSONNotObjectException() {
         // given
         let key = "key"
-        let value = [["id": 7, "login": "mradams"], 2]
+        let value = [["id": 7, "login": "mradams"], 2] as [Any]
         let dictionary: NSDictionary = [key: value]
         // when
         let array = try! [Owner].decode(dictionary => "key", ignoreInvalidObjects: true)

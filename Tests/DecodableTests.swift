@@ -84,7 +84,7 @@ class DecodableTests: XCTestCase {
         
     }
     
-    private func customParseRepository(_ json: AnyObject) throws -> [Repository] {
+    private func customParseRepository(_ json: Any) throws -> [Repository] {
         let error = NSError(domain: "test", code: 0, userInfo: nil)
         guard let array = json as? [NSDictionary] else {
             throw error

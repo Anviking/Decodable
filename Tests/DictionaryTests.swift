@@ -10,11 +10,11 @@ import XCTest
 import Decodable
 
 private struct AccessibilityInfo: Decodable {
-    let data: [String: AnyObject]
+    let data: [String: Any]
     
-    private static func decode(_ json: AnyObject) throws -> AccessibilityInfo {
+    static func decode(_ json: Any) throws -> AccessibilityInfo {
         return try AccessibilityInfo(
-            data: [String: AnyObject].decode(json)
+            data: [String: Any].decode(json)
         )
     }
 }
@@ -47,10 +47,10 @@ class DictionaryTests: XCTestCase {
         XCTAssertNil(result)
     }
     
-    func testStringAnyObject() {
+    func testStringAny() {
         let dict: NSDictionary = ["a": 2]
         let info = try! AccessibilityInfo.decode(dict)
-        XCTAssertEqual(info.data, dict)
+        XCTAssertEqual(info.data as NSDictionary, dict)
         
     }
 
