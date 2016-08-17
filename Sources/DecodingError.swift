@@ -15,7 +15,7 @@ public enum DecodingError: Error, Equatable {
     /// object graph.
     public struct Metadata: Equatable {
         
-        public init(path: [String] = [], object: AnyObject, rootObject: AnyObject? = nil) {
+        public init(path: [String] = [], object: Any, rootObject: Any? = nil) {
             self.path = path
             self.object = object
             self.rootObject = rootObject
@@ -25,10 +25,10 @@ public enum DecodingError: Error, Equatable {
         public var path: [String]
         
         /// The JSON object that failed to be decoded
-        public let object: AnyObject
+        public let object: Any
         
         /// The root JSON object for which the `path` can be used to find `object`
-        public var rootObject: AnyObject?
+        public var rootObject: Any?
         
         /// Represents the path to the object that failed decoding with "." as a separator.
         public var formattedPath: String {
@@ -36,7 +36,7 @@ public enum DecodingError: Error, Equatable {
         }
     }
     
-    /// Thrown when optional casting from `AnyObject` fails.
+    /// Thrown when optional casting from `Any` fails.
     ///
     /// This can happen both when trying to access a key on a object
     /// that isn't a `NSDictionary`, and failing to cast a `Castable`
@@ -110,9 +110,9 @@ public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
 
 // FIXME: I'm not sure about === equality
 public func ==(lhs: DecodingError.Metadata, rhs: DecodingError.Metadata) -> Bool {
-    return lhs.object === rhs.object
+    return lhs.object as AnyObject === rhs.object as AnyObject
         && lhs.path == rhs.path
-        && lhs.rootObject === rhs.rootObject
+        && lhs.rootObject  as AnyObject === rhs.rootObject as AnyObject
 }
 
 public func ==(lhs: DecodingError, rhs: DecodingError) -> Bool {

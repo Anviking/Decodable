@@ -12,7 +12,7 @@ import XCTest
 private struct Color: Decodable {
     let name: String
     
-    private static func decode(_ json: AnyObject) throws -> Color {
+    static func decode(_ json: Any) throws -> Color {
         return try Color(name: json => "name")
     }
 }
@@ -21,7 +21,7 @@ private struct Apple: Decodable {
     let id: Int
     let color: Color?
     
-    private static func decode(_ json: AnyObject) throws -> Apple {
+    static func decode(_ json: Any) throws -> Apple {
         return try Apple(id: json => "id", color: json => "color")
     }
 }
@@ -29,7 +29,7 @@ private struct Apple: Decodable {
 private struct Tree: Decodable {
     let apples: [Apple]
     
-    private static func decode(_ json: AnyObject) throws -> Tree {
+    static func decode(_ json: Any) throws -> Tree {
         return try Tree(apples: json => "apples")
     }
 }
@@ -70,7 +70,7 @@ class ErrorPathTests: XCTestCase {
         do {
             _ = try dict => "object" => "repo" => "owner" => "login" as String
         } catch let DecodingError.typeMismatch(_, actual, metadata) {
-            XCTAssertEqual(String(actual), "__NSCFNumber")
+            XCTAssertEqual(String(describing: actual), "_SwiftTypePreservingNSNumber")
             XCTAssertEqual(metadata.formattedPath, "object.repo.owner.login")
             XCTAssertEqual(metadata.object as? Int, 0)
         } catch let error {
@@ -86,7 +86,7 @@ class ErrorPathTests: XCTestCase {
             _ = try Tree.decode(dict)
             XCTFail()
         } catch let DecodingError.typeMismatch(_, actual, metadata) {
-            XCTAssertEqual(String(actual), "__NSCFNumber")
+            XCTAssertEqual(String(describing: actual), "_SwiftTypePreservingNSNumber")
             XCTAssertEqual(metadata.formattedPath, "apples.color.name")
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
@@ -96,17 +96,17 @@ class ErrorPathTests: XCTestCase {
     
     func testFoo() {
         let dictionary: NSDictionary = ["key": ["test": 3]]
-        let a: Int = try! uppercase(dictionary => "key" as! NSDictionary) as AnyObject => "TEST"
+        let a: Int = try! uppercase(dictionary => "key" as! NSDictionary) as Any => "TEST"
         XCTAssertEqual(a, 3)
     }
     
     private func uppercase(_ json: NSDictionary) -> NSDictionary {
-        var result = [String: AnyObject]()
+        var result = [String: Any]()
         for (key, value) in json {
-            result[key.uppercased] = value
+            result[(key as! String).uppercased()] = value
         }
         print(result)
-        return result
+        return result as NSDictionary
     }
     
 }

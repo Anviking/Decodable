@@ -26,11 +26,11 @@ class DecodeAsOneOfTests: XCTestCase {
         // when
         do {
 			
-			let vehiclesRaw: AnyObject = try json => "vehicles"
+			let vehiclesRaw: Any = try json => "vehicles"
 			
 			let vehicles1 = try decodeArrayAsOneOf(vehiclesRaw, objectTypes: Train.self, Truck.self, Car.self)
 			
-			guard let vehiclesArray = vehiclesRaw as? [AnyObject] else {
+			guard let vehiclesArray = vehiclesRaw as? [Any] else {
                 let metadata = DecodingError.Metadata(object: vehiclesRaw)
 				throw DecodingError.typeMismatch(expected: NSArray.self, actual: Mirror(reflecting: vehiclesRaw).subjectType, metadata)
 			}

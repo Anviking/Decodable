@@ -43,7 +43,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         let result: [String: [Int]] = try! dictionary => KeyPath(key)
         // then
-        XCTAssertEqual(result, value)
+        XCTAssertEqual(result as NSDictionary, value)
     }
     
     // MARK: - Nested keys
@@ -63,9 +63,9 @@ class DecodableOperatorsTests: XCTestCase {
         let value: NSDictionary = ["aKey" : "value"]
         let dictionary: NSDictionary = ["key": ["key": value]]
         // when
-        let result: [String: AnyObject]? = try! dictionary => "key" => "key" as! [String : AnyObject]
+        let result = try! dictionary => "key" => "key" as! [String : Any]
         // then
-        XCTAssertEqual(result, value)
+        XCTAssertEqual(result as NSDictionary, value)
     }
 
 	// TODO: this does not compile with Swift 3
@@ -87,7 +87,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         let result = try! dictionary => "key" => "key" as! [String: String]
         // then
-        XCTAssertEqual(result, value)
+        XCTAssertEqual(result, value as! [String : String])
     }
 
     func testDecodeAnyDecodableOptionalSuccess() {
@@ -121,7 +121,7 @@ class DecodableOperatorsTests: XCTestCase {
             print(a)
             XCTFail()
         } catch let DecodingError.typeMismatch(_, actual, _) {
-            XCTAssertEqual(String(actual), "__NSCFNumber")
+            XCTAssertEqual(String(describing: actual), "_SwiftTypePreservingNSNumber")
         } catch let error {
             XCTFail("should not throw \(error)")
         }
@@ -205,7 +205,7 @@ class DecodableOperatorsTests: XCTestCase {
         } catch let DecodingError.typeMismatch(expected, actual, metadata) where expected == NSDictionary.self {
             // then
             XCTAssertTrue(true)
-            XCTAssertEqual(String(actual), "__NSCFString")
+            XCTAssertEqual(String(describing: actual), "__NSCFString")
             XCTAssertEqual(metadata.formattedPath, "")
             XCTAssertEqual(metadata.object as? NSString, (noDictionary))
         } catch let error {
@@ -242,7 +242,7 @@ class DecodableOperatorsTests: XCTestCase {
         } catch let DecodingError.typeMismatch(expected, actual, metadata) where expected == NSDictionary.self {
             // then
             XCTAssertTrue(true)
-            XCTAssertEqual(String(actual), "__NSCFString")
+            XCTAssertEqual(String(describing: actual), "__NSCFString")
             XCTAssertEqual(metadata.formattedPath, "")
             XCTAssertEqual(metadata.object as? NSString, noDictionary)
         } catch let error {

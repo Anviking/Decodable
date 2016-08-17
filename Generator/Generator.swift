@@ -195,7 +195,7 @@ indirect enum Decodable {
         }
         
         let documentation = generateDocumentationComment(behaviour)
-        return overloads + [documentation + "public func \(operatorString) \(generics)(json: AnyObject, keyPath: \(keyPathType)) throws -> \(returnType) {\n" +
+        return overloads + [documentation + "public func \(operatorString) \(generics)(json: Any, keyPath: \(keyPathType)) throws -> \(returnType) {\n" +
             "    return try parse(json, keyPath: keyPath, decoder: \(decodeClosure(provider)))\n" +
             "}"
         ]
@@ -238,7 +238,7 @@ let types = overloads.map { $0.typeString(TypeNameProvider()) }
 let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).map{ $0.wrapInOptionalIfNeeded() }.flatMap { $0.generateOverloads("=>?") }
 
 do {
-    var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Templates/Header.swift") as NSString
+    var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Templates/Header.swift")
 	template = template.replacingOccurrences(of: "{filename}", with: filename)
 	template = template.replacingOccurrences(of: "{by}", with: "Generator.swift")
 	template = template.replacingOccurrences(of: "{overloads}", with: types.joined(separator: ", "))

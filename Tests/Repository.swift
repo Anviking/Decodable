@@ -28,7 +28,7 @@ struct Repository {
 }
 
 extension Owner : Decodable {
-    static func decode(_ j: AnyObject) throws -> Owner {
+    static func decode(_ j: Any) throws -> Owner {
         return try Owner(
             id: j => "id",
             login: j => "login"
@@ -37,7 +37,7 @@ extension Owner : Decodable {
 }
 
 extension Repository : Decodable {
-    static func decode(_ j: AnyObject) throws -> Repository {
+    static func decode(_ j: Any) throws -> Repository {
         return try Repository(
             id: j => "id",
             name: j => "name",

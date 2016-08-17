@@ -14,7 +14,7 @@ class ParseTests: XCTestCase {
     
     func testParseKeyPathSuccess() {
         let dict: NSDictionary = ["a": ["b": 3]]
-        let a: AnyObject = try! parse(dict, ["a", "b"])
+        let a: Any = try! parse(dict, ["a", "b"])
         XCTAssertEqual(a as? Int, 3)
     }
     
