@@ -3,7 +3,7 @@ Simple and strict, yet powerful object mapping made possible by Swift 2's error 
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Cocoapods version](https://cocoapod-badges.herokuapp.com/v/Decodable/badge.png)](https://cocoapods.org/pods/Decodable)
-[![Platforms](https://cocoapod-badges.herokuapp.com/p/Decodable/badge.png
+[![Platforms](https://cocoapod-badges.herokuapp.coAm/p/Decodable/badge.png
 )](https://cocoadocs.org/docsets/NSStringMask)
 [![Travis](https://img.shields.io/travis/Anviking/Decodable/master.svg)](https://travis-ci.org/Anviking/Decodable/branches)
 
@@ -23,7 +23,7 @@ struct Repository {
 }
 
 extension Repository: Decodable {
-    static func decode(j: AnyObject) throws -> Repository {
+    static func decode(j: Any) throws -> Repository {
         return try Repository(
                     name: j => "nested" => "name", 
                     description: j => "description", 
@@ -137,7 +137,7 @@ For convenience there is an operator, `=>?`, that only returns nil on missing ke
 ```swift
 public protocol DynamicDecodable {
     associatedtype DecodedType
-    static var decoder: (AnyObject) throws -> DecodedType {get set}
+    static var decoder: (Any) throws -> DecodedType {get set}
 }
 ```
 This allows Decodable to implement default decoding closures while allowing you to override them as needed.
