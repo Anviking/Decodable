@@ -3,8 +3,7 @@ Simple and strict, yet powerful object mapping made possible by Swift 2's error 
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![Cocoapods version](https://cocoapod-badges.herokuapp.com/v/Decodable/badge.png)](https://cocoapods.org/pods/Decodable)
-[![Platforms](https://cocoapod-badges.herokuapp.coAm/p/Decodable/badge.png
-)](https://cocoadocs.org/docsets/NSStringMask)
+[![Platforms](https://cocoapod-badges.herokuapp.com/p/Decodable/badge.png)](https://cocoadocs.org/docsets/NSStringMask)
 [![Travis](https://img.shields.io/travis/Anviking/Decodable/master.svg)](https://travis-ci.org/Anviking/Decodable/branches)
 
 
