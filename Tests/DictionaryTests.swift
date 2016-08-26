@@ -9,6 +9,21 @@
 import XCTest
 import Decodable
 
+private struct Color: Decodable, Equatable {
+    let name: String
+    static func decode(_ json: Any) throws -> Color {
+        return try Color(name: String.decode(json))
+    }
+    
+    static func == (lhs: Color, rhs: Color) -> Bool {
+        return lhs.name == rhs.name
+    }
+    
+}
+
+
+
+/* FIXME: https://github.com/Anviking/Decodable/issues/120
 private struct AccessibilityInfo: Decodable {
     let data: [String: Any]
     
@@ -18,7 +33,7 @@ private struct AccessibilityInfo: Decodable {
         )
     }
 }
-
+*/
 class DictionaryTests: XCTestCase {
 
     override func setUp() {
@@ -37,6 +52,12 @@ class DictionaryTests: XCTestCase {
         XCTAssertEqual(a, ["key1": 1, "key2": 2, "key3": 3])
     }
     
+    func testDictionaryWithDecodableValues() {
+        let json: NSDictionary = ["r": "red", "g": "green"]
+        let result = try! [String: Color].decode(json)
+        XCTAssertEqual(["r": Color(name: "red"), "g": Color(name: "green")], result)
+    }
+    
     func testOptionalReturn() {
         var json: NSDictionary = ["object": ["key1": 1, "key2": 2, "key3": 3]]
         var result: [String: Int]? = try! json => "object"
@@ -47,11 +68,13 @@ class DictionaryTests: XCTestCase {
         XCTAssertNil(result)
     }
     
+    /* FIXME: https://github.com/Anviking/Decodable/issues/120
     func testStringAny() {
         let dict: NSDictionary = ["a": 2]
         let info = try! AccessibilityInfo.decode(dict)
         XCTAssertEqual(info.data as NSDictionary, dict)
         
     }
+     */
 
 }

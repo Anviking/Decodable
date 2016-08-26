@@ -19,6 +19,9 @@ extension Dictionary where Key: Decodable, Value: Decodable {
     }
 }
 
+/* FIXME: this causes ambiguity issues, in the meantime resort to `Dictionary.decoder`
+ https://github.com/Anviking/Decodable/issues/120
+ 
 extension Dictionary where Key: Decodable, Value: Any {
     
     public static func decode(_ j: Any) throws -> Dictionary {
@@ -26,6 +29,7 @@ extension Dictionary where Key: Decodable, Value: Any {
         return try Dictionary.decoder(key: Key.decode, value: valueDecoder)(j)
     }
 }
+*/
 
 extension Array where Element: Decodable {
     public static func decode(_ j: Any, ignoreInvalidObjects: Bool = false) throws -> [Element] {
