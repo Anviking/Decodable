@@ -10,13 +10,13 @@ import Foundation
 
 // MARK: - Operators
 
-precedencegroup DecodingPrecendence {
+precedencegroup DecodingPrecedence {
     associativity: right
     higherThan: CastingPrecedence
 }
 
-infix operator =>  : DecodingPrecendence
-infix operator =>? : DecodingPrecendence
+infix operator =>  : DecodingPrecedence
+infix operator =>? : DecodingPrecedence
 
 public func => (lhs: Any, rhs: KeyPath) throws -> Any {
     return try parse(lhs, keyPath: rhs, decoder: { $0 })
