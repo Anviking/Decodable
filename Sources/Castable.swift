@@ -62,14 +62,27 @@ private let iso8601DateFormatter: DateFormatter = {
 }()
 
 extension Date: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> Date = { object in
-        let string = try String.decode(object)
-        guard let date = iso8601DateFormatter.date(from: string) else {
-            let metadata = DecodingError.Metadata(object: object)
-            throw DecodingError.rawRepresentableInitializationError(rawValue: string, metadata)
+    /// Default decoder is `Date.decoder(using: iso8601DateFormatter)`
+    public static var decoder: (Any) throws -> Date = Date.decoder(using: iso8601DateFormatter)
+    
+    /// Create a decode closure using a given formatter
+    ///
+    /// Example usage:
+    /// ```
+    /// let formatter = DateFormatter(...)
+    /// Date.decoder = Date.decoder(using: formatter)
+    /// ```
+    public static func decoder(using formatter: DateFormatter) -> (Any) throws -> Date {
+        return { object in
+            let string = try String.decode(object)
+            guard let date = formatter.date(from: string) else {
+                let metadata = DecodingError.Metadata(object: object)
+                throw DecodingError.rawRepresentableInitializationError(rawValue: string, metadata)
+            }
+            return date
         }
-        return date
     }
+    
 }
 
 extension NSDictionary: Decodable {
