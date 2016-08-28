@@ -153,7 +153,13 @@ Bool.decoder = { json in
     }
 }
 ```
+
 Note that when extending new types to conform to `Decodable` there is really no point in conforming to `DynamicDecodable` since you already control the implementation. Also note that the `decoder` properties are intended as "set once". If you need different behaviour on different occations, please create custom decode functions.
+
+The default `Date.decoder` uses a ISO8601 date formatter. If you don't want to create your own decode closure there's a helper:
+```swift
+Date.decoder = Date.decoder(using: formatter)
+```
 
 ## When `Decodable` isn't enough
 Don't be afraid of not conforming to `Decodable`.
