@@ -18,7 +18,7 @@ import Foundation
 /// ```
 
 public struct KeyPath {
-    var keys: [String]
+    public var keys: [String]
     
     public init(_ keys: [String]) {
         self.keys = keys
@@ -48,4 +48,9 @@ extension KeyPath: ExpressibleByArrayLiteral {
     public init(arrayLiteral elements: String...) {
         self.keys = elements
     }
+}
+
+extension KeyPath: Equatable { }
+public func ==(lhs: KeyPath, rhs: KeyPath) -> Bool {
+    return lhs.keys == rhs.keys
 }
