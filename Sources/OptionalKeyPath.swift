@@ -14,8 +14,8 @@ import Foundation
 /// in a nil return value instead of a thrown error. Unless `isRequired` is `true`, in which 
 /// it behaves as a "normal" `String` inside a "normal" `KeyPath`.
 public struct OptionalKey {
-    var key: String
-    var isRequired: Bool
+    public var key: String
+    public var isRequired: Bool
 }
 
 extension OptionalKey: CustomStringConvertible {
@@ -45,7 +45,7 @@ extension OptionalKey: CustomStringConvertible {
 /// with `isRequired = true`
 
 public struct OptionalKeyPath {
-    var keys: [OptionalKey]
+    public var keys: [OptionalKey]
     mutating func markFirst(required: Bool) {
         if var first = keys.first {
             first.isRequired = required
