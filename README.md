@@ -177,6 +177,6 @@ let array = try NSArray.decode(json => "list").map {
 
 | Swift version | Compatible tag or branch |
 | --- | --- |
-| Swift 3.0 | `master` |
+| Swift 3.0 | `v0.5` |
 | Swift 2.3 | `v0.4.4`|
 | Swift 2.2 | `v0.4.3`|
