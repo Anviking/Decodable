@@ -99,6 +99,30 @@ public enum DecodingError: Error, Equatable {
     
 }
 
+extension DecodingError: CustomStringConvertible {
+    
+    private var errorMessage: String {
+        switch self {
+        case let .typeMismatch(expected, actual, _):
+            return "TypeMismatch: expected \(expected), not \(actual)"
+        case let .missingKey(key, _):
+            return "MissingKey: \(key)"
+        case .rawRepresentableInitializationError(_, _):
+            return "RawRepresentableInitializationError: could not be used to initialize \("TYPE").)" // FIXME
+        case let .other(error, _):
+            return "\(error)"
+        }
+    }
+    
+    public var description: String {
+        var formatter = JSONErrorFormatter(path: metadata.path, message: errorMessage)
+        guard let rootObject = metadata.rootObject else {
+            return debugDescription // FIXME: Don't do this
+        }
+        return formatter.format(json: rootObject)
+    }
+}
+
 
 // Allow types to be used in pattern matching
 // E.g case typeMismatchError(NSNull.self, _, _) but be careful

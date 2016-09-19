@@ -18,6 +18,7 @@ extension String {
     }
 }
 
+/* TODO: Propagate errors through arrays
 enum DebugKey {
     
     /// Dictionary/Object key
@@ -65,10 +66,10 @@ extension DebugKey: ExpressibleByIntegerLiteral {
     }
     
 }
-
+*/
 /// Sorry. /Past me
 struct JSONErrorFormatter {
-    var path: [DebugKey]
+    var path: [String]
     let message: String
     
     mutating func format(json: Any) -> String {
@@ -82,7 +83,8 @@ struct JSONErrorFormatter {
                 // Check if key matches first item in `path`.
                 var highlightMatch = false
                 var isFinalKey = false
-                if let a = (key as? String), let b = path.first?.key, a == b {
+                //if let a = (key as? String), let b = path.first?.key, a == b {
+                if let a = (key as? String), let b = path.first, a == b {
                     highlightMatch = true
                     path.removeFirst()
                 }
@@ -124,18 +126,21 @@ struct JSONErrorFormatter {
                 
                 print(index)
                 // Check if key matches first item in `path`.
+                /*
                 var highlightMatch = false
                 var isFinalKey = false
+                
                 if let i = path.first?.index, index == i {
                     highlightMatch = true
                     path.removeFirst()
                 }
-                
+ 
                 if path.count == 0 && highlightMatch {
                     isFinalKey = true
                 }
+                 */
                 var formattedValue = format(json: value)
-                
+                /*
                 
                 
                 if isFinalKey {
@@ -145,12 +150,13 @@ struct JSONErrorFormatter {
                     }
                     formattedValue = lines.joined(separator: "\n")
                 }
-                
+                */
                 formattedValue = formattedValue.indented
+                 /*
                 if highlightMatch {
                     formattedValue = formattedValue.replacingOccurrences(of: "\n", with: "\n |")
                 }
-                
+                */
                 items.append("[\(index)] \(formattedValue)")
             }
             result.append(items.joined(separator: "\n"))
