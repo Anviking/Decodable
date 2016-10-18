@@ -48,20 +48,20 @@ do {
 ### A protocol
 ```swift
 public protocol Decodable {
-    static func decode(json: AnyObject) throws -> Self
+    static func decode(json: Any) throws -> Self
 }
 ```
 ### A parse-function
 ```swift
-public func parse<T>(json: AnyObject, path: [String], decode: (AnyObject throws -> T)) throws -> T
+public func parse<T>(json: Any, path: [String], decode: (Any throws -> T)) throws -> T
 ```
 
 ### And shameless operator-overloading
-The too-many generated overloads, all calling the `parse`-function, can be found in [Overloads.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Overloads.swift). Return types include `T?`, `[T?]`, `[T?]?`, `AnyObject` and `[String: T]?`. When conditional protocol conformance is supported in Swift this won't be necessary, and automagic decoding of infinitly nested generic types (like `[[[[[[[[[A???]]: B]]]?]]?]]`) would work.
+The too-many generated overloads, all calling the `parse`-function, can be found in [Overloads.swift](https://github.com/Anviking/Decodable/blob/master/Sources/Overloads.swift). Return types include `T?`, `[T?]`, `[T?]?`, `Any` and `[String: T]?`. When conditional protocol conformance is supported in Swift this won't be necessary, and automagic decoding of infinitly nested generic types (like `[[[[[[[[[A???]]: B]]]?]]?]]`) would work.
 
 An overload may look like this:
 ```swift
-public func => <T: Decodable>(json: AnyObject, keyPath: KeyPath) throws -> T
+public func => <T: Decodable>(json: Any, keyPath: KeyPath) throws -> T
 ```
 
 ## KeyPaths
@@ -83,7 +83,7 @@ Errors will be caught and rethrown in the decoding process to backpropagate meta
 From [DecodingError.swift](https://github.com/anviking/decodable/tree/master/Sources/DecodingError.swift):
 ```swift
 public enum DecodingError: ErrorProtocol, Equatable {
-    /// Thrown when optional casting from `AnyObject` fails.
+    /// Thrown when optional casting from `Any` fails.
     ///
     /// This can happen both when trying to access a key on a object
     /// that isn't a `NSDictionary`, and failing to cast a `Castable`
