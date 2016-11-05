@@ -100,7 +100,7 @@ extension NSArray: DynamicDecodable {
 }
 
 
-extension URL: DynamicDecodable {
+extension URL: DynamicDecodable, Decodable {
 	public static var decoder: (Any) throws -> URL = { object in
 		let string = try String.decode(object)
 		guard let url = URL(string: string) else {

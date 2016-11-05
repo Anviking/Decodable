@@ -118,7 +118,7 @@ class DecodableOperatorsTests: XCTestCase {
         // when
         do {
             let a = try dictionary => KeyPath(key) as String?
-            print(a)
+            print(a as Any)
             XCTFail()
         } catch let DecodingError.typeMismatch(_, actual, _) {
             XCTAssertEqual(String(describing: actual), "_SwiftTypePreservingNSNumber")

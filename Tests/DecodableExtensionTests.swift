@@ -122,10 +122,11 @@ class DecodableExtensionTests: XCTestCase {
 		let anyObject = ""
 		//when
 		do {
-			_ = try URL.decoder(anyObject)
-		} catch DecodingError.rawRepresentableInitializationError(_, _) {
+			_ = try Date.decoder(anyObject)
+		} catch DecodingError.rawRepresentableInitializationError(let rawValue, let metaData) {
 			//then
-			XCTAssertTrue(true)
+			XCTAssertEqual(rawValue as! String, "")
+			XCTAssertEqual(metaData.object as! String, anyObject)
 		} catch {
 			XCTFail("should not throw this exception")
 		}
@@ -136,7 +137,7 @@ class DecodableExtensionTests: XCTestCase {
 		//given
 		let anyObject = "http://www.google.com"
 		//when
-		let url = try! URL.decoder(anyObject)
+		let url = try! URL.decode(anyObject)
 		//then
 		XCTAssertEqual(url, URL(string: anyObject))
 	}
@@ -146,10 +147,11 @@ class DecodableExtensionTests: XCTestCase {
 		let anyObject = ""
 		//when
 		do {
-			_ = try URL.decoder(anyObject)
-		} catch DecodingError.rawRepresentableInitializationError(_, _) {
+			_ = try URL.decode(anyObject)
+		} catch DecodingError.rawRepresentableInitializationError(let rawValue, let metaData) {
 			//then
-			XCTAssertTrue(true)
+			XCTAssertEqual(rawValue as! String, "")
+			XCTAssertEqual(metaData.object as! String, anyObject)
 		} catch {
 			XCTFail("should not throw this exception")
 		}
