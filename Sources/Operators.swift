@@ -22,12 +22,6 @@ public func => (lhs: Any, rhs: KeyPath) throws -> Any {
     return try parse(lhs, keyPath: rhs, decoder: { $0 })
 }
 
-
-public func =>? (lhs: Any, rhs: OptionalKeyPath) throws -> Any? {
-    return try parse(lhs, keyPath: rhs, decoder: { $0 })
-}
-
-
 // MARK: - JSONPath
 
 /// Enables parsing nested objects e.g json => "a" => "b"
