@@ -112,7 +112,7 @@ class DecodableExtensionTests: XCTestCase {
 		//given
 		let anyObject = "1970-01-01T00:00:00Z"
 		//when
-		let date = try! Date.decoder(anyObject)
+		let date = try! Date.decode(anyObject)
 		//then
 		XCTAssertEqual(date, Date(timeIntervalSince1970: 0))
 	}
@@ -122,7 +122,7 @@ class DecodableExtensionTests: XCTestCase {
 		let anyObject = ""
 		//when
 		do {
-			_ = try Date.decoder(anyObject)
+			_ = try Date.decode(anyObject)
 		} catch DecodingError.rawRepresentableInitializationError(let rawValue, let metaData) {
 			//then
 			XCTAssertEqual(rawValue as! String, "")
