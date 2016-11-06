@@ -98,3 +98,15 @@ extension NSArray: DynamicDecodable {
     }
 
 }
+
+
+extension URL: DynamicDecodable, Decodable {
+	public static var decoder: (Any) throws -> URL = { object in
+		let string = try String.decode(object)
+		guard let url = URL(string: string) else {
+			let metadata = DecodingError.Metadata(object: object)
+			throw DecodingError.rawRepresentableInitializationError(rawValue: string, metadata)
+		}
+		return url
+	}
+}

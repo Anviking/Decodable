@@ -106,4 +106,54 @@ class DecodableExtensionTests: XCTestCase {
             XCTFail("should not throw this exception")
         }
     }
+	
+	// MARK: Date
+	func testDateDecodable() {
+		//given
+		let anyObject = "1970-01-01T00:00:00Z"
+		//when
+		let date = try! Date.decode(anyObject)
+		//then
+		XCTAssertEqual(date, Date(timeIntervalSince1970: 0))
+	}
+	
+	func testDateDecodableFail() {
+		//given
+		let anyObject = ""
+		//when
+		do {
+			_ = try Date.decode(anyObject)
+		} catch DecodingError.rawRepresentableInitializationError(let rawValue, let metaData) {
+			//then
+			XCTAssertEqual(rawValue as! String, "")
+			XCTAssertEqual(metaData.object as! String, anyObject)
+		} catch {
+			XCTFail("should not throw this exception")
+		}
+	}
+	
+	// MARK: URL
+	func testURLDecodable() {
+		//given
+		let anyObject = "http://www.google.com"
+		//when
+		let url = try! URL.decode(anyObject)
+		//then
+		XCTAssertEqual(url, URL(string: anyObject))
+	}
+	
+	func testURLDecodableFail() {
+		//given
+		let anyObject = ""
+		//when
+		do {
+			_ = try URL.decode(anyObject)
+		} catch DecodingError.rawRepresentableInitializationError(let rawValue, let metaData) {
+			//then
+			XCTAssertEqual(rawValue as! String, "")
+			XCTAssertEqual(metaData.object as! String, anyObject)
+		} catch {
+			XCTFail("should not throw this exception")
+		}
+	}
 }
