@@ -1,5 +1,6 @@
 import PackageDescription
 
 let package = Package(
-  name: "Decodable"
+  name: "Decodable",
+  exclude: [ "Tests" ]
 )
