@@ -9,52 +9,52 @@
 import Foundation
 
 public enum DecodingError: Error, Equatable {
-    
+
     /// `DecodingError.Metadata` provides information about
-    /// where an `DecodingError` was thrown in the JSON 
+    /// where an `DecodingError` was thrown in the JSON
     /// object graph.
     public struct Metadata: Equatable {
-        
+
         public init(path: [String] = [], object: Any, rootObject: Any? = nil) {
             self.path = path
             self.object = object
             self.rootObject = rootObject
         }
-        
+
         /// The JSON key path to the object that failed to be decoded
         public var path: [String]
-        
+
         /// The JSON object that failed to be decoded
         public let object: Any
-        
+
         /// The root JSON object for which the `path` can be used to find `object`
         public var rootObject: Any?
-        
+
         /// Represents the path to the object that failed decoding with "." as a separator.
         public var formattedPath: String {
             return path.joined(separator: ".")
         }
     }
-    
+
     /// Thrown when optional casting from `Any` fails.
     ///
     /// This can happen both when trying to access a key on a object
     /// that isn't a `NSDictionary`, and failing to cast a `Castable`
     /// primitive.
     case typeMismatch(expected: Any.Type, actual: Any.Type, Metadata)
-    
+
     /// Thrown when a given, required, key was not found in a dictionary.
     case missingKey(String, Metadata)
-    
+
     /// Thrown from the `RawRepresentable` extension when
     /// `init(rawValue:)` returned `nil`.
     case rawRepresentableInitializationError(rawValue: Any, Metadata)
-    
-    /// When an error is thrown that isn't `DecodingError`, it 
+
+    /// When an error is thrown that isn't `DecodingError`, it
     /// will be wrapped in `DecodingError.other` in order to also provide
     /// metadata about where the error was thrown.
     case other(Error, Metadata)
-    
+
     public var metadata: Metadata {
         get {
             switch self {
@@ -68,7 +68,7 @@ public enum DecodingError: Error, Equatable {
                 return metadata
             }
         }
-        
+
         set {
             switch self {
             case let .typeMismatch(expected, actual, _):
@@ -83,7 +83,7 @@ public enum DecodingError: Error, Equatable {
         }
 
     }
-    
+
     public var debugDescription: String {
         switch self {
         case let .typeMismatch(expected, actual, metadata):
@@ -96,7 +96,7 @@ public enum DecodingError: Error, Equatable {
             return "\(error)"
         }
     }
-    
+
 }
 
 
@@ -110,9 +110,9 @@ public func ~=<T>(lhs: T.Type, rhs: Any.Type) -> Bool {
 
 // FIXME: I'm not sure about === equality
 public func ==(lhs: DecodingError.Metadata, rhs: DecodingError.Metadata) -> Bool {
-    return lhs.object as AnyObject === rhs.object as AnyObject
+    return lhs.object as? AnyObject === rhs.object as? AnyObject
         && lhs.path == rhs.path
-        && lhs.rootObject  as AnyObject === rhs.rootObject as AnyObject
+        && lhs.rootObject as? AnyObject === rhs.rootObject as? AnyObject
 }
 
 public func ==(lhs: DecodingError, rhs: DecodingError) -> Bool {
@@ -140,4 +140,3 @@ public func ==(lhs: DecodingError, rhs: DecodingError) -> Bool {
         return false
     }
 }
-
