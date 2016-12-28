@@ -53,6 +53,8 @@
 		8F72DC591C3CB8C900A39E10 /* NSValueCastable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F72DC551C3CB8C500A39E10 /* NSValueCastable.swift */; };
 		8F84E70F1C3CB92D001EA4CE /* NSValueDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F84E70E1C3CB92D001EA4CE /* NSValueDecodableTests.swift */; };
 		8F84E7101C3CB92D001EA4CE /* NSValueDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F84E70E1C3CB92D001EA4CE /* NSValueDecodableTests.swift */; };
+		8F85E7781E13DA16000D6989 /* NSNullTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85E7771E13DA16000D6989 /* NSNullTests.swift */; };
+		8F85E7791E13DA16000D6989 /* NSNullTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F85E7771E13DA16000D6989 /* NSNullTests.swift */; };
 		8F87BCBB1B580CE200E53A8C /* ErrorPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */; };
 		8F87BCBC1B580CE200E53A8C /* ErrorPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */; };
 		8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
@@ -136,6 +138,7 @@
 		8F6FCF5E1D4B39FC00838CE4 /* DynamicDecodableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DynamicDecodableTests.swift; sourceTree = "<group>"; };
 		8F72DC551C3CB8C500A39E10 /* NSValueCastable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSValueCastable.swift; sourceTree = "<group>"; };
 		8F84E70E1C3CB92D001EA4CE /* NSValueDecodableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSValueDecodableTests.swift; sourceTree = "<group>"; };
+		8F85E7771E13DA16000D6989 /* NSNullTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSNullTests.swift; sourceTree = "<group>"; };
 		8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPathTests.swift; sourceTree = "<group>"; };
 		8F87BCC31B592F0E00E53A8C /* DecodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingError.swift; sourceTree = "<group>"; };
 		8F956D1E1B4D6FF700243072 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
@@ -286,6 +289,7 @@
 				9E2DA75B1CBC77AB00CAF3DF /* DecodeAsOneOfTests.swift */,
 				8F84E70E1C3CB92D001EA4CE /* NSValueDecodableTests.swift */,
 				FF0060AF1B546FB100D8CB77 /* DecodableOperatorsTests.swift */,
+				8F85E7771E13DA16000D6989 /* NSNullTests.swift */,
 				8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */,
 				651A8C961C29AC5E00DE4D53 /* RawRepresentableDecodableTests.swift */,
 				8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */,
@@ -652,6 +656,7 @@
 				8F4453F01D369FF200C19099 /* ParseTests.swift in Sources */,
 				8F84E7101C3CB92D001EA4CE /* NSValueDecodableTests.swift in Sources */,
 				8F4B52661B5BAA5700FDCBA7 /* ArrayTests.swift in Sources */,
+				8F85E7791E13DA16000D6989 /* NSNullTests.swift in Sources */,
 				FFE77E211B5396FB00E52F28 /* Repository.swift in Sources */,
 				FF0060981B5453C600D8CB77 /* DecodableTests.swift in Sources */,
 				9E2DA75D1CBC77AB00CAF3DF /* DecodeAsOneOfTests.swift in Sources */,
@@ -712,6 +717,7 @@
 				8F4453EF1D369FF200C19099 /* ParseTests.swift in Sources */,
 				8F84E70F1C3CB92D001EA4CE /* NSValueDecodableTests.swift in Sources */,
 				8F4B52651B5BAA5700FDCBA7 /* ArrayTests.swift in Sources */,
+				8F85E7781E13DA16000D6989 /* NSNullTests.swift in Sources */,
 				8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */,
 				FFE77E221B5396FC00E52F28 /* Repository.swift in Sources */,
 				9E2DA75C1CBC77AB00CAF3DF /* DecodeAsOneOfTests.swift in Sources */,

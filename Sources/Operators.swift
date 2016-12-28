@@ -24,9 +24,8 @@ public func => (lhs: Any, rhs: KeyPath) throws -> Any {
 
 
 public func =>? (lhs: Any, rhs: OptionalKeyPath) throws -> Any? {
-    return try parse(lhs, keyPath: rhs, decoder: { $0 })
+    return try parse(lhs, keyPath: rhs, decoder: Optional.decoder({$0}))
 }
-
 
 // MARK: - JSONPath
 
