@@ -19,6 +19,16 @@ public func cast<T>(_ object: Any) throws -> T {
     return result
 }
 
+public protocol Castable: Decodable {
+    
+}
+
+extension Castable {
+    public static func decode(_ json: Any) throws -> Self {
+        return try cast(json)
+    }
+}
+
 /// Allows overriding default `decode` function from your app.
 /// 
 /// You likely don't want to conform to this yourself.
@@ -41,18 +51,10 @@ extension Decodable where Self: DynamicDecodable, Self.DecodedType == Self {
     }
 }
 
-extension String: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> String = { try cast($0) }
-}
-extension Int: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> Int = { try cast($0) }
-}
-extension Double: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> Double = { try cast($0) }
-}
-extension Bool: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> Bool = { try cast($0) }
-}
+extension String: Castable {}
+extension Int: Castable {}
+extension Double: Castable {}
+extension Bool: Castable {}
 
 private let iso8601DateFormatter: DateFormatter = {
     let formatter = DateFormatter()
@@ -99,14 +101,12 @@ extension NSArray: DynamicDecodable {
 
 }
 
-
-extension URL: DynamicDecodable, Decodable {
-	public static var decoder: (Any) throws -> URL = { object in
-		let string = try String.decode(object)
-		guard let url = URL(string: string) else {
-			let metadata = DecodingError.Metadata(object: object)
-			throw DecodingError.rawRepresentableInitializationError(rawValue: string, metadata)
-		}
-		return url
-	}
+extension URL: RawRepresentable {
+    public init?(rawValue: String) {
+        self.init(string: rawValue)
+    }
+    
+    public var rawValue: String {
+        return self.absoluteString
+    }
 }
