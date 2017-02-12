@@ -63,28 +63,19 @@ private let iso8601DateFormatter: DateFormatter = {
     return formatter
 }()
 
-extension Date: Decodable, DynamicDecodable {
-    /// Default decoder is `Date.decoder(using: iso8601DateFormatter)`
-    public static var decoder: (Any) throws -> Date = Date.decoder(using: iso8601DateFormatter)
-    
-    /// Create a decode closure using a given formatter
+
+extension DateFormatter {
+    /// Cast json to string and convert to a Date
     ///
-    /// Example usage:
-    /// ```
-    /// let formatter = DateFormatter(...)
-    /// Date.decoder = Date.decoder(using: formatter)
-    /// ```
-    public static func decoder(using formatter: DateFormatter) -> (Any) throws -> Date {
-        return { object in
-            let string = try String.decode(object)
-            guard let date = formatter.date(from: string) else {
-                let metadata = DecodingError.Metadata(object: object)
-                throw DecodingError.rawRepresentableInitializationError(rawValue: string, metadata)
-            }
-            return date
+    /// - throws: DecodingError.rawRepresentableInitializationError if the string can't be converted to a Date.
+    func decode(_ json: Any) throws -> Date {
+        let string = try String.decode(json)
+        guard let date = self.date(from: string) else {
+            let metadata = DecodingError.Metadata(object: json)
+            throw DecodingError.rawRepresentableInitializationError(rawValue: string, metadata)
         }
+        return date
     }
-    
 }
 
 extension NSDictionary: Decodable {
