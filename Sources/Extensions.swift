@@ -22,7 +22,17 @@ extension URL: RawRepresentable {
 
 // MARK: Dates
 
-private let iso8601DateFormatter: DateFormatter = {
+/// A pre iOS 10 compitable ISO 8601 date formatter that can be used
+/// to implement a `Date: Decodable` extensions:
+///
+/// ```
+/// extension Date: Decodable {
+///     public static func decode(_ json: Any) throws -> Date {
+///         return try iso8601DateFormatter.decode(json)
+///     }
+/// }
+/// ```
+public let iso8601DateFormatter: DateFormatter = {
     let formatter = DateFormatter()
     formatter.locale = Locale(identifier: "en_US_POSIX")
     formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
@@ -34,6 +44,16 @@ extension DateFormatter {
     /// Cast json to string and convert to a Date
     ///
     /// - throws: DecodingError.rawRepresentableInitializationError if the string can't be converted to a Date.
+    ///
+    /// Can be used to implement a `Date: Decodable` extension like this:
+    ///
+    /// ```
+    /// extension Date: Decodable {
+    ///     public static func decode(_ json: Any) throws -> Date {
+    ///         return try iso8601DateFormatter.decode(json)
+    ///     }
+    /// }
+    /// ```
     func decode(_ json: Any) throws -> Date {
         let string = try String.decode(json)
         guard let date = self.date(from: string) else {
