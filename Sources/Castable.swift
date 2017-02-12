@@ -19,15 +19,18 @@ public func cast<T>(_ object: Any) throws -> T {
     return result
 }
 
-public protocol Castable: Decodable {
-    
-}
+public protocol Castable: Decodable {}
 
 extension Castable {
     public static func decode(_ json: Any) throws -> Self {
         return try cast(json)
     }
 }
+
+extension String: Castable {}
+extension Int: Castable {}
+extension Double: Castable {}
+extension Bool: Castable {}
 
 /// Allows overriding default `decode` function from your app.
 /// 
@@ -51,33 +54,6 @@ extension Decodable where Self: DynamicDecodable, Self.DecodedType == Self {
     }
 }
 
-extension String: Castable {}
-extension Int: Castable {}
-extension Double: Castable {}
-extension Bool: Castable {}
-
-private let iso8601DateFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.locale = Locale(identifier: "en_US_POSIX")
-    formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZZZZZ"
-    return formatter
-}()
-
-
-extension DateFormatter {
-    /// Cast json to string and convert to a Date
-    ///
-    /// - throws: DecodingError.rawRepresentableInitializationError if the string can't be converted to a Date.
-    func decode(_ json: Any) throws -> Date {
-        let string = try String.decode(json)
-        guard let date = self.date(from: string) else {
-            let metadata = DecodingError.Metadata(object: json)
-            throw DecodingError.rawRepresentableInitializationError(rawValue: string, metadata)
-        }
-        return date
-    }
-}
-
 extension NSDictionary: Decodable {
     public static func decode(_ json: Any) throws -> Self {
         return try cast(json)
@@ -90,14 +66,4 @@ extension NSArray: DynamicDecodable {
         return try decoder(json)
     }
 
-}
-
-extension URL: RawRepresentable {
-    public init?(rawValue: String) {
-        self.init(string: rawValue)
-    }
-    
-    public var rawValue: String {
-        return self.absoluteString
-    }
 }
