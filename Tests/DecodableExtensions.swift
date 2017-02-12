@@ -18,7 +18,8 @@ extension UInt16: NSNumberCastable {}
 extension UInt32: NSNumberCastable {}
 extension UInt64: NSNumberCastable {}
 
-// URL conforms to `RawRepresentable` which has a default Decodable implementation.
+// URL conforms to `RawRepresentable` which has a default Decodable implementation. RawRepresentable enums 
+// can also be extended this way.
 extension URL: Decodable {}
 
 extension Date: Decodable {
