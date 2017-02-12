@@ -9,13 +9,15 @@
 import Foundation
 import Decodable
 
-// Castable types
+// Castable provides a default Decodable implementation assuming the json object can be cast 
+// using `json as? Self`
 extension Bool: Castable {}
 extension String: Castable {}
 extension Double: Castable {}
 extension Int: Castable {}
 
-// NSNumberCastable types
+// NSNumberCastable provides a default Decodable implementation where the json object is first cast a NSNumber,
+// then the raw value is accessed.
 extension Int8: NSNumberCastable {}
 extension Int16: NSNumberCastable {}
 extension Int32: NSNumberCastable {}
@@ -25,7 +27,7 @@ extension UInt16: NSNumberCastable {}
 extension UInt32: NSNumberCastable {}
 extension UInt64: NSNumberCastable {}
 
-// URL and Date
+// URL conforms to `RawRepresentable` which has a default Decodable implementation.
 extension URL: Decodable {}
 
 extension Date: Decodable {
