@@ -8,18 +8,6 @@
 
 import Foundation
 
-// MARK: URLs
-
-extension URL: RawRepresentable {
-    public init?(rawValue: String) {
-        self.init(string: rawValue)
-    }
-    
-    public var rawValue: String {
-        return self.absoluteString
-    }
-}
-
 // MARK: Dates
 
 /// A pre iOS 10 compitable ISO 8601 date formatter that can be used

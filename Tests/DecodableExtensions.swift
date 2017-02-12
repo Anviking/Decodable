@@ -18,9 +18,16 @@ extension UInt16: NSNumberCastable {}
 extension UInt32: NSNumberCastable {}
 extension UInt64: NSNumberCastable {}
 
-// URL conforms to `RawRepresentable` which has a default Decodable implementation. RawRepresentable enums 
-// can also be extended this way.
-extension URL: Decodable {}
+extension URL {
+    public static func decode(_ json: Any) throws -> URL {
+        let string = try String.decode(json)
+        guard let url = URL(string: string) else {
+            let metadata = DecodingError.Metadata(object: json)
+            throw DecodingError.rawRepresentableInitializationError(rawValue: string, metadata)
+        }
+        return url
+    }
+}
 
 extension Date: Decodable {
      public static func decode(_ json: Any) throws -> Date {
