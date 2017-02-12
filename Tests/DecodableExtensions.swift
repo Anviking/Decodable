@@ -18,7 +18,9 @@ extension UInt16: NSNumberCastable {}
 extension UInt32: NSNumberCastable {}
 extension UInt64: NSNumberCastable {}
 
-extension URL {
+// Types conforming RawRepresentable (e.g enums) can be become Decodable with one line. URL is not RawRepresentable, though and
+// making it that could lead to ambiguity if URL.init is accessed. Hence this extension is a little longer.
+extension URL: Decodable {
     public static func decode(_ json: Any) throws -> URL {
         let string = try String.decode(json)
         guard let url = URL(string: string) else {
