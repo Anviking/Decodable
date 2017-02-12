@@ -54,7 +54,7 @@ extension DateFormatter {
     ///     }
     /// }
     /// ```
-    func decode(_ json: Any) throws -> Date {
+    public func decode(_ json: Any) throws -> Date {
         let string = try String.decode(json)
         guard let date = self.date(from: string) else {
             let metadata = DecodingError.Metadata(object: json)
