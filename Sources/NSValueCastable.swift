@@ -8,28 +8,28 @@
 
 import Foundation
 
-extension Int64: NSNumberCastable {
+extension Int64 {
     public static func convertFrom(_ n: NSNumber) -> Int64 { return n.int64Value }
 }
-extension Int32: NSNumberCastable {
+extension Int32 {
     public static func convertFrom(_ n: NSNumber) -> Int32 { return n.int32Value }
 }
-extension Int16: NSNumberCastable {
+extension Int16 {
     public static func convertFrom(_ n: NSNumber) -> Int16 { return n.int16Value }
 }
-extension Int8: NSNumberCastable {
+extension Int8 {
     public static func convertFrom(_ n: NSNumber) -> Int8 { return n.int8Value }
 }
-extension UInt64: NSNumberCastable {
+extension UInt64 {
     public static func convertFrom(_ n: NSNumber) -> UInt64 { return n.uint64Value }
 }
-extension UInt32: NSNumberCastable {
+extension UInt32 {
     public static func convertFrom(_ n: NSNumber) -> UInt32 { return n.uint32Value }
 }
-extension UInt16: NSNumberCastable {
+extension UInt16 {
     public static func convertFrom(_ n: NSNumber) -> UInt16 { return n.uint16Value }
 }
-extension UInt8: NSNumberCastable {
+extension UInt8 {
     public static func convertFrom(_ n: NSNumber) -> UInt8 { return n.uint8Value }
 }
 
@@ -37,7 +37,7 @@ extension UInt8: NSNumberCastable {
 public protocol NSValueCastable {}
 
 /// Used to enable decoding to different IntegerTypes from NSNumber.
-public protocol NSNumberCastable: NSValueCastable {
+public protocol NSNumberCastable: Decodable {
     static func convertFrom(_ n: NSNumber) -> Self
 }
 

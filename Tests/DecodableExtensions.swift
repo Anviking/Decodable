@@ -16,14 +16,14 @@ extension Double: Castable {}
 extension Int: Castable {}
 
 // NSNumberCastable types
-extension Int8: Decodable {}
-extension Int16: Decodable {}
-extension Int32: Decodable {}
-extension Int64: Decodable {}
-extension UInt8: Decodable {}
-extension UInt16: Decodable {}
-extension UInt32: Decodable {}
-extension UInt64: Decodable {}
+extension Int8: NSNumberCastable {}
+extension Int16: NSNumberCastable {}
+extension Int32: NSNumberCastable {}
+extension Int64: NSNumberCastable {}
+extension UInt8: NSNumberCastable {}
+extension UInt16: NSNumberCastable {}
+extension UInt32: NSNumberCastable {}
+extension UInt64: NSNumberCastable {}
 
 // URL and Date
 extension URL: Decodable {}
