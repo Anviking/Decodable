@@ -27,11 +27,6 @@ extension Castable {
     }
 }
 
-extension String: Castable {}
-extension Int: Castable {}
-extension Double: Castable {}
-extension Bool: Castable {}
-
 /// Allows overriding default `decode` function from your app.
 /// 
 /// You likely don't want to conform to this yourself.
@@ -40,7 +35,7 @@ public protocol DynamicDecodable {
     
     /// A closure describing how this type should be decoded
     /// 
-    /// Types also conforming to `Decodable` call this closure 
+    /// Types also conforming to `Decodable` call this closure
     /// from their `decode` function.
     ///
     /// - note: This is intended as a set-once thing.

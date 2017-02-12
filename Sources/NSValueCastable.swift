@@ -34,7 +34,7 @@ extension UInt8: NSNumberCastable {
 }
 
 /// Provides a default implementation of decode() which casts the object to a NSValue and unsafely casts its value as Self.
-public protocol NSValueCastable: Decodable {}
+public protocol NSValueCastable {}
 
 /// Used to enable decoding to different IntegerTypes from NSNumber.
 public protocol NSNumberCastable: NSValueCastable {
