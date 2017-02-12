@@ -32,4 +32,4 @@ extension Date: Decodable {
      public static func decode(_ json: Any) throws -> Date {
          return try iso8601DateFormatter.decode(json)
      }
- }
+}
