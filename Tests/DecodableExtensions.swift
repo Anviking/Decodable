@@ -1,12 +1,3 @@
-//
-//  DecodableExtensions.swift
-//  Decodable
-//
-//  Created by Johannes Lund on 2017-02-12.
-//  Copyright © 2017 anviking. All rights reserved.
-//
-
-import Foundation
 import Decodable
 
 // Castable provides a default Decodable implementation assuming the json object can be cast 
