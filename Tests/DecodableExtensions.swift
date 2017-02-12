@@ -1,3 +1,4 @@
+import Foundation
 import Decodable
 
 // Castable provides a default Decodable implementation assuming the json object can be cast 

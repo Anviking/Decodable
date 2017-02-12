@@ -49,7 +49,6 @@
 		8F5214CA1E510DB2001059A1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5214C61E510DB2001059A1 /* Extensions.swift */; };
 		8F5214CC1E51139D001059A1 /* DecodableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5214CB1E51139D001059A1 /* DecodableExtensions.swift */; };
 		8F5214CD1E51139D001059A1 /* DecodableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5214CB1E51139D001059A1 /* DecodableExtensions.swift */; };
-		8F5214CE1E51139D001059A1 /* DecodableExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F5214CB1E51139D001059A1 /* DecodableExtensions.swift */; };
 		8F53521D1BE4112900E3563A /* DictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F53521C1BE4112900E3563A /* DictionaryTests.swift */; };
 		8F53521E1BE4112900E3563A /* DictionaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F53521C1BE4112900E3563A /* DictionaryTests.swift */; };
 		8F6FCF5F1D4B39FC00838CE4 /* DynamicDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F6FCF5E1D4B39FC00838CE4 /* DynamicDecodableTests.swift */; };
@@ -675,7 +674,6 @@
 				8F5214CA1E510DB2001059A1 /* Extensions.swift in Sources */,
 				8F0062421C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B31C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
-				8F5214CE1E51139D001059A1 /* DecodableExtensions.swift in Sources */,
 				8F72DC591C3CB8C900A39E10 /* NSValueCastable.swift in Sources */,
 				8F3E45A71D327E4500FB71FC /* Decoders.swift in Sources */,
 			);
