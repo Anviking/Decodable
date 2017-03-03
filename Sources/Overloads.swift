@@ -16,8 +16,8 @@
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode)))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -27,8 +27,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A]?]? {
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: B]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: B]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -38,8 +38,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [A?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(A.decode))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(A.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -49,8 +49,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [A?]? {
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode)))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -60,8 +60,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A?]]? {
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode)))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -71,8 +71,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A]]]? {
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A: B]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A: B]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -82,8 +82,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(A.decode))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(A.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -93,8 +93,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A]]? {
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: B?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: B?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -104,8 +104,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -115,8 +115,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B: C]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B: C]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -126,8 +126,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: B]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: B]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -137,8 +137,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [A]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(A.decode)))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(A.decode)))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -148,8 +148,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [A]? {
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -159,8 +159,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: C]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: C]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -170,8 +170,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: B?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: B?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -181,8 +181,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -192,8 +192,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -203,8 +203,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B: C]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B: C]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -214,8 +214,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -225,8 +225,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: C?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: C?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -236,8 +236,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -247,8 +247,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C: D]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C: D]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -258,8 +258,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: C]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: C]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -269,8 +269,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: B]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: B]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -280,8 +280,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError` if a key is missing or decoding fails.
 /// - returns: `nil` if the object at `path` is `NSNull`
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> A? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(A.decode))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> A? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(A.decode))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -291,8 +291,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> A? {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A?]?] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Array.decoder(Optional.decoder(A.decode)))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A?]?] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Array.decoder(Optional.decoder(A.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -302,8 +302,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A?]?] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A]]?] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Array.decoder(Array.decoder(A.decode)))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A]]?] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Array.decoder(Array.decoder(A.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -313,8 +313,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A]]?] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A: B]]?] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A: B]]?] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -324,8 +324,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A]?] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Array.decoder(A.decode))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A]?] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Array.decoder(A.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -335,8 +335,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A]?] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: B?]?] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: B?]?] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -346,8 +346,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B]]?] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B]]?] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -357,8 +357,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B: C]]?] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B: C]]?] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -368,8 +368,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: B]?] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: B]?] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -379,8 +379,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [A?] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Optional.decoder(A.decode)))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A?] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Optional.decoder(A.decode)))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -390,8 +390,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [A?] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A]?]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode)))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A]?]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -401,8 +401,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A]?]] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A: B]?]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A: B]?]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -412,8 +412,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A?]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Optional.decoder(A.decode))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A?]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Optional.decoder(A.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -423,8 +423,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A?]] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A?]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode)))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A?]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -434,8 +434,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A?]]] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[[A]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode)))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[[A]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -445,8 +445,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[[A]]]] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[[A: B]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[[A: B]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -456,8 +456,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Array.decoder(A.decode))))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Array.decoder(A.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -467,8 +467,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A]]] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A: B?]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A: B?]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -478,8 +478,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A: [B]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A: [B]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -489,8 +489,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A: [B: C]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A: [B: C]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -500,8 +500,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[[A: B]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[[A: B]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -511,8 +511,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Array.decoder(A.decode)))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Array.decoder(A.decode)))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -522,8 +522,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A]] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B]?]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B]?]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -533,8 +533,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B: C]?]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B: C]?]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -544,8 +544,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: B?]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: B?]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -555,8 +555,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B?]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B?]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -566,8 +566,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [[B]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [[B]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -577,8 +577,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [[B: C]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [[B: C]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -588,8 +588,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -599,8 +599,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B: C?]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B: C?]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -610,8 +610,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B: [C]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B: [C]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -621,8 +621,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B: [C: D]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B: [C: D]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -632,8 +632,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: [B: C]]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: [B: C]]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -643,8 +643,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [[A: B]] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [[A: B]] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -654,8 +654,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [A] {
-    return try parse(json, keyPath: keyPath, decoder: Array.decoder(A.decode))
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A] {
+    return try json.parse(keyPath: keyPath, decoder: Array.decoder(A.decode))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -665,8 +665,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> [A] {
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B?]?] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Optional.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B?]?] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Optional.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -676,8 +676,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B]]?] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Array.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B]]?] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Array.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -687,8 +687,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B: C]]?] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B: C]]?] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -698,8 +698,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B]?] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B]?] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -709,8 +709,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: C?]?] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: C?]?] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -720,8 +720,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C]]?] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C]]?] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -731,8 +731,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C: D]]?] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C: D]]?] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -742,8 +742,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: C]?] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: C]?] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -753,8 +753,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: B?] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: B?] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -764,8 +764,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B]?]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Array.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B]?]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Array.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -775,8 +775,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B: C]?]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B: C]?]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -786,8 +786,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B?]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B?]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -797,8 +797,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B?]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Optional.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B?]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Optional.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -808,8 +808,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[[B]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Array.decoder(B.decode)))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[[B]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Array.decoder(B.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -819,8 +819,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[[B: C]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[[B: C]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -830,8 +830,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode))))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -841,8 +841,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B: C?]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B: C?]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -852,8 +852,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B: [C]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B: [C]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -863,8 +863,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B: [C: D]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B: [C: D]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -874,8 +874,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [[B: C]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [[B: C]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -885,8 +885,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -896,8 +896,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C]?]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Array.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C]?]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Array.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -907,8 +907,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C: D]?]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Dictionary.decoder(key: C.decode, value: D.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C: D]?]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Dictionary.decoder(key: C.decode, value: D.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -918,8 +918,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: C?]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: C?]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -929,8 +929,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C?]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Optional.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C?]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Optional.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -940,8 +940,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [[C]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Array.decoder(C.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [[C]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Array.decoder(C.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -951,8 +951,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [[C: D]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Dictionary.decoder(key: C.decode, value: D.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [[C: D]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Dictionary.decoder(key: C.decode, value: D.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -962,8 +962,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode))))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -973,8 +973,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C: D?]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Optional.decoder(D.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C: D?]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Optional.decoder(D.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -984,8 +984,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C: [D]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Array.decoder(D.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C: [D]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Array.decoder(D.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -995,8 +995,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C: [D: E]]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Dictionary.decoder(key: D.decode, value: E.decode)))))
+public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C: [D: E]]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Dictionary.decoder(key: D.decode, value: E.decode)))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1006,8 +1006,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decod
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: [C: D]]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode))))
+public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: [C: D]]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode))))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1017,8 +1017,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: An
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: [B: C]] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))
+public func => <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: [B: C]] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1028,8 +1028,8 @@ public func => <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: Ke
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws -> [A: B] {
-    return try parse(json, keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: B.decode))
+public func => <A: Decodable, B: Decodable>(json: JSON, keyPath: KeyPath) throws -> [A: B] {
+    return try json.parse(keyPath: keyPath, decoder: Dictionary.decoder(key: A.decode, value: B.decode))
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1039,8 +1039,8 @@ public func => <A: Decodable, B: Decodable>(json: Any, keyPath: KeyPath) throws 
 /// - throws: `DecodingError.typeMismatchError`,`.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: something
 ///
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> A {
-    return try parse(json, keyPath: keyPath, decoder: A.decode)
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> A {
+    return try json.parse(keyPath: keyPath, decoder: A.decode)
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1050,8 +1050,8 @@ public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> A {
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A?]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(Optional.decoder(A.decode))))))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A?]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(Optional.decoder(A.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1061,8 +1061,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[A]]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(Array.decoder(A.decode))))))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[A]]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(Array.decoder(A.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1072,8 +1072,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[A: B]]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[A: B]]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1083,8 +1083,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode)))))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1094,8 +1094,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: B?]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: B?]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1105,8 +1105,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [B]]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [B]]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1116,8 +1116,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [B: C]]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [B: C]]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1127,8 +1127,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: B]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: B]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1138,8 +1138,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(A.decode))))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Optional.decoder(A.decode)))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1149,8 +1149,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[A]?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode))))))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[A]?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(Array.decoder(A.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1160,8 +1160,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[A: B]?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[A: B]?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1171,8 +1171,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode)))))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1182,8 +1182,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[A?]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode))))))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[A?]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(Optional.decoder(A.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1193,8 +1193,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[[A]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode))))))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[[A]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1204,8 +1204,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[[A: B]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[[A: B]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1215,8 +1215,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[A]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode)))))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[A]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Array.decoder(A.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1226,8 +1226,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[A: B?]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[A: B?]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1237,8 +1237,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[A: [B]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[A: [B]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1248,8 +1248,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[A: [B: C]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[A: [B: C]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1259,8 +1259,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[[A: B]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[[A: B]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1270,8 +1270,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(A.decode))))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Array.decoder(A.decode)))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1281,8 +1281,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [B]?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [B]?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1292,8 +1292,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [B: C]?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [B: C]?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1303,8 +1303,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: B?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: B?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1314,8 +1314,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [B?]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [B?]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1325,8 +1325,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [[B]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [[B]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1336,8 +1336,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [[B: C]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [[B: C]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1347,8 +1347,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [B]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [B]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1358,8 +1358,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [B: C?]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [B: C?]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1369,8 +1369,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [B: [C]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [B: [C]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1380,8 +1380,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [B: [C: D]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [B: [C: D]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1391,8 +1391,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: [B: C]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: [B: C]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1402,8 +1402,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [[A: B]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [[A: B]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1413,8 +1413,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Array.decoder(A.decode)))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Array.decoder(A.decode))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1424,8 +1424,8 @@ public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B?]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Optional.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B?]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Optional.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1435,8 +1435,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[B]]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Array.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[B]]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Array.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1446,8 +1446,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[B: C]]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[B: C]]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1457,8 +1457,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode)))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Array.decoder(B.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1468,8 +1468,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: C?]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: C?]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1479,8 +1479,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [C]]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [C]]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1490,8 +1490,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [C: D]]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [C: D]]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1501,8 +1501,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: C]?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: C]?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1512,8 +1512,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: B?]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: B?]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Optional.decoder(B.decode)))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1523,8 +1523,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[B]?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Array.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[B]?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Array.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1534,8 +1534,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[B: C]?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[B: C]?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1545,8 +1545,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode)))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Optional.decoder(B.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1556,8 +1556,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[B?]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Optional.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[B?]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Optional.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1567,8 +1567,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[[B]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Array.decoder(B.decode))))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[[B]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Array.decoder(B.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1578,8 +1578,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[[B: C]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[[B: C]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1589,8 +1589,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[B]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode)))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[B]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Array.decoder(B.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1600,8 +1600,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[B: C?]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[B: C?]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1611,8 +1611,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[B: [C]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[B: [C]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1622,8 +1622,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[B: [C: D]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[B: [C: D]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1633,8 +1633,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [[B: C]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode)))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [[B: C]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(Dictionary.decoder(key: B.decode, value: C.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1644,8 +1644,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode))))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Array.decoder(B.decode)))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1655,8 +1655,8 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [C]?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Array.decoder(C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [C]?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Array.decoder(C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1666,8 +1666,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [C: D]?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Dictionary.decoder(key: C.decode, value: D.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [C: D]?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(Dictionary.decoder(key: C.decode, value: D.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1677,8 +1677,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: C?]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode)))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: C?]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Optional.decoder(C.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1688,8 +1688,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [C?]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Optional.decoder(C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [C?]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Optional.decoder(C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1699,8 +1699,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [[C]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Array.decoder(C.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [[C]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Array.decoder(C.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1710,8 +1710,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [[C: D]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Dictionary.decoder(key: C.decode, value: D.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [[C: D]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(Dictionary.decoder(key: C.decode, value: D.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1721,8 +1721,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [C]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode)))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [C]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Array.decoder(C.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1732,8 +1732,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [C: D?]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Optional.decoder(D.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [C: D?]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Optional.decoder(D.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1743,8 +1743,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [C: [D]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Array.decoder(D.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [C: [D]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Array.decoder(D.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1754,8 +1754,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [C: [D: E]]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Dictionary.decoder(key: D.decode, value: E.decode))))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [C: [D: E]]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: Dictionary.decoder(key: D.decode, value: E.decode)))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1765,8 +1765,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable, E: Deco
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: [C: D]]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode)))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: [C: D]]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: Dictionary.decoder(key: C.decode, value: D.decode))))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1776,8 +1776,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable, D: Decodable>(json: A
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: [B: C]]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode))))
+public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: [B: C]]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: Dictionary.decoder(key: B.decode, value: C.decode)))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1787,8 +1787,8 @@ public func =>? <A: Decodable, B: Decodable, C: Decodable>(json: Any, keyPath: O
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> [A: B]? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode)))
+public func =>? <A: Decodable, B: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> [A: B]? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(Dictionary.decoder(key: A.decode, value: B.decode))).flatMap{$0}
 }
 
 /// Retrieves the object at `path` from `json` and decodes it according to the return type
@@ -1798,6 +1798,6 @@ public func =>? <A: Decodable, B: Decodable>(json: Any, keyPath: OptionalKeyPath
 /// - throws: `DecodingError.typeMismatch, `.other(error, metadata)` or possible `.missingKeyError` on required keys
 /// - returns: `nil` if the object at `path` is `NSNull` or if any optional key is missing.
 ///
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> A? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(A.decode))
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> A? {
+    return try json.parse(keyPath: keyPath, decoder: Optional.decoder(A.decode)).flatMap{$0}
 }

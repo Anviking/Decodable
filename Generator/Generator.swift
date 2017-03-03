@@ -168,12 +168,13 @@ indirect enum Decodable {
         
         let arguments = provider.takenNames.values.sorted().map { $0 + ": Decodable" }
         let generics = arguments.count > 0 ? "<\(arguments.joined(separator: ", "))>" : ""
+        var final = ""
         
         switch operatorString {
         case "=>":
             behaviour = Behaviour(throwsIfKeyMissing: true, throwsIfNull: !isOptional, throwsFromDecodeClosure: true)
             keyPathType = "KeyPath"
-            
+
             /*
             // Start again
             guard isOptional else { break }
@@ -190,13 +191,14 @@ indirect enum Decodable {
             // Never trows if null
             behaviour = Behaviour(throwsIfKeyMissing: false, throwsIfNull: false, throwsFromDecodeClosure: true)
             keyPathType = "OptionalKeyPath"
+            final = ".flatMap{$0}" // flatten double optionals
         default:
             fatalError()
         }
         
         let documentation = generateDocumentationComment(behaviour)
-        return overloads + [documentation + "public func \(operatorString) \(generics)(json: Any, keyPath: \(keyPathType)) throws -> \(returnType) {\n" +
-            "    return try parse(json, keyPath: keyPath, decoder: \(decodeClosure(provider)))\n" +
+        return overloads + [documentation + "public func \(operatorString) \(generics)(json: JSON, keyPath: \(keyPathType)) throws -> \(returnType) {\n" +
+            "    return try json.parse(keyPath: keyPath, decoder: \(decodeClosure(provider)))\(final)\n" +
             "}"
         ]
     }

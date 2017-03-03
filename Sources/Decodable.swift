@@ -9,12 +9,12 @@
 import Foundation
 
 public protocol Decodable {
-    static func decode(_ json: Any) throws -> Self
+    static func decode(_ json: JSON) throws -> Self
 }
 
 
 extension Dictionary where Key: Decodable, Value: Decodable {
-    public static func decode(_ j: Any) throws -> Dictionary {
+    public static func decode(_ j: JSON) throws -> Dictionary {
         return try Dictionary.decoder(key: Key.decode, value: Value.decode)(j)
     }
 }
@@ -32,7 +32,7 @@ extension Dictionary where Key: Decodable, Value: Any {
 */
 
 extension Array where Element: Decodable {
-    public static func decode(_ j: Any, ignoreInvalidObjects: Bool = false) throws -> [Element] {
+    public static func decode(_ j: JSON, ignoreInvalidObjects: Bool = false) throws -> [Element] {
         if ignoreInvalidObjects {
             return try [Element?].decoder { try? Element.decode($0) }(j).flatMap {$0}
         } else {
@@ -43,7 +43,7 @@ extension Array where Element: Decodable {
 
 
 
-
+/*
 // MARK: Helpers
 
 /// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
@@ -67,3 +67,4 @@ public func decodeArrayAsOneOf(_ json: Any, objectTypes: Decodable.Type...) thro
 		return try objectTypes.last!.decode($0)
 	}
 }
+*/
