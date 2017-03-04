@@ -14,7 +14,7 @@ import Foundation
 public func cast<T>(_ object: JSON) throws -> T {
     guard let result = object.json as? T else {
         let metadata = DecodingError.Metadata(object: object)
-        throw DecodingError.typeMismatch(expected: T.self, actual: type(of: object), metadata)
+        throw DecodingError.typeMismatch(expected: T.self, actual: type(of: object.json), metadata)
     }
     return result
 }

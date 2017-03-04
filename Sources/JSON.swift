@@ -19,6 +19,10 @@ public struct JSON: Decodable {
         self.metadata = metadata ?? DecodingError.Metadata(object: value)
     }
     
+    public init(jsonData: Data, options: JSONSerialization.ReadingOptions = []) throws {
+        try self.init(value: JSONSerialization.jsonObject(with: jsonData, options: options))
+    }
+    
     
     
     public func parse<T: Decodable>(key: String) throws -> T {
@@ -72,6 +76,12 @@ public struct JSON: Decodable {
     public func with(json: Any) -> JSON {
         var new = self
         new.json = json
+        return new
+    }
+    
+    public func map(_ f: (Any) -> Any) -> JSON {
+        var new = self
+        new.json = f(json)
         return new
     }
     

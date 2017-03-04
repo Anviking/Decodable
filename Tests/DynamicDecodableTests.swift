@@ -48,8 +48,8 @@ class DynamicDecodableTests: XCTestCase {
         let arrayJSON: NSArray = ["a", "b", "c"]
         let objectJSON: NSString = "d"
         
-        XCTAssertEqual(try! [String].decode(JSON(arrayJSON)), ["a", "b", "c"])
-        XCTAssertEqual(try! [String].decode(JSON(objectJSON)), ["d"])
+        XCTAssertEqual(try! [String].decode(JSON(value: arrayJSON)), ["a", "b", "c"])
+        XCTAssertEqual(try! [String].decode(JSON(value: objectJSON)), ["d"])
         
         NSArray.decoder = originalNSArrayDecoder
         

@@ -9,6 +9,15 @@
 import XCTest
 @testable import Decodable
 
+extension JSON {
+    init(fromFile file: String) throws {
+        let bundle = Bundle(for: object_getClass(DecodableTests.self))
+        let url = bundle.resourceURL!.appendingPathComponent(file)
+        let data = try Data(contentsOf: url)
+        try self.init(jsonData: data)
+    }
+}
+
 class DecodableTests: XCTestCase {
     
     private func readJsonFile(_ file: String) -> NSDictionary {
@@ -55,7 +64,7 @@ class DecodableTests: XCTestCase {
     
     func testDecodeArrayOfRepositoriesAndMeasureTime() {
         let json = readJsonFile("Repository.json")
-        let array = JSON(NSArray(array: Array(repeating: json, count: Count)))
+        let array = JSON(value: NSArray(array: Array(repeating: json, count: Count)))
         
         var result: [Repository] = []
         measure {
@@ -160,7 +169,7 @@ class DecodableTests: XCTestCase {
     
     func testDecodeRepositoryExampleNestedShouldThrowTypeMismatchException() {
         // given
-        let json = JSON(["key": readJsonFile("typeMismatch.json")])
+        let json = try! JSON(fromFile: "typeMismatch.json").map { ["key": $0 ]}
         
         // when
         do {

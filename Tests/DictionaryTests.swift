@@ -54,7 +54,7 @@ class DictionaryTests: XCTestCase {
     
     func testDictionaryWithDecodableValues() {
         let json: NSDictionary = ["r": "red", "g": "green"]
-        let result = try! [String: Color].decode(JSON(json))
+        let result = try! [String: Color].decode(JSON(value: json))
         XCTAssertEqual(["r": Color(name: "red"), "g": Color(name: "green")], result)
     }
     
