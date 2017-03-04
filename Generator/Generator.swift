@@ -238,7 +238,7 @@ dateFormatter.dateStyle = .short
 
 let date = dateFormatter.string(from: Date())
 
-let overloads = Decodable.T(Unique()).generateAllPossibleChildren(4)
+let overloads = Decodable.T(Unique()).generateAllPossibleChildren(2)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
 let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).map{ $0.wrapInOptionalIfNeeded() }.flatMap { $0.generateOverloads("=>?") }
 
