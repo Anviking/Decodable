@@ -55,7 +55,7 @@ class DecodableTests: XCTestCase {
     
     func testDecodeArrayOfRepositoriesAndMeasureTime() {
         let json = readJsonFile("Repository.json")
-        let array = NSArray(array: Array(repeating: json, count: Count))
+        let array = JSON(NSArray(array: Array(repeating: json, count: Count)))
         
         var result: [Repository] = []
         measure {
@@ -160,11 +160,11 @@ class DecodableTests: XCTestCase {
     
     func testDecodeRepositoryExampleNestedShouldThrowTypeMismatchException() {
         // given
-        let json: NSDictionary = ["key": readJsonFile("typeMismatch.json")]
+        let json = JSON(["key": readJsonFile("typeMismatch.json")])
         
         // when
         do {
-            _ = (try parse(json, keyPath: ["key"], decoder: Repository.decode)) as Repository
+            _ = try json.parse(keyPath: "key") as Repository
         } catch DecodingError.missingKey {
             XCTFail("it should not throw this exception")
         } catch let DecodingError.typeMismatch(expected, _, metadata) where expected == Int.self {

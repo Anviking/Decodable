@@ -14,7 +14,7 @@ class NSNullTests: XCTestCase {
     // https://github.com/Anviking/Decodable/issues/135
     func testNullToAny() {
         let json = NSDictionary(dictionary: ["tone": NSNull()])
-        let maybeTone: Any? = try! json =>? "tone"
+        let maybeTone: JSON? = try! json =>? "tone"
         XCTAssertNil(maybeTone)
     }
     

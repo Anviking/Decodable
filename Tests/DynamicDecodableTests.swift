@@ -17,7 +17,7 @@ class DynamicDecodableTests: XCTestCase {
     
     func testCustomBooleanDecoding() {
         Bool.decoder = { json in
-            switch json {
+            switch json.json {
             case let str as String where str == "true":
                 return true
             case let str as String where str == "false":
@@ -37,7 +37,7 @@ class DynamicDecodableTests: XCTestCase {
     
     func testCustomArrayDecoding() {
         NSArray.decoder = { json in
-            switch json {
+            switch json.json {
             case let array as NSArray:
                 return array
             default:
@@ -48,8 +48,8 @@ class DynamicDecodableTests: XCTestCase {
         let arrayJSON: NSArray = ["a", "b", "c"]
         let objectJSON: NSString = "d"
         
-        XCTAssertEqual(try! [String].decode(arrayJSON), ["a", "b", "c"])
-        XCTAssertEqual(try! [String].decode(objectJSON), ["d"])
+        XCTAssertEqual(try! [String].decode(JSON(arrayJSON)), ["a", "b", "c"])
+        XCTAssertEqual(try! [String].decode(JSON(objectJSON)), ["d"])
         
         NSArray.decoder = originalNSArrayDecoder
         

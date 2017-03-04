@@ -15,7 +15,7 @@ public struct JSON: Decodable {
     //var parameters: T
 
     
-    init(_ value: Any, path: [String] = [], rootObject: Any? = nil) {
+    public init(_ value: Any, path: [String] = [], rootObject: Any? = nil) {
         self.json = value
         self.path = path
         self.rootObject = rootObject ?? value

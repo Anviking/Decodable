@@ -30,7 +30,7 @@ class DecodableOperatorsTests: XCTestCase {
         let value: NSDictionary = [key : "value"]
         let dictionary: NSDictionary = [key: value]
         // when
-        let result: NSDictionary = try! dictionary => KeyPath(key) as! NSDictionary
+        let result: NSDictionary = try! dictionary => KeyPath(key)
         // then
         XCTAssertEqual(result, value)
     }
@@ -53,9 +53,9 @@ class DecodableOperatorsTests: XCTestCase {
         let value: NSDictionary = ["aKey" : "value"]
         let dictionary: NSDictionary = ["key": ["key": value]]
         // when
-        let result = try! dictionary => "key" => "key"
+        let result: JSON = try! dictionary => "key" => "key"
         // then
-        XCTAssertEqual(result as? NSDictionary, value)
+        XCTAssertEqual(result.json as? NSDictionary, value)
     }
 
     func testDecodeNestedDictionaryOptionalSuccess() {
@@ -63,7 +63,7 @@ class DecodableOperatorsTests: XCTestCase {
         let value: NSDictionary = ["aKey" : "value"]
         let dictionary: NSDictionary = ["key": ["key": value]]
         // when
-        let result = try! dictionary => "key" => "key" as! [String : Any]
+        let result = try! dictionary => "key" => "key" as [String : JSON]
         // then
         XCTAssertEqual(result as NSDictionary, value)
     }
@@ -85,7 +85,7 @@ class DecodableOperatorsTests: XCTestCase {
         let value: NSDictionary = ["aKey" : "value"]
         let dictionary: NSDictionary = ["key": ["key": value]]
         // when
-        let result = try! dictionary => "key" => "key" as! [String: String]
+        let result = try! dictionary => "key" => "key" as [String: String]
         // then
         XCTAssertEqual(result, value as! [String : String])
     }
@@ -220,7 +220,7 @@ class DecodableOperatorsTests: XCTestCase {
         let dictionary: NSDictionary = [key: value]
         // when
         do {
-            _ = try dictionary => "nokey"
+            let _: JSON = try dictionary => "nokey"
         } catch let DecodingError.missingKey(key, metadata) {
             // then
             XCTAssertEqual(key, "nokey")
@@ -238,7 +238,7 @@ class DecodableOperatorsTests: XCTestCase {
         let noDictionary: NSString = "noDictionary"
         // when
         do {
-            _ = try noDictionary => KeyPath(key)
+            let _: JSON = try noDictionary => KeyPath(key)
         } catch let DecodingError.typeMismatch(expected, actual, metadata) where expected == NSDictionary.self {
             // then
             XCTAssertTrue(true)
@@ -256,7 +256,7 @@ class DecodableOperatorsTests: XCTestCase {
         let dictionary: NSDictionary = [key: "value"]
         // when
         do {
-            _ = try dictionary => KeyPath(key)
+            let _: JSON = try dictionary => KeyPath(key)
         } catch DecodingError.typeMismatch {
             // then
             XCTAssertTrue(true)

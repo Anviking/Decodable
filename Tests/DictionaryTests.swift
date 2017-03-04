@@ -11,7 +11,7 @@ import Decodable
 
 private struct Color: Decodable, Equatable {
     let name: String
-    static func decode(_ json: Any) throws -> Color {
+    static func decode(_ json: JSON) throws -> Color {
         return try Color(name: String.decode(json))
     }
     
@@ -54,7 +54,7 @@ class DictionaryTests: XCTestCase {
     
     func testDictionaryWithDecodableValues() {
         let json: NSDictionary = ["r": "red", "g": "green"]
-        let result = try! [String: Color].decode(json)
+        let result = try! [String: Color].decode(JSON(json))
         XCTAssertEqual(["r": Color(name: "red"), "g": Color(name: "green")], result)
     }
     

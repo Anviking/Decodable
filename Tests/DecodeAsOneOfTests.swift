@@ -6,6 +6,7 @@
 //  Copyright © 2015 anviking. All rights reserved.
 //
 
+/*
 import XCTest
 @testable import Decodable
 
@@ -51,3 +52,4 @@ class DecodeAsOneOfTests: XCTestCase {
         }
     }
 }
+*/

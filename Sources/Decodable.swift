@@ -12,6 +12,12 @@ public protocol Decodable {
     static func decode(_ json: JSON) throws -> Self
 }
 
+extension Decodable {
+    static func decode(_ json: Any) throws -> Self {
+        return try Self.decode(JSON(json))
+    }
+}
+
 
 extension Dictionary where Key: Decodable, Value: Decodable {
     public static func decode(_ j: JSON) throws -> Dictionary {

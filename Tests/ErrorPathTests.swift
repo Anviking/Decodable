@@ -12,7 +12,7 @@ import XCTest
 private struct Color: Decodable {
     let name: String
     
-    static func decode(_ json: Any) throws -> Color {
+    static func decode(_ json: JSON) throws -> Color {
         return try Color(name: json => "name")
     }
 }
@@ -21,7 +21,7 @@ private struct Apple: Decodable {
     let id: Int
     let color: Color?
     
-    static func decode(_ json: Any) throws -> Apple {
+    static func decode(_ json: JSON) throws -> Apple {
         return try Apple(id: json => "id", color: json => "color")
     }
 }
@@ -29,7 +29,7 @@ private struct Apple: Decodable {
 private struct Tree: Decodable {
     let apples: [Apple]
     
-    static func decode(_ json: Any) throws -> Tree {
+    static func decode(_ json: JSON) throws -> Tree {
         return try Tree(apples: json => "apples")
     }
 }
