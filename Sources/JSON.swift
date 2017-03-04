@@ -41,7 +41,7 @@ public struct JSON: Decodable {
     
     public func parse<T: Decodable>(key: OptionalKey) throws -> T? {
         let dict = try NSDictionary.decode(self)
-        guard let obj = dict[key] else {
+        guard let obj = dict[key.key] else {
             if key.isRequired {
                 throw DecodingError.missingKey(key.key, metadata)
             } else {
