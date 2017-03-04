@@ -14,7 +14,7 @@ public protocol Decodable {
 
 extension Decodable {
     static func decode(_ json: Any) throws -> Self {
-        return try Self.decode(JSON(json))
+        return try Self.decode(JSON(value: json))
     }
 }
 

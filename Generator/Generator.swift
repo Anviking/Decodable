@@ -201,7 +201,7 @@ indirect enum Decodable {
             "    return try json.parse(keyPath: keyPath, decoder: \(decodeClosure(provider)))\(final)\n" +
             "}",
                             documentation + "public func \(operatorString) \(generics)(json: Any, keyPath: \(keyPathType)) throws -> \(returnType) {\n" +
-                                "    return try JSON(json).parse(keyPath: keyPath, decoder: \(decodeClosure(provider)))\(final)\n" +
+                                "    return try JSON(value: json).parse(keyPath: keyPath, decoder: \(decodeClosure(provider)))\(final)\n" +
             "}",
         ]
     }

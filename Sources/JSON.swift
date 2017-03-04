@@ -9,21 +9,17 @@
 import Foundation
 
 public struct JSON: Decodable {
-    var path: [String]
     var json: Any
-    var rootObject: Any
+    var metadata: DecodingError.Metadata
     //var parameters: T
 
     
-    public init(_ value: Any, path: [String] = [], rootObject: Any? = nil) {
+    public init(value: Any, metadata: DecodingError.Metadata? = nil) {
         self.json = value
-        self.path = path
-        self.rootObject = rootObject ?? value
+        self.metadata = metadata ?? DecodingError.Metadata(object: value)
     }
     
-    var metadata: DecodingError.Metadata {
-        return DecodingError.Metadata(path: path, object: json, rootObject: rootObject)
-    }
+    
     
     public func parse<T: Decodable>(key: String) throws -> T {
         let dict = try NSDictionary.decode(self)
