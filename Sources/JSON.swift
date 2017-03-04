@@ -13,11 +13,12 @@ public struct JSON: Decodable {
     var json: Any
     var rootObject: Any
     //var parameters: T
+
     
-    init(json: Any, path: [String] = [], rootObject: AnyObject) {
-        self.json = json
+    init(_ value: Any, path: [String] = [], rootObject: Any? = nil) {
+        self.json = value
         self.path = path
-        self.rootObject = rootObject
+        self.rootObject = rootObject ?? value
     }
     
     var metadata: DecodingError.Metadata {
