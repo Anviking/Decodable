@@ -1010,7 +1010,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = anviking.Decodable;
 				PRODUCT_NAME = Decodable;
 				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 			};
 			name = Debug;
 		};

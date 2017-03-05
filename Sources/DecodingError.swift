@@ -24,6 +24,10 @@ public enum DecodingError: Error, Equatable {
         /// The JSON key path to the object that failed to be decoded
         public var path: [String]
         
+        var file: String?
+        var line: Int?
+        var function: String?
+        
         /// The JSON object that failed to be decoded
         public var object: Any
         

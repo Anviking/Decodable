@@ -88,6 +88,26 @@ class ErrorPathTests: XCTestCase {
         } catch let DecodingError.typeMismatch(_, actual, metadata) {
             XCTAssertEqual(String(describing: actual), "_SwiftTypePreservingNSNumber")
             XCTAssertEqual(metadata.formattedPath, "apples.color.name")
+            
+
+        } catch let error {
+            XCTFail("should not throw this exception: \(error)")
+        }
+    }
+    
+    func testFileMetadata() {
+        let json = JSON(value: ["key": 3])
+        do {
+            let _: String = try json.parse(key: "key")
+            XCTFail()
+        } catch let DecodingError.typeMismatch(_, actual, metadata) {
+            XCTAssertEqual(String(describing: actual), "_SwiftTypePreservingNSNumber")
+            XCTAssertEqual(metadata.formattedPath, "key")
+            guard let file = metadata.file else { XCTFail("file should not be nil"); return }
+            XCTAssertTrue(file.hasSuffix("ErrorPathTests.swift"))
+            XCTAssertEqual(metadata.line, 101)
+            XCTAssertEqual(metadata.function, "testFileMetadata()")
+            
         } catch let error {
             XCTFail("should not throw this exception: \(error)")
         }

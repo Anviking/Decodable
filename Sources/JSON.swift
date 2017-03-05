@@ -25,15 +25,20 @@ public struct JSON: Decodable {
     
     
     
-    public func parse<T: Decodable>(key: String) throws -> T {
+    public func parse<T: Decodable>(key: String, file: String = #file, line: Int = #line, function: String = #function) throws -> T {
         let dict = try decode(using: NSDictionary.decode)
         guard let obj = dict[key] else {
             throw DecodingError.missingKey(key, metadata)
         }
         
+        // TODO: Make Metadata as imutable as appropriate
         var new = with(json: obj)
         new.metadata.path += [key]
         new.metadata.object = obj
+        new.metadata.file = file
+        new.metadata.line = line
+        new.metadata.function = function
+        
         return try new.decode(using: T.decode)
     }
     
@@ -41,7 +46,7 @@ public struct JSON: Decodable {
         return json
     }
     
-    public func parse<T: Decodable>(key: OptionalKey) throws -> T? {
+    public func parse<T: Decodable>(key: OptionalKey, file: String = #file, line: Int = #line, function: String = #function) throws -> T? {
         let dict = try decode(using: NSDictionary.decode)
         guard let obj = dict[key.key] else {
             if key.isRequired {
@@ -54,26 +59,29 @@ public struct JSON: Decodable {
         var new = with(json: obj)
         new.metadata.path += [key.key]
         new.metadata.object = obj
+        new.metadata.file = file
+        new.metadata.line = line
+        new.metadata.function = function
         return try new.decode(using: T.decode)
     }
     
-    public func parse<T: Decodable>(keyPath: KeyPath) throws -> T {
-        let json = try keyPath.keys.reduce(self) { try $0.0.parse(key: $0.1) }
+    public func parse<T: Decodable>(keyPath: KeyPath, file: String = #file, line: Int = #line, function: String = #function) throws -> T {
+        let json = try keyPath.keys.reduce(self) { try $0.0.parse(key: $0.1, file: file) }
         return try json.decode(using: T.decode)
     }
     
-    public func parse<T: Decodable>(keyPath: OptionalKeyPath) throws -> T? {
-        let json = try keyPath.keys.reduce(self) { try $0.0?.parse(key: $0.1) }
+    public func parse<T: Decodable>(keyPath: OptionalKeyPath, file: String = #file, line: Int = #line, function: String = #function) throws -> T? {
+        let json = try keyPath.keys.reduce(self) { try $0.0?.parse(key: $0.1, file: file, line: line, function: function) }
         return try json?.decode(using: T.decode)
     }
     
-    public func parse<T>(keyPath: KeyPath, decoder: (JSON) throws -> T) throws -> T {
-        let json = try keyPath.keys.reduce(self) { try $0.0.parse(key: $0.1) }
+    public func parse<T>(keyPath: KeyPath, file: String = #file, line: Int = #line, function: String = #function, decoder: (JSON) throws -> T) throws -> T {
+        let json = try keyPath.keys.reduce(self) { try $0.0.parse(key: $0.1, file: file, line: line, function: function) }
         return try json.decode(using: decoder)
     }
     
-    public func parse<T>(keyPath: OptionalKeyPath, decoder: (JSON) throws -> T) throws -> T? {
-        let json = try keyPath.keys.reduce(self) { try $0.0?.parse(key: $0.1) }
+    public func parse<T>(keyPath: OptionalKeyPath, file: String = #file, line: Int = #line, function: String = #function, decoder: (JSON) throws -> T) throws -> T? {
+        let json = try keyPath.keys.reduce(self) { try $0.0?.parse(key: $0.1, file: file, line: line, function: function) }
         return try json?.decode(using: decoder)
     }
     
