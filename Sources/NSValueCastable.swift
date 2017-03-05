@@ -43,7 +43,7 @@ public protocol NSNumberCastable: NSValueCastable {
 
 extension NSValueCastable {
     private typealias PointerOfSelf = UnsafeMutablePointer<Self> // Why do we have to do this?
-    public static func decode(_ j: Any) throws -> Self {
+    public static func decode(_ j: JSON) throws -> Self {
         let value: NSValue = try cast(j)
         let pointer = PointerOfSelf.allocate(capacity: 1)
         defer { pointer.deallocate(capacity: 1) }
@@ -53,7 +53,7 @@ extension NSValueCastable {
 }
 
 extension NSNumberCastable {
-    public static func decode(_ json: Any) throws -> Self {
+    public static func decode(_ json: JSON) throws -> Self {
         return try convertFrom(cast(json))
     }
 }
