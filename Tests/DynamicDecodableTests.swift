@@ -41,7 +41,7 @@ class DynamicDecodableTests: XCTestCase {
             case let array as NSArray:
                 return array
             default:
-                return [json]
+                return [json.json]
             }
         }
         

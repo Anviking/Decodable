@@ -38,7 +38,7 @@ extension Array {
     /// - returns: A closure that takes an `NSArray` and maps it using the element decode closure
     public static func decoder(_ elementDecoder: @escaping (JSON) throws -> Element) -> (JSON) throws -> Array<Element> {
         return { json in
-            return try NSArray.decode(json).map { try elementDecoder(json.with(json: $0)) }
+            return try NSArray.decode(json).map { try elementDecoder(JSON(value: $0, metadata: json.metadata)) }
         }
     }
 }

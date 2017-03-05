@@ -12,7 +12,7 @@ public struct JSON: Decodable {
     var json: Any
     var metadata: DecodingError.Metadata
     //var parameters: T
-
+    
     
     public init(value: Any, metadata: DecodingError.Metadata? = nil) {
         self.json = value
@@ -26,12 +26,13 @@ public struct JSON: Decodable {
     
     
     public func parse<T: Decodable>(key: String) throws -> T {
-        let dict = try NSDictionary.decode(self)
+        let dict = try decode(using: NSDictionary.decode)
         guard let obj = dict[key] else {
             throw DecodingError.missingKey(key, metadata)
         }
         
-        let new = with(json: obj)
+        var new = with(json: obj)
+        new.metadata.path += [key]
         return try T.decode(new)
     }
     
@@ -40,7 +41,7 @@ public struct JSON: Decodable {
     }
     
     public func parse<T: Decodable>(key: OptionalKey) throws -> T? {
-        let dict = try NSDictionary.decode(self)
+        let dict = try decode(using: NSDictionary.decode)
         guard let obj = dict[key.key] else {
             if key.isRequired {
                 throw DecodingError.missingKey(key.key, metadata)
@@ -49,7 +50,8 @@ public struct JSON: Decodable {
             }
         }
         
-        let new = with(json: obj)
+        var new = with(json: obj)
+        new.metadata.path += [key.key]
         return try T.decode(new)
     }
     
@@ -65,12 +67,12 @@ public struct JSON: Decodable {
     
     public func parse<T>(keyPath: KeyPath, decoder: (JSON) throws -> T) throws -> T {
         let json = try keyPath.keys.reduce(self) { try $0.0.parse(key: $0.1) }
-        return try decoder(json)
+        return try json.decode(using: decoder)
     }
     
     public func parse<T>(keyPath: OptionalKeyPath, decoder: (JSON) throws -> T) throws -> T? {
         let json = try keyPath.keys.reduce(self) { try $0.0?.parse(key: $0.1) }
-        return try json.map(decoder)
+        return try json?.decode(using: decoder)
     }
     
     public func with(json: Any) -> JSON {
@@ -85,7 +87,18 @@ public struct JSON: Decodable {
         return new
     }
     
-//    func map<U>(closure: (T) -> U) -> DecodingContext<U> {
-//        return DecodingContext<U>(json: json, path: path, rootObject: rootObject, parameters: closure(parameters))
-//    }
+    func decode<T>(using decoder: (JSON) throws -> T) throws -> T {
+        do {
+            return try decoder(self)
+        } catch var error as DecodingError {
+            error.metadata = self.metadata
+            throw error
+        } catch let error {
+            throw error
+        }
+    }
+    
+    //    func map<U>(closure: (T) -> U) -> DecodingContext<U> {
+    //        return DecodingContext<U>(json: json, path: path, rootObject: rootObject, parameters: closure(parameters))
+    //    }
 }

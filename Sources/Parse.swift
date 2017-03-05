@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 func catchAndRethrow<T>(_ json: Any, _ keyPath: KeyPath, block: (Void) throws -> T) throws -> T {
     do {
         return try block()
