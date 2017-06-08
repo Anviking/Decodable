@@ -7,6 +7,8 @@
 //
 
 import XCTest
+import protocol Decodable.Decodable
+import enum Decodable.DecodingError
 @testable import Decodable
 
 class DecodableExtensionTests: XCTestCase {

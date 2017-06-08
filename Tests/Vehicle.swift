@@ -6,6 +6,8 @@
 //  Copyright © 2016 anviking. All rights reserved.
 //
 
+import protocol Decodable.Decodable
+import enum Decodable.DecodingError
 @testable import Decodable
 
 protocol Vehicle {
