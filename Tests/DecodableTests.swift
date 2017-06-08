@@ -15,7 +15,7 @@ import struct Decodable.KeyPath
 class DecodableTests: XCTestCase {
     
     private func readJsonFile(_ file: String) -> NSDictionary {
-        let filePath = (Bundle(for: object_getClass(self)).resourcePath! as NSString).appendingPathComponent(file)
+        let filePath = (Bundle(for: object_getClass(self)!).resourcePath! as NSString).appendingPathComponent(file)
         let jsonString = try! String(contentsOfFile: filePath)
         let jsonData = jsonString.data(using: String.Encoding.utf8)!
 		return try! JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) as! NSDictionary
@@ -180,7 +180,7 @@ class DecodableTests: XCTestCase {
     
     func testDecodeRepositoryExampleShouldThrowNoJsonObjectException() {
         // given
-        let filePath = (Bundle(for: object_getClass(self)).resourcePath! as NSString).appendingPathComponent("NoJsonObject.json")
+        let filePath = (Bundle(for: object_getClass(self)!).resourcePath! as NSString).appendingPathComponent("NoJsonObject.json")
         let jsonString = try! String(contentsOfFile: filePath)
         
         // when
