@@ -480,9 +480,11 @@
 					};
 					8FE7B5611B4C9FB900837609 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0900;
 					};
 					8FE7B56B1B4C9FB900837609 = {
 						CreatedOnToolsVersion = 7.0;
+						LastSwiftMigration = 0900;
 					};
 					D0DC546E1B7814D200F79CB0 = {
 						CreatedOnToolsVersion = 7.0;
@@ -1013,6 +1015,8 @@
 				PRODUCT_NAME = Decodable;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1034,6 +1038,8 @@
 				PRODUCT_NAME = Decodable;
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
@@ -1046,6 +1052,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = anviking.DecodableTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -1059,6 +1067,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = anviking.DecodableTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_SWIFT3_OBJC_INFERENCE = On;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
