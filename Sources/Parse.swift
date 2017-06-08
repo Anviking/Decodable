@@ -56,7 +56,7 @@ public func parse<T>(_ json: Any, keyPath: OptionalKeyPath, decoder: ((Any) thro
 
 // MARK: - Helpers
 
-func catchMissingKeyAndReturnNil<T>(_ closure: (Void) throws -> T) throws -> T? {
+func catchMissingKeyAndReturnNil<T>(_ closure: () throws -> T) throws -> T? {
     do {
         return try closure()
     } catch DecodingError.missingKey {
@@ -64,7 +64,7 @@ func catchMissingKeyAndReturnNil<T>(_ closure: (Void) throws -> T) throws -> T? 
     }
 }
 
-func catchAndRethrow<T>(_ json: Any, _ keyPath: KeyPath, block: (Void) throws -> T) throws -> T {
+func catchAndRethrow<T>(_ json: Any, _ keyPath: KeyPath, block: () throws -> T) throws -> T {
     do {
         return try block()
     } catch let error as DecodingError {
@@ -77,7 +77,7 @@ func catchAndRethrow<T>(_ json: Any, _ keyPath: KeyPath, block: (Void) throws ->
     }
 }
 
-func catchAndRethrow<T>(_ json: Any, _ keyPath: OptionalKeyPath, block: (Void) throws -> T) throws -> T {
+func catchAndRethrow<T>(_ json: Any, _ keyPath: OptionalKeyPath, block: () throws -> T) throws -> T {
     do {
         return try block()
     } catch let error as DecodingError {
