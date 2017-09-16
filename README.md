@@ -8,6 +8,7 @@ Simple and strict, yet powerful object mapping made possible by Swift 2's error 
 
 
 ```swift
+
 struct Repository {
     let name: String
     let description: String
@@ -177,6 +178,16 @@ let array = try NSArray.decode(json => "list").map {
 
 | Swift version | Compatible tag or branch |
 | --- | --- |
+| Swift 4.0 | `0.6.0` |
 | Swift 3.0 | `v0.5` |
 | Swift 2.3 | `v0.4.4`|
 | Swift 2.2 | `v0.4.3`|
+
+## Note on Swift 4.0 usage
+Due to collisions with the standard library you will need to make use of the following import syntax:
+```swift
+import protocol Decodable.Decodable
+import enum Decodable.DecodingError
+import struct Decodable.KeyPath
+```
+
