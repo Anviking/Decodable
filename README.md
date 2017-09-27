@@ -164,7 +164,7 @@ Date.decoder = Date.decoder(using: formatter)
 
 ## When `Decodable` isn't enough
 Don't be afraid of not conforming to `Decodable`.
-```
+```swift
 let array = try NSArray.decode(json => "list").map {
     try Contribution(json: $0, repository: repo)
 }
