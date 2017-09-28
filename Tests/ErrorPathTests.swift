@@ -7,6 +7,8 @@
 //
 
 import XCTest
+import protocol Decodable.Decodable
+import enum Decodable.DecodingError
 @testable import Decodable
 
 private struct Color: Decodable {
@@ -70,7 +72,8 @@ class ErrorPathTests: XCTestCase {
         do {
             _ = try dict => "object" => "repo" => "owner" => "login" as String
         } catch let DecodingError.typeMismatch(_, actual, metadata) {
-            XCTAssertEqual(String(describing: actual), "_SwiftTypePreservingNSNumber")
+            let typeString = String(describing: actual)
+            XCTAssertTrue(typeString.contains("Number"), "\(typeString) should contain NSNumber")
             XCTAssertEqual(metadata.formattedPath, "object.repo.owner.login")
             XCTAssertEqual(metadata.object as? Int, 0)
         } catch let error {
@@ -86,7 +89,7 @@ class ErrorPathTests: XCTestCase {
             _ = try Tree.decode(dict)
             XCTFail()
         } catch let DecodingError.typeMismatch(_, actual, metadata) {
-            XCTAssertEqual(String(describing: actual), "_SwiftTypePreservingNSNumber")
+            XCTAssertTrue(String(describing: actual).contains("Number"))
             XCTAssertEqual(metadata.formattedPath, "apples.color.name")
         } catch let error {
             XCTFail("should not throw this exception: \(error)")

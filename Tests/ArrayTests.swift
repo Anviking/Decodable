@@ -7,6 +7,9 @@
 //
 
 import XCTest
+import protocol Decodable.Decodable
+import enum Decodable.DecodingError
+import struct Decodable.KeyPath
 @testable import Decodable
 
 class DecodableArrayTests: XCTestCase {

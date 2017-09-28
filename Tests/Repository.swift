@@ -7,6 +7,9 @@
 //
 
 import Foundation
+import protocol Decodable.Decodable
+import enum Decodable.DecodingError
+import struct Decodable.KeyPath
 @testable import Decodable
 
 struct Owner {

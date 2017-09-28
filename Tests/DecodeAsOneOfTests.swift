@@ -7,12 +7,15 @@
 //
 
 import XCTest
+import protocol Decodable.Decodable
+import enum Decodable.DecodingError
+import struct Decodable.KeyPath
 @testable import Decodable
 
 class DecodeAsOneOfTests: XCTestCase {
     
     private func readJsonFile(_ file: String) -> NSDictionary {
-        let filePath = (Bundle(for: object_getClass(self)).resourcePath! as NSString).appendingPathComponent(file)
+        let filePath = (Bundle(for: object_getClass(self)!).resourcePath! as NSString).appendingPathComponent(file)
 		print(filePath)
         let jsonString = try! String(contentsOfFile: filePath)
 		let jsonData = jsonString.data(using: String.Encoding.utf8)!
