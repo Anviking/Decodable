@@ -184,10 +184,11 @@ let array = try NSArray.decode(json => "list").map {
 | Swift 2.2 | `v0.4.3`|
 
 ## Note on Swift 4.0 usage
-Due to collisions with the standard library you will need to make use of the following import syntax:
-```swift
-import protocol Decodable.Decodable
-import enum Decodable.DecodingError
-import struct Decodable.KeyPath
-```
+Due to collisions with the standard library you will have to import ambiguous symbols specifically, in addition to `Decodable` as a whole.
 
+This means you likely want the following
+```swift
+import Decodable
+import protocol Decodable.Decodable
+```
+and you can import other symbols, e.g `KeyPath`, `DecodingError`, in a simlilar fashion (using `import struct` and `import enum`)
