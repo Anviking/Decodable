@@ -31,7 +31,7 @@ public protocol DynamicDecodable {
     /// from their `decode` function.
     ///
     /// - note: This is intended as a set-once thing.
-    static var decoder: (Any) throws -> DecodedType {get set}
+    static var decoder: Decoder<DecodedType> {get set}
 }
 
 extension Decodable where Self: DynamicDecodable, Self.DecodedType == Self {
@@ -42,16 +42,16 @@ extension Decodable where Self: DynamicDecodable, Self.DecodedType == Self {
 }
 
 extension String: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> String = { try cast($0) }
+    public static var decoder: Decoder<String> = { try cast($0) }
 }
 extension Int: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> Int = { try cast($0) }
+    public static var decoder: Decoder<Int> = { try cast($0) }
 }
 extension Double: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> Double = { try cast($0) }
+    public static var decoder: Decoder<Double> = { try cast($0) }
 }
 extension Bool: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> Bool = { try cast($0) }
+    public static var decoder: Decoder<Bool> = { try cast($0) }
 }
 
 private let iso8601DateFormatter: DateFormatter = {
@@ -63,7 +63,7 @@ private let iso8601DateFormatter: DateFormatter = {
 
 extension Date: Decodable, DynamicDecodable {
     /// Default decoder is `Date.decoder(using: iso8601DateFormatter)`
-    public static var decoder: (Any) throws -> Date = Date.decoder(using: iso8601DateFormatter)
+    public static var decoder: Decoder<Date> = Date.decoder(using: iso8601DateFormatter)
     
     /// Create a decode closure using a given formatter
     ///
@@ -92,7 +92,7 @@ extension NSDictionary: Decodable {
 }
 
 extension NSArray: DynamicDecodable {
-    public static var decoder: (Any) throws -> NSArray = { try cast($0) }
+    public static var decoder: Decoder<NSArray> = { try cast($0) }
     public static func decode(_ json: Any) throws -> NSArray {
         return try decoder(json)
     }
