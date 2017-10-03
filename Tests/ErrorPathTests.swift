@@ -51,6 +51,17 @@ class ErrorPathTests: XCTestCase {
         }
     }
     
+    func testErrorDescription() {
+        // Actually there is no test here...
+        let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
+        
+        do {
+            _ = try dict => "object" => "repo" => "owner" => "oops" as String
+        } catch  {
+            print(error)
+        }
+    }
+    
     // FIXME: #
     func testNestedUnexpectedNSNull() {
         let dict: NSDictionary = ["id": 1, "color": ["name": NSNull()]]

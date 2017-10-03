@@ -61,6 +61,10 @@
 		8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
 		8FA733591D328D13003A90A7 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45AF1D32853F00FB71FC /* Header.swift */; };
+		8FA8B0601D90A4A3008E5728 /* ErrorFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8B05F1D90A4A3008E5728 /* ErrorFormatter.swift */; };
+		8FA8B0611D90A4A3008E5728 /* ErrorFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8B05F1D90A4A3008E5728 /* ErrorFormatter.swift */; };
+		8FA8B0621D90A4A3008E5728 /* ErrorFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8B05F1D90A4A3008E5728 /* ErrorFormatter.swift */; };
+		8FA8B0631D90A4A3008E5728 /* ErrorFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA8B05F1D90A4A3008E5728 /* ErrorFormatter.swift */; };
 		8FB48ECA1D306C4700BC50A1 /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB48EC91D306C4700BC50A1 /* KeyPath.swift */; };
 		8FB48ECB1D306C4700BC50A1 /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB48EC91D306C4700BC50A1 /* KeyPath.swift */; };
 		8FB48ECC1D306C4700BC50A1 /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB48EC91D306C4700BC50A1 /* KeyPath.swift */; };
@@ -142,6 +146,7 @@
 		8F87BCBA1B580CE200E53A8C /* ErrorPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorPathTests.swift; sourceTree = "<group>"; };
 		8F87BCC31B592F0E00E53A8C /* DecodingError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DecodingError.swift; sourceTree = "<group>"; };
 		8F956D1E1B4D6FF700243072 /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		8FA8B05F1D90A4A3008E5728 /* ErrorFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorFormatter.swift; sourceTree = "<group>"; };
 		8FB48EC91D306C4700BC50A1 /* KeyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyPath.swift; sourceTree = "<group>"; };
 		8FD3D92E1C270A2D00D1AF4E /* MissingKeyOperatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MissingKeyOperatorTests.swift; sourceTree = "<group>"; };
 		8FE7B5621B4C9FB900837609 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -264,6 +269,7 @@
 				8F72DC551C3CB8C500A39E10 /* NSValueCastable.swift */,
 				8F3E45A31D327E4500FB71FC /* Decoders.swift */,
 				8FB48EC91D306C4700BC50A1 /* KeyPath.swift */,
+				8FA8B05F1D90A4A3008E5728 /* ErrorFormatter.swift */,
 				8F3E45991D31362B00FB71FC /* OptionalKeyPath.swift */,
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
 				8F00623E1C81EF61007BCF48 /* Overloads.swift */,
@@ -630,6 +636,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */,
+				8FA8B0611D90A4A3008E5728 /* ErrorFormatter.swift in Sources */,
 				8FFAB8131B7CFA9500E2D724 /* Parse.swift in Sources */,
 				8F012EF61BB5A920007D0B5C /* Castable.swift in Sources */,
 				8FB48ECB1D306C4700BC50A1 /* KeyPath.swift in Sources */,
@@ -671,6 +678,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				57FCDE5B1BA283C900130C48 /* DecodingError.swift in Sources */,
+				8FA8B0631D90A4A3008E5728 /* ErrorFormatter.swift in Sources */,
 				57FCDE5C1BA283C900130C48 /* Parse.swift in Sources */,
 				8F012EF81BB5A928007D0B5C /* Castable.swift in Sources */,
 				8FB48ECD1D306C4700BC50A1 /* KeyPath.swift in Sources */,
@@ -695,6 +703,7 @@
 				8FB48ECA1D306C4700BC50A1 /* KeyPath.swift in Sources */,
 				8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */,
 				8F72DC561C3CB8C500A39E10 /* NSValueCastable.swift in Sources */,
+				8FA8B0601D90A4A3008E5728 /* ErrorFormatter.swift in Sources */,
 				8F3E459A1D31362B00FB71FC /* OptionalKeyPath.swift in Sources */,
 				8F00623F1C81EF61007BCF48 /* Overloads.swift in Sources */,
 				8F3E45B81D32884700FB71FC /* Documentation.swift in Sources */,
@@ -732,6 +741,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0DC547A1B78150900F79CB0 /* DecodingError.swift in Sources */,
+				8FA8B0621D90A4A3008E5728 /* ErrorFormatter.swift in Sources */,
 				8FFAB8141B7CFA9500E2D724 /* Parse.swift in Sources */,
 				8F012EF71BB5A920007D0B5C /* Castable.swift in Sources */,
 				8FB48ECC1D306C4700BC50A1 /* KeyPath.swift in Sources */,
