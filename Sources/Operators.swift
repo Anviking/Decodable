@@ -11,43 +11,70 @@ import Foundation
 // MARK: - Operators
 
 precedencegroup DecodingPrecedence {
-    associativity: right
+    associativity: left
     higherThan: CastingPrecedence
 }
 
 infix operator =>  : DecodingPrecedence
 infix operator =>? : DecodingPrecedence
 
-public func => (lhs: Any, rhs: KeyPath) throws -> Any {
-    return try parse(lhs, keyPath: rhs, decoder: { $0 })
+
+
+// Dict -> T
+func => <A: Decodable, Key>(container: KeyedDecodingContainer<Key>, key: Key) throws -> A {
+    return try decode(container, key)
+}
+
+// Dict -> Dict
+func => <Key>(container: KeyedDecodingContainer<Key>, key: Key) throws -> KeyedDecodingContainer<Key> {
+    return try nested(container, key)
+}
+
+// Dict -> Dict?
+func => <Key>(container: KeyedDecodingContainer<Key>, key: Key) throws -> KeyedDecodingContainer<Key>? {
+    return try lift(nested)(container, key)
 }
 
 
-public func =>? (lhs: Any, rhs: OptionalKeyPath) throws -> Any? {
-    return try parse(lhs, keyPath: rhs, decoder: Optional.decoder({$0}))
+
+// Dict? -> Dict?
+func =>? <Key>(container: KeyedDecodingContainer<Key>?, key: Key) throws -> KeyedDecodingContainer<Key>? {
+    return try lift(nested)(container, key)
 }
 
-// MARK: - JSONPath
-
-/// Enables parsing nested objects e.g json => "a" => "b"
-
-public func => (lhs: KeyPath, rhs: KeyPath) -> KeyPath {
-    return KeyPath(lhs.keys + rhs.keys)
+// Dict? -> Dict
+func => <Key>(container: KeyedDecodingContainer<Key>?, key: Key) throws -> KeyedDecodingContainer<Key>? {
+    return try container.map { try nested($0, key) }
 }
 
-public func => (lhs: OptionalKeyPath, rhs: OptionalKeyPath) -> OptionalKeyPath {
-    return OptionalKeyPath(keys: lhs.keys + rhs.markingFirst(required: true).keys)
-}
-
-public func =>? (lhs: OptionalKeyPath, rhs: OptionalKeyPath) -> OptionalKeyPath {
-    return OptionalKeyPath(keys: lhs.keys + rhs.keys)
-}
-
-public func => (lhs: OptionalKeyPath, rhs: KeyPath) -> OptionalKeyPath {
-    return OptionalKeyPath(keys: lhs.keys + rhs.keys.map { OptionalKey(key: $0, isRequired: true) })
+// Dict? -> T
+func =>? <T: Decodable, Key>(container: KeyedDecodingContainer<Key>?, key: Key) throws -> T? {
+    return try lift(decode)(container, key)
 }
 
 
-public func =>? (lhs: KeyPath, rhs: OptionalKeyPath) -> OptionalKeyPath {
-    return OptionalKeyPath(keys: lhs.keys.map { OptionalKey(key: $0, isRequired: true) } + rhs.keys  )
+
+// -------------------------
+// MARK: Private Helpers
+// -------------------------
+
+
+
+
+private func decode<K, T: Decodable>(_ container: KeyedDecodingContainer<K>, _ key: K) throws -> T {
+    return try container.decode(T.self, forKey: key)
+}
+
+private func nested<K>(_ container: KeyedDecodingContainer<K>, _ key: K) throws -> KeyedDecodingContainer<K> {
+    return try container.nestedContainer(keyedBy: K.self, forKey: key)
+}
+
+private func lift<K,T>(_ f: @escaping (KeyedDecodingContainer<K>, K) throws -> T) -> (KeyedDecodingContainer<K>?, K) throws -> T? {
+    return { container, key in
+        if let container = container, container.contains(key) {
+            return try f(container, key)
+        } else {
+            return nil
+        }
+    }
 }
