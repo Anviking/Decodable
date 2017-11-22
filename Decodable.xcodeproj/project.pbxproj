@@ -20,10 +20,6 @@
 		65DB18B11C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */; };
 		65DB18B21C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */; };
 		65DB18B31C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */; };
-		8F00623F1C81EF61007BCF48 /* Overloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00623E1C81EF61007BCF48 /* Overloads.swift */; };
-		8F0062401C81EF61007BCF48 /* Overloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00623E1C81EF61007BCF48 /* Overloads.swift */; };
-		8F0062411C81EF61007BCF48 /* Overloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00623E1C81EF61007BCF48 /* Overloads.swift */; };
-		8F0062421C81EF61007BCF48 /* Overloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F00623E1C81EF61007BCF48 /* Overloads.swift */; };
 		8F012EF51BB5A920007D0B5C /* Castable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F012EF41BB5A920007D0B5C /* Castable.swift */; };
 		8F012EF61BB5A920007D0B5C /* Castable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F012EF41BB5A920007D0B5C /* Castable.swift */; };
 		8F012EF71BB5A920007D0B5C /* Castable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F012EF41BB5A920007D0B5C /* Castable.swift */; };
@@ -38,7 +34,6 @@
 		8F3E45A51D327E4500FB71FC /* Decoders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45A31D327E4500FB71FC /* Decoders.swift */; };
 		8F3E45A61D327E4500FB71FC /* Decoders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45A31D327E4500FB71FC /* Decoders.swift */; };
 		8F3E45A71D327E4500FB71FC /* Decoders.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45A31D327E4500FB71FC /* Decoders.swift */; };
-		8F3E45B81D32884700FB71FC /* Documentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45AE1D32853F00FB71FC /* Documentation.swift */; };
 		8F4453EF1D369FF200C19099 /* ParseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4453EE1D369FF200C19099 /* ParseTests.swift */; };
 		8F4453F01D369FF200C19099 /* ParseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4453EE1D369FF200C19099 /* ParseTests.swift */; };
 		8F4B52651B5BAA5700FDCBA7 /* ArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */; };
@@ -60,7 +55,6 @@
 		8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F87BCC51B592F0E00E53A8C /* DecodingError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F87BCC31B592F0E00E53A8C /* DecodingError.swift */; };
 		8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F956D1E1B4D6FF700243072 /* Operators.swift */; };
-		8FA733591D328D13003A90A7 /* Header.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E45AF1D32853F00FB71FC /* Header.swift */; };
 		8FB48ECA1D306C4700BC50A1 /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB48EC91D306C4700BC50A1 /* KeyPath.swift */; };
 		8FB48ECB1D306C4700BC50A1 /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB48EC91D306C4700BC50A1 /* KeyPath.swift */; };
 		8FB48ECC1D306C4700BC50A1 /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FB48EC91D306C4700BC50A1 /* KeyPath.swift */; };
@@ -123,15 +117,11 @@
 		57FCDE651BA283C900130C48 /* Decodable.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Decodable.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		651A8C961C29AC5E00DE4D53 /* RawRepresentableDecodableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawRepresentableDecodableTests.swift; sourceTree = "<group>"; };
 		65DB18AF1C29AC0E003BDA5C /* RawRepresentableDecodable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawRepresentableDecodable.swift; sourceTree = "<group>"; };
-		8F00623E1C81EF61007BCF48 /* Overloads.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overloads.swift; sourceTree = "<group>"; };
-		8F0062481C81F4A2007BCF48 /* Generator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Generator.swift; sourceTree = "<group>"; };
 		8F012EEF1BB414D4007D0B5C /* Playground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = Playground.playground; sourceTree = "<group>"; };
 		8F012EF41BB5A920007D0B5C /* Castable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Castable.swift; sourceTree = "<group>"; };
 		8F3E45991D31362B00FB71FC /* OptionalKeyPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionalKeyPath.swift; sourceTree = "<group>"; };
 		8F3E459E1D313A7000FB71FC /* KeyPathTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyPathTests.swift; sourceTree = "<group>"; };
 		8F3E45A31D327E4500FB71FC /* Decoders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decoders.swift; sourceTree = "<group>"; };
-		8F3E45AE1D32853F00FB71FC /* Documentation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Documentation.swift; sourceTree = "<group>"; };
-		8F3E45AF1D32853F00FB71FC /* Header.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Header.swift; sourceTree = "<group>"; };
 		8F4453EE1D369FF200C19099 /* ParseTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseTests.swift; sourceTree = "<group>"; };
 		8F4B52641B5BAA5700FDCBA7 /* ArrayTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayTests.swift; sourceTree = "<group>"; };
 		8F53521C1BE4112900E3563A /* DictionaryTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DictionaryTests.swift; sourceTree = "<group>"; };
@@ -213,30 +203,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8F0062471C81F4A2007BCF48 /* Code Generation */ = {
-			isa = PBXGroup;
-			children = (
-				8F0062481C81F4A2007BCF48 /* Generator.swift */,
-				8F3E45AD1D32853F00FB71FC /* Templates */,
-			);
-			name = "Code Generation";
-			path = Generator;
-			sourceTree = "<group>";
-		};
-		8F3E45AD1D32853F00FB71FC /* Templates */ = {
-			isa = PBXGroup;
-			children = (
-				8F3E45AE1D32853F00FB71FC /* Documentation.swift */,
-				8F3E45AF1D32853F00FB71FC /* Header.swift */,
-			);
-			path = Templates;
-			sourceTree = "<group>";
-		};
 		8FE7B5581B4C9FB900837609 = {
 			isa = PBXGroup;
 			children = (
 				8FE7B5641B4C9FB900837609 /* Decodable */,
-				8F0062471C81F4A2007BCF48 /* Code Generation */,
 				8FE7B5701B4C9FB900837609 /* DecodableTests */,
 				8FE7B5631B4C9FB900837609 /* Products */,
 			);
@@ -266,7 +236,6 @@
 				8FB48EC91D306C4700BC50A1 /* KeyPath.swift */,
 				8F3E45991D31362B00FB71FC /* OptionalKeyPath.swift */,
 				8F956D1E1B4D6FF700243072 /* Operators.swift */,
-				8F00623E1C81EF61007BCF48 /* Overloads.swift */,
 				8FE7B57C1B4CA01400837609 /* Decodable.swift */,
 				8F012EF41BB5A920007D0B5C /* Castable.swift */,
 				8FFAB8111B7CFA9500E2D724 /* Parse.swift */,
@@ -354,7 +323,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17FB81081B530FED0012F106 /* Build configuration list for PBXNativeTarget "Decodable-Mac" */;
 			buildPhases = (
-				8F0062451C81F348007BCF48 /* ShellScript */,
 				17FB80F21B530FED0012F106 /* Sources */,
 				17FB80F31B530FED0012F106 /* Frameworks */,
 				17FB80F41B530FED0012F106 /* Headers */,
@@ -391,7 +359,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 57FCDE621BA283C900130C48 /* Build configuration list for PBXNativeTarget "Decodable-tvOS" */;
 			buildPhases = (
-				8F00624B1C81F6F1007BCF48 /* ShellScript */,
 				57FCDE5A1BA283C900130C48 /* Sources */,
 				57FCDE5F1BA283C900130C48 /* Frameworks */,
 				57FCDE601BA283C900130C48 /* Headers */,
@@ -410,7 +377,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8FE7B5761B4C9FB900837609 /* Build configuration list for PBXNativeTarget "Decodable-iOS" */;
 			buildPhases = (
-				8F0062441C81F26B007BCF48 /* ShellScript */,
 				8FE7B55D1B4C9FB900837609 /* Sources */,
 				8FE7B55E1B4C9FB900837609 /* Frameworks */,
 				8FE7B55F1B4C9FB900837609 /* Headers */,
@@ -447,7 +413,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0DC54761B7814D200F79CB0 /* Build configuration list for PBXNativeTarget "Decodable-watchOS" */;
 			buildPhases = (
-				8F0062461C81F350007BCF48 /* ShellScript */,
 				D0DC546A1B7814D200F79CB0 /* Sources */,
 				D0DC546B1B7814D200F79CB0 /* Frameworks */,
 				D0DC546C1B7814D200F79CB0 /* Headers */,
@@ -569,61 +534,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		8F0062441C81F26B007BCF48 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    ./Generator.swift\nfi";
-		};
-		8F0062451C81F348007BCF48 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    ./Generator.swift\nfi";
-		};
-		8F0062461C81F350007BCF48 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    ./Generator.swift\nfi";
-		};
-		8F00624B1C81F6F1007BCF48 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n    cd \"${SRCROOT}/Generator\"\n    ./Generator.swift\nfi";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		17FB80F21B530FED0012F106 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -636,7 +546,6 @@
 				17FB810E1B5311840012F106 /* Decodable.swift in Sources */,
 				17FB810F1B5311870012F106 /* Operators.swift in Sources */,
 				8F3E459B1D31362B00FB71FC /* OptionalKeyPath.swift in Sources */,
-				8F0062401C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B11C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 				8F72DC571C3CB8C800A39E10 /* NSValueCastable.swift in Sources */,
 				8F3E45A51D327E4500FB71FC /* Decoders.swift in Sources */,
@@ -677,7 +586,6 @@
 				57FCDE5D1BA283C900130C48 /* Decodable.swift in Sources */,
 				57FCDE5E1BA283C900130C48 /* Operators.swift in Sources */,
 				8F3E459D1D31362B00FB71FC /* OptionalKeyPath.swift in Sources */,
-				8F0062421C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B31C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 				8F72DC591C3CB8C900A39E10 /* NSValueCastable.swift in Sources */,
 				8F3E45A71D327E4500FB71FC /* Decoders.swift in Sources */,
@@ -689,15 +597,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F87BCC41B592F0E00E53A8C /* DecodingError.swift in Sources */,
-				8FA733591D328D13003A90A7 /* Header.swift in Sources */,
 				8FFAB8121B7CFA9500E2D724 /* Parse.swift in Sources */,
 				8F012EF51BB5A920007D0B5C /* Castable.swift in Sources */,
 				8FB48ECA1D306C4700BC50A1 /* KeyPath.swift in Sources */,
 				8FE7B57E1B4CA01400837609 /* Decodable.swift in Sources */,
 				8F72DC561C3CB8C500A39E10 /* NSValueCastable.swift in Sources */,
 				8F3E459A1D31362B00FB71FC /* OptionalKeyPath.swift in Sources */,
-				8F00623F1C81EF61007BCF48 /* Overloads.swift in Sources */,
-				8F3E45B81D32884700FB71FC /* Documentation.swift in Sources */,
 				8F956D1F1B4D6FF700243072 /* Operators.swift in Sources */,
 				65DB18B01C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 				8F3E45A41D327E4500FB71FC /* Decoders.swift in Sources */,
@@ -738,7 +643,6 @@
 				D0DC54771B78150900F79CB0 /* Decodable.swift in Sources */,
 				D0DC54781B78150900F79CB0 /* Operators.swift in Sources */,
 				8F3E459C1D31362B00FB71FC /* OptionalKeyPath.swift in Sources */,
-				8F0062411C81EF61007BCF48 /* Overloads.swift in Sources */,
 				65DB18B21C29AC0E003BDA5C /* RawRepresentableDecodable.swift in Sources */,
 				8F72DC581C3CB8C900A39E10 /* NSValueCastable.swift in Sources */,
 				8F3E45A61D327E4500FB71FC /* Decoders.swift in Sources */,
