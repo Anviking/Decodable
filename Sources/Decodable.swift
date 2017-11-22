@@ -13,9 +13,21 @@ public protocol Decodable {
 }
 
 
-extension Dictionary where Key: Decodable, Value: Decodable {
+extension Dictionary: Decodable where Key: Decodable, Value: Decodable {
     public static func decode(_ j: Any) throws -> Dictionary {
         return try Dictionary.decoder(key: Key.decode, value: Value.decode)(j)
+    }
+}
+
+extension Array: Decodable where Element: Decodable {
+    public static func decode(_ j: Any) throws -> Array {
+        return try Array.decoder(Element.decode)(j)
+    }
+}
+
+extension Optional: Decodable where Wrapped: Decodable {
+    public static func decode(_ j: Any) throws -> Optional {
+        return try Optional.decoder(Wrapped.decode)(j)
     }
 }
 
