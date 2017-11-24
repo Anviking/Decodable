@@ -16,7 +16,7 @@ public struct JSON {
         for (index, key) in keyPath.keys.enumerated() {
             guard let result = try NSDictionary.decode(current)[key] else {
                 let currentPath = keyPath.keys[0 ..< index]
-                let metadata = DecodingError.Metadata(path: Array(currentPath), object: current, rootObject: self)
+                let metadata = DecodingError.Metadata(path: Array(currentPath), object: current.object, rootObject: self)
                 throw DecodingError.missingKey(key, metadata)
             }
             current = JSON(object: result)
@@ -31,7 +31,7 @@ public struct JSON {
             guard let result = try NSDictionary.decode(current)[key.key] else {
                 if key.isRequired {
                     let currentPath = keyPath.keys[0 ..< index].map { $0.key }
-                    let metadata = DecodingError.Metadata(path: currentPath, object: current, rootObject: self)
+                    let metadata = DecodingError.Metadata(path: currentPath, object: current.object, rootObject: self)
                     throw DecodingError.missingKey(key.key, metadata)
                 } else {
                     return nil
@@ -58,7 +58,7 @@ private func catchAndRethrow<T>(_ json: JSON, _ keyPath: KeyPath, block: () thro
     } catch let error as DecodingError {
         var error = error
         error.metadata.path = keyPath.keys + error.metadata.path
-        error.metadata.rootObject = json
+        error.metadata.rootObject = json.object
         throw error
     } catch let error {
         throw error
@@ -71,7 +71,7 @@ private func catchAndRethrow<T>(_ json: JSON, _ keyPath: OptionalKeyPath, block:
     } catch let error as DecodingError {
         var error = error
         error.metadata.path = keyPath.keys.map{$0.key} + error.metadata.path
-        error.metadata.rootObject = json
+        error.metadata.rootObject = json.object
         throw error
     } catch let error {
         throw error

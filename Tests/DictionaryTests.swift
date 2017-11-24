@@ -13,7 +13,7 @@ import Decodable
 
 private struct Color: Decodable, Equatable {
     let name: String
-    static func decode(_ json: Any) throws -> Color {
+    static func decode(_ json: JSON) throws -> Color {
         return try Color(name: String.decode(json))
     }
     
@@ -29,7 +29,7 @@ private struct Color: Decodable, Equatable {
 private struct AccessibilityInfo: Decodable {
     let data: [String: Any]
     
-    static func decode(_ json: Any) throws -> AccessibilityInfo {
+    static func decode(_ json: JSON) throws -> AccessibilityInfo {
         return try AccessibilityInfo(
             data: [String: Any].decode(json)
         )

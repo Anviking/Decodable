@@ -12,41 +12,43 @@ import XCTest
 class NSValueDecodableTests: XCTestCase {
     func testIntegerDecodingFromInt64() {
         let number = NSNumber(value: 100)
-        XCTAssertEqual(try! Int64.decode(number), number.int64Value)
-        XCTAssertEqual(try! Int32.decode(number), number.int32Value)
-        XCTAssertEqual(try! Int16.decode(number), number.int16Value)
-        XCTAssertEqual(try! Int8.decode(number), number.int8Value)
+        let json = JSON(object: number)
+        XCTAssertEqual(try! Int64.decode(json), number.int64Value)
+        XCTAssertEqual(try! Int32.decode(json), number.int32Value)
+        XCTAssertEqual(try! Int16.decode(json), number.int16Value)
+        XCTAssertEqual(try! Int8.decode(json), number.int8Value)
         
-        XCTAssertEqual(try! UInt64.decode(number), number.uint64Value)
-        XCTAssertEqual(try! UInt32.decode(number), number.uint32Value)
-        XCTAssertEqual(try! UInt16.decode(number), number.uint16Value)
-        XCTAssertEqual(try! UInt8.decode(number), number.uint8Value)
+        XCTAssertEqual(try! UInt64.decode(json), number.uint64Value)
+        XCTAssertEqual(try! UInt32.decode(json), number.uint32Value)
+        XCTAssertEqual(try! UInt16.decode(json), number.uint16Value)
+        XCTAssertEqual(try! UInt8.decode(json), number.uint8Value)
     }
     
     func testIntegerDecodingFromInt32() {
         let number = NSNumber(value: 100)
-        XCTAssertEqual(try! Int64.decode(number), number.int64Value)
-        XCTAssertEqual(try! Int32.decode(number), number.int32Value)
-        XCTAssertEqual(try! Int16.decode(number), number.int16Value)
-        XCTAssertEqual(try! Int8.decode(number), number.int8Value)
+        let json = JSON(object: number)
+        XCTAssertEqual(try! Int64.decode(json), number.int64Value)
+        XCTAssertEqual(try! Int32.decode(json), number.int32Value)
+        XCTAssertEqual(try! Int16.decode(json), number.int16Value)
+        XCTAssertEqual(try! Int8.decode(json), number.int8Value)
         
-        XCTAssertEqual(try! UInt64.decode(number), number.uint64Value)
-        XCTAssertEqual(try! UInt32.decode(number), number.uint32Value)
-        XCTAssertEqual(try! UInt16.decode(number), number.uint16Value)
-        XCTAssertEqual(try! UInt8.decode(number), number.uint8Value)
+        XCTAssertEqual(try! UInt64.decode(json), number.uint64Value)
+        XCTAssertEqual(try! UInt32.decode(json), number.uint32Value)
+        XCTAssertEqual(try! UInt16.decode(json), number.uint16Value)
+        XCTAssertEqual(try! UInt8.decode(json), number.uint8Value)
     }
     
     func testIntegerDecodingFromInt8() {
         let number = NSNumber(value: 100)
+        let json = JSON(object: number)
+        XCTAssertEqual(try! Int64.decode(json), number.int64Value)
+        XCTAssertEqual(try! Int32.decode(json), number.int32Value)
+        XCTAssertEqual(try! Int16.decode(json), number.int16Value)
+        XCTAssertEqual(try! Int8.decode(json), number.int8Value)
         
-        XCTAssertEqual(try! Int64.decode(number), number.int64Value)
-        XCTAssertEqual(try! Int32.decode(number), number.int32Value)
-        XCTAssertEqual(try! Int16.decode(number), number.int16Value)
-        XCTAssertEqual(try! Int8.decode(number), number.int8Value)
-        
-        XCTAssertEqual(try! UInt64.decode(number), number.uint64Value)
-        XCTAssertEqual(try! UInt32.decode(number), number.uint32Value)
-        XCTAssertEqual(try! UInt16.decode(number), number.uint16Value)
-        XCTAssertEqual(try! UInt8.decode(number), number.uint8Value)
+        XCTAssertEqual(try! UInt64.decode(json), number.uint64Value)
+        XCTAssertEqual(try! UInt32.decode(json), number.uint32Value)
+        XCTAssertEqual(try! UInt16.decode(json), number.uint16Value)
+        XCTAssertEqual(try! UInt8.decode(json), number.uint8Value)
     }
 }

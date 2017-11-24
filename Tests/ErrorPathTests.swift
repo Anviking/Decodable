@@ -14,7 +14,7 @@ import enum Decodable.DecodingError
 private struct Color: Decodable {
     let name: String
     
-    static func decode(_ json: Any) throws -> Color {
+    static func decode(_ json: JSON) throws -> Color {
         return try Color(name: json => "name")
     }
 }
@@ -23,7 +23,7 @@ private struct Apple: Decodable {
     let id: Int
     let color: Color?
     
-    static func decode(_ json: Any) throws -> Apple {
+    static func decode(_ json: JSON) throws -> Apple {
         return try Apple(id: json => "id", color: json => "color")
     }
 }
@@ -31,7 +31,7 @@ private struct Apple: Decodable {
 private struct Tree: Decodable {
     let apples: [Apple]
     
-    static func decode(_ json: Any) throws -> Tree {
+    static func decode(_ json: JSON) throws -> Tree {
         return try Tree(apples: json => "apples")
     }
 }
@@ -41,9 +41,9 @@ class ErrorPathTests: XCTestCase {
     func testMissingKeyErrorPath() {
         
         let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": "anviking"]]]]
-        
+        let json = JSON(object: dict)
         do {
-            _ = try dict => "object" => "repo" => "owner" => "oops" as String
+            _ = try json => "object" => "repo" => "owner" => "oops" as String
         } catch DecodingError.missingKey(_ , let metadata) {
             XCTAssertEqual(metadata.formattedPath, "object.repo.owner")
         } catch let error {
@@ -54,8 +54,9 @@ class ErrorPathTests: XCTestCase {
     // FIXME: #
     func testNestedUnexpectedNSNull() {
         let dict: NSDictionary = ["id": 1, "color": ["name": NSNull()]]
+        let json = JSON(object: dict)
         do {
-            let apple = try Apple.decode(dict)
+            let apple = try Apple.decode(json)
             print(apple)
             XCTFail()
         } catch DecodingError.typeMismatch(_, _, let metadata) where metadata.object is NSNull {
@@ -68,9 +69,9 @@ class ErrorPathTests: XCTestCase {
     func testTypeMismatchErrorPath() {
         
         let dict: NSDictionary = ["object": ["repo": ["owner": ["id" : 1, "login": 0]]]]
-        
+        let json = JSON(object: dict)
         do {
-            _ = try dict => "object" => "repo" => "owner" => "login" as String
+            _ = try json => "object" => "repo" => "owner" => "login" as String
         } catch let DecodingError.typeMismatch(_, actual, metadata) {
             let typeString = String(describing: actual)
             XCTAssertTrue(typeString.contains("Number"), "\(typeString) should contain NSNumber")
@@ -85,8 +86,9 @@ class ErrorPathTests: XCTestCase {
         let dict: NSDictionary = ["apples": [["id": 2, "color": ["name": "red"]],
             ["id": 2, "color": ["name": "green"]],
             ["id": 2, "color": ["name": 3]]]]
+        let json = JSON(object: dict)
         do {
-            _ = try Tree.decode(dict)
+            _ = try Tree.decode(json)
             XCTFail()
         } catch let DecodingError.typeMismatch(_, actual, metadata) {
             XCTAssertTrue(String(describing: actual).contains("Number"))
@@ -99,6 +101,7 @@ class ErrorPathTests: XCTestCase {
     
     func testFoo() {
         let dictionary: NSDictionary = ["key": ["test": 3]]
+        let json = JSON(object: dictionary)
         let a: Int = try! uppercase(dictionary => "key") => "TEST"
         XCTAssertEqual(a, 3)
     }

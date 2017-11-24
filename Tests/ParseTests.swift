@@ -17,7 +17,8 @@ class ParseTests: XCTestCase {
     
     func testParseKeyPathSuccess() {
         let dict: NSDictionary = ["a": ["b": 3]]
-        let a = try! parse(dict, ["a", "b"] as KeyPath)
+        let json = JSON(object: dict)
+        let a = try! json (dict, ["a", "b"] as KeyPath)
         XCTAssertEqual(a as? Int, 3)
     }
     

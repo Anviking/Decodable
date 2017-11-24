@@ -24,7 +24,7 @@ class RawRepresentableDecodableTests: XCTestCase {
         // given
         let key = "color"
         let color = "Cyan"
-        let json: NSDictionary = [key: color]
+        let json = JSON(object: [key: color] as NSDictionary)
         // when
         let cmykColor: CMYKColor = try! json => KeyPath(key)
         // then
@@ -35,7 +35,7 @@ class RawRepresentableDecodableTests: XCTestCase {
         // given
         let key = "color"
         let color = "Green"
-        let json: NSDictionary = [key: color]
+        let json = JSON(object: [key: color] as NSDictionary)
         // when
         do {
             _ = try json => KeyPath(key) as CMYKColor
@@ -52,7 +52,7 @@ class RawRepresentableDecodableTests: XCTestCase {
         // given
         let key = "color"
         let color = 0
-        let json: NSDictionary = [key: color]
+        let json = JSON(object: [key: color] as NSDictionary)
         // when
         do {
             _ = try json => KeyPath(key) as CMYKColor

@@ -11,10 +11,10 @@ import Foundation
 /// Attempt to cast an `Any` to `T` or throw
 ///
 /// - throws: `DecodingError.typeMismatch(expected, actual, metadata)`
-public func cast<T>(_ object: JSON) throws -> T {
-    guard let result = object as? T else {
-        let metadata = DecodingError.Metadata(object: object)
-        throw DecodingError.typeMismatch(expected: T.self, actual: type(of: object), metadata)
+public func cast<T>(_ json: JSON) throws -> T {
+    guard let result = json.object as? T else {
+        let metadata = DecodingError.Metadata(object: json.object)
+        throw DecodingError.typeMismatch(expected: T.self, actual: type(of: json.object), metadata)
     }
     return result
 }
