@@ -20,11 +20,12 @@ infix operator =>? : DecodingPrecedence
 
 
 public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> A {
-    return try parse(json, keyPath: keyPath, decoder: A.decode)
+    return try json.decodeSubobject(at: keyPath, using: A.decode)
 }
 
 public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> A? {
-    return try parse(json, keyPath: keyPath, decoder: Optional.decoder(A.decode))
+    return try json.decodeSubobject(at: keyPath, using: A?.decode)
+        .flatMap({$0}) // flatten from A?? to A?
 }
 
 // MARK: - JSONPath
