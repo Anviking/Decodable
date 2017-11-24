@@ -18,20 +18,12 @@ precedencegroup DecodingPrecedence {
 infix operator =>  : DecodingPrecedence
 infix operator =>? : DecodingPrecedence
 
-public func => (lhs: Any, rhs: KeyPath) throws -> Any {
-    return try parse(lhs, keyPath: rhs, decoder: { $0 })
-}
 
-
-public func =>? (lhs: Any, rhs: OptionalKeyPath) throws -> Any? {
-    return try parse(lhs, keyPath: rhs, decoder: Optional.decoder({$0}))
-}
-
-public func => <A: Decodable>(json: Any, keyPath: KeyPath) throws -> A {
+public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> A {
     return try parse(json, keyPath: keyPath, decoder: A.decode)
 }
 
-public func =>? <A: Decodable>(json: Any, keyPath: OptionalKeyPath) throws -> A? {
+public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> A? {
     return try parse(json, keyPath: keyPath, decoder: Optional.decoder(A.decode))
 }
 

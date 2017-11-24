@@ -8,7 +8,7 @@
 
 import Foundation
 
-func parse(_ json: Any, _ keyPath: KeyPath) throws -> Any {
+func parse(_ json: JSON, _ keyPath: KeyPath) throws -> JSON {
     var currentDict = json
     
     for (index, key) in keyPath.keys.enumerated() {
@@ -18,13 +18,13 @@ func parse(_ json: Any, _ keyPath: KeyPath) throws -> Any {
             throw DecodingError.missingKey(key, metadata)
         }
         
-        currentDict = result
+        currentDict = JSON(object: result)
     }
     
     return currentDict
 }
 
-func parse(_ json: Any, _ path: OptionalKeyPath) throws -> Any? {
+func parse(_ json: JSON, _ path: OptionalKeyPath) throws -> JSON? {
     var currentDict = json
     
     for (index, key) in path.keys.enumerated() {
@@ -37,18 +37,18 @@ func parse(_ json: Any, _ path: OptionalKeyPath) throws -> Any? {
                 return nil
             }
         }
-        currentDict = result
+        currentDict = JSON(object: result)
     }
     
     return currentDict
 }
-public func parse<T>(_ json: Any, keyPath: KeyPath, decoder: ((Any) throws -> T)) throws -> T {
+public func parse<T>(_ json: JSON, keyPath: KeyPath, decoder: ((JSON) throws -> T)) throws -> T {
     let object = try parse(json, keyPath)
     return try catchAndRethrow(json, keyPath) { try decoder(object) }
 }
 
 // FIXME: Should perhaps not return T?, but this way we don't have to flatMap in certain overloads
-public func parse<T>(_ json: Any, keyPath: OptionalKeyPath, decoder: ((Any) throws -> T?)) throws -> T? {
+public func parse<T>(_ json: JSON, keyPath: OptionalKeyPath, decoder: ((JSON) throws -> T?)) throws -> T? {
     guard let object = try parse(json, keyPath) else { return nil }
     return try catchAndRethrow(json, keyPath) { try decoder(object) }
 }
@@ -64,7 +64,7 @@ func catchMissingKeyAndReturnNil<T>(_ closure: () throws -> T) throws -> T? {
     }
 }
 
-func catchAndRethrow<T>(_ json: Any, _ keyPath: KeyPath, block: () throws -> T) throws -> T {
+func catchAndRethrow<T>(_ json: JSON, _ keyPath: KeyPath, block: () throws -> T) throws -> T {
     do {
         return try block()
     } catch let error as DecodingError {
@@ -77,7 +77,7 @@ func catchAndRethrow<T>(_ json: Any, _ keyPath: KeyPath, block: () throws -> T) 
     }
 }
 
-func catchAndRethrow<T>(_ json: Any, _ keyPath: OptionalKeyPath, block: () throws -> T) throws -> T {
+func catchAndRethrow<T>(_ json: JSON, _ keyPath: OptionalKeyPath, block: () throws -> T) throws -> T {
     do {
         return try block()
     } catch let error as DecodingError {

@@ -14,7 +14,7 @@
  */
 public extension RawRepresentable where RawValue: Decodable, Self: Decodable {
     
-    static func decode(_ json: Any) throws -> Self {
+    static func decode(_ json: JSON) throws -> Self {
         let rawValue = try RawValue.decode(json)
         guard let rawRepresentable = Self(rawValue: rawValue) else {
             let metadata = DecodingError.Metadata(object: json)

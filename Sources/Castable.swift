@@ -11,7 +11,7 @@ import Foundation
 /// Attempt to cast an `Any` to `T` or throw
 ///
 /// - throws: `DecodingError.typeMismatch(expected, actual, metadata)`
-public func cast<T>(_ object: Any) throws -> T {
+public func cast<T>(_ object: JSON) throws -> T {
     guard let result = object as? T else {
         let metadata = DecodingError.Metadata(object: object)
         throw DecodingError.typeMismatch(expected: T.self, actual: type(of: object), metadata)
@@ -31,27 +31,27 @@ public protocol DynamicDecodable {
     /// from their `decode` function.
     ///
     /// - note: This is intended as a set-once thing.
-    static var decoder: (Any) throws -> DecodedType {get set}
+    static var decoder: (JSON) throws -> DecodedType {get set}
 }
 
 extension Decodable where Self: DynamicDecodable, Self.DecodedType == Self {
-    public static func decode(_ json: Any) throws -> Self {
+    public static func decode(_ json: JSON) throws -> Self {
         return try decoder(json)
         
     }
 }
 
 extension String: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> String = { try cast($0) }
+    public static var decoder: (JSON) throws -> String = { try cast($0) }
 }
 extension Int: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> Int = { try cast($0) }
+    public static var decoder: (JSON) throws -> Int = { try cast($0) }
 }
 extension Double: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> Double = { try cast($0) }
+    public static var decoder: (JSON) throws -> Double = { try cast($0) }
 }
 extension Bool: Decodable, DynamicDecodable {
-    public static var decoder: (Any) throws -> Bool = { try cast($0) }
+    public static var decoder: (JSON) throws -> Bool = { try cast($0) }
 }
 
 private let iso8601DateFormatter: DateFormatter = {
@@ -63,7 +63,7 @@ private let iso8601DateFormatter: DateFormatter = {
 
 extension Date: Decodable, DynamicDecodable {
     /// Default decoder is `Date.decoder(using: iso8601DateFormatter)`
-    public static var decoder: (Any) throws -> Date = Date.decoder(using: iso8601DateFormatter)
+    public static var decoder: (JSON) throws -> Date = Date.decoder(using: iso8601DateFormatter)
     
     /// Create a decode closure using a given formatter
     ///
@@ -72,7 +72,7 @@ extension Date: Decodable, DynamicDecodable {
     /// let formatter = DateFormatter(...)
     /// Date.decoder = Date.decoder(using: formatter)
     /// ```
-    public static func decoder(using formatter: DateFormatter) -> (Any) throws -> Date {
+    public static func decoder(using formatter: DateFormatter) -> (JSON) throws -> Date {
         return { object in
             let string = try String.decode(object)
             guard let date = formatter.date(from: string) else {
@@ -86,14 +86,14 @@ extension Date: Decodable, DynamicDecodable {
 }
 
 extension NSDictionary: Decodable {
-    public static func decode(_ json: Any) throws -> Self {
+    public static func decode(_ json: JSON) throws -> Self {
         return try cast(json)
     }
 }
 
 extension NSArray: DynamicDecodable {
-    public static var decoder: (Any) throws -> NSArray = { try cast($0) }
-    public static func decode(_ json: Any) throws -> NSArray {
+    public static var decoder: (JSON) throws -> NSArray = { try cast($0) }
+    public static func decode(_ json: JSON) throws -> NSArray {
         return try decoder(json)
     }
 
@@ -101,7 +101,7 @@ extension NSArray: DynamicDecodable {
 
 
 extension URL: DynamicDecodable, Decodable {
-	public static var decoder: (Any) throws -> URL = { object in
+	public static var decoder: (JSON) throws -> URL = { object in
 		let string = try String.decode(object)
 		guard let url = URL(string: string) else {
 			let metadata = DecodingError.Metadata(object: object)
