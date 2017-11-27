@@ -52,30 +52,3 @@ extension Array where Element: Decodable {
         }
     }
 }
-
-
-
-
-// MARK: Helpers
-
-/// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
-public func decodeAsOneOf(_ json: JSON, objectTypes: Decodable.Type...) throws -> Decodable {
-	for decodable in objectTypes.dropLast() {
-		if let decoded = try? decodable.decode(json) {
-			return decoded
-		}
-	}
-	return try objectTypes.last!.decode(json)
-}
-
-/// Attempt to decode one of multiple objects in order until: A: we get a positive match, B: we throw an exception if the last object does not decode
-public func decodeArrayAsOneOf(_ json: JSON, objectTypes: Decodable.Type...) throws -> [Decodable] {
-	return try NSArray.decode(json).map {
-		for decodable in objectTypes.dropLast() {
-            if let decoded = try? decodable.decode(JSON(object: $0)) {
-				return decoded
-			}
-		}
-		return try objectTypes.last!.decode(JSON(object: $0))
-	}
-}
