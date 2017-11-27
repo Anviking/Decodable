@@ -22,7 +22,11 @@ public func => <A: Decodable>(json: JSON, key: String) throws -> A {
     return try json.decodeSubobject(at: key, using: A.decode)
 }
 
-public func =>? <A: Decodable>(json: JSON, key: String) throws -> A? {
-    return try json.decodeSubobject(at: key, using: A?.decode)
+public func => <A: Decodable>(json: JSON?, key: String) throws -> A? {
+    return try json.map { try $0 => key }
+}
+
+public func =>? <A: Decodable>(json: JSON?, key: String) throws -> A? {
+    return try json?.decodeSubobject(at: key, using: A?.decode)
         .flatMap({$0}) // flatten from A?? to A?
 }
