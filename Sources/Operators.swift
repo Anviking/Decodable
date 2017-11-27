@@ -11,19 +11,18 @@ import Foundation
 // MARK: - Operators
 
 precedencegroup DecodingPrecedence {
-    associativity: right
+    associativity: left
     higherThan: CastingPrecedence
 }
 
 infix operator =>  : DecodingPrecedence
 infix operator =>? : DecodingPrecedence
 
-
-public func => <A: Decodable>(json: JSON, keyPath: KeyPath) throws -> A {
-    return try json.decodeSubobject(at: keyPath, using: A.decode)
+public func => <A: Decodable>(json: JSON, key: String) throws -> A {
+    return try json.decodeSubobject(at: key, using: A.decode)
 }
 
-public func =>? <A: Decodable>(json: JSON, keyPath: OptionalKeyPath) throws -> A? {
-    return try json.decodeSubobject(at: keyPath, using: A?.decode)
+public func =>? <A: Decodable>(json: JSON, key: String) throws -> A? {
+    return try json.decodeSubobject(at: key, using: A?.decode)
         .flatMap({$0}) // flatten from A?? to A?
 }

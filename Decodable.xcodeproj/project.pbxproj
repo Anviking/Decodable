@@ -42,10 +42,6 @@
 		8FEF60FA1FC81A75002CD57E /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEF60F81FC81A75002CD57E /* JSON.swift */; };
 		8FEF60FB1FC81A75002CD57E /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEF60F81FC81A75002CD57E /* JSON.swift */; };
 		8FEF60FC1FC81A75002CD57E /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FEF60F81FC81A75002CD57E /* JSON.swift */; };
-		8FEF60FD1FC82ACB002CD57E /* KeyPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E459E1D313A7000FB71FC /* KeyPathTests.swift */; };
-		8FEF60FE1FC82ACB002CD57E /* KeyPathTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F3E459E1D313A7000FB71FC /* KeyPathTests.swift */; };
-		8FEF60FF1FC82AE8002CD57E /* RawRepresentableDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A8C961C29AC5E00DE4D53 /* RawRepresentableDecodableTests.swift */; };
-		8FEF61001FC82AE9002CD57E /* RawRepresentableDecodableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 651A8C961C29AC5E00DE4D53 /* RawRepresentableDecodableTests.swift */; };
 		9E2DA75F1CBC784700CAF3DF /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2DA75E1CBC784700CAF3DF /* Vehicle.swift */; };
 		9E2DA7601CBC784700CAF3DF /* Vehicle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E2DA75E1CBC784700CAF3DF /* Vehicle.swift */; };
 		9E2DA7651CBC802200CAF3DF /* Vehicle.json in Resources */ = {isa = PBXBuildFile; fileRef = 9E2DA7641CBC802200CAF3DF /* Vehicle.json */; };
@@ -523,11 +519,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E2DA7601CBC784700CAF3DF /* Vehicle.swift in Sources */,
-				8FEF61001FC82AE9002CD57E /* RawRepresentableDecodableTests.swift in Sources */,
 				8F84E7101C3CB92D001EA4CE /* NSValueDecodableTests.swift in Sources */,
 				FFE77E211B5396FB00E52F28 /* Repository.swift in Sources */,
 				FF0060981B5453C600D8CB77 /* DecodableTests.swift in Sources */,
-				8FEF60FE1FC82ACB002CD57E /* KeyPathTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -566,11 +560,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E2DA75F1CBC784700CAF3DF /* Vehicle.swift in Sources */,
-				8FEF60FF1FC82AE8002CD57E /* RawRepresentableDecodableTests.swift in Sources */,
 				8F84E70F1C3CB92D001EA4CE /* NSValueDecodableTests.swift in Sources */,
 				8FE7B5721B4C9FB900837609 /* DecodableTests.swift in Sources */,
 				FFE77E221B5396FC00E52F28 /* Repository.swift in Sources */,
-				8FEF60FD1FC82ACB002CD57E /* KeyPathTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
