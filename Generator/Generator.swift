@@ -133,7 +133,7 @@ indirect enum Decodable {
         guard deepness > 0 else { return [.T(Unique())] }
         
         var array = [Decodable]()
-        array += generateAllPossibleChildren(deepness - 1).flatMap(filterChainedOptionals)
+        array += generateAllPossibleChildren(deepness - 1).compactMap(filterChainedOptionals)
         array += generateAllPossibleChildren(deepness - 1).map { .Array($0) }
         array += generateAllPossibleChildren(deepness - 1).map { .Dictionary(.T(Unique()),$0) }
         array += [.T(Unique())]
@@ -235,7 +235,7 @@ let date = dateFormatter.string(from: Date())
 
 let overloads = Decodable.T(Unique()).generateAllPossibleChildren(4)
 let types = overloads.map { $0.typeString(TypeNameProvider()) }
-let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.flatMap(filterOptionals).map{ $0.wrapInOptionalIfNeeded() }.flatMap { $0.generateOverloads("=>?") }
+let all = overloads.flatMap { $0.generateOverloads("=>") } + overloads.compactMap(filterOptionals).map{ $0.wrapInOptionalIfNeeded() }.flatMap { $0.generateOverloads("=>?") }
 
 do {
     var template = try String(contentsOfFile: fileManager.currentDirectoryPath + "/Templates/Header.swift")

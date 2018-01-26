@@ -34,7 +34,7 @@ extension Dictionary where Key: Decodable, Value: Any {
 extension Array where Element: Decodable {
     public static func decode(_ j: Any, ignoreInvalidObjects: Bool = false) throws -> [Element] {
         if ignoreInvalidObjects {
-            return try [Element?].decoder { try? Element.decode($0) }(j).flatMap {$0}
+            return try [Element?].decoder { try? Element.decode($0) }(j).compactMap {$0}
         } else {
             return try Array.decoder(Element.decode)(j)
         }
