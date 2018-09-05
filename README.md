@@ -2,7 +2,7 @@
 Simple and strict, yet powerful object mapping made possible by Swift 2's error handling. Greatly inspired by [Argo](http://github.com/thoughtbot/Argo), but without a bizillion functional operators.
 
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![Cocoapods version](https://cocoapod-badges.herokuapp.com/v/Decodable/badge.png)](https://cocoapods.org/pods/Decodable)
+[![CocoaPods version](https://cocoapod-badges.herokuapp.com/v/Decodable/badge.png)](https://cocoapods.org/pods/Decodable)
 [![Platforms](https://cocoapod-badges.herokuapp.com/p/Decodable/badge.png)](https://cocoadocs.org/docsets/NSStringMask)
 [![Travis](https://img.shields.io/travis/Anviking/Decodable/master.svg)](https://travis-ci.org/Anviking/Decodable/branches)
 
@@ -83,7 +83,7 @@ Errors will be caught and rethrown in the decoding process to backpropagate meta
 
 From [DecodingError.swift](https://github.com/anviking/decodable/tree/master/Sources/DecodingError.swift):
 ```swift
-public enum DecodingError: ErrorProtocol, Equatable {
+public enum DecodingError: Error, Equatable {
     /// Thrown when optional casting from `Any` fails.
     ///
     /// This can happen both when trying to access a key on a object
@@ -101,7 +101,7 @@ public enum DecodingError: ErrorProtocol, Equatable {
     /// When an error is thrown that isn't `DecodingError`, it 
     /// will be wrapped in `DecodingError.other` in order to also provide
     /// metadata about where the error was thrown.
-    case other(ErrorProtocol, Metadata)
+    case other(Error, Metadata)
 }
 ```
 
@@ -142,7 +142,7 @@ public protocol DynamicDecodable {
 ```
 This allows Decodable to implement default decoding closures while allowing you to override them as needed.
 ```swift
-// Lets extend Bool.decoder so that it accepts certain strings:
+// Let's extend Bool.decoder so that it accepts certain strings:
 Bool.decoder = { json in
     switch json {
     case let str as String where str == "true":
@@ -191,4 +191,4 @@ This means you likely want the following
 import Decodable
 import protocol Decodable.Decodable
 ```
-and you can import other symbols, e.g `KeyPath`, `DecodingError`, in a simlilar fashion (using `import struct` and `import enum`)
+and you can import other symbols, e.g `KeyPath`, `DecodingError`, in a similar fashion (using `import struct` and `import enum`).
