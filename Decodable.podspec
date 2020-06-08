@@ -13,4 +13,5 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = '2.0'
   s.requires_arc = true
   s.source_files = 'Sources/*.{swift,h}'
+  s.swift_version = '5.0'
 end
