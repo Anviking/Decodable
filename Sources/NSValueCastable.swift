@@ -46,7 +46,7 @@ extension NSValueCastable {
     public static func decode(_ j: Any) throws -> Self {
         let value: NSValue = try cast(j)
         let pointer = PointerOfSelf.allocate(capacity: 1)
-        defer { pointer.deallocate(capacity: 1) }
+        defer { pointer.deallocate() }
         value.getValue(pointer)
         return pointer.move()
     }
