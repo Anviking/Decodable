@@ -1,7 +1,6 @@
 language: objective-c
 xcode_project: Decodable.xcodeproj # path to your xcodeproj folder
-osx_image: xcode9
+osx_image: xcode11
 script:
-  - xcodebuild build -project Decodable.xcodeproj/ -scheme 'Decodable-iOS' -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO -destination 'platform=iOS Simulator,name=iPhone 6,OS=10.0'
+  - xcodebuild build -project Decodable.xcodeproj/ -scheme 'Decodable-iOS' -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.0'
   -  xcodebuild test -project Decodable.xcodeproj/ -scheme 'Decodable-Mac' ONLY_ACTIVE_ARCH=NO
-

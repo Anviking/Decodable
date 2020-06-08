@@ -42,11 +42,11 @@ class DecodeAsOneOfTests: XCTestCase {
 			
 			XCTAssertEqual(vehicles1.count, vehicles2.count)
 			XCTAssertEqual(vehicles1.count, vehiclesArray.count)
-			for truck in vehicles1.flatMap({ $0 as? Truck }) {
+			for truck in vehicles1.compactMap({ $0 as? Truck }) {
 				XCTAssertEqual(truck.wheels, 18)
 			}
 			
-			let train = vehicles1.flatMap { $0 as? Train }.first!
+			let train = vehicles1.compactMap { $0 as? Train }.first!
 			XCTAssertEqual(train.electric, true)
 			
         } catch {
